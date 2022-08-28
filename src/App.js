@@ -1,10 +1,11 @@
+import Layout from "./components/common/Layout";
 import Router from "./shared/Router";
 
 function App() {
   return (
-    <div className="App">
+    <Layout>
       <Router />
-    </div>
+    </Layout>
   );
 }
 
