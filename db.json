@@ -1,0 +1,39 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "React는 무엇인가",
+      "content": "typicode",
+      "image": "https://i0.wp.com/jaglo.net/wp-content/uploads/2021/03/%EC%BD%94%EB%94%A9-%EC%82%AC%EC%9D%B4%ED%8A%B8-1.jpg?resize=768%2C432&ssl=1" 
+    },
+    {
+      "id": 2,
+      "title": "코딩은 무엇인가",
+      "content": "typicode",
+      "image": "https://cdn.aitimes.com/news/photo/202204/143777_149131_434.jpg" 
+    },
+    {
+      "id": 3,
+      "title": "javaScript는 무엇인가",
+      "content": "typicode",
+      "image": "https://t1.daumcdn.net/cfile/tistory/995A17455A409C9A28" 
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "comment": "첫번째 좋군요"
+      
+    },
+    {
+      "id": 2,
+      "comment": "두번째 좋군요"
+      
+    },
+    {
+      "id": 3,
+      "comment": "세번째 좋군요"
+      
+    }
+  ]
+}

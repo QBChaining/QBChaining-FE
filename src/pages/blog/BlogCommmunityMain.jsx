@@ -1,7 +1,11 @@
 import React from "react";
+import {useSelector, useDispatch} from "react-redux";
+import styled from "styled-components";
 
 const BlogCommmunityMain = () => {
-  return <div>BlogCommmunityMain 페이지입니다</div>;
+  const blog = useSelector((state) => state);
+  console.log(blog);
+  return <div>개발일지를 공유해요</div>;
 };
 
 export default BlogCommmunityMain;
