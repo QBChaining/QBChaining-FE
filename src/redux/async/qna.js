@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { qnaApi } from "./../../axios/api/qna";
+import { qnaApi } from "../../axios/api/qnaAPI";
 import { Swal } from "sweetalert2";
 import { async } from "@firebase/util";
 
