@@ -10,13 +10,13 @@ const qnaSlice = createSlice({
   name: "qna",
   initialState: {
     qnaList: [],
+    qnaTarget: null,
     isFetching: false,
     errorMessage: "",
   },
   reducers: {},
   extraReducers: {
     [getQnaListDB.fulfilled]: (state, { payload }) => {
-      console.log(payload);
       state.qnaList = payload;
       state.isFetching = false;
       state.errorMessage = null;
@@ -30,6 +30,7 @@ const qnaSlice = createSlice({
     },
 
     [getOneQnaListDB.fulfilled]: (state, { payload }) => {
+      state.qnaTarget = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },

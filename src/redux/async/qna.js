@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { qnaApi } from "../../axios/api/qnaAPI";
 import { Swal } from "sweetalert2";
-import { async } from "@firebase/util";
 
 export const getQnaListDB = createAsyncThunk(
   "qna/getlist",
@@ -24,7 +23,6 @@ export const getOneQnaListDB = createAsyncThunk(
     try {
       const response = await qnaApi.getOneList(data);
       if (response.statusText === "OK") {
-        console.log(response);
         return response.data;
       }
     } catch (err) {
@@ -53,11 +51,9 @@ export const postQnaListDB = createAsyncThunk(
 export const editQnaListDB = createAsyncThunk(
   "qna/editList",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await qnaApi.editList(data);
       if (response.statusText === "OK") {
-        console.log(response);
         return;
       }
     } catch (err) {

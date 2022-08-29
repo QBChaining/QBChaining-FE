@@ -11,7 +11,7 @@ const QnaEdit = () => {
   const { id } = useParams();
   const [originData, setOriginData] = useState();
 
-  const list = useSelector((state) => state.qnaSlice);
+  const target = useSelector((state) => state.qnaSlice.qnaTarget);
 
   // const getList = async () => {
   //   const response = await axios.get("http://localhost:5000/posts");
@@ -22,16 +22,14 @@ const QnaEdit = () => {
   // };
 
   useEffect(() => {
-    // getList();
-    dispatch(getOneQnaListDB(id))
-      .then((result) => {
-        setOriginData(result.payload[0]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id]);
-  // console.log(originData);
+    dispatch(getOneQnaListDB(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (target) {
+      setOriginData(target[0]);
+    }
+  }, [target]);
 
   if (originData) {
     return <Editor isEdit={true} originData={originData} />;

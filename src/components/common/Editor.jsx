@@ -33,40 +33,52 @@ const Editor = ({ isEdit, originData }) => {
 
   const placeholder = "입력해주세요";
   const theme = "snow";
+
+  const toolbarOptions = [
+    ["bold", "italic", "underline", "strike"], // toggled buttons
+    ["blockquote", "code-block"],
+
+    [{ header: 1 }, { header: 2 }], // custom button values
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ script: "sub" }, { script: "super" }], // superscript/subscript
+    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+    [{ direction: "rtl" }], // text direction
+
+    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+    [{ font: [] }],
+    [{ align: [] }],
+
+    ["clean"], // remove formatting button
+  ];
   const modules = {
-    toolbar: [
-      ["bold", "italic", "underline", "strike", "code-block"],
-      [{ align: [] }],
-
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ indent: "-1" }, { indent: "+1" }],
-
-      [{ size: ["small", false, "large", "huge"] }],
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      ["link", "image", "video"],
-      [{ color: [] }, { background: [] }],
-
-      ["clean"],
-    ],
+    toolbar: toolbarOptions,
     ImageResize: {
       modules: ["Resize"],
     },
     syntax: {
       highlight: (text) => hljs.highlightAuto(text).value,
     },
+    // theme: "snow",
   };
   const formats = [
     "bold",
+    "blockquote",
     "italic",
     "underline",
     "strike",
     "align",
     "list",
     "indent",
+    "direction",
     "size",
+    "font",
     "header",
     "link",
     "image",
+    "script",
     "video",
     "color",
     "background",
@@ -161,6 +173,14 @@ const Editor = ({ isEdit, originData }) => {
     }
   }, [isEdit, originData]);
 
+  //toolbar가 오류로 2개생길때 한개 삭제하는 로직
+  if (quillRef.current?.parentNode?.childNodes.length > 2) {
+    // return quillRef.current.parentNode.childNodes.removeChild;
+    quillRef.current.parentNode.removeChild(
+      quillRef.current.parentNode.childNodes[1]
+    );
+  }
+
   return (
     <Sform>
       <label htmlFor="title">제목</label>
@@ -170,7 +190,7 @@ const Editor = ({ isEdit, originData }) => {
         onChange={onTitleChangeHandler}
         type="text"
       />
-      <div style={{ width: "100%", height: 500 }}>
+      <div style={{ width: "100%", height: 500, position: "relative" }}>
         <div ref={quillRef} />
       </div>
       <button type="submit" onClick={onSubmitHandler}>
