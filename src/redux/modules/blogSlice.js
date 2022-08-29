@@ -10,14 +10,11 @@ export const blogSlice = createSlice({
   reducers: {},
   extraReducers: {
     [getBlogCommunityListDB.fulfilled]: (state, {payload}) => {
-      console.log(payload);
       state.blogList = payload;
       state.isFetching = false;
       state.errorMessage = null;
-      console.log("ffe");
     },
     [getBlogCommunityListDB.pending]: (state, {payload}) => {
-      console.log(payload);
       state.isFetching = true;
     },
     [getBlogCommunityListDB.rejected]: (state, {payload: errorMessage}) => {

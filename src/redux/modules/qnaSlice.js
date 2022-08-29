@@ -16,12 +16,12 @@ const qnaSlice = createSlice({
   reducers: {},
   extraReducers: {
     [getQnaListDB.fulfilled]: (state, {payload}) => {
+      console.log(payload);
       state.qnaList = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
     [getQnaListDB.pending]: (state, {payload}) => {
-      console.log(payload);
       state.isFetching = true;
     },
     [getQnaListDB.rejected]: (state, {payload: errorMessage}) => {
