@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Editor from "../../components/common/Editor";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const QnaWrite = () => {
-  return <div>QNA쓰기게시판입니다</div>;
+  return (
+    <>
+      <Editor />
+    </>
+  );
 };
 
 export default QnaWrite;
