@@ -6,6 +6,7 @@ import QnaWrite from "./../pages/qna/QnaWrite";
 import QnaMain from "./../pages/qna/QnaMain";
 import BlogCommmunityMain from "./../pages/blog/BlogCommmunityMain";
 import BlogPersonalMain from "./../pages/blog/BlogPersonalMain";
+import QnaEdit from "./../pages/qna/QnaEdit";
 
 const router = () => {
   return (
@@ -14,6 +15,7 @@ const router = () => {
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/qna" element={<QnaMain />} />
       <Route path="/qna/write" element={<QnaWrite />} />
+      <Route path="/qna/edit/:id" element={<QnaEdit />} />
       <Route path="/blog" element={<BlogCommmunityMain />} />
       <Route path="/blog/:id" element={<BlogPersonalMain />} />
     </Routes>
