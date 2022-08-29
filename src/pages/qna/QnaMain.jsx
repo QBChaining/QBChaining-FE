@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { getQnaListDB } from "./../../redux/async/qna";
+import {useNavigate} from "react-router-dom";
+import {getQnaListDB} from "./../../redux/async/qna";
 
 const QnaMain = () => {
   const navigate = useNavigate();
@@ -21,10 +21,10 @@ const QnaMain = () => {
         qnaList.map((data) => {
           return (
             <div className="ql-snow" key={data.id}>
-              <div dangerouslySetInnerHTML={{ __html: data.title }}></div>
+              <div dangerouslySetInnerHTML={{__html: data.title}}></div>
               <div
                 className="ql-editor"
-                dangerouslySetInnerHTML={{ __html: data.content }}
+                dangerouslySetInnerHTML={{__html: data.content}}
               ></div>
               <button
                 onClick={() => {

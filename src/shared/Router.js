@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Landing from "./../pages/landing/Landing";
 import MyPage from "./../pages/myPage/MyPage";
 import QnaWrite from "./../pages/qna/QnaWrite";

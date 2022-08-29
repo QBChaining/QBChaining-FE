@@ -1,5 +1,5 @@
-import instance from '../axios';
+import instance from "../axios";
 
 export const blogApi = {
-  null
-}
+  getBlogCommunityList: () => instance.get("/posts"),
+};
