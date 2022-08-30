@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {useParams} from "react-router-dom";
 import Editor from "../../components/common/Editor";
 import axios from "axios";
 import qnaSlice from "./../../redux/modules/qnaSlice";
-import { getOneQnaListDB, getQnaListDB } from "./../../redux/async/qna";
+import {getOneQnaListDB, getQnaListDB} from "./../../redux/async/qna";
 
 const QnaEdit = () => {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const {id} = useParams();
   const [originData, setOriginData] = useState();
 
   const list = useSelector((state) => state.qnaSlice);

@@ -1,7 +1,7 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { qnaApi } from "../../axios/api/qnaAPI";
-import { Swal } from "sweetalert2";
-import { async } from "@firebase/util";
+import {createAsyncThunk} from "@reduxjs/toolkit";
+import {qnaApi} from "../../axios/api/qnaAPI";
+import {Swal} from "sweetalert2";
+import {async} from "@firebase/util";
 
 export const getQnaListDB = createAsyncThunk(
   "qna/getlist",
