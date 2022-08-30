@@ -1,5 +1,5 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {getBlogCommunityListDB} from "../async/blog";
+import { createSlice } from "@reduxjs/toolkit";
+import { getBlogCommunityListDB } from "../async/blog";
 export const blogSlice = createSlice({
   name: "blog",
   initialState: {
@@ -9,15 +9,15 @@ export const blogSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [getBlogCommunityListDB.fulfilled]: (state, {payload}) => {
+    [getBlogCommunityListDB.fulfilled]: (state, { payload }) => {
       state.blogList = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getBlogCommunityListDB.pending]: (state, {payload}) => {
+    [getBlogCommunityListDB.pending]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getBlogCommunityListDB.rejected]: (state, {payload: errorMessage}) => {
+    [getBlogCommunityListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
