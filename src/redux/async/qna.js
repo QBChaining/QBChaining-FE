@@ -93,3 +93,33 @@ export const postCommentListDB = createAsyncThunk(
     }
   },
 );
+
+export const deleteCommentListDB = createAsyncThunk(
+  "qna/deletecomment",
+  async (data, thunkAPI) => {
+    try {
+      const response = await qnaApi.deleteCommentList(data);
+      if (response.statusText === "OK") {
+        return data;
+      }
+    } catch (err) {
+      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+
+export const editCommentListDB = createAsyncThunk(
+  "qna/editcomment",
+  async (data, thunkAPI) => {
+    try {
+      const response = await qnaApi.editCommentList(data);
+      if (response.statusText === "OK") {
+        return data;
+      }
+    } catch (err) {
+      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);

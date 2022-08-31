@@ -55,6 +55,13 @@ const Header = () => {
           >
             QNA쓰기
           </li>
+          <li
+            onClick={() => {
+              navigate("/register");
+            }}
+          >
+            레지스터
+          </li>
           <li onClick={loginApi}>로그인</li>
         </ul>
       </nav>

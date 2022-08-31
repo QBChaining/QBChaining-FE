@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCommentListDB } from "./../../redux/async/qna";
+import Editor from "../common/Editor";
+import { deleteCommentListDB, getCommentListDB } from "./../../redux/async/qna";
 
 const QnaCommentList = ({ qnaId }) => {
   const dispatch = useDispatch();
@@ -12,17 +13,38 @@ const QnaCommentList = ({ qnaId }) => {
     dispatch(getCommentListDB(qnaId));
   }, [qnaId]);
 
+  const onDeleteHandler = id => {
+    dispatch(deleteCommentListDB(id));
+  };
+
+  const onEditHandler = id => {};
+
   return (
-    <div className="ql-snow">
-      {a.map(data => (
-        <div className="ql-editor">
-          <div
-            key={data.id}
-            dangerouslySetInnerHTML={{ __html: data.content }}
-          ></div>
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="ql-snow">
+        {a.map(data => (
+          <div key={data.id}>
+            <div className="ql-editor">
+              <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
+            </div>
+            <button
+              onClick={() => {
+                onDeleteHandler(data.id);
+              }}
+            >
+              삭제하기
+            </button>
+            <button
+              onClick={() => {
+                onEditHandler(data.id);
+              }}
+            >
+              수정하기
+            </button>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

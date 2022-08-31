@@ -33,7 +33,7 @@ const Editor = ({
   isWrite,
   isCommentWrite,
   originData,
-  style,
+  style = "300px",
   qnaId,
 }) => {
   const navigate = useNavigate();

@@ -6,6 +6,8 @@ import {
   editQnaListDB,
   getCommentListDB,
   postCommentListDB,
+  deleteCommentListDB,
+  editCommentListDB,
 } from "../async/qna";
 
 const qnaSlice = createSlice({
@@ -91,6 +93,34 @@ const qnaSlice = createSlice({
       state.isFetching = true;
     },
     [postCommentListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+
+    [deleteCommentListDB.fulfilled]: (state, { payload }) => {
+      const newCommentList = state.commentList.filter(
+        data => data.id !== payload,
+      );
+      state.commentList = newCommentList;
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [deleteCommentListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [deleteCommentListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+
+    [editCommentListDB.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [editCommentListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [editCommentListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },

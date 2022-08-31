@@ -7,6 +7,9 @@ const QnaList = ({ data }) => {
   const navigate = useNavigate();
   return (
     <div style={{ border: "1px solid black", padding: "20px" }}>
+      <div>
+        <button>즐겨찾기</button>
+      </div>
       <div
         onClick={() => {
           navigate(`/qna/detail/${data.id}`);
