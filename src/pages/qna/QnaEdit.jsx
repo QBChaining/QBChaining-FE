@@ -7,34 +7,28 @@ import qnaSlice from "./../../redux/modules/qnaSlice";
 import { getOneQnaListDB, getQnaListDB } from "./../../redux/async/qna";
 
 const QnaEdit = () => {
+  const style = { height: "300px" };
   const dispatch = useDispatch();
   const { id } = useParams();
   const [originData, setOriginData] = useState();
 
-  const target = useSelector((state) => state.qnaSlice.qnaTarget);
+  //qnatarget 구독
+  const target = useSelector(state => state.qnaSlice.qnaTarget);
 
-  // const getList = async () => {
-  //   const response = await axios.get("http://localhost:5000/posts");
-  //   console.log(response.data);
-  //   const post = response.data;
-  //   const targetPost = post.find((data) => parseInt(data.id) === parseInt(id));
-  //   setOriginData(targetPost);
-  // };
-
+  //최초로딩시  타겟게시글 정보 요청
   useEffect(() => {
     dispatch(getOneQnaListDB(id));
-  }, [dispatch, id]);
+  }, [id]);
 
+  //타겟이 있다면 원본데이터 props전달목적
   useEffect(() => {
-    if (target) {
-      setOriginData(target[0]);
-    }
+    setOriginData(target[0]);
   }, [target]);
 
   if (originData) {
-    return <Editor isEdit={true} originData={originData} />;
+    return <Editor isEdit={true} originData={originData} style={style} />;
   } else {
-    return <Editor />;
+    return <Editor style={style} />;
   }
 };
 

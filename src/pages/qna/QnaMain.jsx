@@ -10,15 +10,18 @@ const QnaMain = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const qnaList = useSelector(state => state.qnaSlice.qnaList);
+
+  //최초진입시 qnalistdb 요청
   useEffect(() => {
     dispatch(getQnaListDB());
-  }, [dispatch]);
-
-  const qnaList = useSelector((state) => state.qnaSlice.qnaList);
+  }, []);
 
   return (
-    <StextMain qnaList={qnaList}>
-      {qnaList && qnaList.map((data) => <QnaList data={data} key={data.id} />)}
+    <StextMain>
+      {qnaList.map(data => (
+        <QnaList data={data} key={data.id} />
+      ))}
     </StextMain>
   );
 };

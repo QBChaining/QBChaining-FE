@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { qnaApi } from "../../axios/api/qnaAPI";
-import { Swal } from "sweetalert2";
+import Swal from "sweetalert2";
 
 export const getQnaListDB = createAsyncThunk(
   "qna/getlist",
@@ -14,7 +14,7 @@ export const getQnaListDB = createAsyncThunk(
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
       return thunkAPI.rejectWithValue(err.response.message);
     }
-  }
+  },
 );
 
 export const getOneQnaListDB = createAsyncThunk(
@@ -29,7 +29,7 @@ export const getOneQnaListDB = createAsyncThunk(
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
       return thunkAPI.rejectWithValue(err.response.message);
     }
-  }
+  },
 );
 
 export const postQnaListDB = createAsyncThunk(
@@ -45,11 +45,11 @@ export const postQnaListDB = createAsyncThunk(
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
       return thunkAPI.rejectWithValue(err.response.message);
     }
-  }
+  },
 );
 
 export const editQnaListDB = createAsyncThunk(
-  "qna/editList",
+  "qna/editlist",
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.editList(data);
@@ -60,5 +60,36 @@ export const editQnaListDB = createAsyncThunk(
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
       return thunkAPI.rejectWithValue(err.response.message);
     }
-  }
+  },
+);
+
+export const getCommentListDB = createAsyncThunk(
+  "qna/getcomment",
+  async (data, thunkAPI) => {
+    try {
+      const response = await qnaApi.getCommentList(data);
+      if (response.statusText === "OK") {
+        return response.data;
+      }
+    } catch (err) {
+      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+
+export const postCommentListDB = createAsyncThunk(
+  "qna/postcomment",
+  async (data, thunkAPI) => {
+    try {
+      const response = await qnaApi.postCommentList(data);
+      console.log(response);
+      if (response.statusText === "Created") {
+        return response.data;
+      }
+    } catch (err) {
+      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
 );

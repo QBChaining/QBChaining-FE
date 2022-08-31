@@ -1,10 +1,11 @@
 import instance from "../axios";
 
 export const qnaApi = {
-  getList: () => instance.get("/boards"),
-  // getOneList: (id) => instance.get(`/boards/${id}`),
-  getOneList: (id) => instance.get(`/boards?id=${id}`),
-  postList: (data) => instance.post("/boards", data),
-  // editList: (data) => instance.put(`/boards/${data.id}`),
-  editList: (data) => instance.put(`/boards/${data.id}`, data),
+  getList: () => instance.get("/qna"),
+  getOneList: id => instance.get(`/qna?id=${id}`),
+  postList: data => instance.post("/qna", data),
+  editList: data => instance.put(`/qna/${data.id}`, data),
+  // getCommentList:(id)=>instance.get(`qna/comment/${id}`),
+  getCommentList: id => instance.get(`/comments?qnaId=${id}`),
+  postCommentList: data => instance.post(`/comments`, data),
 };
