@@ -4,38 +4,24 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { getQnaListDB } from "./../../redux/async/qna";
+import QnaList from "./../../components/qna/QnaList";
 
 const QnaMain = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getQnaListDB());
-  }, [dispatch]);
-
   const qnaList = useSelector(state => state.qnaSlice.qnaList);
 
+  //최초진입시 qnalistdb 요청
+  useEffect(() => {
+    dispatch(getQnaListDB());
+  }, []);
+
   return (
-    <StextMain qnaList={qnaList}>
-      {qnaList &&
-        qnaList.map(data => {
-          return (
-            <div className="ql-snow" key={data.id}>
-              <div dangerouslySetInnerHTML={{ __html: data.title }}></div>
-              <div
-                className="ql-editor"
-                dangerouslySetInnerHTML={{ __html: data.content }}
-              ></div>
-              <button
-                onClick={() => {
-                  navigate(`/qna/edit/${data.id}`);
-                }}
-              >
-                수정하기
-              </button>
-            </div>
-          );
-        })}
+    <StextMain>
+      {qnaList.map(data => (
+        <QnaList data={data} key={data.id} />
+      ))}
     </StextMain>
   );
 };
