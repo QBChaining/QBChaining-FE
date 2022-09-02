@@ -27,11 +27,11 @@ import { editQnaListDB } from "./../../redux/async/qna";
 
 //이미지 리사이즈 레지스터
 Quill.register("modules/ImageResize", ImageResize);
-
 const Editor = ({
   isEdit,
   isWrite,
   isCommentWrite,
+  blogCommnuityEdit,
   originData,
   style = "300px",
   qnaId,
@@ -157,16 +157,20 @@ const Editor = ({
   }
 
   //생성 or 수정 함수
+
   const onSubmitHandler = e => {
     e.preventDefault();
+
     if (isEdit) {
       dispatch(
         editQnaListDB({
           title,
           content: quillRef.current.firstChild.innerHTML,
           id: originData.id,
+
           category: category,
           tag: tags,
+
         }),
       ).then(res => {
         navigate("/qna");

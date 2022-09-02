@@ -1,0 +1,68 @@
+{
+  "boards": [
+    {
+      "title": "React는 무엇인가",
+      "content": "<p>sdfsdfsdfsdf</p>",
+      "id": 1
+    },
+    {
+      "id": 2,
+      "title": "코딩은 무엇인가",
+      "content": "typicode",
+      "image": "https://cdn.aitimes.com/news/photo/202204/143777_149131_434.jpg"
+    },
+    {
+      "title": "javaScript는 무엇인가",
+      "content": "<p>typicodedfdfdfdf</p>",
+      "id": 3
+    },
+    {
+      "title": "",
+      "content": "<p>제출</p>",
+      "id": 4
+    },
+    {
+      "title": "sdfsd",
+      "content": "<p>fsdfsdff</p>",
+      "id": 5
+    },
+    {
+      "title": "sdfsdfsdf",
+      "content": "<p>sdfsdfsdfsdfsdf</p>",
+      "id": 6
+    },
+    {
+      "title": "안녕하세요",
+      "content": "<p>테스트 블로그글입니다</p>",
+      "id": 7
+    }
+  ],
+  "comments": [
+    {
+      "comment": "ㄴㅇㄹㄴㅇㄹ",
+      "postId": 1,
+      "commentId": 1,
+      "id": 1
+    },
+    {
+      "comment": "ㄴㅇㄹㄴㅇㄹ",
+      "postId": 1,
+      "commentId": 1,
+      "id": 2
+    }
+  ],
+  "posts": [
+    {
+      "id": 2,
+      "title": "두번째 REACT 이란??",
+      "content": "훅은 리엑트의 꽃이죠!",
+      "postId": 2
+    },
+    {
+      "id": 3,
+      "title": "세번째 REACT 이란??",
+      "content": "훅은 리엑트의 꽃이죠!",
+      "postId": 3
+    }
+  ]
+}

@@ -15,6 +15,7 @@ const QnaEdit = () => {
   //qnatarget 구독
   const target = useSelector(state => state.qnaSlice.qnaTarget);
 
+
   //최초로딩시  타겟게시글 정보 요청
   useEffect(() => {
     dispatch(getOneQnaListDB(id));
