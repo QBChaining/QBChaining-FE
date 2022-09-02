@@ -5,18 +5,6 @@ import axios from "axios";
 
 const Header = () => {
   const navigate = useNavigate();
-
-  // const loginApi = () => {
-  //   try {
-  //     axios.get("http://13.124.114.140/api/auth/github").then(res => {
-  //       console.log(res);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // http://13.124.114.140/
   return (
     <SHeader>
       <nav>

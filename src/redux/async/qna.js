@@ -37,7 +37,6 @@ export const postQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.postList(data);
-      console.log(response);
       if (response.statusText === "OK") {
         return response.data;
       }
@@ -83,7 +82,6 @@ export const postCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.postCommentList(data);
-      console.log(response);
       if (response.statusText === "Created") {
         return response.data;
       }
