@@ -15,7 +15,6 @@ const QnaEdit = () => {
   //qnatarget 구독
   const target = useSelector(state => state.qnaSlice.qnaTarget);
 
-
   //최초로딩시  타겟게시글 정보 요청
   useEffect(() => {
     dispatch(getOneQnaListDB(id));
@@ -23,7 +22,7 @@ const QnaEdit = () => {
 
   //타겟이 있다면 원본데이터 props전달목적
   useEffect(() => {
-    setOriginData(target[0]);
+    setOriginData(target);
   }, [target]);
 
   if (originData) {

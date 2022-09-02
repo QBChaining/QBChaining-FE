@@ -5,6 +5,18 @@ import axios from "axios";
 
 const Header = () => {
   const navigate = useNavigate();
+
+  // const loginApi = () => {
+  //   try {
+  //     axios.get("http://13.124.114.140/api/auth/github").then(res => {
+  //       console.log(res);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // http://13.124.114.140/
   return (
     <SHeader>
       <nav>
@@ -50,6 +62,9 @@ const Header = () => {
             }}
           >
             레지스터
+          </li>
+          <li>
+            <a href="http://13.125.180.179/api/auth/github">로그인</a>
           </li>
         </ul>
       </nav>

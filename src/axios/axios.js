@@ -9,10 +9,9 @@ const instance = axios.create({
   timeout: 2000,
 });
 instance.interceptors.request.use(config => {
-  // 세션쿠키 있을때 활성화
-  // if (getCookie("session")) {
-  //   config.headers["Cookie"] = "session=" + getCookie("session");
-  // }
+  if (getCookie("token")) {
+    config.headers["Authorization"] = getCookie("token");
+  }
   return config;
 });
 

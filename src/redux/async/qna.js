@@ -5,10 +5,11 @@ import Swal from "sweetalert2";
 export const getQnaListDB = createAsyncThunk(
   "qna/getlist",
   async (data, thunkAPI) => {
+    console.log(data);
     try {
       const response = await qnaApi.getList();
-      if (response.statusText === "OK") {
-        return response.data;
+      if (response.data.success === true) {
+        return response.data.data;
       }
     } catch (err) {
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
@@ -22,8 +23,9 @@ export const getOneQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getOneList(data);
-      if (response.statusText === "OK") {
-        return response.data;
+      console.log(response);
+      if (response.data.success === true) {
+        return response.data.data;
       }
     } catch (err) {
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
@@ -37,7 +39,8 @@ export const postQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.postList(data);
-      if (response.statusText === "OK") {
+      console.log(response);
+      if (response.data.success === true) {
         return response.data;
       }
     } catch (err) {
@@ -52,7 +55,7 @@ export const editQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.editList(data);
-      if (response.statusText === "OK") {
+      if (response.data.success === true) {
         return;
       }
     } catch (err) {
@@ -67,8 +70,8 @@ export const getCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getCommentList(data);
-      if (response.statusText === "OK") {
-        return response.data;
+      if (response.data.success === true) {
+        return response.data.data;
       }
     } catch (err) {
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
@@ -80,12 +83,15 @@ export const getCommentListDB = createAsyncThunk(
 export const postCommentListDB = createAsyncThunk(
   "qna/postcomment",
   async (data, thunkAPI) => {
+    console.log(data);
     try {
       const response = await qnaApi.postCommentList(data);
+      console.log(response);
       if (response.statusText === "Created") {
         return response.data;
       }
     } catch (err) {
+      console.log(err);
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
       return thunkAPI.rejectWithValue(err.response.message);
     }

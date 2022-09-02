@@ -34,12 +34,12 @@ const Editor = ({
   blogCommnuityEdit,
   originData,
   style = "300px",
-  qnaId,
+  id,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("Java");
+  const [category, setCategory] = useState("JavaScript");
   const tagText = useRef();
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
@@ -170,7 +170,6 @@ const Editor = ({
 
           category: category,
           tag: tags,
-
         }),
       ).then(res => {
         navigate("/qna");
@@ -192,7 +191,7 @@ const Editor = ({
       dispatch(
         postCommentListDB({
           content: quillRef.current.firstChild.innerHTML,
-          qnaId: parseInt(qnaId),
+          id: parseInt(id),
         }),
       );
     }

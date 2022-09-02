@@ -19,15 +19,16 @@ const QnaDetail = () => {
 
   useEffect(() => {
     if (target) {
-      setData(target[0]);
+      setData(target);
     }
   }, [target]);
 
+  console.log(target);
   return (
     <div>
-      {data && <QnaList data={data} />}
-      <QnaAddComment qnaId={id} />
-      <QnaCommentList qnaId={id} />
+      {data && <QnaList isDatail={true} data={data} />}
+      <QnaAddComment id={id} />
+      <QnaCommentList id={id} />
     </div>
   );
 };
