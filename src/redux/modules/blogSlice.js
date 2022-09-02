@@ -93,7 +93,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [deleteBlogCommentDB.fulfilled]: (state, action) => {
-      console.log("액션", action);
       state.isFetching = false;
       state.errorMessage = null;
       state.commentList = action.meta.arg;

@@ -70,7 +70,6 @@ export const patchBlogCommentDB = createAsyncThunk(
   "PATCH_BLOG_COMMENTLIST",
   async (data, thunkAPI) => {
     try {
-      console.log(data);
       const response = await blogApi.patchBlogComment(data);
       if (response.statusText === "OK") {
         return response.data;
@@ -85,11 +84,8 @@ export const patchBlogCommentDB = createAsyncThunk(
 export const deleteBlogCommentDB = createAsyncThunk(
   "DELETE_BLOG_COMMENTLIST",
   async (commentId, thunkAPI) => {
-    console.log("DEL", commentId);
     try {
-      console.log("테스트");
       const response = await blogApi.DeleteBlogComment(commentId);
-      console.log(response);
       if (response.statusText === "OK") {
         return response.data;
       }
