@@ -9,6 +9,7 @@ import BlogPersonalMain from "./../pages/blog/BlogPersonalMain";
 import QnaEdit from "./../pages/qna/QnaEdit";
 import QnaDetail from "./../pages/qna/QnaDetail";
 import Register from "./../pages/register/Register";
+import Login from "../pages/register/Login";
 
 const router = () => {
   return (
@@ -22,6 +23,7 @@ const router = () => {
       <Route path="/blog" element={<BlogCommmunityMain />} />
       <Route path="/blog/:id" element={<BlogPersonalMain />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   );
 };

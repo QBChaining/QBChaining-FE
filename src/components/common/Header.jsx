@@ -6,14 +6,15 @@ import axios from "axios";
 const Header = () => {
   const navigate = useNavigate();
 
-  const loginApi = async () => {
-    try {
-      const response = await axios.get("http://13.124.114.140/api/auth/github");
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const loginApi = () => {
+  //   try {
+  //     axios.get("http://13.124.114.140/api/auth/github").then(res => {
+  //       console.log(res);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // http://13.124.114.140/
   return (
@@ -62,7 +63,6 @@ const Header = () => {
           >
             레지스터
           </li>
-          <li onClick={loginApi}>로그인</li>
         </ul>
       </nav>
     </SHeader>

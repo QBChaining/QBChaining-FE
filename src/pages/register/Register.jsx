@@ -1,54 +1,142 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import categories from "../../utils/category";
 import styled from "styled-components";
+import { axios } from "axios";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import InterestItem from "./../../components/register/InterestItem";
+//에러처리
+// {errors.nickname && errors.nickname.type === "required" && (
+//   <p className={"warning"}>닉네임은 필수 입력사항 입니다.</p>
+// )}
+// {errors.nickname && errors.nickname.type === "minLength" && (
+//   <p className={"warning"}>{errors.nickname.message}</p>
+// )}
+// {errors.nickname && errors.nickname.type === "maxLength" && (
+//   <p className={"warning"}>{errors.nickname.message}</p>
+// )}
 
-const Interest = ({ data, setList, list }) => {
-  const [toggle, setToggle] = useState(false);
-
-  const onToggleHandler = name => {
-    setToggle(!toggle);
-    if (list.indexOf(name) === -1) {
-      setList([...list, data.interestName]);
-    }
-    console.log(list.indexOf(name));
-  };
-  return (
-    <SList
-      toggle={toggle}
-      onClick={() => {
-        onToggleHandler(data.interestName);
-      }}
-    >
-      {data.interestName}
-    </SList>
-  );
-};
-
-const Register = () => {
-  const [list, setList] = useState([]);
-  console.log(list);
+//select component
+const Select = ({ register, options, name, ...rest }) => {
   return (
     <div>
-      <ul style={{ display: "flex", flexWrap: "wrap" }}>
-        {categories.interestCategory.map(data => (
-          <Interest
-            data={data}
-            setList={setList}
-            list={list}
-            key={data.interestId}
-          ></Interest>
+      <select {...register(name)} {...rest}>
+        {options.map(value => (
+          <option key={value} value={value}>
+            {value}
+          </option>
         ))}
-      </ul>
+      </select>
     </div>
   );
 };
 
-export default Register;
+//radio component
+const Radio = ({ register, options, name, ...rest }) => {
+  return (
+    <div>
+      {options.map(value => (
+        <Fragment key={value}>
+          <label htmlFor={value}>{value}</label>
+          <input
+            {...register(name)}
+            {...rest}
+            type="radio"
+            name={name}
+            value={value}
+            id={value}
+          />
+        </Fragment>
+      ))}
+    </div>
+  );
+};
 
-const SList = styled.li`
-  padding: 20px;
-  cursor: pointer;
-  border: 1px solid black;
-  background-color: ${props => (props.toggle ? "black" : "white")};
-  color: ${props => (props.toggle ? "white" : "black")};
-`;
+//checkbox component
+const CheckBox = ({ register, options, name, ...rest }) => {
+  return (
+    <>
+      {options.map(value => (
+        <span style={{ padding: "10px", display: "inline-block" }} key={value}>
+          <input
+            {...register(name)}
+            {...rest}
+            type="checkbox"
+            name={name}
+            value={value}
+            id={value}
+          />
+          <label htmlFor={value}>{value}</label>
+        </span>
+      ))}
+    </>
+  );
+};
+
+const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { isSubmitting, errors },
+  } = useForm();
+  const [list, setList] = useState([]);
+  const dispatch = useDispatch();
+  const onSubmitHandler = data => {
+    // console.log(data, list);
+  };
+  return (
+    <>
+      <div>
+        <ul style={{ display: "flex", flexWrap: "wrap" }}>
+          {categories.interestCategory.map(data => (
+            <InterestItem
+              data={data}
+              setList={setList}
+              list={list}
+              key={data.interestId}
+            />
+          ))}
+        </ul>
+      </div>
+      <form onSubmit={handleSubmit(onSubmitHandler)}>
+        <div>
+          <input
+            type="text"
+            placeholder="닉네임"
+            {...register("nickname", {
+              required: true,
+              minLength: {
+                value: 2,
+                message: "2자리 이상 10자리 이하로 입력해주세요",
+              },
+              maxLength: {
+                value: 10,
+                message: "2자리 이상 10자리 이하로 입력해주세요",
+              },
+            })}
+          />
+          <button type={"button"}>중복체크</button>
+        </div>
+        <Select
+          register={register}
+          name="age"
+          options={["10대", "20대", "30대"]}
+        />
+        <Radio
+          register={register}
+          name="gender"
+          options={["남", "여"]}
+          required
+        />
+        <CheckBox register={register} name="job" options={categories.jobs} />
+        <Select register={register} name="career" options={categories.career} />
+        <button type="submit" disabled={isSubmitting}>
+          제출하기
+        </button>
+      </form>
+    </>
+  );
+};
+
+export default Register;
