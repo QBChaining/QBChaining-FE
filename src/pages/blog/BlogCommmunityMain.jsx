@@ -19,19 +19,26 @@ const BlogCommmunityMain = () => {
       <SBody>
         <SListGroup>
           <div>
-            <button>글쓰기</button>
+            <button
+              onClick={() => {
+                navigate("/blog/write");
+              }}
+            >
+              글쓰기
+            </button>
           </div>
           {/* {blogList && */}
           {blogList.map(posts => {
             return (
-              <SBloglist
-                key={posts.id}
-                onClick={() => {
-                  navigate(`/blog/detail/${postId}`);
-                }}
-              >
-                <p>{posts.title}</p>
-                <p>{posts.content}</p>
+              <SBloglist key={posts.id}>
+                <div
+                  onClick={() => {
+                    navigate(`/blog/detail/${postId}`);
+                  }}
+                >
+                  <p>{posts.title}</p>
+                  <p>{posts.content}</p>
+                </div>
                 <div>
                   <button>JAVA</button>
                   <button>REACT</button>
@@ -50,15 +57,15 @@ const BlogCommmunityMain = () => {
   );
 };
 
+const SBody = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 const SListGroup = styled.div``;
 const SBloglist = styled.div`
   border: 1px solid black;
 `;
 const STopList = styled.div``;
-const SBody = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
 const STopBox = styled.div`
   border: 1px solid black;
 `;

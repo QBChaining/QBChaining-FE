@@ -1,7 +1,7 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import {qnaApi} from "../../axios/api/qnaAPI";
-import {Swal} from "sweetalert2";
-import {async} from "@firebase/util";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { qnaApi } from "../../axios/api/qnaAPI";
+import { Swal } from "sweetalert2";
+import { async } from "@firebase/util";
 
 export const getQnaListDB = createAsyncThunk(
   "qna/getlist",
@@ -15,7 +15,7 @@ export const getQnaListDB = createAsyncThunk(
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
       return thunkAPI.rejectWithValue(err.response.message);
     }
-  }
+  },
 );
 
 export const getOneQnaListDB = createAsyncThunk(
@@ -31,7 +31,7 @@ export const getOneQnaListDB = createAsyncThunk(
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
       return thunkAPI.rejectWithValue(err.response.message);
     }
-  }
+  },
 );
 
 export const postQnaListDB = createAsyncThunk(
@@ -47,7 +47,7 @@ export const postQnaListDB = createAsyncThunk(
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
       return thunkAPI.rejectWithValue(err.response.message);
     }
-  }
+  },
 );
 
 export const editQnaListDB = createAsyncThunk(
@@ -64,5 +64,5 @@ export const editQnaListDB = createAsyncThunk(
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
       return thunkAPI.rejectWithValue(err.response.message);
     }
-  }
+  },
 );

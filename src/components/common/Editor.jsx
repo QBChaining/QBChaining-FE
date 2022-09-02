@@ -26,7 +26,7 @@ import { editQnaListDB } from "./../../redux/async/qna";
 //이미지 리사이즈 레지스터
 Quill.register("modules/ImageResize", ImageResize);
 
-const Editor = ({ isEdit, originData }) => {
+const Editor = ({ isEdit, originData, blogCommnuityEdit }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
@@ -52,7 +52,7 @@ const Editor = ({ isEdit, originData }) => {
       modules: ["Resize"],
     },
     syntax: {
-      highlight: (text) => hljs.highlightAuto(text).value,
+      highlight: text => hljs.highlightAuto(text).value,
     },
   };
   const formats = [
@@ -97,7 +97,7 @@ const Editor = ({ isEdit, originData }) => {
         //firebase에 이미지 업로드
         const uploaded_file = await uploadBytes(
           ref(storage, `images/${Date.now()}`),
-          file
+          file,
         );
 
         //firebase에 올라간 이미지url 저장
@@ -127,30 +127,36 @@ const Editor = ({ isEdit, originData }) => {
   //글생성, 수정 함수
 
   //submithandler
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = e => {
     e.preventDefault();
+
     if (isEdit) {
       dispatch(
         editQnaListDB({
           title,
           content: quillRef.current.firstChild.innerHTML,
           id: originData.id,
-        })
-      ).then((res) => {
+        }),
+      ).then(res => {
         navigate("/qna");
       });
       //생성중이라면
-    } else {
+    }
+    //블로그
+    else {
       dispatch(
-        postQnaListDB({ title, content: quillRef.current.firstChild.innerHTML })
-      ).then((res) => {
+        postQnaListDB({
+          title,
+          content: quillRef.current.firstChild.innerHTML,
+        }),
+      ).then(res => {
         navigate("/qna");
       });
     }
   };
 
   //titlechangehandler
-  const onTitleChangeHandler = (e) => {
+  const onTitleChangeHandler = e => {
     setTitle(e.target.value);
   };
 
