@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   getQnaListDB,
   getOneQnaListDB,
@@ -15,52 +15,51 @@ const qnaSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [getQnaListDB.fulfilled]: (state, {payload}) => {
-      console.log(payload);
+    [getQnaListDB.fulfilled]: (state, { payload }) => {
       state.qnaList = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getQnaListDB.pending]: (state, {payload}) => {
+    [getQnaListDB.pending]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getQnaListDB.rejected]: (state, {payload: errorMessage}) => {
+    [getQnaListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
 
-    [getOneQnaListDB.fulfilled]: (state, {payload}) => {
+    [getOneQnaListDB.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getOneQnaListDB.pending]: (state, {payload}) => {
+    [getOneQnaListDB.pending]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getOneQnaListDB.rejected]: (state, {payload: errorMessage}) => {
+    [getOneQnaListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
 
-    [postQnaListDB.fulfilled]: (state, {payload}) => {
+    [postQnaListDB.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [postQnaListDB.pending]: (state, {payload}) => {
+    [postQnaListDB.pending]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [postQnaListDB.rejected]: (state, {payload: errorMessage}) => {
+    [postQnaListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
 
-    [editQnaListDB.fulfilled]: (state, {payload}) => {
+    [editQnaListDB.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [editQnaListDB.pending]: (state, {payload}) => {
+    [editQnaListDB.pending]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [editQnaListDB.rejected]: (state, {payload: errorMessage}) => {
+    [editQnaListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },

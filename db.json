@@ -15,38 +15,54 @@
       "title": "javaScript는 무엇인가",
       "content": "<p>typicodedfdfdfdf</p>",
       "id": 3
+    },
+    {
+      "title": "",
+      "content": "<p>제출</p>",
+      "id": 4
+    },
+    {
+      "title": "sdfsd",
+      "content": "<p>fsdfsdff</p>",
+      "id": 5
+    },
+    {
+      "title": "sdfsdfsdf",
+      "content": "<p>sdfsdfsdfsdfsdf</p>",
+      "id": 6
+    },
+    {
+      "title": "안녕하세요",
+      "content": "<p>테스트 블로그글입니다</p>",
+      "id": 7
     }
   ],
   "comments": [
     {
-      "id": 1,
-      "comment": "첫번째 좋군요"
+      "comment": "ㄴㅇㄹㄴㅇㄹ",
+      "postId": 1,
+      "commentId": 1,
+      "id": 1
     },
     {
-      "id": 2,
-      "comment": "두번째 좋군요"
-    },
-    {
-      "id": 3,
-      "comment": "세번째 좋군요"
+      "comment": "ㄴㅇㄹㄴㅇㄹ",
+      "postId": 1,
+      "commentId": 1,
+      "id": 2
     }
   ],
   "posts": [
     {
-    "id":1,
-    "title": "첫번째 Hook이란??",
-    "content":"훅은 리엑트의 꽃이죠!"
-
-  },
+      "id": 2,
+      "title": "두번째 REACT 이란??",
+      "content": "훅은 리엑트의 꽃이죠!",
+      "postId": 2
+    },
     {
-    "id":2,
-    "title": "두번째 REACT 이란??",
-    "content":"훅은 리엑트의 꽃이죠!"
-  },
-    {
-    "id":3,
-    "title": "세번째 REACT 이란??",
-    "content":"훅은 리엑트의 꽃이죠!"
-  }
-]
+      "id": 3,
+      "title": "세번째 REACT 이란??",
+      "content": "훅은 리엑트의 꽃이죠!",
+      "postId": 3
+    }
+  ]
 }
