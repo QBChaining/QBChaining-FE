@@ -4,10 +4,9 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 const QnaWrite = () => {
-  const style = { height: "300px" };
   return (
     <>
-      <Editor isWrite={true} style={style} />
+      <Editor isWrite={true} />
     </>
   );
 };

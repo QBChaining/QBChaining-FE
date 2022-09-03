@@ -64,7 +64,7 @@ const Header = () => {
             레지스터
           </li>
           <li>
-            <a href="http://13.125.180.179/api/auth/github">로그인</a>
+            <a href="http://54.180.25.241/api/auth/github">로그인</a>
           </li>
         </ul>
       </nav>

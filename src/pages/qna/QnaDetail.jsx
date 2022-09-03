@@ -23,7 +23,6 @@ const QnaDetail = () => {
     }
   }, [target]);
 
-  console.log(target);
   return (
     <div>
       {data && <QnaList isDatail={true} data={data} />}

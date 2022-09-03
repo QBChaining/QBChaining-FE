@@ -7,10 +7,9 @@ import qnaSlice from "./../../redux/modules/qnaSlice";
 import { getOneQnaListDB, getQnaListDB } from "./../../redux/async/qna";
 
 const QnaEdit = () => {
-  const style = { height: "300px" };
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [originData, setOriginData] = useState();
+  const [editData, setEditData] = useState();
 
   //qnatarget 구독
   const target = useSelector(state => state.qnaSlice.qnaTarget);
@@ -22,13 +21,13 @@ const QnaEdit = () => {
 
   //타겟이 있다면 원본데이터 props전달목적
   useEffect(() => {
-    setOriginData(target);
+    setEditData(target);
   }, [target]);
 
-  if (originData) {
-    return <Editor isEdit={true} originData={originData} style={style} />;
+  if (editData) {
+    return <Editor isEdit={true} editData={editData} />;
   } else {
-    return <Editor style={style} />;
+    return <Editor />;
   }
 };
 

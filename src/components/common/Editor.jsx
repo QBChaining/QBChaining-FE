@@ -1,29 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-
 //유틸 카테고리
 import categories from "../../utils/category";
-
 // firebase storage
 import { storage } from "../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
+//로딩이미지
+import loadingImage from "../../assets/images/Loading_icon.gif";
 //quill
 import Quill from "quill";
 import { useQuill } from "react-quilljs";
 import "react-quill/dist/quill.snow.css";
 import ImageResize from "@looop/quill-image-resize-module-react";
-
 //코드블럭 구문강조 highlight.js
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
 
-//로딩이미지
-import loadingImage from "../../assets/images/Loading_icon.gif";
-import { useDispatch } from "react-redux";
-import { postCommentListDB, postQnaListDB } from "../../redux/async/qna";
-import { editQnaListDB } from "./../../redux/async/qna";
+import {
+  editQnaListDB,
+  postCommentListDB,
+  postQnaListDB,
+} from "../../redux/async/qna";
 
 //이미지 리사이즈 레지스터
 Quill.register("modules/ImageResize", ImageResize);
@@ -32,15 +31,14 @@ const Editor = ({
   isWrite,
   isCommentWrite,
   blogCommnuityEdit,
-  originData,
-  style = "300px",
+  editData,
   id,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const tagText = useRef();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("JavaScript");
-  const tagText = useRef();
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
 
@@ -50,20 +48,11 @@ const Editor = ({
   const toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // toggled buttons
     ["blockquote", "code-block"],
-
-    [{ header: 1 }, { header: 2 }], // custom button values
     [{ list: "ordered" }, { list: "bullet" }],
-    [{ script: "sub" }, { script: "super" }], // superscript/subscript
-    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-    [{ direction: "rtl" }], // text direction
-
-    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
     [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-    [{ font: [] }],
     [{ align: [] }],
-    ["clean"], // remove formatting button
+    ["image"],
   ];
   const modules = {
     toolbar: toolbarOptions,
@@ -82,18 +71,11 @@ const Editor = ({
     "strike",
     "align",
     "list",
-    "indent",
-    "direction",
     "size",
-    "font",
-    "header",
     "link",
     "image",
-    "script",
-    "video",
     "color",
     "background",
-    "clean",
     "code-block",
   ];
   const { quill, quillRef } = useQuill({
@@ -150,24 +132,21 @@ const Editor = ({
 
   //toolbar가 오류로 2개생길때 한개 삭제
   if (quillRef.current?.parentNode?.childNodes.length > 2) {
-    // return quillRef.current.parentNode.childNodes.removeChild;
     quillRef.current.parentNode.removeChild(
       quillRef.current.parentNode.childNodes[1],
     );
   }
 
   //생성 or 수정 함수
-
   const onSubmitHandler = e => {
     e.preventDefault();
-
+    //수정중이라면
     if (isEdit) {
       dispatch(
         editQnaListDB({
           title,
           content: quillRef.current.firstChild.innerHTML,
-          id: originData.id,
-
+          id: editData.id,
           category: category,
           tag: tags,
         }),
@@ -205,11 +184,11 @@ const Editor = ({
   //edit상황이라면 타이틀, content 가져오기
   useEffect(() => {
     if (isEdit) {
-      setTitle(originData.title);
-      setCategory(originData.category);
-      quillRef.current.firstChild.innerHTML = originData.content;
+      setTitle(editData.title);
+      setCategory(editData.category);
+      quillRef.current.firstChild.innerHTML = editData.content;
     }
-  }, [isEdit, originData]);
+  }, [isEdit, editData]);
 
   const onCategoryChangeHandler = e => {
     setCategory(e.target.value);
@@ -238,7 +217,7 @@ const Editor = ({
           <label htmlFor="title">제목</label>
           <input
             id="title"
-            value={title}
+            value={title || ""}
             onChange={onTitleChangeHandler}
             type="text"
           />
@@ -257,12 +236,9 @@ const Editor = ({
           </select>
         </>
       )}
-
-      <div
-        style={{ width: "100%", height: style.height, position: "relative" }}
-      >
+      <SEditor>
         <div ref={quillRef} />
-      </div>
+      </SEditor>
       {(isEdit || isWrite) && (
         <>
           <label htmlFor="tag">태그</label>
@@ -293,9 +269,13 @@ const Editor = ({
 
 export default Editor;
 
-const Sform = styled.form`
+const Sform = styled.form``;
+
+const SEditor = styled.div`
+  width: 100%;
   & .ql-toolbar.ql-snow + .ql-container.ql-snow {
     height: calc(300px - 42px);
+    /* height: ${props => props.height}; */
   }
 
   & .ql-snow .ql-editor pre.ql-syntax {

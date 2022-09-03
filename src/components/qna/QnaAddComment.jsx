@@ -4,6 +4,7 @@ import Editor from "./../common/Editor";
 
 const QnaAddComment = ({ id }) => {
   const style = { height: "300px" };
+
   return (
     <>
       <Editor isCommentWrite={true} id={id} style={style} />
