@@ -15,13 +15,13 @@ const QnaList = ({ data, isDatail }) => {
 
   const onAddBookmark = () => {
     setBookmark(!bookmark);
-    // dispatch(postBookmarkListDB(data.id));
+    dispatch(postBookmarkListDB(data.id));
     Swal.fire("즐겨찾기", "즐겨찾기에 추가되었습니다.", "success");
   };
 
   const onDeleteBookmark = () => {
     setBookmark(!bookmark);
-    // dispatch(deleteBookmarkListDB(data.id));
+    dispatch(deleteBookmarkListDB(data.id));
     Swal.fire("즐겨찾기", "즐겨찾기에 삭제되었습니다.", "info");
   };
 
@@ -59,7 +59,7 @@ const QnaList = ({ data, isDatail }) => {
           <div>{data.honeytip}</div>
           <div>
             {data.tag?.map(data => {
-              return <div>{data}</div>;
+              return <div key={data}>{data}</div>;
             })}
           </div>
         </div>

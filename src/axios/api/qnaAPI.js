@@ -12,7 +12,7 @@ export const qnaApi = {
   //게시글 즐겨찾기 조회
   getBookmarkList: () => instance.get("/qna/bookmarks"),
   //게시글 즐겨찾기 추가
-  postBookmarkList: data => instance.post(`/qna/${data.id}/bookmark`, data),
+  postBookmarkList: id => instance.post(`/qna/${id}/bookmark`, id),
   //게시글 즐겨찾기 삭제
   deleteBookmarkList: data => instance.delete(`/qna/${data.id}/bookmark`),
   //댓글 조회

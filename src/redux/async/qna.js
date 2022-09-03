@@ -25,7 +25,6 @@ export const getOneQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getOneList(data);
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -157,8 +156,10 @@ export const getBookmarkListDB = createAsyncThunk(
 export const postBookmarkListDB = createAsyncThunk(
   "qna/postbookmark",
   async (data, thunkAPI) => {
+    console.log(data);
     try {
       const response = await qnaApi.postBookmarkList(data);
+      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
