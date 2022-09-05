@@ -9,11 +9,13 @@ export const getQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getList();
+      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
     } catch (err) {
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      console.log(err);
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -25,6 +27,7 @@ export const getOneQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getOneList(data);
+      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }

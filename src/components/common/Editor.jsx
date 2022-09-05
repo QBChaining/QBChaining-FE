@@ -231,16 +231,6 @@ const Editor = ({
     tagText.current.value = "";
   };
 
-  useEffect(() => {
-    if (quill) {
-      quill.on("text-change", (delta, oldDelta, source) => {
-        // console.log(quill.getText()); // Get text only
-        // console.log(quill.getContents()); // Get delta contents
-        // console.log(quill.root.innerHTML); // Get innerHTML using quill
-        console.log(quillRef.current.firstChild.innerHTML); // Get innerHTML using quillRef
-      });
-    }
-  }, [quill]);
   return (
     <Sform>
       <div>
@@ -342,6 +332,7 @@ const SEditor = styled.div`
   height: 40vh;
   display: flex;
   flex-direction: column;
+  background-color: white;
 
   & .ql-container.ql-snow {
     flex: 1;

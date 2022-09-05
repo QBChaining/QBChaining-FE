@@ -26,59 +26,45 @@ const QnaTarget = ({ data, isDatail }) => {
   };
 
   return (
-    <StextMain>
+    <SQnaTarget>
       <div>
-        {isDatail && (
-          <div>
-            <button onClick={bookmark ? onDeleteBookmark : onAddBookmark}>
-              {bookmark ? "즐겨찾기삭제" : "즐겨찾기"}
-            </button>
-          </div>
-        )}
-        <div
-          onClick={() => {
-            !isDatail && navigate(`/qna/detail/${data.id}`);
-          }}
-        >
-          <div>
-            <div>{data.user?.user_name}</div>
-            <div>{data.createdAt}</div>
-          </div>
-          <div className="ql-snow">
-            <div>{data.title}</div>
-            {isDatail && (
-              <div
-                className="ql-editor"
-                dangerouslySetInnerHTML={{ __html: data.content }}
-              ></div>
-            )}
-          </div>
+        <div>
+          <button onClick={bookmark ? onDeleteBookmark : onAddBookmark}>
+            {bookmark ? "즐겨찾기삭제" : "즐겨찾기"}
+          </button>
+        </div>
+        <div>
+          <div>{data.user?.user_name}</div>
+          <div>{data.createdAt}</div>
+        </div>
+        <div className="ql-snow">
+          <div>{data.title}</div>
+          {isDatail && (
+            <div
+              className="ql-editor"
+              dangerouslySetInnerHTML={{ __html: data.content }}
+            ></div>
+          )}
         </div>
         <div>
           <div>{data.category}</div>
           <div>{data.honeytip}</div>
           <div>
-            {data.tag?.map(data => {
-              return <div key={data}>{data}</div>;
+            {data.tag?.map((data, i) => {
+              return <div key={i}>{data}</div>;
             })}
           </div>
         </div>
-        <button
-          style={{ display: "block" }}
-          onClick={() => {
-            navigate(`/qna/edit/${data.id}`);
-          }}
-        >
-          수정하기
-        </button>
       </div>
-    </StextMain>
+    </SQnaTarget>
   );
 };
-
 export default QnaTarget;
 
-const StextMain = styled.div`
+const SQnaTarget = styled.div`
+  & .ql-snow .ql-editor {
+    background-color: white;
+  }
   & .ql-snow .ql-editor pre.ql-syntax {
     padding: 20px;
   }

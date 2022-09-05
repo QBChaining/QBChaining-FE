@@ -62,9 +62,9 @@ const QnaList = ({ data }) => {
         </div>
         <div className="tagWrapper">
           <div className="tags">
-            {data.tag?.map(data => {
+            {data.tag?.map((data, i) => {
               return (
-                <div key={data} className="tag">
+                <div key={i} className="tag">
                   {data}
                 </div>
               );

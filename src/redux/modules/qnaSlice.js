@@ -39,6 +39,7 @@ const qnaSlice = createSlice({
     },
 
     [getOneQnaListDB.fulfilled]: (state, { payload }) => {
+      state.qnaTarget = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
