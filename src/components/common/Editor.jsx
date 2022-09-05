@@ -18,17 +18,11 @@ import ImageResize from "@looop/quill-image-resize-module-react";
 //코드블럭 구문강조 highlight.js
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
-
-//로딩이미지
-import loadingImage from "../../assets/images/Loading_icon.gif";
-import { useDispatch } from "react-redux";
-import { postCommentListDB, postQnaListDB } from "../../redux/async/qna";
+import Swal from "sweetalert2";
 import {
   patchBlogCommunityDB,
   postBlogCommunityDB,
 } from "../../redux/async/blog";
-import { editQnaListDB } from "./../../redux/async/qna";
-import Swal from "sweetalert2";
 
 import {
   editQnaListDB,
@@ -44,9 +38,6 @@ const Editor = ({
   isCommentWrite,
   blogEdit,
   blogWrite,
-  originData,
-  style = "300px",
-  qnaId,
   //블로그 포스트아이디
   postId,
   blogCommnuityEdit,
@@ -194,37 +185,13 @@ const Editor = ({
         }),
       );
       //블로그 수정, 생성 수정중
-    } else if ((e, blogWrite)) {
+    } else if (blogWrite) {
       navigate("/blog");
-      e.preventDefault();
       dispatch(
         postBlogCommunityDB({
           title,
           content: quillRef.current.firstChild.innerHTML,
           tag,
-        }),
-      );
-    }
-  };
-
-  //블로그 생성, 수정
-
-  const onClickBlogWriteEdit = e => {
-    navigate("/blog");
-    e.preventDefault();
-    if (blogWrite) {
-      dispatch(
-        postBlogCommunityDB({
-          title,
-          content: quillRef.current.firstChild.innerHTML,
-          tag,
-        }),
-      );
-    } else if (blogEdit) {
-      dispatch(
-        patchBlogCommunityDB({
-          content: quillRef.current.firstChild.innerHtMl,
-          postId: parseInt(postId),
         }),
       );
     }
@@ -277,7 +244,7 @@ const Editor = ({
   return (
     <Sform>
       <div>
-        {(isEdit || isWrite) && (
+        {(isEdit || isWrite || blogWrite) && (
           <div className="titleWrapper">
             <input
               id="title"
@@ -286,30 +253,32 @@ const Editor = ({
               type="text"
               placeholder="제목을 입력해주세요."
             />
-            <Select
-              onChange={onCategoryChangeHandler}
-              defaultValue={category}
-              value={isEdit && category}
-              name="category"
-              id="category"
-              required
-              arrow={selectArrow}
-            >
-              <option disabled hidden value="카테고리를 선택해 주세요">
-                카테고리를 선택해 주세요
-              </option>
-              {categories.qnaCategory.map(data => (
-                <option key={data.langId} value={data.langName}>
-                  {data.langName}
+            {(isEdit || isWrite) && (
+              <Select
+                onChange={onCategoryChangeHandler}
+                defaultValue={category}
+                value={isEdit && category}
+                name="category"
+                id="category"
+                required
+                arrow={selectArrow}
+              >
+                <option disabled hidden value="카테고리를 선택해 주세요">
+                  카테고리를 선택해 주세요
                 </option>
-              ))}
-            </Select>
+                {categories.qnaCategory.map(data => (
+                  <option key={data.langId} value={data.langName}>
+                    {data.langName}
+                  </option>
+                ))}
+              </Select>
+            )}
           </div>
         )}
         <SEditor>
           <div ref={quillRef} />
         </SEditor>
-        {(isEdit || isWrite) && (
+        {(isEdit || isWrite || blogWrite) && (
           <STagContainer>
             <input
               type="text"
@@ -323,72 +292,16 @@ const Editor = ({
               태그 추가
             </button>
             {tags.map((data, i) => (
-              <div className="tags" style={{ padding: "10px" }} key={i}>
+              <div className="tags" key={i}>
                 {data}
               </div>
             ))}
-          </select>
-        </>
-      )}
-      {/* 블로그 */}
-      {blogWrite ? (
-        <>
-          <label htmlFor="title">제목</label>
-          <input
-            id="title"
-            value={title}
-            onChange={onTitleChangeHandler}
-            type="text"
-          />
-        </>
-      ) : null}
-      <div
-        style={{ width: "100%", height: style.height, position: "relative" }}
-      >
-        <div ref={quillRef} />
-      </div>
-      {(isEdit || isWrite) && (
-        <>
-          <label htmlFor="tag">태그</label>
-          <input
-            type="text"
-            id="tag"
-            ref={tagText}
-            onChange={onChangeTagHandler}
-          />
-          <button type="button" onClick={onAddTagHandler}>
-            태그 추가
-          </button>
-          {tags.map((data, i) => (
-            <span style={{ padding: "10px" }} key={i}>
-              {data}
-            </span>
-          ))}
-        </>
-      )}
-      {blogWrite === true ? (
-        <>
-          <div>
-            <button type="button" onClick={onClickBlogWriteEdit}>
-              제출합시다
-            </button>
-          </div>
-        </>
-      ) : (
-        <>
-          <div>
-            <button type="submit" onClick={onSubmitHandler}>
-              {isEdit || isWrite ? "제출하기" : "댓글쓰기"}
-            </button>
-          </div>
-        </>
-      )}
           </STagContainer>
         )}
       </div>
       <div className="submitWrapper">
         <button type="submit" onClick={onSubmitHandler}>
-          {isEdit || isWrite ? "제출하기" : "댓글쓰기"}
+          {isEdit || isWrite || blogWrite ? "제출하기" : "댓글쓰기"}
         </button>
       </div>
     </Sform>
