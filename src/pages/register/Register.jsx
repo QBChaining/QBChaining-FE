@@ -85,6 +85,7 @@ const Register = () => {
   const onSubmitHandler = data => {
     // console.log(data, list);
   };
+
   return (
     <>
       <div>

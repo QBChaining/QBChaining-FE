@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 const QnaTarget = ({ data, isDatail }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [bookmark, setBookmark] = useState(false);
+  const [bookmark, setBookmark] = useState(data.is_resolve);
 
   const onAddBookmark = () => {
     setBookmark(!bookmark);
@@ -19,19 +19,23 @@ const QnaTarget = ({ data, isDatail }) => {
     Swal.fire("즐겨찾기", "즐겨찾기에 추가되었습니다.", "success");
   };
 
+  console.log(data);
+
   const onDeleteBookmark = () => {
     setBookmark(!bookmark);
     dispatch(deleteBookmarkListDB(data.id));
-    Swal.fire("즐겨찾기", "즐겨찾기에 삭제되었습니다.", "info");
+    Swal.fire("즐겨찾기", "즐겨찾기에 삭제되었습니다.", "error");
   };
 
   return (
     <SQnaTarget>
       <div>
         <div>
-          <button onClick={bookmark ? onDeleteBookmark : onAddBookmark}>
+          {/* <button onClick={bookmark ? onDeleteBookmark : onAddBookmark}>
             {bookmark ? "즐겨찾기삭제" : "즐겨찾기"}
-          </button>
+          </button> */}
+          <button onClick={onAddBookmark}>즐겨찾기</button>
+          <button onClick={onDeleteBookmark}>즐겨찾기삭제</button>
         </div>
         <div>
           <div>{data.user?.user_name}</div>

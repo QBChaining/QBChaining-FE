@@ -1,24 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { AiOutlineSearch } from "react-icons/ai";
 import { HiOutlineBell } from "react-icons/hi";
+import { getCookie } from "../../utils/cookie";
+import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { logIn, logOut } from "../../redux/modules/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLogin } = useSelector(state => state.userSlice);
 
-  // const loginApi = () => {
-  //   try {
-  //     axios.get("http://13.124.114.140/api/auth/github").then(res => {
-  //       console.log(res);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const onLogoutHandler = () => {
+    Swal.fire("로그아웃", "성공", "success").then(() => {
+      navigate("/");
+    });
+    dispatch(logOut());
+  };
 
-  // http://13.124.114.140/
+  useEffect(() => {
+    if (getCookie("token")) {
+      dispatch(logIn());
+    }
+  }, []);
   return (
     <SHeader>
       <div
@@ -74,7 +81,11 @@ const Header = () => {
           <HiOutlineBell />
         </div>
         <div className="loginConatainer">
-          <a href="http://13.209.15.22/api/auth/github">로그인</a>
+          {isLogin ? (
+            <button onClick={onLogoutHandler}>로그아웃</button>
+          ) : (
+            <a href="http://13.209.15.22/api/auth/github">로그인</a>
+          )}
           <div className="loginProfile"></div>
         </div>
       </div>
@@ -226,6 +237,15 @@ const SHeader = styled.header`
     & .loginConatainer {
       display: flex;
       align-items: center;
+
+      & button {
+        margin-right: 10px;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        background-color: transparent;
+        border: none;
+      }
 
       & a {
         margin-right: 10px;

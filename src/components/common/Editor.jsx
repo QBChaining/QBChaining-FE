@@ -48,7 +48,7 @@ const Editor = ({
   const dispatch = useDispatch();
   const tagText = useRef();
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("카테고리를 선택해 주세요");
+  const [category, setCategory] = useState("Javascript");
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
 
@@ -141,7 +141,7 @@ const Editor = ({
     }
   }, [quill]);
 
-  //toolbar가 오류로 2개생길때 한개 삭제
+  //toolbar 오류로 2개생길때 한개 삭제
   if (quillRef.current?.parentNode?.childNodes.length > 2) {
     quillRef.current.parentNode.removeChild(
       quillRef.current.parentNode.childNodes[1],
@@ -151,6 +151,10 @@ const Editor = ({
   //생성 or 수정 함수
   const onSubmitHandler = e => {
     e.preventDefault();
+    if (quill.getText().length < 2) {
+      Swal.fire("입력해주세요", "", "error");
+      return;
+    }
     //수정중이라면
     if (isEdit) {
       dispatch(

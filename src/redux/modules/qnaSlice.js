@@ -11,6 +11,7 @@ import {
   getBookmarkListDB,
   postBookmarkListDB,
   deleteBookmarkListDB,
+  likeCommentListDB,
 } from "../async/qna";
 
 const qnaSlice = createSlice({
@@ -76,6 +77,7 @@ const qnaSlice = createSlice({
     },
 
     [getCommentListDB.fulfilled]: (state, { payload }) => {
+      console.log(payload);
       state.commentList = payload;
       state.isFetching = false;
       state.errorMessage = null;
@@ -125,6 +127,18 @@ const qnaSlice = createSlice({
       state.isFetching = true;
     },
     [editCommentListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+
+    [likeCommentListDB.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [likeCommentListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [likeCommentListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
