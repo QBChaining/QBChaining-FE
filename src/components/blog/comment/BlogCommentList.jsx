@@ -18,13 +18,13 @@ const CommentList = () => {
 
   return (
     <div>
-      {/* {response?.map(comments => {
+      {response?.map(comments => {
         return (
-          <div key={comments.commentId}>
+          <div key={comments.id}>
             <CommentEditDel comments={comments} />
           </div>
         );
-      })} */}
+      })}
     </div>
   );
 };

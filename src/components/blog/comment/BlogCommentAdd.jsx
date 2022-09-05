@@ -6,19 +6,24 @@ import { useParams } from "react-router-dom";
 const CommentAdd = () => {
   const dispatch = useDispatch();
   const commentRefInput = React.useRef();
-  const { postId } = useParams();
+  // const { id } = useParams();
   //댓글 추가 이벤트
   const addComment = () => {
     dispatch(
       postBlogCommentDB({
         comment: commentRefInput.current.value,
-        postId,
+        // id: 1,
       }),
     );
   };
 
   return (
-    <form>
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        addComment();
+      }}
+    >
       <input
         type="text"
         ref={commentRefInput}

@@ -19,7 +19,7 @@ const BlogCommunityDetail = () => {
         <div>BlogPersonalMain</div>
         <div>
           <div>홍길동</div>
-          <div>{response.user.nick_name}</div>
+          <div></div>
           <div>date</div>
           <div>프로필사진</div>
         </div>
