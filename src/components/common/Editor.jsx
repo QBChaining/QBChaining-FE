@@ -1,29 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-
 //유틸 카테고리
 import categories from "../../utils/category";
-
 // firebase storage
 import { storage } from "../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
+//로딩이미지
+import loadingImage from "../../assets/images/Loading_icon.gif";
+import selectArrow from "../../assets/images/SelectArrow.png";
 //quill
 import Quill from "quill";
 import { useQuill } from "react-quilljs";
 import "react-quill/dist/quill.snow.css";
 import ImageResize from "@looop/quill-image-resize-module-react";
-
 //코드블럭 구문강조 highlight.js
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
 
-//로딩이미지
-import loadingImage from "../../assets/images/Loading_icon.gif";
-import { useDispatch } from "react-redux";
-import { postCommentListDB, postQnaListDB } from "../../redux/async/qna";
-import { editQnaListDB } from "./../../redux/async/qna";
+import Swal from "sweetalert2";
+
+import {
+  editQnaListDB,
+  postCommentListDB,
+  postQnaListDB,
+} from "../../redux/async/qna";
 
 //이미지 리사이즈 레지스터
 Quill.register("modules/ImageResize", ImageResize);
@@ -32,15 +34,14 @@ const Editor = ({
   isWrite,
   isCommentWrite,
   blogCommnuityEdit,
-  originData,
-  style = "300px",
-  qnaId,
+  editData,
+  id,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("Java");
   const tagText = useRef();
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("카테고리를 선택해 주세요");
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
 
@@ -50,20 +51,11 @@ const Editor = ({
   const toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // toggled buttons
     ["blockquote", "code-block"],
-
-    [{ header: 1 }, { header: 2 }], // custom button values
     [{ list: "ordered" }, { list: "bullet" }],
-    [{ script: "sub" }, { script: "super" }], // superscript/subscript
-    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-    [{ direction: "rtl" }], // text direction
-
-    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
     [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-    [{ font: [] }],
     [{ align: [] }],
-    ["clean"], // remove formatting button
+    ["image"],
   ];
   const modules = {
     toolbar: toolbarOptions,
@@ -82,18 +74,12 @@ const Editor = ({
     "strike",
     "align",
     "list",
-    "indent",
-    "direction",
-    "size",
-    "font",
     "header",
+    "size",
     "link",
     "image",
-    "script",
-    "video",
     "color",
     "background",
-    "clean",
     "code-block",
   ];
   const { quill, quillRef } = useQuill({
@@ -150,27 +136,23 @@ const Editor = ({
 
   //toolbar가 오류로 2개생길때 한개 삭제
   if (quillRef.current?.parentNode?.childNodes.length > 2) {
-    // return quillRef.current.parentNode.childNodes.removeChild;
     quillRef.current.parentNode.removeChild(
       quillRef.current.parentNode.childNodes[1],
     );
   }
 
   //생성 or 수정 함수
-
   const onSubmitHandler = e => {
     e.preventDefault();
-
+    //수정중이라면
     if (isEdit) {
       dispatch(
         editQnaListDB({
           title,
           content: quillRef.current.firstChild.innerHTML,
-          id: originData.id,
-
+          id: editData.id,
           category: category,
           tag: tags,
-
         }),
       ).then(res => {
         navigate("/qna");
@@ -192,7 +174,7 @@ const Editor = ({
       dispatch(
         postCommentListDB({
           content: quillRef.current.firstChild.innerHTML,
-          qnaId: parseInt(qnaId),
+          id: parseInt(id),
         }),
       );
     }
@@ -206,11 +188,11 @@ const Editor = ({
   //edit상황이라면 타이틀, content 가져오기
   useEffect(() => {
     if (isEdit) {
-      setTitle(originData.title);
-      setCategory(originData.category);
-      quillRef.current.firstChild.innerHTML = originData.content;
+      setTitle(editData.title);
+      setCategory(editData.category);
+      quillRef.current.firstChild.innerHTML = editData.content;
     }
-  }, [isEdit, originData]);
+  }, [isEdit, editData]);
 
   const onCategoryChangeHandler = e => {
     setCategory(e.target.value);
@@ -232,58 +214,73 @@ const Editor = ({
     tagText.current.value = "";
   };
 
+  useEffect(() => {
+    if (quill) {
+      quill.on("text-change", (delta, oldDelta, source) => {
+        // console.log(quill.getText()); // Get text only
+        // console.log(quill.getContents()); // Get delta contents
+        // console.log(quill.root.innerHTML); // Get innerHTML using quill
+        console.log(quillRef.current.firstChild.innerHTML); // Get innerHTML using quillRef
+      });
+    }
+  }, [quill]);
   return (
     <Sform>
-      {(isEdit || isWrite) && (
-        <>
-          <label htmlFor="title">제목</label>
-          <input
-            id="title"
-            value={title}
-            onChange={onTitleChangeHandler}
-            type="text"
-          />
-          <label htmlFor="category">카테고리</label>
-          <select
-            onChange={onCategoryChangeHandler}
-            value={isEdit && category}
-            name="category"
-            id="category"
-          >
-            {categories.qnaCategory.map(data => (
-              <option key={data.langId} value={data.langName}>
-                {data.langName}
-              </option>
-            ))}
-          </select>
-        </>
-      )}
-
-      <div
-        style={{ width: "100%", height: style.height, position: "relative" }}
-      >
-        <div ref={quillRef} />
-      </div>
-      {(isEdit || isWrite) && (
-        <>
-          <label htmlFor="tag">태그</label>
-          <input
-            type="text"
-            id="tag"
-            ref={tagText}
-            onChange={onChangeTagHandler}
-          />
-          <button type="button" onClick={onAddTagHandler}>
-            태그 추가
-          </button>
-          {tags.map((data, i) => (
-            <span style={{ padding: "10px" }} key={i}>
-              {data}
-            </span>
-          ))}
-        </>
-      )}
       <div>
+        {(isEdit || isWrite) && (
+          <div className="titleWrapper">
+            <input
+              id="title"
+              value={title || ""}
+              onChange={onTitleChangeHandler}
+              type="text"
+              placeholder="제목을 입력해주세요."
+            />
+            <Select
+              onChange={onCategoryChangeHandler}
+              defaultValue={category}
+              value={isEdit && category}
+              name="category"
+              id="category"
+              required
+              arrow={selectArrow}
+            >
+              <option disabled hidden value="카테고리를 선택해 주세요">
+                카테고리를 선택해 주세요
+              </option>
+              {categories.qnaCategory.map(data => (
+                <option key={data.langId} value={data.langName}>
+                  {data.langName}
+                </option>
+              ))}
+            </Select>
+          </div>
+        )}
+        <SEditor>
+          <div ref={quillRef} />
+        </SEditor>
+        {(isEdit || isWrite) && (
+          <STagContainer>
+            <input
+              type="text"
+              id="tag"
+              ref={tagText}
+              onChange={onChangeTagHandler}
+              maxLength="20"
+              placeholder="태그를 추가해 주세요."
+            />
+            <button type="button" onClick={onAddTagHandler}>
+              태그 추가
+            </button>
+            {tags.map((data, i) => (
+              <div className="tags" style={{ padding: "10px" }} key={i}>
+                {data}
+              </div>
+            ))}
+          </STagContainer>
+        )}
+      </div>
+      <div className="submitWrapper">
         <button type="submit" onClick={onSubmitHandler}>
           {isEdit || isWrite ? "제출하기" : "댓글쓰기"}
         </button>
@@ -295,11 +292,93 @@ const Editor = ({
 export default Editor;
 
 const Sform = styled.form`
-  & .ql-toolbar.ql-snow + .ql-container.ql-snow {
-    height: calc(300px - 42px);
+  display: flex;
+  flex-direction: column;
+  & .titleWrapper {
+    display: flex;
+    margin-bottom: 18px;
+    & #title {
+      width: 70%;
+      margin-right: 26px;
+      padding: 10px 13px;
+      border: 1px solid #939393;
+    }
+  }
+
+  & .submitWrapper {
+    align-self: flex-end;
+    margin-top: 43px;
+    margin-bottom: 10px;
+
+    & button {
+      padding: 10px 41px;
+      background-color: white;
+      border: 1px solid #939393;
+    }
+  }
+`;
+
+const SEditor = styled.div`
+  width: 100%;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+
+  & .ql-container.ql-snow {
+    flex: 1;
+    overflow: auto;
   }
 
   & .ql-snow .ql-editor pre.ql-syntax {
     padding: 20px;
+  }
+`;
+
+const Select = styled.select`
+  min-width: 251px;
+  width: 30%;
+  padding: 10px 30px;
+  appearance: none;
+  background-image: url(${props => props.arrow});
+  background-repeat: no-repeat;
+  background-position: center right 30px;
+  border: 1px solid #939393;
+  border-radius: 30px;
+
+  & option {
+    border: 1px solid #939393;
+    border-radius: 30px;
+  }
+`;
+
+const STagContainer = styled.div`
+  margin-top: 44px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 140px;
+  & input {
+    padding: 10px 32px;
+    border: 1px solid #939393;
+    border-radius: 30px;
+    margin-bottom: 10px;
+  }
+
+  & button {
+    padding: 10px 32px;
+    border: none;
+    border-radius: 30px;
+    margin-left: 4px;
+    background: #d9d9d9;
+    margin-bottom: 10px;
+  }
+  & .tags {
+    padding: 10px 32px;
+    border: none;
+    border-radius: 30px;
+    margin: 0 10px 10px 10px;
+    background: #d9d9d9;
+    min-width: 100px;
+    display: flex;
+    justify-content: center;
   }
 `;

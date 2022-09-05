@@ -8,6 +8,9 @@ import {
   postCommentListDB,
   deleteCommentListDB,
   editCommentListDB,
+  getBookmarkListDB,
+  postBookmarkListDB,
+  deleteBookmarkListDB,
 } from "../async/qna";
 
 const qnaSlice = createSlice({
@@ -16,6 +19,7 @@ const qnaSlice = createSlice({
     qnaList: [],
     qnaTarget: {},
     commentList: [],
+    bookmarkList: [],
     isFetching: false,
     errorMessage: "",
   },
@@ -121,6 +125,47 @@ const qnaSlice = createSlice({
       state.isFetching = true;
     },
     [editCommentListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+    // deleteBookmarkListDB,
+    [getBookmarkListDB.fulfilled]: (state, { payload }) => {
+      state.bookmarkList = payload;
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [getBookmarkListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [getBookmarkListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+
+    [postBookmarkListDB.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [postBookmarkListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [postBookmarkListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+
+    [deleteBookmarkListDB.fulfilled]: (state, { payload }) => {
+      const newBookmarkList = state.bookmarkList.filter(
+        data => data.id !== payload,
+      );
+      state.bookmarkList = newBookmarkList;
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [deleteBookmarkListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [deleteBookmarkListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
