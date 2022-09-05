@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Editor from "../common/Editor";
 import { deleteCommentListDB, getCommentListDB } from "./../../redux/async/qna";
 
-const QnaCommentList = ({ qnaId }) => {
+const QnaCommentList = ({ id }) => {
   const dispatch = useDispatch();
 
   //commentList 구독
@@ -11,8 +11,8 @@ const QnaCommentList = ({ qnaId }) => {
 
   //최초진입시 commentList 받아오기
   useEffect(() => {
-    dispatch(getCommentListDB(qnaId));
-  }, [qnaId]);
+    dispatch(getCommentListDB(id));
+  }, [id]);
 
   //코멘트 삭제 dispatch
   const onDeleteHandler = id => {
