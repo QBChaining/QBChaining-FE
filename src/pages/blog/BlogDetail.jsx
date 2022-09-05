@@ -5,22 +5,26 @@ import CommentList from "../../components/blog/comment/BlogCommentList";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getBlogDetailDB } from "../../redux/async/blog";
+import { useParams } from "react-router-dom";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogList);
   const dispatch = useDispatch();
+  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getBlogDetailDB());
-  }, []);
+    dispatch(getBlogDetailDB(id));
+  }, [dispatch]);
+
   return (
     <div>
       <STopBox>
         <div>BlogPersonalMain</div>
         <div>
-          <div>홍길동</div>
-          <div></div>
-          <div>date</div>
+          <div>{response.title}</div>
+          <div>{response.content}</div>
+          <div>{response.createdAt}</div>
+          <div>{response.User?.user_name}</div>
           <div>프로필사진</div>
         </div>
         <button

@@ -20,9 +20,12 @@ export const getBlogCommunityListDB = createAsyncThunk(
 //블로그 디테일
 export const getBlogDetailDB = createAsyncThunk(
   "BLOG_DETAIL",
-  async (postId, thunkAPI) => {
+  async (id, thunkAPI) => {
+    console.log("디테일조회", id);
     try {
-      const response = await blogApi.getBlogDetail(postId);
+      const response = await blogApi.getBlogDetail(id);
+      console.log("디테일리스폰", response);
+
       return response.data.data;
     } catch (err) {
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");

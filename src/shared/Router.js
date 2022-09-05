@@ -29,7 +29,7 @@ const router = () => {
       <Route path="/blog/:id" element={<BlogPersonalMain />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/blog/detail/:postId" element={<BlogDetail />} />
+      <Route path="/blog/detail/:id" element={<BlogDetail />} />
     </Routes>
   );
 };

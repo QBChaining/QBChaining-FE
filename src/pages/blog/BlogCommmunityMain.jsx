@@ -8,17 +8,21 @@ const BlogCommmunityMain = () => {
   console.log("블로고", blogList);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { postId } = useParams();
 
   // 요청한 데이터를 조회 하기 위해서
   React.useEffect(() => {
     dispatch(getBlogCommunityListDB());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
       <SBody>
         <SListGroup>
+          <STopBox>
+            <STopList>최근의 추천 많이 받은 게시글</STopList>
+            <br />
+            리스트나중에
+          </STopBox>
           <div>
             <button
               onClick={() => {
@@ -28,18 +32,17 @@ const BlogCommmunityMain = () => {
               글쓰기
             </button>
           </div>
-          {/* {blogList && */}
           {blogList?.map(posts => {
             return (
               <SBloglist key={posts.id}>
                 <div
                   onClick={() => {
-                    navigate(`/blog/detail/${postId}`);
+                    navigate(`/blog/detail/${posts.id}`);
                   }}
                 >
                   <p>{posts.title}</p>
                   <p>{posts.content}</p>
-                  <p>{posts.user.user_name}</p>
+                  <p>{posts.user?.user_name}</p>
                 </div>
                 <div>
                   <p>{posts.tag}</p>
@@ -48,10 +51,6 @@ const BlogCommmunityMain = () => {
             );
           })}
         </SListGroup>
-        <STopBox>
-          <STopList>주간게시글? 블로그게시글?</STopList>
-          리스트나중에
-        </STopBox>
       </SBody>
     </div>
   );
