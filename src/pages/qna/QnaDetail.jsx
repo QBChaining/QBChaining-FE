@@ -5,6 +5,7 @@ import { getOneQnaListDB } from "../../redux/async/qna";
 import QnaList from "./../../components/qna/QnaList";
 import QnaAddComment from "./../../components/qna/QnaAddComment";
 import QnaCommentList from "./../../components/qna/QnaCommentList";
+import QnaTarget from "../../components/qna/QnaTarget";
 
 const QnaDetail = () => {
   const { id } = useParams();
@@ -25,7 +26,7 @@ const QnaDetail = () => {
 
   return (
     <div>
-      {data && <QnaList isDatail={true} data={data} />}
+      {data && <QnaTarget isDatail={true} data={data} />}
       <QnaAddComment id={id} />
       <QnaCommentList id={id} />
     </div>

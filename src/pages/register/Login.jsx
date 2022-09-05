@@ -13,9 +13,9 @@ const Login = () => {
     setCookie("token", token[1]);
     let decoded = jwt_decode(getCookie("token"));
     console.log(decoded);
-    if (decoded.name === "Changsoon") {
-      navigate("/register");
-    }
+    // if (decoded.name === "Changsoon-Yun") {
+    //   navigate("/register");
+    // }
   }
 
   const onLogoutHandler = () => {

@@ -1,4 +1,4 @@
-import {createGlobalStyle} from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -15,7 +15,27 @@ const GlobalStyle = createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  input {
+
+    &:active {
+      outline: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
   
+  select {
+    &:active {
+      outline: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
 `;
 
 export default GlobalStyle;
