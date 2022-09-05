@@ -9,7 +9,7 @@ import CommentEditDel from "./BlogCommentEditDel";
 // get,
 const CommentList = () => {
   const response = useSelector(state => state.blogSlice.commentList);
-  console.log(response);
+  console.log("코멘트", response);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -18,13 +18,13 @@ const CommentList = () => {
 
   return (
     <div>
-      {response?.map(comments => {
+      {/* {response?.map(comments => {
         return (
           <div key={comments.commentId}>
             <CommentEditDel comments={comments} />
           </div>
         );
-      })}
+      })} */}
     </div>
   );
 };

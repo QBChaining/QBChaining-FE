@@ -19,6 +19,15 @@ import ImageResize from "@looop/quill-image-resize-module-react";
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
 
+//로딩이미지
+import loadingImage from "../../assets/images/Loading_icon.gif";
+import { useDispatch } from "react-redux";
+import { postCommentListDB, postQnaListDB } from "../../redux/async/qna";
+import {
+  patchBlogCommunityDB,
+  postBlogCommunityDB,
+} from "../../redux/async/blog";
+import { editQnaListDB } from "./../../redux/async/qna";
 import Swal from "sweetalert2";
 
 import {
@@ -33,6 +42,13 @@ const Editor = ({
   isEdit,
   isWrite,
   isCommentWrite,
+  blogEdit,
+  blogWrite,
+  originData,
+  style = "300px",
+  qnaId,
+  //블로그 포스트아이디
+  postId,
   blogCommnuityEdit,
   editData,
   id,
@@ -177,6 +193,40 @@ const Editor = ({
           id: parseInt(id),
         }),
       );
+      //블로그 수정, 생성 수정중
+    } else if ((e, blogWrite)) {
+      navigate("/blog");
+      e.preventDefault();
+      dispatch(
+        postBlogCommunityDB({
+          title,
+          content: quillRef.current.firstChild.innerHTML,
+          tag,
+        }),
+      );
+    }
+  };
+
+  //블로그 생성, 수정
+
+  const onClickBlogWriteEdit = e => {
+    navigate("/blog");
+    e.preventDefault();
+    if (blogWrite) {
+      dispatch(
+        postBlogCommunityDB({
+          title,
+          content: quillRef.current.firstChild.innerHTML,
+          tag,
+        }),
+      );
+    } else if (blogEdit) {
+      dispatch(
+        patchBlogCommunityDB({
+          content: quillRef.current.firstChild.innerHtMl,
+          postId: parseInt(postId),
+        }),
+      );
     }
   };
 
@@ -277,6 +327,62 @@ const Editor = ({
                 {data}
               </div>
             ))}
+          </select>
+        </>
+      )}
+      {/* 블로그 */}
+      {blogWrite ? (
+        <>
+          <label htmlFor="title">제목</label>
+          <input
+            id="title"
+            value={title}
+            onChange={onTitleChangeHandler}
+            type="text"
+          />
+        </>
+      ) : null}
+      <div
+        style={{ width: "100%", height: style.height, position: "relative" }}
+      >
+        <div ref={quillRef} />
+      </div>
+      {(isEdit || isWrite) && (
+        <>
+          <label htmlFor="tag">태그</label>
+          <input
+            type="text"
+            id="tag"
+            ref={tagText}
+            onChange={onChangeTagHandler}
+          />
+          <button type="button" onClick={onAddTagHandler}>
+            태그 추가
+          </button>
+          {tags.map((data, i) => (
+            <span style={{ padding: "10px" }} key={i}>
+              {data}
+            </span>
+          ))}
+        </>
+      )}
+      {blogWrite === true ? (
+        <>
+          <div>
+            <button type="button" onClick={onClickBlogWriteEdit}>
+              제출합시다
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <div>
+            <button type="submit" onClick={onSubmitHandler}>
+              {isEdit || isWrite ? "제출하기" : "댓글쓰기"}
+            </button>
+          </div>
+        </>
+      )}
           </STagContainer>
         )}
       </div>

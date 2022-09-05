@@ -1,15 +1,14 @@
 {
-  "boards": [
+  "qna": [
     {
-      "title": "React는 무엇인가",
-      "content": "<p>sdfsdfsdfsdf</p>",
-      "id": 1
-    },
-    {
-      "id": 2,
-      "title": "코딩은 무엇인가",
-      "content": "typicode",
-      "image": "https://cdn.aitimes.com/news/photo/202204/143777_149131_434.jpg"
+      "title": "테스트212",
+      "content": "<p>테스트 12123</p>",
+      "id": 1,
+      "category": "Python",
+      "tag": [
+        "ㅇㄹ",
+        "ㄴㅇㄹ"
+      ]
     },
     {
       "title": "javaScript는 무엇인가",
@@ -35,20 +34,24 @@
       "title": "안녕하세요",
       "content": "<p>테스트 블로그글입니다</p>",
       "id": 7
+    },
+    {
+      "title": "테스트",
+      "content": "<p>테스트</p>",
+      "id": 8,
+      "category": "Java",
+      "tag": [
+        "테스트 123",
+        "테스트 33444"
+      ]
     }
   ],
   "comments": [
     {
-      "comment": "ㄴㅇㄹㄴㅇㄹ",
+      "comment": "ㄴㅇㄹ",
       "postId": 1,
       "commentId": 1,
       "id": 1
-    },
-    {
-      "comment": "ㄴㅇㄹㄴㅇㄹ",
-      "postId": 1,
-      "commentId": 1,
-      "id": 2
     }
   ],
   "posts": [

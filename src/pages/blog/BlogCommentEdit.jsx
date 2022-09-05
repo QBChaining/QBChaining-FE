@@ -3,7 +3,7 @@ import Editor from "../../components/common/Editor";
 const BlogCommunityEdit = () => {
   return (
     <div>
-      <Editor blogCommnuityEdit={true}></Editor>
+      <Editor blogEdit={true}></Editor>
     </div>
   );
 };

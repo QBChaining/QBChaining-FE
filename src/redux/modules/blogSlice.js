@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getBlogCommunityListDB,
+  getBlogDetailDB,
   postBlogCommunityDB,
   getBlogCommentListDB,
   postBlogCommentDB,
   patchBlogCommentDB,
   deleteBlogCommentDB,
+  patchBlogCommunityDB,
 } from "../async/blog";
 export const blogSlice = createSlice({
   name: "blog",
@@ -18,43 +20,66 @@ export const blogSlice = createSlice({
   reducers: {},
   extraReducers: {
     //블로그 조회 부분
+    [getBlogCommunityListDB.pending]: state => {
+      state.isFetching = true;
+    },
     [getBlogCommunityListDB.fulfilled]: (state, action) => {
       state.blogList = action.payload;
       state.isFetching = false;
       state.errorMessage = null;
-    },
-
-    [getBlogCommunityListDB.pending]: state => {
-      state.isFetching = true;
     },
     [getBlogCommunityListDB.rejected]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },
 
-    //블로그 생성 부분
-    [postBlogCommunityDB.fulfilled]: (state, action) => {
-      state.blogList = action.payload;
+    //블로그 디테일 조회
+    [getBlogDetailDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [getBlogDetailDB.fulfilled]: (state, action) => {
       state.isFetching = false;
-      state.errorMessage = null;
+      state.blogList = action.payload;
+    },
+    [getBlogDetailDB.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = action.payload.errorMessage;
     },
 
+    //블로그 게시글 생성
     [postBlogCommunityDB.pending]: state => {
       state.isFetching = true;
+    },
+    [postBlogCommunityDB.fulfilled]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = null;
     },
     [postBlogCommunityDB.rejected]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },
 
+    //블로그 게시글 수정
+    [patchBlogCommunityDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [patchBlogCommunityDB.fulfilled]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [patchBlogCommunityDB.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = action.payload.errerMessage;
+    },
+
     //댓글 조회 부분
+    [getBlogCommentListDB.pending]: state => {
+      state.isFetching = true;
+    },
     [getBlogCommentListDB.fulfilled]: (state, action) => {
       state.commentList = action.payload;
       state.isFetching = false;
       state.errorMessage = null;
-    },
-    [getBlogCommentListDB.pending]: state => {
-      state.isFetching = true;
     },
     [getBlogCommentListDB.rejected]: (state, action) => {
       state.isFetching = false;
@@ -69,9 +94,9 @@ export const blogSlice = createSlice({
       state.errorMessage = null;
       state.commentList = action.meta.arg;
     },
-    [postBlogCommentDB.rejected]: (state, { payload: errorMessage }) => {
+    [postBlogCommentDB.rejected]: (state, action) => {
       state.isFetching = false;
-      state.errorMessage = errorMessage;
+      state.errorMessage = action.payload.errorMessage;
     },
 
     //댓글 수정 부분
@@ -83,9 +108,9 @@ export const blogSlice = createSlice({
       state.errorMessage = null;
       state.commentList = action.meta.arg;
     },
-    [patchBlogCommentDB.rejected]: (state, { payload: errorMessage }) => {
+    [patchBlogCommentDB.rejected]: (state, action) => {
       state.isFetching = false;
-      state.errorMessage = errorMessage;
+      state.errorMessage = action.payload.errorMessage;
     },
 
     //댓글 삭제 부분
@@ -93,14 +118,13 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [deleteBlogCommentDB.fulfilled]: (state, action) => {
-      console.log("액션", action);
       state.isFetching = false;
       state.errorMessage = null;
       state.commentList = action.meta.arg;
     },
-    [deleteBlogCommentDB.rejected]: (state, { payload: errorMessage }) => {
+    [deleteBlogCommentDB.rejected]: (state, action) => {
       state.isFetching = false;
-      state.errorMessage = errorMessage;
+      state.errorMessage = action.payload.errorMessage;
     },
   },
 });
