@@ -3,13 +3,12 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getBlogCommentListDB } from "../../../redux/async/blog";
 import CommentEditDel from "./BlogCommentEditDel";
-
+import { useParams } from "react-router-dom";
 // import { containerRegistryDomain } from "firebase-tools/lib/api";
 
 // get,
 const CommentList = () => {
   const response = useSelector(state => state.blogSlice.commentList);
-  console.log("코멘트", response);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -18,13 +17,13 @@ const CommentList = () => {
 
   return (
     <div>
-      {/* {response?.map(comments => {
+      {response?.map(comments => {
         return (
-          <div key={comments.commentId}>
+          <div key={comments.id}>
             <CommentEditDel comments={comments} />
           </div>
         );
-      })} */}
+      })}
     </div>
   );
 };

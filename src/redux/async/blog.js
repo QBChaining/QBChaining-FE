@@ -20,9 +20,12 @@ export const getBlogCommunityListDB = createAsyncThunk(
 //블로그 디테일
 export const getBlogDetailDB = createAsyncThunk(
   "BLOG_DETAIL",
-  async (postId, thunkAPI) => {
+  async (id, thunkAPI) => {
+    console.log("디테일조회", id);
     try {
-      const response = await blogApi.getBlogDetail(postId);
+      const response = await blogApi.getBlogDetail(id);
+      console.log("디테일리스폰", response);
+
       return response.data.data;
     } catch (err) {
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
@@ -35,10 +38,8 @@ export const postBlogCommunityDB = createAsyncThunk(
   "BLOG_COMMUNITY",
   async (data, thunkAPI) => {
     try {
-      console.log(data);
       const response = await blogApi.poastBlogCommunity(data);
       if (response.statusText === "OK") {
-        console.log("리스폰스", response);
         return response.data.success;
       }
     } catch (err) {
@@ -69,12 +70,12 @@ export const patchBlogCommunityDB = createAsyncThunk(
 // 댓글 조회
 export const getBlogCommentListDB = createAsyncThunk(
   "BLOG_COMMENTLIST",
-  async (data, thunkAPI) => {
+  async thunkAPI => {
     try {
-      const response = await blogApi.getBlogCommentList(data);
+      const response = await blogApi.getBlogCommentList();
       if (response.statusText === "OK") {
         //이거 몰까요?
-        return response.data;
+        return response.data.data;
       }
     } catch (err) {
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.", "error");
@@ -86,8 +87,10 @@ export const getBlogCommentListDB = createAsyncThunk(
 export const postBlogCommentDB = createAsyncThunk(
   "POST_BLOG_COMMENTLIST",
   async (data, thunkAPI) => {
+    console.log("데이터", data);
     try {
       const response = await blogApi.postBlogComment(data);
+      console.log("첫번째", response);
       if (response.statusText === "OK") {
         return response.data;
       }
