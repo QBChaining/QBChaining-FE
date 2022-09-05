@@ -5,6 +5,7 @@ import { getBlogCommunityListDB } from "../../redux/async/blog";
 import { useNavigate, useParams } from "react-router-dom";
 const BlogCommmunityMain = () => {
   const blogList = useSelector(state => state.blogSlice.blogList);
+  console.log(blogList);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postId } = useParams();
@@ -28,7 +29,7 @@ const BlogCommmunityMain = () => {
             </button>
           </div>
           {/* {blogList && */}
-          {blogList.map(posts => {
+          {blogList?.map(posts => {
             return (
               <SBloglist key={posts.id}>
                 <div

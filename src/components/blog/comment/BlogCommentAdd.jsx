@@ -2,25 +2,19 @@ import React from "react";
 import { useDispatch } from "react-redux";
 // import styled from "styled-components";
 import { postBlogCommentDB } from "../../../redux/async/blog.js";
-
+import { useParams } from "react-router-dom";
 const CommentAdd = () => {
   const dispatch = useDispatch();
-  //댓글 이벤트
   const commentRefInput = React.useRef();
-  //서버 연결하고 지울것.
-  const [commentId, setCommmentId] = React.useState(1);
-  //--------그리고 mockapi 설정법 알아보기
-  const postId = 1;
+  const { postId } = useParams();
+  //댓글 추가 이벤트
   const addComment = () => {
-    console.log(commentId);
     dispatch(
       postBlogCommentDB({
         comment: commentRefInput.current.value,
         postId,
-        commentId,
       }),
     );
-    // commentRefInput.current.value = "";
   };
 
   return (
@@ -34,7 +28,6 @@ const CommentAdd = () => {
 
       <button
         onClick={() => {
-          setCommmentId(commentId + 1);
           addComment();
         }}
       >

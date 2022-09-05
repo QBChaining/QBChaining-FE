@@ -1,5 +1,6 @@
 import axios from "axios";
-
+import Cookies from "universal-cookie";
+import { getCookie } from "../utils/cookie";
 const instance = axios.create({
   baseURL: process.env.REACT_APP_ENDPOINT,
   headers: {
@@ -8,9 +9,10 @@ const instance = axios.create({
   timeout: 2000,
 });
 instance.interceptors.request.use(config => {
-  //   if (getCookie("token")) {
-  //     config.headers["Authorization"] = "Bearer " + getCookie("token");
-  //   }
+  // 세션쿠키 있을때 활성화
+  // if (getCookie("session")) {
+  //   config.headers["Cookie"] = "session=" + getCookie("session");
+  // }
   return config;
 });
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -42,6 +43,13 @@ const Header = () => {
             }}
           >
             QNA쓰기
+          </li>
+          <li
+            onClick={() => {
+              navigate("/register");
+            }}
+          >
+            레지스터
           </li>
         </ul>
       </nav>
