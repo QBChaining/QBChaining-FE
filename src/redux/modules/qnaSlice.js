@@ -11,6 +11,10 @@ import {
   getBookmarkListDB,
   postBookmarkListDB,
   deleteBookmarkListDB,
+  likeCommentListDB,
+  choiceCommentListDB,
+  likeQnaListDB,
+  dislikeQnaListDB,
 } from "../async/qna";
 
 const qnaSlice = createSlice({
@@ -25,6 +29,7 @@ const qnaSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
+    //게시글조회
     [getQnaListDB.fulfilled]: (state, { payload }) => {
       state.qnaList = payload;
       state.isFetching = false;
@@ -37,8 +42,9 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-
+    //상세qna 조회
     [getOneQnaListDB.fulfilled]: (state, { payload }) => {
+      state.qnaTarget = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -49,7 +55,7 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-
+    //게시글 생성
     [postQnaListDB.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.errorMessage = null;
@@ -61,7 +67,7 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-
+    //게시글 수정
     [editQnaListDB.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.errorMessage = null;
@@ -73,7 +79,31 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-
+    //게시글 좋아요
+    [likeQnaListDB.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [likeQnaListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [likeQnaListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+    //게시글 좋아요 취소
+    [dislikeQnaListDB.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [dislikeQnaListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [dislikeQnaListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+    //댓글 조회
     [getCommentListDB.fulfilled]: (state, { payload }) => {
       state.commentList = payload;
       state.isFetching = false;
@@ -86,8 +116,9 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-
+    //댓글 생성
     [postCommentListDB.fulfilled]: (state, { payload }) => {
+      payload.honey_tip = 0;
       state.commentList.push(payload);
       state.isFetching = false;
       state.errorMessage = null;
@@ -99,7 +130,7 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-
+    //댓글 삭제
     [deleteCommentListDB.fulfilled]: (state, { payload }) => {
       const newCommentList = state.commentList.filter(
         data => data.id !== payload,
@@ -115,7 +146,7 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-
+    //댓글 수정
     [editCommentListDB.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.errorMessage = null;
@@ -127,7 +158,22 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-    // deleteBookmarkListDB,
+    //댓글 좋아요
+    [likeCommentListDB.fulfilled]: (state, { payload }) => {
+      state.commentList.map(data =>
+        data.id === payload ? (data.honey_tip += 1) : data,
+      );
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [likeCommentListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [likeCommentListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+    //게시글 즐겨찾기 조회
     [getBookmarkListDB.fulfilled]: (state, { payload }) => {
       state.bookmarkList = payload;
       state.isFetching = false;
@@ -140,8 +186,9 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-
+    //게시글 즐겨찾기 추가
     [postBookmarkListDB.fulfilled]: (state, { payload }) => {
+      state.bookmarkList.push(payload);
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -152,10 +199,10 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-
+    //게시글 즐겨찾기 삭제
     [deleteBookmarkListDB.fulfilled]: (state, { payload }) => {
       const newBookmarkList = state.bookmarkList.filter(
-        data => data.id !== payload,
+        data => data.qna_id !== payload,
       );
       state.bookmarkList = newBookmarkList;
       state.isFetching = false;
@@ -165,6 +212,19 @@ const qnaSlice = createSlice({
       state.isFetching = true;
     },
     [deleteBookmarkListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+    //댓글 채택
+    [choiceCommentListDB.fulfilled]: (state, { payload }) => {
+      state.qnaTarget.is_resolve = true;
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [choiceCommentListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [choiceCommentListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
