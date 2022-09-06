@@ -40,7 +40,7 @@ const QnaList = ({ data }) => {
   const time = timeForToday(data.createdAt);
 
   return (
-    <StextMain>
+    <StextMain resolve={data.is_resolve}>
       <div
         className="wrapper"
         onClick={() => {
@@ -96,7 +96,8 @@ const StextMain = styled.div`
   & .wrapper {
     width: 100%;
     padding: 23px 49px 29px 29px;
-    border: 1px solid #c6c6c6;
+    border: ${props =>
+      props.resolve ? "1px solid #ff6e6e" : "1px solid #c6c6c6"};
     border-radius: 30px;
     margin: 16px 0;
     cursor: pointer;

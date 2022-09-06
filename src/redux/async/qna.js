@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { qnaApi } from "../../axios/api/qnaAPI";
 import Swal from "sweetalert2";
-import { async } from "@firebase/util";
 
 //게시글 전체 조회
 export const getQnaListDB = createAsyncThunk(
@@ -67,6 +66,38 @@ export const editQnaListDB = createAsyncThunk(
   },
 );
 
+//게시글 추천
+export const likeQnaListDB = createAsyncThunk(
+  "qna/likeqnalist",
+  async (data, thunkAPI) => {
+    try {
+      const response = await qnaApi.likeQnaList(data);
+      if (response.data.success === true) {
+        return;
+      }
+    } catch (err) {
+      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+
+//게시글 추천 취소
+export const dislikeQnaListDB = createAsyncThunk(
+  "qna/dislikeqnalist",
+  async (data, thunkAPI) => {
+    try {
+      const response = await qnaApi.dislikeQnaList(data);
+      if (response.data.success === true) {
+        return;
+      }
+    } catch (err) {
+      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+
 //댓글 전체조회
 export const getCommentListDB = createAsyncThunk(
   "qna/getcomment",
@@ -87,10 +118,8 @@ export const getCommentListDB = createAsyncThunk(
 export const postCommentListDB = createAsyncThunk(
   "qna/postcomment",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await qnaApi.postCommentList(data);
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -106,7 +135,6 @@ export const postCommentListDB = createAsyncThunk(
 export const deleteCommentListDB = createAsyncThunk(
   "qna/deletecomment",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await qnaApi.deleteCommentList(data);
       if (response.data.success === true) {
@@ -141,9 +169,8 @@ export const likeCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.likeCommentList(data);
-      console.log(response);
       if (response.data.success === true) {
-        return;
+        return data;
       }
     } catch (err) {
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
@@ -175,7 +202,7 @@ export const postBookmarkListDB = createAsyncThunk(
     try {
       const response = await qnaApi.postBookmarkList(data);
       if (response.data.success === true) {
-        return response.data.data;
+        return data;
       }
     } catch (err) {
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
@@ -188,12 +215,10 @@ export const postBookmarkListDB = createAsyncThunk(
 export const deleteBookmarkListDB = createAsyncThunk(
   "qna/deletebookmark",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await qnaApi.deleteBookmarkList(data);
-      console.log(response);
       if (response.data.success === true) {
-        return response.data.data;
+        return data.qna_id;
       }
     } catch (err) {
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
@@ -202,15 +227,14 @@ export const deleteBookmarkListDB = createAsyncThunk(
   },
 );
 
+//댓글 채택
 export const choiceCommentListDB = createAsyncThunk(
   "qna/choiceComment",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await qnaApi.choiceCommentList(data);
-      console.log(response);
       if (response.data.success === true) {
-        return response.data.data;
+        return data;
       }
     } catch (err) {
       Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");

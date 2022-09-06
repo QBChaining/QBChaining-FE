@@ -186,6 +186,7 @@ const Editor = ({
         postCommentListDB({
           content: quillRef.current.firstChild.innerHTML,
           id: parseInt(id),
+          honey_tip: 0,
         }),
       );
       //블로그 수정, 생성 수정중

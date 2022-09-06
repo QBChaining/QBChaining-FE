@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import Editor from "../common/Editor";
 import {
   choiceCommentListDB,
   deleteCommentListDB,
   getCommentListDB,
+  getOneQnaListDB,
   likeCommentListDB,
 } from "./../../redux/async/qna";
 
-const QnaCommentList = ({ id }) => {
+const QnaCommentList = ({ resolve, id, qnaId }) => {
   const dispatch = useDispatch();
 
   //commentList 구독
@@ -29,16 +31,26 @@ const QnaCommentList = ({ id }) => {
   };
 
   const onChoiceHandler = id => {
-    dispatch(choiceCommentListDB(id));
+    Swal.fire({
+      title: "채택 하시겠습니까?",
+      icon: "warning",
+      showDenyButton: true,
+      confirmButtonText: "확인",
+      denyButtonText: `취소`,
+    }).then(res => {
+      if (res.isConfirmed) {
+        Swal.fire("채택하셨습니다", "", "success");
+        dispatch(choiceCommentListDB({ id, qnaId }));
+      }
+    });
   };
-
-  console.log(list);
 
   return (
     <>
       <div className="ql-snow">
         {list.map(data => (
           <div key={data.id}>
+            <div>{data.user_name}</div>
             <div className="ql-editor">
               <div dangerouslySetInnerHTML={{ __html: data.comment }}></div>
             </div>
@@ -57,13 +69,15 @@ const QnaCommentList = ({ id }) => {
             >
               추천하기
             </button>
-            <button
-              onClick={() => {
-                onChoiceHandler(data.id);
-              }}
-            >
-              채택하기
-            </button>
+            {!resolve && (
+              <button
+                onClick={() => {
+                  onChoiceHandler(data.id);
+                }}
+              >
+                채택하기
+              </button>
+            )}
           </div>
         ))}
       </div>

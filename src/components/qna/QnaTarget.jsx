@@ -1,31 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import QnaCommentList from "./QnaCommentList";
 import QnaAddComment from "./QnaAddComment";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { postBookmarkListDB } from "../../redux/async/qna";
+import { useDispatch, useSelector } from "react-redux";
+import { getBookmarkListDB, postBookmarkListDB } from "../../redux/async/qna";
 import { deleteBookmarkListDB } from "./../../redux/async/qna";
 import Swal from "sweetalert2";
 
 const QnaTarget = ({ data, isDatail }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [bookmark, setBookmark] = useState(data.is_resolve);
+  const bookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
+  const isBookmarked =
+    bookmarkList.filter(mark => mark.qna_id === data.id).length > 0;
+
+  const bookData = {
+    qna_id: data.id,
+    Qna: { title: data.title },
+  };
 
   const onAddBookmark = () => {
-    setBookmark(!bookmark);
-    dispatch(postBookmarkListDB(data.id));
+    dispatch(postBookmarkListDB(bookData));
     Swal.fire("즐겨찾기", "즐겨찾기에 추가되었습니다.", "success");
   };
 
-  console.log(data);
-
   const onDeleteBookmark = () => {
-    setBookmark(!bookmark);
-    dispatch(deleteBookmarkListDB(data.id));
+    dispatch(deleteBookmarkListDB(bookData));
     Swal.fire("즐겨찾기", "즐겨찾기에 삭제되었습니다.", "error");
   };
+
+  useEffect(() => {
+    dispatch(getBookmarkListDB());
+  }, []);
 
   return (
     <SQnaTarget>
@@ -34,8 +41,11 @@ const QnaTarget = ({ data, isDatail }) => {
           {/* <button onClick={bookmark ? onDeleteBookmark : onAddBookmark}>
             {bookmark ? "즐겨찾기삭제" : "즐겨찾기"}
           </button> */}
-          <button onClick={onAddBookmark}>즐겨찾기</button>
-          <button onClick={onDeleteBookmark}>즐겨찾기삭제</button>
+          {isBookmarked ? (
+            <button onClick={onDeleteBookmark}>즐겨찾기삭제</button>
+          ) : (
+            <button onClick={onAddBookmark}>즐겨찾기</button>
+          )}
         </div>
         <div>
           <div>{data.user?.user_name}</div>
