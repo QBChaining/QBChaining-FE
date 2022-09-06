@@ -12,7 +12,6 @@ const CommentEditDel = ({ comments }) => {
   const editRef = React.useRef();
 
   const dispatch = useDispatch();
-  const { id } = useParams();
 
   //댓글 수정 완료 버튼
   const onClickEditHandler = () => {
