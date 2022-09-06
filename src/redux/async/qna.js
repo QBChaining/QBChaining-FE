@@ -261,7 +261,6 @@ export const choiceCommentListDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      console.log(err.response);
       if (err.response.data.message === "채택은 게시글 작성자만 가능합니다.") {
         errorLikeAlert(err.response.data.message);
         return thunkAPI.rejectWithValue(err.response.data.message);

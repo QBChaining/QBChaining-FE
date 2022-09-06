@@ -14,10 +14,13 @@ const Header = () => {
   const dispatch = useDispatch();
   const { isLogin } = useSelector(state => state.userSlice);
   const onLogoutHandler = () => {
-    Swal.fire("로그아웃", "성공", "success").then(() => {
-      navigate("/");
-    });
-    dispatch(logOut());
+    Swal.fire("로그아웃", "성공", "success")
+      .then(() => {
+        navigate("/");
+      })
+      .then(() => {
+        dispatch(logOut());
+      });
   };
 
   return (
