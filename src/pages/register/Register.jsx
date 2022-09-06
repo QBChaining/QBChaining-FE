@@ -85,6 +85,7 @@ const Register = () => {
   const onSubmitHandler = data => {
     // console.log(data, list);
   };
+
   return (
     <>
       <div>
@@ -100,24 +101,6 @@ const Register = () => {
         </ul>
       </div>
       <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <div>
-          <input
-            type="text"
-            placeholder="닉네임"
-            {...register("nickname", {
-              required: true,
-              minLength: {
-                value: 2,
-                message: "2자리 이상 10자리 이하로 입력해주세요",
-              },
-              maxLength: {
-                value: 10,
-                message: "2자리 이상 10자리 이하로 입력해주세요",
-              },
-            })}
-          />
-          <button type={"button"}>중복체크</button>
-        </div>
         <Select
           register={register}
           name="age"
