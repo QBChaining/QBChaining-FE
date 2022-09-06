@@ -13,6 +13,7 @@ import {
   deleteBookmarkListDB,
   likeCommentListDB,
   choiceCommentListDB,
+  getQnaLikeListDB,
   likeQnaListDB,
   dislikeQnaListDB,
 } from "../async/qna";
@@ -31,6 +32,7 @@ const qnaSlice = createSlice({
   extraReducers: {
     //게시글조회
     [getQnaListDB.fulfilled]: (state, { payload }) => {
+      //payload에는 전체 리스트가 들어있다
       state.qnaList = payload;
       state.isFetching = false;
       state.errorMessage = null;
@@ -44,6 +46,7 @@ const qnaSlice = createSlice({
     },
     //상세qna 조회
     [getOneQnaListDB.fulfilled]: (state, { payload }) => {
+      //payload에는 타겟qna가 있다
       state.qnaTarget = payload;
       state.isFetching = false;
       state.errorMessage = null;
@@ -79,7 +82,19 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-    //게시글 좋아요
+    //게시글 추천 목록조회
+    [getQnaLikeListDB.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [getQnaLikeListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [getQnaLikeListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+    //게시글 추천
     [likeQnaListDB.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.errorMessage = null;
@@ -91,7 +106,7 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-    //게시글 좋아요 취소
+    //게시글 추천 취소
     [dislikeQnaListDB.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.errorMessage = null;

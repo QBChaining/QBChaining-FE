@@ -33,7 +33,12 @@ const QnaDetail = () => {
       <div className="rightContainer">
         <h2>댓글</h2>
         <QnaAddComment id={id} />
-        <QnaCommentList resolve={target.is_resolve} id={id} qnaId={id} />
+        <QnaCommentList
+          author={target.user?.user_name}
+          resolve={target.is_resolve}
+          id={id}
+          qnaId={id}
+        />
       </div>
     </SQnaDetail>
   );

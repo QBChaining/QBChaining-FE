@@ -1,7 +1,9 @@
+import { legacy_createStore } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import Editor from "../common/Editor";
+import { successAlert, errorAlert } from "./../../utils/swal";
 import {
   choiceCommentListDB,
   deleteCommentListDB,
@@ -10,12 +12,14 @@ import {
   likeCommentListDB,
 } from "./../../redux/async/qna";
 
-const QnaCommentList = ({ resolve, id, qnaId }) => {
+const QnaCommentList = ({ author, resolve, id, qnaId }) => {
   const dispatch = useDispatch();
 
   //commentList 구독
   const list = useSelector(state => state.qnaSlice.commentList);
-
+  const { isLogin } = useSelector(state => state.userSlice);
+  //로그인 유저 이름 구독
+  const userName = useSelector(state => state.userSlice.userName);
   //최초진입시 commentList 받아오기
   useEffect(() => {
     dispatch(getCommentListDB(id));
@@ -23,10 +27,18 @@ const QnaCommentList = ({ resolve, id, qnaId }) => {
 
   //코멘트 삭제 dispatch
   const onDeleteHandler = id => {
+    if (!isLogin) {
+      errorAlert("로그인이 필요한 기능입니다!");
+      return;
+    }
     dispatch(deleteCommentListDB(id));
   };
 
   const onLikeHandler = id => {
+    if (!isLogin) {
+      errorAlert("로그인이 필요한 기능입니다!");
+      return;
+    }
     dispatch(likeCommentListDB(id));
   };
 
@@ -39,11 +51,15 @@ const QnaCommentList = ({ resolve, id, qnaId }) => {
       denyButtonText: `취소`,
     }).then(res => {
       if (res.isConfirmed) {
-        Swal.fire("채택하셨습니다", "", "success");
+        successAlert("채택 하셨습니다.");
         dispatch(choiceCommentListDB({ id, qnaId }));
+      } else if (res.isDenied || res.isDismissed) {
+        errorAlert("취소 하셨습니다.");
       }
     });
   };
+
+  console.log(list);
 
   return (
     <>
@@ -55,13 +71,15 @@ const QnaCommentList = ({ resolve, id, qnaId }) => {
               <div dangerouslySetInnerHTML={{ __html: data.comment }}></div>
             </div>
             <div>{data.honey_tip}</div>
-            <button
-              onClick={() => {
-                onDeleteHandler(data.id);
-              }}
-            >
-              삭제하기
-            </button>
+            {userName === data.user_name && (
+              <button
+                onClick={() => {
+                  onDeleteHandler(data.id);
+                }}
+              >
+                삭제하기
+              </button>
+            )}
             <button
               onClick={() => {
                 onLikeHandler(data.id);
@@ -69,7 +87,7 @@ const QnaCommentList = ({ resolve, id, qnaId }) => {
             >
               추천하기
             </button>
-            {!resolve && (
+            {!resolve && author === userName && (
               <button
                 onClick={() => {
                   onChoiceHandler(data.id);

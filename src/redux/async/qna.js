@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { qnaApi } from "../../axios/api/qnaAPI";
 import Swal from "sweetalert2";
+import { errorLikeAlert, networkError } from "../../utils/swal";
 
 //게시글 전체 조회
 export const getQnaListDB = createAsyncThunk(
@@ -12,7 +13,7 @@ export const getQnaListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -28,7 +29,7 @@ export const getOneQnaListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -44,7 +45,7 @@ export const postQnaListDB = createAsyncThunk(
         return response.data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -60,7 +61,23 @@ export const editQnaListDB = createAsyncThunk(
         return;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+
+//게시글 추천조회
+export const getQnaLikeListDB = createAsyncThunk(
+  "qna/getqnalikelist",
+  async (data, thunkAPI) => {
+    try {
+      const response = await qnaApi.likeQnaList(data);
+      if (response.data.success === true) {
+        return;
+      }
+    } catch (err) {
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -76,7 +93,11 @@ export const likeQnaListDB = createAsyncThunk(
         return;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      if (err.response.data.message === "반복해서 눌렀습니다.") {
+        errorLikeAlert(err.response.data.message);
+        return;
+      }
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -92,7 +113,7 @@ export const dislikeQnaListDB = createAsyncThunk(
         return;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -108,7 +129,7 @@ export const getCommentListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -124,8 +145,7 @@ export const postCommentListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      console.log(err);
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -141,7 +161,7 @@ export const deleteCommentListDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -157,7 +177,7 @@ export const editCommentListDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -173,7 +193,11 @@ export const likeCommentListDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      if (err.response.data.message === "반복해서 눌렀습니다.") {
+        errorLikeAlert(err.response.data.message);
+        return thunkAPI.rejectWithValue(err.response.data.message);
+      }
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -189,7 +213,7 @@ export const getBookmarkListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -205,7 +229,7 @@ export const postBookmarkListDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -221,7 +245,7 @@ export const deleteBookmarkListDB = createAsyncThunk(
         return data.qna_id;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -237,7 +261,11 @@ export const choiceCommentListDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      if (err.response.data.message === "채택은 게시글 작성자만 가능합니다.") {
+        errorLikeAlert(err.response.data.message);
+        return thunkAPI.rejectWithValue(err.response.data.message);
+      }
+      networkError();
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },

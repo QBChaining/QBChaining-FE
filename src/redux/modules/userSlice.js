@@ -1,26 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { deleteCookie, getCookie } from "./../../utils/cookie";
-import { jwt_decode } from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 export const userSlice = createSlice({
   name: "user",
   initialState: {
     isLogin: false,
-    userEmail: null,
+    userToken: null,
+    userName: null,
   },
   reducers: {
     logOut: (state, action) => {
       deleteCookie("token");
       state.isLogin = false;
-      state.user = {
-        nickname: null,
-        userId: null,
-        iat: null,
-      };
+      state.userToken = null;
+      state.userName = null;
     },
     logIn: (state, action) => {
       state.isLogin = true;
       state.userToken = getCookie("token");
+      state.userName = jwt_decode(getCookie("token")).name;
     },
   },
 });

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 //유틸 카테고리
 import categories from "../../utils/category";
@@ -29,6 +29,7 @@ import {
   postCommentListDB,
   postQnaListDB,
 } from "../../redux/async/qna";
+import { errorAlert } from "../../utils/swal";
 
 //이미지 리사이즈 레지스터
 Quill.register("modules/ImageResize", ImageResize);
@@ -50,6 +51,8 @@ const Editor = ({
   const [category, setCategory] = useState("Javascript");
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
+
+  const { isLogin } = useSelector(state => state.userSlice);
 
   const placeholder = "입력해주세요";
   const theme = "snow";
@@ -150,6 +153,10 @@ const Editor = ({
   //생성 or 수정 함수
   const onSubmitHandler = e => {
     e.preventDefault();
+    if (!isLogin) {
+      errorAlert("로그인이 필요한 기능입니다!");
+      return;
+    }
     if (quill.getText().length < 2) {
       Swal.fire("입력해주세요", "", "error");
       return;
