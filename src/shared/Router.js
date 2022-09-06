@@ -13,6 +13,7 @@ import Register from "./../pages/register/Register";
 import Login from "../pages/register/Login";
 import BlogWrite from "../pages/blog/BlogCommunityWrite";
 import BlogEdit from "../pages/blog/BlogCommentEdit";
+import MyBlog from "../pages/blog/MyBlog";
 
 const router = () => {
   return (
@@ -23,13 +24,14 @@ const router = () => {
       <Route path="/qna/write" element={<QnaWrite />} />
       <Route path="/qna/detail/:id" element={<QnaDetail />} />
       <Route path="/qna/edit/:id" element={<QnaEdit />} />
-      <Route path="/blog/edit/" element={<BlogEdit />} />
+      <Route path="/blog/edit/:id" element={<BlogEdit />} />
       <Route path="/blog/write" element={<BlogWrite />} />
       <Route path="/blog" element={<BlogCommmunityMain />} />
       <Route path="/blog/:id" element={<BlogPersonalMain />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/blog/detail/:id" element={<BlogDetail />} />
+      <Route path="/blog/my/:id" element={<MyBlog />} />
     </Routes>
   );
 };

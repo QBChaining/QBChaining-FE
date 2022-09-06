@@ -36,13 +36,12 @@ const Editor = ({
   isEdit,
   isWrite,
   isCommentWrite,
-  blogEdit,
-  blogWrite,
+  isBlogEdit,
+  isBlogWrite,
   //블로그 포스트아이디
-  postId,
-  blogCommnuityEdit,
-  editData,
   id,
+  blogEditId,
+  editData,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -185,13 +184,22 @@ const Editor = ({
         }),
       );
       //블로그 수정, 생성 수정중
-    } else if (blogWrite) {
+    } else if (isBlogWrite) {
       navigate("/blog");
       dispatch(
         postBlogCommunityDB({
           title,
           content: quillRef.current.firstChild.innerHTML,
           tag,
+        }),
+      );
+    } else if (isBlogEdit) {
+      navigate(`/blog/detail/${blogEditId}`);
+      dispatch(
+        patchBlogCommunityDB({
+          title,
+          content: quillRef.current.firstChild.innerHTML,
+          id: blogEditId,
         }),
       );
     }
@@ -244,7 +252,7 @@ const Editor = ({
   return (
     <Sform>
       <div>
-        {(isEdit || isWrite || blogWrite) && (
+        {(isEdit || isWrite || isBlogWrite || isBlogEdit) && (
           <div className="titleWrapper">
             <input
               id="title"
@@ -278,7 +286,7 @@ const Editor = ({
         <SEditor>
           <div ref={quillRef} />
         </SEditor>
-        {(isEdit || isWrite || blogWrite) && (
+        {(isEdit || isWrite || isBlogWrite || isBlogEdit) && (
           <STagContainer>
             <input
               type="text"
@@ -301,7 +309,9 @@ const Editor = ({
       </div>
       <div className="submitWrapper">
         <button type="submit" onClick={onSubmitHandler}>
-          {isEdit || isWrite || blogWrite ? "제출하기" : "댓글쓰기"}
+          {isEdit || isWrite || isBlogWrite || isBlogEdit
+            ? "제출하기"
+            : "댓글쓰기"}
         </button>
       </div>
     </Sform>

@@ -1,9 +1,12 @@
 import React from "react";
 import Editor from "../../components/common/Editor";
+import { useParams } from "react-router-dom";
 const BlogCommunityEdit = () => {
+  const { id } = useParams();
+
   return (
     <div>
-      <Editor blogEdit={true}></Editor>
+      <Editor blogEditId={id} isBlogEdit={true}></Editor>
     </div>
   );
 };
