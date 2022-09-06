@@ -4,44 +4,73 @@ import QnaCommentList from "./QnaCommentList";
 import QnaAddComment from "./QnaAddComment";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { getBookmarkListDB, postBookmarkListDB } from "../../redux/async/qna";
+import {
+  dislikeQnaListDB,
+  getBookmarkListDB,
+  likeQnaListDB,
+  postBookmarkListDB,
+} from "../../redux/async/qna";
 import { deleteBookmarkListDB } from "./../../redux/async/qna";
-import Swal from "sweetalert2";
-import { axios } from "axios";
+import { errorAlert, needLoginAlert } from "../../utils/swal";
+import { successAlert } from "./../../utils/swal";
 
 const QnaTarget = ({ data, isDatail }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const bookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
   const { isLogin } = useSelector(state => state.userSlice);
-  //내 북마크 목록에 있는지
+  //내 북마크 목록에 있는지 확인
   const isBookmarked =
     bookmarkList.filter(mark => mark.qna_id === data.id).length > 0;
 
-  console.log(isBookmarked);
-  console.log(isLogin);
-  const bookData = {
+  //내 좋아요 목록에 있는지 확인
+  // const isliked =
+  //   likeList.filter(mark => mark.qna_id === data.id).length > 0;
+
+  const totalId = {
     qna_id: data.id,
     Qna: { title: data.title },
   };
 
+  //즐겨찾기 추가
   const onAddBookmark = () => {
-    dispatch(postBookmarkListDB(bookData));
-    Swal.fire("즐겨찾기", "즐겨찾기에 추가되었습니다.", "success");
+    if (!isLogin) {
+      needLoginAlert();
+      return;
+    }
+    dispatch(postBookmarkListDB(totalId));
+    successAlert("즐겨찾기에 추가 되었습니다.");
   };
 
+  //즐겨찾기 삭제
   const onDeleteBookmark = () => {
-    dispatch(deleteBookmarkListDB(bookData));
-    Swal.fire("즐겨찾기", "즐겨찾기에 삭제되었습니다.", "error");
+    dispatch(deleteBookmarkListDB(totalId));
+    errorAlert("즐겨찾기에 삭제 되었습니다.");
   };
 
-  const onLikeQna = () => {};
+  //게시글 추천
+  const onLikeQna = () => {
+    if (!isLogin) {
+      needLoginAlert();
+      return;
+    }
+    dispatch(likeQnaListDB(totalId));
+  };
 
-  const onDislikeQna = () => {};
+  //게시글 추천 취소
+  const onDislikeQna = () => {
+    if (!isLogin) {
+      needLoginAlert();
+      return;
+    }
+    dispatch(dislikeQnaListDB(totalId));
+  };
 
+  //최초진입시 get요청
   useEffect(() => {
     if (isLogin) {
       dispatch(getBookmarkListDB());
+      // dispatch(getQnaLikeListDB())
     }
   }, []);
 
@@ -49,17 +78,14 @@ const QnaTarget = ({ data, isDatail }) => {
     <SQnaTarget>
       <div>
         <div>
-          {isLogin ? (
-            isBookmarked ? (
-              <button onClick={onDeleteBookmark}>즐겨찾기삭제</button>
-            ) : (
-              <button onClick={onAddBookmark}>즐겨찾기</button>
-            )
-          ) : null}
+          {isBookmarked ? (
+            <button onClick={onDeleteBookmark}>즐겨찾기삭제</button>
+          ) : (
+            <button onClick={onAddBookmark}>즐겨찾기</button>
+          )}
         </div>
         <div>
           <button onClick={onLikeQna}>게시글 추천</button>
-          <button onClick={onDislikeQna}>게시글 추천취소</button>
         </div>
         <div>
           <div>{data.user?.user_name}</div>

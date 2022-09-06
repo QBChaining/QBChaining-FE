@@ -13,6 +13,7 @@ import {
   deleteBookmarkListDB,
   likeCommentListDB,
   choiceCommentListDB,
+  getQnaLikeListDB,
   likeQnaListDB,
   dislikeQnaListDB,
 } from "../async/qna";
@@ -81,7 +82,19 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-    //게시글 좋아요
+    //게시글 추천 목록조회
+    [getQnaLikeListDB.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [getQnaLikeListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [getQnaLikeListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+    //게시글 추천
     [likeQnaListDB.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.errorMessage = null;
@@ -93,7 +106,7 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-    //게시글 좋아요 취소
+    //게시글 추천 취소
     [dislikeQnaListDB.fulfilled]: (state, { payload }) => {
       state.isFetching = false;
       state.errorMessage = null;
