@@ -1,3 +1,4 @@
+import { legacy_createStore } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -15,7 +16,8 @@ const QnaCommentList = ({ resolve, id, qnaId }) => {
 
   //commentList 구독
   const list = useSelector(state => state.qnaSlice.commentList);
-
+  //로그인 유저 이름 구독
+  const userName = useSelector(state => state.userSlice.userName);
   //최초진입시 commentList 받아오기
   useEffect(() => {
     dispatch(getCommentListDB(id));
@@ -69,7 +71,7 @@ const QnaCommentList = ({ resolve, id, qnaId }) => {
             >
               추천하기
             </button>
-            {!resolve && (
+            {!resolve && data.user_name === userName && (
               <button
                 onClick={() => {
                   onChoiceHandler(data.id);

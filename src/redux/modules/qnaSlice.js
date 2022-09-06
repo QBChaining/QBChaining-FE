@@ -31,6 +31,7 @@ const qnaSlice = createSlice({
   extraReducers: {
     //게시글조회
     [getQnaListDB.fulfilled]: (state, { payload }) => {
+      //payload에는 전체 리스트가 들어있다
       state.qnaList = payload;
       state.isFetching = false;
       state.errorMessage = null;
@@ -44,6 +45,7 @@ const qnaSlice = createSlice({
     },
     //상세qna 조회
     [getOneQnaListDB.fulfilled]: (state, { payload }) => {
+      //payload에는 타겟qna가 있다
       state.qnaTarget = payload;
       state.isFetching = false;
       state.errorMessage = null;

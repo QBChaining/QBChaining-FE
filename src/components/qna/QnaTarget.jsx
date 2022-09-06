@@ -7,14 +7,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBookmarkListDB, postBookmarkListDB } from "../../redux/async/qna";
 import { deleteBookmarkListDB } from "./../../redux/async/qna";
 import Swal from "sweetalert2";
+import { axios } from "axios";
 
 const QnaTarget = ({ data, isDatail }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const bookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
+  const { isLogin } = useSelector(state => state.userSlice);
+  //내 북마크 목록에 있는지
   const isBookmarked =
     bookmarkList.filter(mark => mark.qna_id === data.id).length > 0;
 
+  console.log(isBookmarked);
+  console.log(isLogin);
   const bookData = {
     qna_id: data.id,
     Qna: { title: data.title },
@@ -30,22 +35,31 @@ const QnaTarget = ({ data, isDatail }) => {
     Swal.fire("즐겨찾기", "즐겨찾기에 삭제되었습니다.", "error");
   };
 
+  const onLikeQna = () => {};
+
+  const onDislikeQna = () => {};
+
   useEffect(() => {
-    dispatch(getBookmarkListDB());
+    if (isLogin) {
+      dispatch(getBookmarkListDB());
+    }
   }, []);
 
   return (
     <SQnaTarget>
       <div>
         <div>
-          {/* <button onClick={bookmark ? onDeleteBookmark : onAddBookmark}>
-            {bookmark ? "즐겨찾기삭제" : "즐겨찾기"}
-          </button> */}
-          {isBookmarked ? (
-            <button onClick={onDeleteBookmark}>즐겨찾기삭제</button>
-          ) : (
-            <button onClick={onAddBookmark}>즐겨찾기</button>
-          )}
+          {isLogin ? (
+            isBookmarked ? (
+              <button onClick={onDeleteBookmark}>즐겨찾기삭제</button>
+            ) : (
+              <button onClick={onAddBookmark}>즐겨찾기</button>
+            )
+          ) : null}
+        </div>
+        <div>
+          <button onClick={onLikeQna}>게시글 추천</button>
+          <button onClick={onDislikeQna}>게시글 추천취소</button>
         </div>
         <div>
           <div>{data.user?.user_name}</div>

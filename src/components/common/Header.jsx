@@ -13,7 +13,6 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLogin } = useSelector(state => state.userSlice);
-
   const onLogoutHandler = () => {
     Swal.fire("로그아웃", "성공", "success").then(() => {
       navigate("/");
@@ -21,11 +20,6 @@ const Header = () => {
     dispatch(logOut());
   };
 
-  useEffect(() => {
-    if (getCookie("token")) {
-      dispatch(logIn());
-    }
-  }, []);
   return (
     <SHeader>
       <div

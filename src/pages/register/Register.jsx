@@ -1,7 +1,5 @@
 import React, { Fragment, useState } from "react";
 import categories from "../../utils/category";
-import styled from "styled-components";
-import { axios } from "axios";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import InterestItem from "./../../components/register/InterestItem";
