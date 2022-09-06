@@ -5,7 +5,7 @@ import Editor from "../../components/common/Editor";
 const BlogCommunityWrite = () => {
   return (
     <div>
-      <Editor blogWrite={true} />
+      <Editor isBlogWrite={true} />
       {/* <Tag /> */}
     </div>
   );

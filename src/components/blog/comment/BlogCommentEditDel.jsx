@@ -9,9 +9,8 @@ import { useParams } from "react-router-dom";
 
 const CommentEditDel = ({ comments }) => {
   const [show, setShow] = React.useState(false);
-  const { postId } = useParams();
-
   const editRef = React.useRef();
+
   const dispatch = useDispatch();
 
   //댓글 수정 완료 버튼
@@ -19,18 +18,18 @@ const CommentEditDel = ({ comments }) => {
     dispatch(
       patchBlogCommentDB({
         comment: editRef.current.value,
-        postId,
+        id: comments.id,
       }),
     );
   };
 
   //댓글 삭제 버튼
   const onClickDeleteHandler = () => {
-    console.log(comments.commentId);
-    dispatch(deleteBlogCommentDB(comments.commentId));
+    dispatch(deleteBlogCommentDB(comments.id));
   };
+
   return (
-    <form>
+    <div>
       {!show ? (
         <SCommentList>
           <div>프로필사진</div>
@@ -48,7 +47,7 @@ const CommentEditDel = ({ comments }) => {
             </button>
             <button
               onClick={() => {
-                onClickDeleteHandler(comments.commentsId);
+                onClickDeleteHandler();
               }}
             >
               삭제
@@ -63,19 +62,17 @@ const CommentEditDel = ({ comments }) => {
           <input type="text" placeholder={comments.comment} ref={editRef} />
           <div>
             <button
-              type="button"
               onClick={() => {
-                onClickEditHandler();
+                onClickEditHandler(comments.id);
                 setShow(!show);
               }}
             >
-              완료
+              수정완료
             </button>
-            <button>삭제</button>
           </div>
         </>
       )}
-    </form>
+    </div>
   );
 };
 

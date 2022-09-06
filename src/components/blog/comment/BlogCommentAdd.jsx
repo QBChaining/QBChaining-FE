@@ -10,22 +10,18 @@ const CommentAdd = () => {
   //댓글 추가 이벤트
 
   const addComment = () => {
-    console.log(id);
     dispatch(
       postBlogCommentDB({
         comment: commentRefInput.current.value,
-        id,
+        id: parseInt(id),
+        // id,
       }),
     );
+    commentRefInput.current.value = "";
   };
 
   return (
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-        addComment();
-      }}
-    >
+    <div>
       <input
         type="text"
         ref={commentRefInput}
@@ -34,13 +30,14 @@ const CommentAdd = () => {
       />
 
       <button
+        // type="button"
         onClick={() => {
           addComment();
         }}
       >
         추가하기
       </button>
-    </form>
+    </div>
   );
 };
 

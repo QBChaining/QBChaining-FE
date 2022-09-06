@@ -8,16 +8,16 @@ import { useParams } from "react-router-dom";
 
 // get,
 const CommentList = () => {
-  const response = useSelector(state => state.blogSlice.commentList);
+  const res = useSelector(state => state.blogSlice.commentList);
   const dispatch = useDispatch();
-
+  const { id } = useParams();
   React.useEffect(() => {
-    dispatch(getBlogCommentListDB());
+    dispatch(getBlogCommentListDB(id));
   }, [dispatch]);
 
   return (
     <div>
-      {response?.map(comments => {
+      {res?.map(comments => {
         return (
           <div key={comments.id}>
             <CommentEditDel comments={comments} />

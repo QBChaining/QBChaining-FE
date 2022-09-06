@@ -8,12 +8,15 @@ import {
   patchBlogCommentDB,
   deleteBlogCommentDB,
   patchBlogCommunityDB,
+  getMyBlogDB,
 } from "../async/blog";
 export const blogSlice = createSlice({
   name: "blog",
   initialState: {
     blogList: [],
+    blogDetail: {},
     commentList: [],
+    myblog: [],
     isFetching: false,
     errorMessage: "",
   },
@@ -38,8 +41,8 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogDetailDB.fulfilled]: (state, action) => {
+      state.blogDetail = action.payload;
       state.isFetching = false;
-      state.blogList = action.payload;
     },
     [getBlogDetailDB.rejected]: (state, action) => {
       state.isFetching = false;
@@ -51,6 +54,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogCommunityDB.fulfilled]: (state, action) => {
+      console.log(action.payload);
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -72,6 +76,20 @@ export const blogSlice = createSlice({
       state.errorMessage = action.payload.errerMessage;
     },
 
+    //블로그 게시글 삭제
+    [deleteBlogCommentDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [deleteBlogCommentDB.fulfilled]: (state, action) => {
+      state.blogList = action.payload;
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [deleteBlogCommentDB.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = action.payload.errerMessage;
+    },
+
     //댓글 조회 부분
     [getBlogCommentListDB.pending]: state => {
       state.isFetching = true;
@@ -87,12 +105,12 @@ export const blogSlice = createSlice({
     },
     //댓글 추가 부분
     [postBlogCommentDB.pending]: state => {
+      console.log(state);
       state.isFetching = true;
     },
     [postBlogCommentDB.fulfilled]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = null;
-      state.commentList = action.meta.arg;
     },
     [postBlogCommentDB.rejected]: (state, action) => {
       state.isFetching = false;
@@ -106,7 +124,6 @@ export const blogSlice = createSlice({
     [patchBlogCommentDB.fulfilled]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = null;
-      state.commentList = action.meta.arg;
     },
     [patchBlogCommentDB.rejected]: (state, action) => {
       state.isFetching = false;
@@ -118,11 +135,28 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [deleteBlogCommentDB.fulfilled]: (state, action) => {
+      console.log(action.payload);
+
       state.isFetching = false;
       state.errorMessage = null;
-      state.commentList = action.meta.arg;
     },
     [deleteBlogCommentDB.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = action.payload.errorMessage;
+    },
+
+    //마이블로그 조회
+    [getMyBlogDB.pending]: state => {
+      state.isFetchin = true;
+    },
+    [getMyBlogDB.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      state.myblog = action.payload;
+
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [getMyBlogDB.rejected]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },
