@@ -1,11 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { qnaApi } from "../../axios/api/qnaAPI";
 //alert
-import { errorLikeAlert, networkError } from "../../utils/swal";
+import { errorLikeAlert, networkError, successAlert } from "../../utils/swal";
 
 //error loging
 import * as Sentry from "@sentry/react";
-import { successAlert } from "./../../utils/swal";
 
 //게시글 전체 조회
 export const getQnaListDB = createAsyncThunk(
@@ -13,6 +12,7 @@ export const getQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getList();
+      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -214,10 +214,33 @@ export const editCommentListDB = createAsyncThunk(
 export const likeCommentListDB = createAsyncThunk(
   "qna/likecomment",
   async (data, thunkAPI) => {
+    console.log(data);
     try {
       const response = await qnaApi.likeCommentList(data);
       if (response.data.success === true) {
         successAlert("정상적으로 추천 되었습니다.");
+        return data;
+      }
+    } catch (err) {
+      if (err.response.data.message === "반복해서 눌렀습니다.") {
+        errorLikeAlert(err.response.data.message);
+        return thunkAPI.rejectWithValue(err.response.data.message);
+      }
+      networkError();
+      Sentry.captureException(`error, QNA게시글 댓글 추천 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+
+//댓글 취소
+export const dislikeCommentListDB = createAsyncThunk(
+  "qna/dislikecomment",
+  async (data, thunkAPI) => {
+    try {
+      const response = await qnaApi.dislikeCommentList(data);
+      if (response.data.success === true) {
+        successAlert("정상적으로 추천 취소 되었습니다.");
         return data;
       }
     } catch (err) {
