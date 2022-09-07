@@ -33,7 +33,7 @@ const Router = () => {
         element={isLogin ? <QnaEdit /> : <NoLogin />}
       />
       <Route
-        path="/blog/edit/"
+        path="/blog/edit/:id"
         element={isLogin ? <BlogEdit /> : <NoLogin />}
       />
       <Route

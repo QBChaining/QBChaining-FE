@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getBlogCommunityListDB } from "../../redux/async/blog";
 import { useNavigate } from "react-router-dom";
+
 const BlogCommmunityMain = () => {
-  const blogMainList = useSelector(state => state.blogSlice.blogList);
+  const blogMainLists = useSelector(state => state.blogSlice.blogList);
   const isRe = useSelector(state => state.blogSlice.isFetching);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const BlogCommmunityMain = () => {
               글쓰기
             </button>
           </div>
-          {blogMainList?.map(posts => {
+          {blogMainLists?.map(posts => {
             return (
               <SBloglist data={posts} key={posts.id}>
                 <div

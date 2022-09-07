@@ -11,6 +11,7 @@ const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
   const dispatch = useDispatch();
   const { id } = useParams();
+  console.log(id);
   const navigate = useNavigate();
   //게시글 삭제
   const deleteBlogPost = id => {
@@ -48,9 +49,9 @@ const BlogCommunityDetail = () => {
         </button>
         <button
           type="button"
-          onClick={id => {
+          onClick={() => {
             navigate("/blog");
-            deleteBlogPost(id);
+            deleteBlogPost();
           }}
         >
           삭제하기

@@ -22,7 +22,7 @@ export const blogSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    //블로그 조회 부분
+    //블로그 전체조회 부분
     [getBlogCommunityListDB.pending]: state => {
       state.isFetching = true;
     },
@@ -55,6 +55,7 @@ export const blogSlice = createSlice({
     },
     [postBlogCommunityDB.fulfilled]: (state, action) => {
       console.log(action.payload);
+      state.blogList.push(action.pay);
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -68,6 +69,8 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [patchBlogCommunityDB.fulfilled]: (state, action) => {
+      console.log(action);
+      state.blogList = action.meta.arg;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -147,7 +150,7 @@ export const blogSlice = createSlice({
 
     //마이블로그 조회
     [getMyBlogDB.pending]: state => {
-      state.isFetchin = true;
+      state.isFetching = true;
     },
     [getMyBlogDB.fulfilled]: (state, action) => {
       console.log(action.payload);
