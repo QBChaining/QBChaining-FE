@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getQnaListDB } from "./../../redux/async/qna";
 import QnaList from "./../../components/qna/QnaList";
 import QnaMainCatergory from "./../../components/qna/QnaMainCatergory";
+import ModalBookmark from "../../components/common/ModalBookmark";
 
 const QnaMain = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const QnaMain = () => {
         </SleftConatiner>
         <SRightContainer></SRightContainer>
       </SQnaWrapper>
+      <ModalBookmark />
     </SQnaMain>
   );
 };

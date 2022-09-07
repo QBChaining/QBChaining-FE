@@ -133,7 +133,6 @@ const qnaSlice = createSlice({
     },
     //댓글 생성
     [postCommentListDB.fulfilled]: (state, { payload }) => {
-      payload.honey_tip = 0;
       state.commentList.push(payload);
       state.isFetching = false;
       state.errorMessage = null;
