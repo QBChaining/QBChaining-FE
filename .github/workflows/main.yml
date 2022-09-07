@@ -18,9 +18,8 @@ jobs:
       - name: Generate Environment Varibles Fils for Production
       # Gitgub repository Secrtets를 통해 변수 파일을 생성
         run: |
-        echo"REACT_APP_ENDPOINT=$REACT_APP_ENDPOINT">>.env
+        echo"REACT_APP_ENDPOINT=$REACT_APP_ENDPOINT">>.env.produciton
       env:
-      # REACT_APP_ENDPOINT: ${{ secrets.REACT_APP_ENDPOINT }}
       REACT_APP_ENDPOINT: ${{ secrets.REACT_APP_ENDPOINT }}
 
       # 실행 속도를 빠르게 하기 위해 설치된 Node 모듈을 캐시하도록 설정합니다.
@@ -50,7 +49,3 @@ jobs:
           --region ap-northeast-2 \
           build s3://qb-chaning
       
-
-  
-
-
