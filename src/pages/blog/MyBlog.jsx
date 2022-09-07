@@ -1,19 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyBlogDB } from "../../redux/async/blog";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import BlogList from "../../components/blog/BlogList";
+import BlogList from "../../components/blog/MyBlogList";
 const MyBlog = () => {
-  const res = useSelector(state => state.blogSlice.myblog);
+  const myBlogLists = useSelector(state => state.blogSlice.myblog);
   const dispatch = useDispatch();
   const { id } = useParams();
-  React.useEffect(id => {
+  useEffect(id => {
     dispatch(getMyBlogDB(id));
   }, []);
   return (
     <div>
-      {res?.map(myco => (
+      {myBlogLists?.map(myco => (
         <BlogList blogList={myco} key={myco.id} />
       ))}
       <div></div>
@@ -23,6 +23,7 @@ const MyBlog = () => {
   );
 };
 
+//현재 보류 중, components/blog/MyBloglist 완성 이후 지움.
 {
   /* <SCard>
   <div>{myco.title}</div>

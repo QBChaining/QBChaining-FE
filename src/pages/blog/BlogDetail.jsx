@@ -13,10 +13,11 @@ const BlogCommunityDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   //게시글 삭제
-  const deleteBlogPost = id => {
-    dispatch(deleteBlogCommunityDB(id));
-  };
 
+  const deleteBlogPost = () => {
+    dispatch(deleteBlogCommunityDB(parseInt(id)));
+  };
+  console.log(typeof id);
   useEffect(() => {
     dispatch(getBlogDetailDB(id));
   }, []);

@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import {
   patchBlogCommentDB,
   deleteBlogCommentDB,
 } from "../../../redux/async/blog";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 
 const CommentEditDel = ({ comments }) => {
-  const [show, setShow] = React.useState(false);
-  const editRef = React.useRef();
+  const [show, setShow] = useState(false);
+  const editRef = useRef();
 
   const dispatch = useDispatch();
 
@@ -24,7 +23,8 @@ const CommentEditDel = ({ comments }) => {
   };
 
   //댓글 삭제 버튼
-  const onClickDeleteHandler = () => {
+  const onClickDeleteHandler = e => {
+    e.preventDefault();
     dispatch(deleteBlogCommentDB(comments.id));
   };
 
@@ -45,13 +45,7 @@ const CommentEditDel = ({ comments }) => {
             >
               수졍
             </button>
-            <button
-              onClick={() => {
-                onClickDeleteHandler();
-              }}
-            >
-              삭제
-            </button>
+            <button onClick={onClickDeleteHandler}>삭제</button>
           </div>
         </SCommentList>
       ) : (

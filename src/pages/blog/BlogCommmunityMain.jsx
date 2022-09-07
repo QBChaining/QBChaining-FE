@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getBlogCommunityListDB } from "../../redux/async/blog";
 import { useNavigate } from "react-router-dom";
+
 const BlogCommmunityMain = () => {
-  const blogMainList = useSelector(state => state.blogSlice.blogList);
-  const isRe = useSelector(state => state.blogSlice.isFetching);
+  const blogMainLists = useSelector(state => state.blogSlice.blogList);
+  // const isRe = useSelector(state => state.blogSlice.isFetching);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // 요청한 데이터를 조회 하기 위해서
-  React.useEffect(() => {
-    dispatch(getBlogCommunityListDB(isRe));
-  }, []);
+  // React.useEffect(() => {
+  //   dispatch(getBlogCommunityListDB(isRe));
+  // }, []);
+
+  useEffect(() => {
+    dispatch(getBlogCommunityListDB());
+  }, [dispatch]);
 
   return (
     <div>
@@ -32,7 +37,7 @@ const BlogCommmunityMain = () => {
               글쓰기
             </button>
           </div>
-          {blogMainList?.map(posts => {
+          {blogMainLists?.map(posts => {
             return (
               <SBloglist data={posts} key={posts.id}>
                 <div
