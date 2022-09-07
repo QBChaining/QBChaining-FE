@@ -19,11 +19,11 @@ const QnaTarget = ({ data, isDatail }) => {
   const dispatch = useDispatch();
   const bookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
   const { isLogin } = useSelector(state => state.userSlice);
-  //내 북마크 목록에 있는지 확인
+  //내 즐겨찾기 목록에 있는지 확인
   const isBookmarked =
     bookmarkList.filter(mark => mark.qna_id === data.id).length > 0;
 
-  //내 좋아요 목록에 있는지 확인
+  //내 추천 목록에 있는지 확인
   // const isliked =
   //   likeList.filter(mark => mark.qna_id === data.id).length > 0;
 
@@ -86,6 +86,7 @@ const QnaTarget = ({ data, isDatail }) => {
         </div>
         <div>
           <button onClick={onLikeQna}>게시글 추천</button>
+          <button onClick={onDislikeQna}>게시글 추천취소</button>
         </div>
         <div>
           <div>{data.user?.user_name}</div>

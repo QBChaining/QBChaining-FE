@@ -51,15 +51,12 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
       denyButtonText: `취소`,
     }).then(res => {
       if (res.isConfirmed) {
-        successAlert("채택 하셨습니다.");
-        dispatch(choiceCommentListDB({ id, qnaId }));
+        dispatch(choiceCommentListDB({ id, qnaId, userName }));
       } else if (res.isDenied || res.isDismissed) {
         errorAlert("취소 하셨습니다.");
       }
     });
   };
-
-  console.log(list);
 
   return (
     <>
@@ -71,7 +68,8 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
               <div dangerouslySetInnerHTML={{ __html: data.comment }}></div>
             </div>
             <div>{data.honey_tip}</div>
-            {userName === data.user_name && (
+            {/* 유저이름과 작성자이름이 같고 채택이 없을때 삭제 가능 */}
+            {userName === data.user_name && !resolve && (
               <button
                 onClick={() => {
                   onDeleteHandler(data.id);
@@ -87,7 +85,8 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
             >
               추천하기
             </button>
-            {!resolve && author === userName && (
+            {/* 글작성자와 유저이름이 같고 채택이 없을때 채택 가능 */}
+            {author === userName && !resolve && (
               <button
                 onClick={() => {
                   onChoiceHandler(data.id);

@@ -53,6 +53,7 @@ const Editor = ({
   const [tags, setTags] = useState([]);
 
   const { isLogin } = useSelector(state => state.userSlice);
+  const { userName } = useSelector(state => state.userSlice);
 
   const placeholder = "입력해주세요";
   const theme = "snow";
@@ -193,6 +194,7 @@ const Editor = ({
           content: quillRef.current.firstChild.innerHTML,
           id: parseInt(id),
           honey_tip: 0,
+          user_name: userName,
         }),
       );
       //블로그 수정, 생성 수정중

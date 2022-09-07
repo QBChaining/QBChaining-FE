@@ -20,7 +20,7 @@ export const qnaApi = {
   //게시글 추천
   likeQnaList: data => instance.post(`qna/${data.qna_id}/like`),
   //게시글 추천 취소
-  dislikeQnaList: data => instance.post(`qna/${data.qna_id}/like`),
+  dislikeQnaList: data => instance.delete(`qna/${data.qna_id}/like`),
   //댓글 조회
   getCommentList: id => instance.get(`/qna/${id}/comments`),
   //댓글 작성
