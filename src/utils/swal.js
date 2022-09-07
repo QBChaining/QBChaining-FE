@@ -16,6 +16,14 @@ export const errorAlert = message => {
   });
 };
 
+export const infoAlert = message => {
+  return Swal.fire({
+    icon: "info",
+    text: message,
+    confirmButtonText: "확인",
+  });
+};
+
 export const needLoginAlert = () => {
   return Swal.fire({
     icon: "error",

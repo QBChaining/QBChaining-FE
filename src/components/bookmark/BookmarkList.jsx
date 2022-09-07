@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getBookmarkListDB } from "./../../redux/async/qna";
+import { getBookmarkListDB } from "../../redux/async/qna";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import WriteBookmark from "./WriteBookmark";
+import BookmarkListItem from "./BookmarkListItem";
 
 const BookmarkList = () => {
   const dispatch = useDispatch();
@@ -9,6 +12,8 @@ const BookmarkList = () => {
   useEffect(() => {
     dispatch(getBookmarkListDB());
   }, []);
+
+  console.log(qnaBookmarkList);
 
   return (
     <SBookmarkList>
@@ -26,7 +31,7 @@ const BookmarkList = () => {
       <div>
         <ul>
           {qnaBookmarkList.map(data => (
-            <li key={data.qna_id}>{data.Qna.title}</li>
+            <BookmarkListItem key={data.qna_id} data={data} />
           ))}
         </ul>
       </div>
