@@ -10,6 +10,7 @@ import {
   getCommentListDB,
   getOneQnaListDB,
   likeCommentListDB,
+  dislikeCommentListDB,
 } from "./../../redux/async/qna";
 
 const QnaCommentList = ({ author, resolve, id, qnaId }) => {
@@ -34,12 +35,18 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
     dispatch(deleteCommentListDB(id));
   };
 
+  //댓글 추천
   const onLikeHandler = id => {
     if (!isLogin) {
       errorAlert("로그인이 필요한 기능입니다!");
       return;
     }
     dispatch(likeCommentListDB(id));
+  };
+
+  //댓글 추천 취소
+  const onDisLikeHandler = id => {
+    dispatch(dislikeCommentListDB(id));
   };
 
   const onChoiceHandler = id => {
@@ -78,13 +85,23 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
                 삭제하기
               </button>
             )}
-            <button
-              onClick={() => {
-                onLikeHandler(data.id);
-              }}
-            >
-              추천하기
-            </button>
+            {data.is_honey_tip ? (
+              <button
+                onClick={() => {
+                  onDisLikeHandler(data.id);
+                }}
+              >
+                추천취소
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  onLikeHandler(data.id);
+                }}
+              >
+                추천하기
+              </button>
+            )}
             {/* 글작성자와 유저이름이 같고 채택이 없을때 채택 가능 */}
             {author === userName && !resolve && (
               <button
