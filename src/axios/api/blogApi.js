@@ -24,14 +24,23 @@ export const blogApi = {
   patchBlogComment: data => instance.put(`/comments/${data.id}`, data),
   //댓글 삭제
   DeleteBlogComment: id => instance.delete(`/comments/${id}`),
+
+  //마이블로그
+
   //마이블로그 조회
   getMyBlog: id => instance.get(`/posts/my/${id}`),
   //유저마이블로그 조회
   getYouBlog: id => instance.get(`/posts/you/${id}`),
+
+  //즐겨찾기
+
   //블로그즐겨찾기 추가
   postBlogBookMark: id => instance.post(`/posts/bookmark/${id}`),
   //블로그즐겨찾기 삭제
   delBlogBookMark: id => instance.delete(`/posts/bookmark/${id}`),
+
+  // 추천
+
   //블로그추천
   postBlogLike: id => instance.post(`/posts/like/${id}`),
   //블로그 추천삭제

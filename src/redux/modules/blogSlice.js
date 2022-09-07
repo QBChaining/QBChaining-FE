@@ -27,6 +27,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogCommunityListDB.fulfilled]: (state, action) => {
+      //블로그 메인 게시물 리스트 GET
       state.blogList = action.payload;
       state.isFetching = false;
       state.errorMessage = null;
@@ -41,6 +42,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogDetailDB.fulfilled]: (state, action) => {
+      //블로그 디테일 게시물
       state.blogDetail = action.payload;
       state.isFetching = false;
     },
@@ -98,6 +100,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogCommentListDB.fulfilled]: (state, action) => {
+      //같은 포스트아이디에 comment리스트
       state.commentList = action.payload;
       state.isFetching = false;
       state.errorMessage = null;
@@ -108,10 +111,11 @@ export const blogSlice = createSlice({
     },
     //댓글 추가 부분
     [postBlogCommentDB.pending]: state => {
-      console.log(state);
       state.isFetching = true;
     },
     [postBlogCommentDB.fulfilled]: (state, action) => {
+      console.log(action);
+      state.commentList.push(action.payload);
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -125,6 +129,8 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [patchBlogCommentDB.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      state.commntList = action.payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -138,7 +144,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [deleteBlogCommentDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
+      console.log(action);
 
       state.isFetching = false;
       state.errorMessage = null;

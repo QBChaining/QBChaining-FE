@@ -5,7 +5,6 @@ import {
   deleteBlogCommentDB,
 } from "../../../redux/async/blog";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 
 const CommentEditDel = ({ comments }) => {
   const [show, setShow] = useState(false);
@@ -24,7 +23,8 @@ const CommentEditDel = ({ comments }) => {
   };
 
   //댓글 삭제 버튼
-  const onClickDeleteHandler = () => {
+  const onClickDeleteHandler = e => {
+    e.preventDefault();
     dispatch(deleteBlogCommentDB(comments.id));
   };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getBlogCommunityListDB } from "../../redux/async/blog";
@@ -6,14 +6,18 @@ import { useNavigate } from "react-router-dom";
 
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
-  const isRe = useSelector(state => state.blogSlice.isFetching);
+  // const isRe = useSelector(state => state.blogSlice.isFetching);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // 요청한 데이터를 조회 하기 위해서
-  React.useEffect(() => {
-    dispatch(getBlogCommunityListDB(isRe));
-  }, []);
+  // React.useEffect(() => {
+  //   dispatch(getBlogCommunityListDB(isRe));
+  // }, []);
+
+  useEffect(() => {
+    dispatch(getBlogCommunityListDB());
+  }, [dispatch]);
 
   return (
     <div>

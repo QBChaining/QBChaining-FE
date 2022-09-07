@@ -1,6 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { blogApi } from "../../axios/api/blogApi";
-import Swal from "sweetalert2";
+//경고창
+import { networkError } from "../../utils/swal";
+
+//에러 로딩
+import * as Sentry from "@sentry/react";
+import { successAlert } from "../../utils/swal";
 
 //블로그 커뮤니티 조회
 export const getBlogCommunityListDB = createAsyncThunk(
@@ -12,24 +17,30 @@ export const getBlogCommunityListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.", "error");
+      networkError();
+      Sentry.captureException(`error, 블로그 전체조회 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
 );
+
 //블로그 디테일
 export const getBlogDetailDB = createAsyncThunk(
   "BLOG_DETAIL",
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.getBlogDetail(id);
-      return response.data.data;
+      if (response.data.success === true) {
+        return response.data.data;
+      }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
+      Sentry.captureException(`error, 블로그 상세 조회 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
 );
+
 //블로그 커뮤니티 생성
 export const postBlogCommunityDB = createAsyncThunk(
   "BLOG_COMMUNITY",
@@ -37,13 +48,11 @@ export const postBlogCommunityDB = createAsyncThunk(
     try {
       const response = await blogApi.poastBlogCommunity(data);
       if (response.data.success === true) {
-        return response.data.success;
-        //chan ret
-        // return data;
+        return;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
-
+      networkError();
+      Sentry.captureException(`error, 블로그 작성: ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -55,27 +64,31 @@ export const patchBlogCommunityDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.editBlogCommunity(data);
-      if (response.statusText === "OK") {
-        return response.data.data.content;
+      if (response.data.success === true) {
+        successAlert("수정 되었습니다!");
+        return;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.!", "error");
+      networkError();
+      Sentry.captureException(`error, 블로그 게시물 수정 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
 );
 
-//블로그 커뮤니티 삭제
+//블로그 게시글 삭제
 export const deleteBlogCommunityDB = createAsyncThunk(
   "BLOG_DELETE",
   async (id, thunkAPI) => {
+    console.log(id);
     try {
       const response = await blogApi.deleteBlogCommunity(id);
       console.log(response);
       if (response.data.success === true) {
-        return response.data;
+        return;
       }
     } catch (err) {
+      Sentry.captureException(`error, 블로그 게시물 삭제 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -87,11 +100,11 @@ export const getBlogCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.getBlogCommentList(data);
-      if (response.statusText === "OK") {
+      if (response.data.success === true) {
         return response.data.data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.", "error");
+      Sentry.captureException(`error, 댓글 조회 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -100,14 +113,16 @@ export const getBlogCommentListDB = createAsyncThunk(
 export const postBlogCommentDB = createAsyncThunk(
   "POST_BLOG_COMMENTLIST",
   async (data, thunkAPI) => {
+    console.log(data);
     try {
       const response = await blogApi.postBlogComment(data);
       console.log(response);
-      if (response.statusText === "CREATED") {
-        return response.data.sucs;
+      if (response.data.success === true) {
+        successAlert("정상적으로 추가 되었습니다.");
+        return response.data;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.", "error");
+      Sentry.captureException(`error, 블로그 댓글 추가 : ${err}`);
       return thunkAPI.rejectWithValue(err.response);
     }
   },
@@ -120,11 +135,12 @@ export const patchBlogCommentDB = createAsyncThunk(
     try {
       const response = await blogApi.patchBlogComment(data);
       console.log(response);
-      if (response.statusText === "OK") {
+      if (response.data.success === true) {
+        successAlert("정상적으로 수정 되었습니다.");
         return response.data.comment;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.", "error");
+      Sentry.captureException(`error, 블로그 댓글 수정 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -133,13 +149,16 @@ export const patchBlogCommentDB = createAsyncThunk(
 export const deleteBlogCommentDB = createAsyncThunk(
   "DELETE_BLOG_COMMENTLIST",
   async (id, thunkAPI) => {
+    console.log(id);
     try {
       const response = await blogApi.DeleteBlogComment(id);
-      if (response.statusText === "OK") {
-        return response.data.success;
+      console.log(response.data.success);
+      if (response.data.success === true) {
+        successAlert("정상적으로 삭제 되었습니다.");
+        return;
       }
     } catch (err) {
-      Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.", "error");
+      Sentry.captureException(`error, 블로그 댓글 삭제 성공! : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
     }
   },
@@ -148,10 +167,11 @@ export const deleteBlogCommentDB = createAsyncThunk(
 export const getMyBlogDB = createAsyncThunk("GET_MY_BLOG", async thunkAPI => {
   try {
     const response = await blogApi.getMyBlog();
-
-    return response.data.data;
+    if (response.data.success === true) {
+      return response.data.data;
+    }
   } catch (err) {
-    Swal.fire("에러", "네트워크 연결 상태를 확인해주세요.", "error");
+    Sentry.captureException(`error, MYBLOG 조회 : ${err}`);
     return thunkAPI.rejectWithValue(err.response.message);
   }
 });
