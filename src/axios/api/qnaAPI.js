@@ -33,6 +33,9 @@ export const qnaApi = {
   //댓글 추천
   likeCommentList: (commentId, id) =>
     instance.post(`/qna/comments/${commentId}/like`),
+  //댓글 추천
+  dislikeCommentList: (commentId, id) =>
+    instance.delete(`/qna/comments/${commentId}/like`),
   //댓글 채택
   choiceCommentList: data => instance.post(`/qna/comments/${data.id}/choice`),
 };

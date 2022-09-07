@@ -12,6 +12,7 @@ import {
   postBookmarkListDB,
   deleteBookmarkListDB,
   likeCommentListDB,
+  dislikeCommentListDB,
   choiceCommentListDB,
   getQnaLikeListDB,
   likeQnaListDB,
@@ -96,6 +97,7 @@ const qnaSlice = createSlice({
     },
     //게시글 추천
     [likeQnaListDB.fulfilled]: (state, { payload }) => {
+      state.qnaTarget.is_honey_tip = true;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -108,6 +110,7 @@ const qnaSlice = createSlice({
     },
     //게시글 추천 취소
     [dislikeQnaListDB.fulfilled]: (state, { payload }) => {
+      state.qnaTarget.is_honey_tip = false;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -172,11 +175,13 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
-    //댓글 좋아요
+    //댓글 추천
     [likeCommentListDB.fulfilled]: (state, { payload }) => {
-      state.commentList.map(data =>
-        data.id === payload ? (data.honey_tip += 1) : data,
-      );
+      const idx = state.commentList.findIndex(data => {
+        return data.id === payload;
+      });
+      state.commentList[idx].is_honey_tip = true;
+      state.commentList[idx].honey_tip += 1;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -184,6 +189,23 @@ const qnaSlice = createSlice({
       state.isFetching = true;
     },
     [likeCommentListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+    //댓글 추천 취소
+    [dislikeCommentListDB.fulfilled]: (state, { payload }) => {
+      const idx = state.commentList.findIndex(data => {
+        return data.id === payload;
+      });
+      state.commentList[idx].is_honey_tip = false;
+      state.commentList[idx].honey_tip -= 1;
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [dislikeCommentListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [dislikeCommentListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },

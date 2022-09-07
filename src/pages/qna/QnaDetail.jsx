@@ -11,7 +11,6 @@ import styled from "styled-components";
 const QnaDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [data, setData] = useState();
 
   const target = useSelector(state => state.qnaSlice.qnaTarget);
 
@@ -19,16 +18,10 @@ const QnaDetail = () => {
     dispatch(getOneQnaListDB(id));
   }, [dispatch, id]);
 
-  useEffect(() => {
-    if (target) {
-      setData(target);
-    }
-  }, [target]);
-
   return (
     <SQnaDetail>
       <div className="leftContainer">
-        {data && <QnaTarget isDatail={true} data={data} />}
+        {target && <QnaTarget isDatail={true} data={target} />}
       </div>
       <div className="rightContainer">
         <h2>댓글</h2>

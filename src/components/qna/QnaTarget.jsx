@@ -23,10 +23,6 @@ const QnaTarget = ({ data, isDatail }) => {
   const isBookmarked =
     bookmarkList.filter(mark => mark.qna_id === data.id).length > 0;
 
-  //내 추천 목록에 있는지 확인
-  // const isliked =
-  //   likeList.filter(mark => mark.qna_id === data.id).length > 0;
-
   const totalId = {
     qna_id: data.id,
     Qna: { title: data.title },
@@ -39,13 +35,11 @@ const QnaTarget = ({ data, isDatail }) => {
       return;
     }
     dispatch(postBookmarkListDB(totalId));
-    successAlert("즐겨찾기에 추가 되었습니다.");
   };
 
   //즐겨찾기 삭제
   const onDeleteBookmark = () => {
     dispatch(deleteBookmarkListDB(totalId));
-    errorAlert("즐겨찾기에 삭제 되었습니다.");
   };
 
   //게시글 추천
@@ -85,8 +79,11 @@ const QnaTarget = ({ data, isDatail }) => {
           )}
         </div>
         <div>
-          <button onClick={onLikeQna}>게시글 추천</button>
-          <button onClick={onDislikeQna}>게시글 추천취소</button>
+          {data.is_honey_tip ? (
+            <button onClick={onDislikeQna}>게시글 추천취소</button>
+          ) : (
+            <button onClick={onLikeQna}>게시글 추천</button>
+          )}
         </div>
         <div>
           <div>{data.user?.user_name}</div>
