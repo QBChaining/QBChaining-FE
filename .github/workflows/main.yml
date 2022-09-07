@@ -20,6 +20,7 @@ jobs:
             # Gitgub repository Secrtets를 통해 변수 파일을 생성
               run: |
               echo"REACT_APP_ENDPOINT=$REACT_APP_ENDPOINT">>.env.production
+
             env: 
             # REACT_APP_ENDPOINT: ${{ secrets.REACT_APP_ENDPOINT }}
             REACT_APP_ENDPOINT: ${{ secrets.REACT_APP_ENDPOINT }}
