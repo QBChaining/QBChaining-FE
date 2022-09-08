@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import WriteBookmark from "./WriteBookmark";
+import { useNavigate } from "react-router-dom";
 
-const BookmarkListItem = data => {
+const BookmarkListItem = ({ isModal, data }) => {
+  const navigate = useNavigate();
   const [modal, setModal] = useState(false);
 
   const onToggleHandler = () => {
     setModal(!modal);
   };
+
+  const goDetail = (content, id) => {
+    navigate(`/${content}/detail/${id}`);
+  };
+
   return (
     <>
       <li
@@ -18,16 +25,22 @@ const BookmarkListItem = data => {
           backgroundColor: "white",
           color: "black",
         }}
-        onClick={onToggleHandler}
+        onClick={
+          isModal
+            ? () => {
+                goDetail("qna", data.qna_id);
+              }
+            : onToggleHandler
+        }
       >
-        {data.data.Qna.title}
+        {data.Qna.title}
       </li>
       {modal && (
         <WriteBookmark
           modal={modal}
           setModal={setModal}
           onToggleHandler={onToggleHandler}
-          id={data.data.qna_id}
+          id={data.qna_id}
         />
       )}
     </>

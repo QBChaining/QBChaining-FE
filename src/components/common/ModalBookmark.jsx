@@ -1,17 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BookmarkStar from "../../assets/images/BookmarkStar.png";
 import BookmarkModal1 from "../../assets/images/BookmarkModal1.png";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getBookmarkListDB } from "../../redux/async/qna";
+import BookmarkListItem from "./../bookmark/BookmarkListItem";
+import { needLoginAlert } from "./../../utils/swal";
 const ModalBookmark = () => {
+  const dispatch = useDispatch();
+  const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
+  const { isLogin } = useSelector(state => state.userSlice);
   const [modal, setModal] = useState(false);
   const toggle = () => {
+    if (!isLogin) {
+      return needLoginAlert();
+    }
     setModal(!modal);
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      dispatch(getBookmarkListDB());
+    }
+  }, []);
   return (
     <>
       {modal && (
         <SModalBookmark>
-          <div className="listWrapper"></div>
+          <div className="listWrapper">
+            <div className="blog">
+              <h2>블로그</h2>
+            </div>
+            <div className="qna">
+              <h2>Q&A</h2>
+              <ul>
+                {qnaBookmarkList.map(data => (
+                  <BookmarkListItem
+                    isModal={true}
+                    key={data.qna_id}
+                    data={data}
+                  />
+                ))}
+              </ul>
+            </div>
+          </div>
         </SModalBookmark>
       )}
       <SModalBookmarkIcon onClick={toggle} />
@@ -56,6 +89,7 @@ const SModalBookmark = styled.div`
     width: 468px;
     height: 643px;
     background-color: #1c2030;
+    color: white;
 
     &::before {
       content: "";

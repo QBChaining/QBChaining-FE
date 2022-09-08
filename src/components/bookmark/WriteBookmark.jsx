@@ -8,7 +8,7 @@ const WriteBookmark = ({ id, onToggleHandler }) => {
   const dispatch = useDispatch();
   const { qnaTarget } = useSelector(state => state.qnaSlice);
   const { commentList } = useSelector(state => state.qnaSlice);
-  console.log(commentList);
+
   useEffect(() => {
     dispatch(getOneQnaListDB(id));
     dispatch(getCommentListDB(id));

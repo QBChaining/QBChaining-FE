@@ -13,8 +13,6 @@ const BookmarkList = () => {
     dispatch(getBookmarkListDB());
   }, []);
 
-  console.log(qnaBookmarkList);
-
   return (
     <SBookmarkList>
       <h2>개발일지</h2>

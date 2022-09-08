@@ -139,8 +139,8 @@ const SHeader = styled.header`
     cursor: pointer;
     padding: 20px 40px;
     position: relative;
-    overflow: hidden;
-
+    white-space: nowrap;
+    text-overflow: ellipsis;
     &::before {
       content: "";
       width: 1px;
@@ -234,6 +234,8 @@ const SHeader = styled.header`
     & .loginConatainer {
       display: flex;
       align-items: center;
+      white-space: nowrap;
+      text-overflow: ellipsis;
 
       & button {
         margin-right: 10px;
