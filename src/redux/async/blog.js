@@ -46,7 +46,7 @@ export const postBlogCommunityDB = createAsyncThunk(
   "BLOG_COMMUNITY",
   async (data, thunkAPI) => {
     try {
-      const response = await blogApi.poastBlogCommunity(data);
+      const response = await blogApi.postBlogCommunity(data);
       if (response.data.success === true) {
         return;
       }
@@ -100,6 +100,7 @@ export const getBlogCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.getBlogCommentList(data);
+      console.log("댓글조회", response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -116,7 +117,7 @@ export const postBlogCommentDB = createAsyncThunk(
     console.log(data);
     try {
       const response = await blogApi.postBlogComment(data);
-      console.log(response);
+      console.log("댓글추가", response);
       if (response.data.success === true) {
         successAlert("정상적으로 추가 되었습니다.");
         return response.data;
@@ -132,12 +133,13 @@ export const postBlogCommentDB = createAsyncThunk(
 export const patchBlogCommentDB = createAsyncThunk(
   "PATCH_BLOG_COMMENTLIST",
   async (data, thunkAPI) => {
+    console.log(data);
     try {
       const response = await blogApi.patchBlogComment(data);
-      console.log(response);
+      console.log("댓글수정", response);
       if (response.data.success === true) {
         successAlert("정상적으로 수정 되었습니다.");
-        return response.data.comment;
+        return response.data;
       }
     } catch (err) {
       Sentry.captureException(`error, 블로그 댓글 수정 : ${err}`);
@@ -149,13 +151,12 @@ export const patchBlogCommentDB = createAsyncThunk(
 export const deleteBlogCommentDB = createAsyncThunk(
   "DELETE_BLOG_COMMENTLIST",
   async (id, thunkAPI) => {
-    console.log(id);
     try {
       const response = await blogApi.DeleteBlogComment(id);
-      console.log(response.data.success);
+      console.log(response);
       if (response.data.success === true) {
         successAlert("정상적으로 삭제 되었습니다.");
-        return;
+        return id;
       }
     } catch (err) {
       Sentry.captureException(`error, 블로그 댓글 삭제 성공! : ${err}`);
