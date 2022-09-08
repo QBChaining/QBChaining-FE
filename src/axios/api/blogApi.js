@@ -8,7 +8,7 @@ export const blogApi = {
   //블로그 디테일 조회
   getBlogDetail: id => instance.get(`/posts/${id}`),
   //블로그 게시글 생성
-  poastBlogCommunity: data => instance.post("/posts", data),
+  postBlogCommunity: data => instance.post("/posts", data),
   //블로그 게시물 수정
   editBlogCommunity: data => instance.put(`/posts/${data.id}`, data),
   //블로그 게시물 삭제

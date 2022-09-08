@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { deleteBlogCommunityDB } from "../../redux/async/blog";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
+  console.log("디테일", response);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ const BlogCommunityDetail = () => {
   const deleteBlogPost = () => {
     dispatch(deleteBlogCommunityDB(parseInt(id)));
   };
-  console.log(typeof id);
   useEffect(() => {
     dispatch(getBlogDetailDB(id));
   }, []);

@@ -12,7 +12,6 @@ export const getQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getList();
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -141,7 +140,6 @@ export const getCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getCommentList(data);
-      console.log(response.data.data);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -214,7 +212,6 @@ export const editCommentListDB = createAsyncThunk(
 export const likeCommentListDB = createAsyncThunk(
   "qna/likecomment",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await qnaApi.likeCommentList(data);
       if (response.data.success === true) {

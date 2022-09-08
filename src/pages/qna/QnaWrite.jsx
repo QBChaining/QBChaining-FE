@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Editor from "../../components/common/Editor";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import BookmarkList from "./../../components/common/BookmarkList";
+import BookmarkList from "../../components/bookmark/BookmarkList";
 import styled from "styled-components";
 
 const QnaWrite = () => {
@@ -42,4 +42,5 @@ const SEditor = styled.div`
 const SBookmark = styled.div`
   width: 35%;
   background-color: #1c2030;
+  position: relative;
 `;

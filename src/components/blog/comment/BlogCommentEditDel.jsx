@@ -43,7 +43,7 @@ const CommentEditDel = ({ comments }) => {
                 setShow(!show);
               }}
             >
-              수졍
+              수정
             </button>
             <button onClick={onClickDeleteHandler}>삭제</button>
           </div>
