@@ -18,7 +18,10 @@ import ImageResize from "@looop/quill-image-resize-module-react";
 //코드블럭 구문강조 highlight.js
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
-import Swal from "sweetalert2";
+
+//에러알럿
+import { errorAlert } from "../../utils/swal";
+
 import {
   patchBlogCommunityDB,
   postBlogCommunityDB,
@@ -29,7 +32,6 @@ import {
   postCommentListDB,
   postQnaListDB,
 } from "../../redux/async/qna";
-import { errorAlert } from "../../utils/swal";
 
 //이미지 리사이즈 레지스터
 Quill.register("modules/ImageResize", ImageResize);
@@ -46,6 +48,7 @@ const Editor = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const tagText = useRef();
+  const titleText = useRef();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Javascript");
   const [tag, setTag] = useState("");
@@ -153,14 +156,25 @@ const Editor = ({
   //생성 or 수정 함수
   const onSubmitHandler = e => {
     e.preventDefault();
+
+    //로그인이 안되어있을때 알럿
     if (!isLogin) {
       errorAlert("로그인이 필요한 기능입니다!");
       return;
     }
-    if (quill.getText().length < 2) {
-      Swal.fire("입력해주세요", "", "error");
+
+    //제목이 빈칸일때 알럿
+    if (titleText.current !== undefined && titleText.current.value.length < 1) {
+      errorAlert("제목을 입력해주세요!");
       return;
     }
+
+    //본문이 빈칸일때 알럿
+    if (quill.getText().length < 2) {
+      errorAlert("본문을 입력해주세요!");
+      return;
+    }
+
     //수정중이라면
     if (isEdit) {
       dispatch(
@@ -196,6 +210,8 @@ const Editor = ({
           user_name: userName,
         }),
       );
+      //작성 후 입력 값 초기화
+      quillRef.current.firstChild.innerHTML = "";
       //블로그 수정, 생성
     } else if (isBlogWrite) {
       navigate("/blog");
@@ -244,7 +260,7 @@ const Editor = ({
   //태그추가
   const onAddTagHandler = () => {
     if (tagText.current.value.length < 1) {
-      alert("입력부탁드려요~");
+      errorAlert("빈칸입니다.");
       return;
     }
     setTags([...tags, tag]);
@@ -262,6 +278,8 @@ const Editor = ({
               value={title || ""}
               onChange={onTitleChangeHandler}
               type="text"
+              ref={titleText}
+              maxLength="20"
               placeholder="제목을 입력해주세요."
             />
             {(isEdit || isWrite) && (

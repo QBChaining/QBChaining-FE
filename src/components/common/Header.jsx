@@ -101,7 +101,7 @@ const SHeader = styled.header`
   background: linear-gradient(285.14deg, #fa98b8 0.67%, #8dc6fd 97.6%);
   color: white;
   position: relative;
-  /* &::before {
+  &::before {
     content: "";
     position: absolute;
     bottom: 0;
@@ -111,7 +111,7 @@ const SHeader = styled.header`
     height: 1px;
     display: block;
     background-color: white;
-  } */
+  }
 
   & .logoContainer {
     display: flex;
@@ -139,8 +139,8 @@ const SHeader = styled.header`
     cursor: pointer;
     padding: 20px 40px;
     position: relative;
-    overflow: hidden;
-
+    white-space: nowrap;
+    text-overflow: ellipsis;
     &::before {
       content: "";
       width: 1px;
@@ -234,6 +234,8 @@ const SHeader = styled.header`
     & .loginConatainer {
       display: flex;
       align-items: center;
+      white-space: nowrap;
+      text-overflow: ellipsis;
 
       & button {
         margin-right: 10px;
