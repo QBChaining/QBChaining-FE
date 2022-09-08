@@ -7,15 +7,14 @@ const CommentAdd = () => {
   const dispatch = useDispatch();
   const commentRefInput = useRef();
   const { id } = useParams();
-  //댓글 추가 이벤트
 
+  //댓글 추가 이벤트
   const addComment = e => {
     e.preventDefault();
     dispatch(
       postBlogCommentDB({
         comment: commentRefInput.current.value,
         id: parseInt(id),
-        // id,
       }),
     );
     commentRefInput.current.value = "";

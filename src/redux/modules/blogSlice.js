@@ -115,8 +115,12 @@ export const blogSlice = createSlice({
     },
     [postBlogCommentDB.fulfilled]: (state, action) => {
       console.log(action);
-      state.commentList.push(action.payload);
+      console.log("추가", state);
+      console.log("코멘츠", state.commentList);
+      state.commentList.push(action.payload.data);
       state.isFetching = false;
+
+      // state.commentList = action.payload.data;
       state.errorMessage = null;
     },
     [postBlogCommentDB.rejected]: (state, action) => {
@@ -129,8 +133,11 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [patchBlogCommentDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      state.commntList = action.payload;
+      // console.log("dfsdf", action.payload.data.id);
+      const idx = state.commentList.findIndex(data => {
+        return data.id === action.payload.data.id;
+      });
+      state.commentList[idx] = action.payload.data;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -144,8 +151,8 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [deleteBlogCommentDB.fulfilled]: (state, action) => {
-      console.log(action);
-
+      const idxx = state.commentList.filter(data => data.id !== action.payload);
+      state.commentList = idxx;
       state.isFetching = false;
       state.errorMessage = null;
     },

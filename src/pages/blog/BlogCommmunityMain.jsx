@@ -6,15 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
-  // const isRe = useSelector(state => state.blogSlice.isFetching);
+  console.log("메인블로그", blogMainLists);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // 요청한 데이터를 조회 하기 위해서
-  // React.useEffect(() => {
-  //   dispatch(getBlogCommunityListDB(isRe));
-  // }, []);
-
+  //메인 블로그 게시글 조회
   useEffect(() => {
     dispatch(getBlogCommunityListDB());
   }, [dispatch]);
@@ -48,6 +44,8 @@ const BlogCommmunityMain = () => {
                   <p>{posts.title}</p>
                   <p>{posts.content}</p>
                   <p>{posts.user?.user_name}</p>
+                  댓글조회수
+                  <p>💬{posts.cmtNum}</p>
                 </div>
                 <div>
                   <p>{posts.tag}</p>

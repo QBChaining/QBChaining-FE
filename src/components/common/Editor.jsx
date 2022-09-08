@@ -39,7 +39,6 @@ const Editor = ({
   isCommentWrite,
   isBlogEdit,
   isBlogWrite,
-  //블로그 포스트아이디
   id,
   blogEditId,
   editData,
