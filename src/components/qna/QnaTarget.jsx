@@ -68,6 +68,8 @@ const QnaTarget = ({ data, isDatail }) => {
     }
   }, []);
 
+  console.log(isBookmarked);
+
   return (
     <SQnaTarget>
       <div>

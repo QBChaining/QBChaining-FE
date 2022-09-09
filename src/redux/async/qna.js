@@ -29,11 +29,13 @@ export const getOneQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getOneList(data);
+      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
     } catch (err) {
       networkError();
+      console.log(err);
       Sentry.captureException(`error, QNA게시글 상세 조회 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
     }

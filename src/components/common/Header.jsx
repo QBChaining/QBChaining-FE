@@ -8,6 +8,7 @@ import { getCookie } from "../../utils/cookie";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, logOut } from "../../redux/modules/userSlice";
+import { removeUserInfo } from "../../redux/modules/qnaSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const Header = () => {
       })
       .then(() => {
         dispatch(logOut());
+        dispatch(removeUserInfo());
       });
   };
 
@@ -81,7 +83,8 @@ const Header = () => {
           {isLogin ? (
             <button onClick={onLogoutHandler}>로그아웃</button>
           ) : (
-            <a href={process.env.REACT_APP_GITHUB_API}>로그인</a>
+            // <a href={process.env.REACT_APP_GITHUB_API}>로그인</a>
+            <a href="http://kpzzy.shop/api/auth/github">로그인</a>
           )}
           <div className="loginProfile"></div>
         </div>
