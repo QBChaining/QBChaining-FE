@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 const BlogLike = () => {
   // 내일 할 일
   // response props로 받아서 버튼 삼항연산자로 표현하기
+  // 즐겨찾기, 마이블로그 다 끝내기!
   const dispatch = useDispatch();
   const { id } = useParams();
 
