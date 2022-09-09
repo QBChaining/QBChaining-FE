@@ -175,3 +175,35 @@ export const getMyBlogDB = createAsyncThunk("GET_MY_BLOG", async thunkAPI => {
     return thunkAPI.rejectWithValue(err.response.message);
   }
 });
+
+// 좋아요 추가
+export const postBlogLikeDB = createAsyncThunk(
+  "ADD_LIKE",
+  async (id, thunkAPI) => {
+    console.log(id);
+    try {
+      const response = await blogApi.postBlogLike(id);
+      console.log(response);
+      if (response.data.success === true) {
+        console.log(response.data.success);
+        successAlert("좋아요를 누르셨습니다.");
+        return response;
+      }
+    } catch (err) {
+      Sentry.captureException(`error, 좋아요 에러. ${err}`);
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+
+export const unBlogLikeDB = createAsyncThunk(
+  "UN_LIKE",
+  async (id, thunkAPI) => {
+    console.log("unlike", id);
+    try {
+      const response = await blogApi.unBlogLike(id);
+      console.log(response);
+      successAlert("좋아요가 취소 되었습니다.");
+    } catch (err) {}
+  },
+);
