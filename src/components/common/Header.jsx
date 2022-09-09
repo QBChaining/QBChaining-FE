@@ -81,7 +81,7 @@ const Header = () => {
           {isLogin ? (
             <button onClick={onLogoutHandler}>로그아웃</button>
           ) : (
-            <a href="http://13.209.15.22/api/auth/github">로그인</a>
+            <a href={process.env.REACT_APP_GITHUB_API}>로그인</a>
           )}
           <div className="loginProfile"></div>
         </div>
