@@ -44,5 +44,5 @@ export const blogApi = {
   //블로그추천
   postBlogLike: id => instance.post(`/posts/like/${id}`),
   //블로그 추천삭제
-  delBlogLike: id => instance.delete(`/posts/like/${id}`),
+  unBlogLike: id => instance.delete(`/posts/like/${id}`),
 };

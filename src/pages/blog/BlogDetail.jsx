@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getBlogDetailDB } from "../../redux/async/blog";
 import { useParams } from "react-router-dom";
 import { deleteBlogCommunityDB } from "../../redux/async/blog";
+import BlogLike from "../../components/blog/BlogLike";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
   console.log("디테일", response);
@@ -60,6 +61,7 @@ const BlogCommunityDetail = () => {
           <CommentAdd />
           <CommentList />
         </div>
+        <BlogLike />
       </STopBox>
     </form>
   );
