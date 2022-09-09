@@ -153,7 +153,6 @@ export const deleteBlogCommentDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.DeleteBlogComment(id);
-      console.log(response);
       if (response.data.success === true) {
         successAlert("정상적으로 삭제 되었습니다.");
         return id;
