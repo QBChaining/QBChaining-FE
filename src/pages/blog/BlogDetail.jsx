@@ -8,9 +8,9 @@ import { getBlogDetailDB } from "../../redux/async/blog";
 import { useParams } from "react-router-dom";
 import { deleteBlogCommunityDB } from "../../redux/async/blog";
 import BlogLike from "../../components/blog/BlogLike";
+import BlogBookMark from "../../components/blog/BlogBookMark";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
-  console.log("디테일", response);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -57,11 +57,12 @@ const BlogCommunityDetail = () => {
         >
           삭제하기
         </button>
+        <BlogLike />
+        <BlogBookMark />
         <div>
           <CommentAdd />
           <CommentList />
         </div>
-        <BlogLike />
       </STopBox>
     </form>
   );

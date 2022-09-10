@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-const BlogList = ({ blogList }) => {
+const BlogMyList = ({ blogList }) => {
   return (
     <div>
       <STag>태그리스트</STag>
@@ -14,6 +14,5 @@ const BlogList = ({ blogList }) => {
 };
 
 const STag = styled.div``;
-
 const SCardList = styled.div``;
-export default BlogList;
+export default BlogMyList;
