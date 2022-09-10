@@ -12,6 +12,7 @@ export const getQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getList();
+      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
