@@ -20,6 +20,17 @@ const BlogCommmunityMain = () => {
     <div>
       <SBody>
         <SListGroup>
+          <div
+            style={{
+              fillOpacity: "0.3",
+              width: "100%",
+              textAlign: "center",
+              borderBottom: "1px solid #aaa",
+              lineHeight: "0.1em",
+              margin: "100px 0 20px",
+            }}
+          ></div>
+
           <STopBox>
             <STopList>최근의 추천 많이 받은 게시글</STopList>
             <br />
@@ -43,14 +54,15 @@ const BlogCommmunityMain = () => {
                   }}
                 >
                   <div>TITLE :: {posts.title}</div>
+                  <hr />
                   <ToastViewer content={posts.content} />
                   <div>NICKNAME :: {posts.user?.user_name}</div>
-                  <div>❤️{posts.like}</div>
-                  <div>💬{posts.cmtNum}</div>
-                  <div>CREATED_DATE :: {posts.created_at}</div>
+                  <div>❤️{posts?.like}</div>
+                  <div>💬{posts?.cmtNum}</div>
+                  <div>CREATED_DATE :: {posts?.created_at}</div>
                 </div>
                 <div>
-                  <p>TAGS :: {posts.tag}</p>
+                  <p>TAGS :: {posts?.tag}</p>
                 </div>
               </SBloglist>
             );

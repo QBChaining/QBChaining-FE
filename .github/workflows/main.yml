@@ -1,9 +1,10 @@
 name: main
 
 on:
+  # Branch에 push하면 실행
   push:
     branches:
-      - main # main 브랜치에서 push 했을 때 실행
+      - main
   pull_request:
     branches:
       - main
