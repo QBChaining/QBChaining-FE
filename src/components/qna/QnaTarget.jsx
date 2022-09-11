@@ -14,8 +14,7 @@ import { deleteBookmarkListDB } from "./../../redux/async/qna";
 import { errorAlert, needLoginAlert } from "../../utils/swal";
 import { successAlert } from "./../../utils/swal";
 
-import "@toast-ui/editor/dist/toastui-editor-viewer.css";
-import { Viewer } from "@toast-ui/react-editor";
+import ToastViewer from "../editor/ToastViewer";
 
 const QnaTarget = ({ data, isDatail }) => {
   const navigate = useNavigate();
@@ -71,8 +70,6 @@ const QnaTarget = ({ data, isDatail }) => {
     }
   }, []);
 
-  console.log(data);
-
   return (
     <SQnaTarget>
       <div>
@@ -95,9 +92,8 @@ const QnaTarget = ({ data, isDatail }) => {
           <div>생성날짜 : {data.createdAt}</div>
         </div>
         <div>제목 : {data.title}</div>
-        <Viewer initialValue={data.content} />
+        <ToastViewer content={data.content} />
         {/* <div className="ql-snow">
-
           {isDatail && (
             <div
               className="ql-editor"
