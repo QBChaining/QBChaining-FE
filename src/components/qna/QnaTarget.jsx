@@ -14,6 +14,8 @@ import { deleteBookmarkListDB } from "./../../redux/async/qna";
 import { errorAlert, needLoginAlert } from "../../utils/swal";
 import { successAlert } from "./../../utils/swal";
 
+import ToastViewer from "../editor/ToastViewer";
+
 const QnaTarget = ({ data, isDatail }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -86,21 +88,22 @@ const QnaTarget = ({ data, isDatail }) => {
           )}
         </div>
         <div>
-          <div>{data.user?.user_name}</div>
-          <div>{data.createdAt}</div>
+          <div>유저이름 : {data.user?.user_name}</div>
+          <div>생성날짜 : {data.createdAt}</div>
         </div>
-        <div className="ql-snow">
-          <div>{data.title}</div>
+        <div>제목 : {data.title}</div>
+        <ToastViewer content={data.content} />
+        {/* <div className="ql-snow">
           {isDatail && (
             <div
               className="ql-editor"
               dangerouslySetInnerHTML={{ __html: data.content }}
             ></div>
           )}
-        </div>
+        </div> */}
         <div>
-          <div>{data.category}</div>
-          <div>{data.honeytip}</div>
+          <div>카테고리 : {data.category}</div>
+          <div>추천수 : {data.honeytip}</div>
           <div>
             {data.tag?.map((data, i) => {
               return <div key={i}>{data}</div>;

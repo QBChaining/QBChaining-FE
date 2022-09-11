@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getBlogDetailDB } from "../../redux/async/blog";
 import { useParams } from "react-router-dom";
 import { deleteBlogCommunityDB } from "../../redux/async/blog";
+import ToastViewer from "./../../components/editor/ToastViewer";
 import BlogLike from "../../components/blog/BlogLike";
 import BlogBookMark from "../../components/blog/BlogBookMark";
 const BlogCommunityDetail = () => {
@@ -29,7 +30,8 @@ const BlogCommunityDetail = () => {
         <div>BlogPersonalMain</div>
         <div>
           <div>{response?.title}</div>
-          <div>{response?.content}</div>
+          <ToastViewer content={response.content} />
+          {/* <div>{response?.content}</div> */}
           <div>{response?.createdAt}</div>
           <div
             onClick={() => {
