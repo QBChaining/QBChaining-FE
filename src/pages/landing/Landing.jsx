@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import bigLogo from "../../assets/images/BigLogo.png";
 import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 
@@ -7,6 +8,7 @@ const Landing = () => {
   const navigate = useNavigate();
   return (
     <SLanding>
+      <div className="bigLogo"></div>
       <div className="logo"></div>
       <div
         className="goQna container"
@@ -34,8 +36,18 @@ const SLanding = styled.div`
   position: relative;
   width: 100%;
   height: calc(100vh - 100px);
-  background: linear-gradient(270deg, #fa98b8 0.67%, #8dc6fd 97.6%);
+  background: linear-gradient(270.85deg, #2676ed -0.91%, #2ad798 97.98%);
   display: flex;
+
+  & .bigLogo {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(${bigLogo});
+    width: 823px;
+    height: 745px;
+  }
   & .logo {
     position: absolute;
     top: 50%;

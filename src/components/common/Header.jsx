@@ -13,6 +13,7 @@ import { removeUserInfo } from "../../redux/modules/qnaSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = window.location.pathname;
   const search = useRef();
   const { isLogin } = useSelector(state => state.userSlice);
   const onLogoutHandler = () => {
@@ -29,7 +30,7 @@ const Header = () => {
   //임시검색창
 
   return (
-    <SHeader>
+    <SHeader location={location}>
       <div
         className="logoContainer"
         onClick={() => {
@@ -112,20 +113,14 @@ const SHeader = styled.header`
   justify-content: space-between;
   padding: 0 40px;
   height: 100px;
-  background: linear-gradient(285.14deg, #fa98b8 0.67%, #8dc6fd 97.6%);
+  background: ${props =>
+    props.location === "/qna"
+      ? props.theme.color.mainGreen
+      : props.location === "/blog"
+      ? props.theme.color.mainBlue
+      : props.theme.color.backgroundGradient};
   color: white;
   position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 80px);
-    height: 1px;
-    display: block;
-    background-color: white;
-  }
 
   & .logoContainer {
     display: flex;
