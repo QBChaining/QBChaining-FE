@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -8,10 +8,13 @@ import { getCookie } from "../../utils/cookie";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, logOut } from "../../redux/modules/userSlice";
+import { removeUserInfo } from "../../redux/modules/qnaSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = window.location.pathname;
+  const search = useRef();
   const { isLogin } = useSelector(state => state.userSlice);
   const onLogoutHandler = () => {
     Swal.fire("로그아웃", "성공", "success")
@@ -20,11 +23,14 @@ const Header = () => {
       })
       .then(() => {
         dispatch(logOut());
+        dispatch(removeUserInfo());
       });
   };
 
+  //임시검색창
+
   return (
-    <SHeader>
+    <SHeader location={location}>
       <div
         className="logoContainer"
         onClick={() => {
@@ -70,8 +76,16 @@ const Header = () => {
         <div className="searchIcon">
           <AiOutlineSearch />
         </div>
-        <input type="text" placeholder="Javascript" />
-        <button>검색</button>
+        <input ref={search} type="text" placeholder="Javascript" />
+        <button
+          onClick={() => {
+            axios.get(`http://kpzzy.shop/api/search?q=node  `).then(res => {
+              console.log(res);
+            });
+          }}
+        >
+          검색
+        </button>
       </div>
       <div className="alarmLoginWrapper">
         <div className="alarmConatainer active">
@@ -81,7 +95,8 @@ const Header = () => {
           {isLogin ? (
             <button onClick={onLogoutHandler}>로그아웃</button>
           ) : (
-            <a href={process.env.REACT_APP_GITHUB_API}>로그인</a>
+            // <a href={process.env.REACT_APP_GITHUB_API}>로그인</a>
+            <a href="http://kpzzy.shop/api/auth/github">로그인</a>
           )}
           <div className="loginProfile"></div>
         </div>
@@ -98,20 +113,14 @@ const SHeader = styled.header`
   justify-content: space-between;
   padding: 0 40px;
   height: 100px;
-  background: linear-gradient(285.14deg, #fa98b8 0.67%, #8dc6fd 97.6%);
+  background: ${props =>
+    props.location === "/qna"
+      ? props.theme.color.mainGreen
+      : props.location === "/blog"
+      ? props.theme.color.mainBlue
+      : props.theme.color.backgroundGradient};
   color: white;
   position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 80px);
-    height: 1px;
-    display: block;
-    background-color: white;
-  }
 
   & .logoContainer {
     display: flex;

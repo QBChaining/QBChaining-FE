@@ -33,7 +33,7 @@ const BookmarkListItem = ({ isModal, data }) => {
             : onToggleHandler
         }
       >
-        {data.Qna.title}
+        {data.Qna?.title}
       </li>
       {modal && (
         <WriteBookmark

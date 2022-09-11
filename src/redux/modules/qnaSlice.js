@@ -29,7 +29,11 @@ const qnaSlice = createSlice({
     isFetching: false,
     errorMessage: "",
   },
-  reducers: {},
+  reducers: {
+    removeUserInfo: (state, { payload }) => {
+      state.bookmarkList = [];
+    },
+  },
   extraReducers: {
     //게시글조회
     [getQnaListDB.fulfilled]: (state, { payload }) => {
@@ -266,5 +270,5 @@ const qnaSlice = createSlice({
     },
   },
 });
-export const {} = qnaSlice.actions;
+export const { removeUserInfo } = qnaSlice.actions;
 export default qnaSlice.reducer;

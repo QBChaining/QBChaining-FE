@@ -10,14 +10,8 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 //로딩이미지
 import loadingImage from "../../assets/images/Loading_icon.gif";
 import selectArrow from "../../assets/images/SelectArrow.png";
-//quill
-import Quill from "quill";
-import { useQuill } from "react-quilljs";
-import "react-quill/dist/quill.snow.css";
-import ImageResize from "@looop/quill-image-resize-module-react";
-//코드블럭 구문강조 highlight.js
-import hljs from "highlight.js";
-import "highlight.js/styles/monokai-sublime.css";
+//에디터
+import ToastEditor from "../editor/ToastEditor";
 
 //에러알럿
 import { errorAlert } from "../../utils/swal";
@@ -33,8 +27,6 @@ import {
   postQnaListDB,
 } from "../../redux/async/qna";
 
-//이미지 리사이즈 레지스터
-Quill.register("modules/ImageResize", ImageResize);
 const Editor = ({
   isEdit,
   isWrite,
@@ -50,6 +42,7 @@ const Editor = ({
   const tagText = useRef();
   const titleText = useRef();
   const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [category, setCategory] = useState("Javascript");
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
@@ -57,101 +50,43 @@ const Editor = ({
   const { isLogin } = useSelector(state => state.userSlice);
   const { userName } = useSelector(state => state.userSlice);
 
-  const placeholder = "입력해주세요";
-  const theme = "snow";
+  // const selectLocalImage = () => {
+  //   const input = document.createElement("input");
+  //   input.setAttribute("type", "file");
+  //   input.setAttribute("accept", "image/*");
+  //   input.click();
 
-  const toolbarOptions = [
-    ["bold", "italic", "underline", "strike"], // toggled buttons
-    ["blockquote", "code-block"],
-    [{ list: "ordered" }, { list: "bullet" }],
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-    [{ align: [] }],
-    ["image"],
-  ];
-  const modules = {
-    toolbar: toolbarOptions,
-    ImageResize: {
-      modules: ["Resize"],
-    },
-    syntax: {
-      highlight: text => hljs.highlightAuto(text).value,
-    },
-  };
-  const formats = [
-    "bold",
-    "blockquote",
-    "italic",
-    "underline",
-    "strike",
-    "align",
-    "list",
-    "header",
-    "size",
-    "link",
-    "image",
-    "color",
-    "background",
-    "code-block",
-  ];
-  const { quill, quillRef } = useQuill({
-    theme,
-    modules,
-    formats,
-    placeholder,
-  });
+  //   input.onchange = async () => {
+  //     const file = input.files[0];
 
-  const selectLocalImage = () => {
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.click();
+  //     //현재 커서의 위치 저장
+  //     const range = quill.getSelection(true);
+  //     //업로드중 로딩이미지 삽입
+  //     quill.insertEmbed(range.index, "image", loadingImage);
+  //     try {
+  //       //firebase에 이미지 업로드
+  //       const uploaded_file = await uploadBytes(
+  //         ref(storage, `images/${Date.now()}`),
+  //         file,
+  //       );
 
-    input.onchange = async () => {
-      const file = input.files[0];
+  //       //firebase에 올라간 이미지url 저장
+  //       const file_url = await getDownloadURL(uploaded_file.ref);
 
-      //현재 커서의 위치 저장
-      const range = quill.getSelection(true);
-      //업로드중 로딩이미지 삽입
-      quill.insertEmbed(range.index, "image", loadingImage);
-      try {
-        //firebase에 이미지 업로드
-        const uploaded_file = await uploadBytes(
-          ref(storage, `images/${Date.now()}`),
-          file,
-        );
+  //       //로딩중 이미지 삭제
+  //       quill.deleteText(range.index, 1);
 
-        //firebase에 올라간 이미지url 저장
-        const file_url = await getDownloadURL(uploaded_file.ref);
+  //       //firebase에 이미지 업로드 완료 후 url 추출후 textEditor에 삽입
+  //       quill.insertEmbed(range.index, "image", file_url);
 
-        //로딩중 이미지 삭제
-        quill.deleteText(range.index, 1);
-
-        //firebase에 이미지 업로드 완료 후 url 추출후 textEditor에 삽입
-        quill.insertEmbed(range.index, "image", file_url);
-
-        //유저 편의를 위해 커서를 이미지 오른쪽에 위치
-        quill.setSelection(range.index + 1);
-      } catch (error) {
-        //이미지 업로드 실패시 로딩이미지 삭제
-        quill.deleteText(range.index, 1);
-      }
-    };
-  };
-
-  //quill에 image기능 추가
-  useEffect(() => {
-    if (quill) {
-      quill.getModule("toolbar").addHandler("image", selectLocalImage);
-    }
-  }, [quill]);
-
-  //toolbar 오류로 2개생길때 한개 삭제
-  if (quillRef.current?.parentNode?.childNodes.length > 2) {
-    quillRef.current.parentNode.removeChild(
-      quillRef.current.parentNode.childNodes[1],
-    );
-  }
+  //       //유저 편의를 위해 커서를 이미지 오른쪽에 위치
+  //       quill.setSelection(range.index + 1);
+  //     } catch (error) {
+  //       //이미지 업로드 실패시 로딩이미지 삭제
+  //       quill.deleteText(range.index, 1);
+  //     }
+  //   };
+  // };
 
   //생성 or 수정 함수
   const onSubmitHandler = e => {
@@ -170,17 +105,17 @@ const Editor = ({
     }
 
     //본문이 빈칸일때 알럿
-    if (quill.getText().length < 2) {
-      errorAlert("본문을 입력해주세요!");
-      return;
-    }
+    // if (quill.getText().length < 2) {
+    //   errorAlert("본문을 입력해주세요!");
+    //   return;
+    // }
 
     //수정중이라면
     if (isEdit) {
       dispatch(
         editQnaListDB({
           title,
-          content: quillRef.current.firstChild.innerHTML,
+          content,
           id: editData.id,
           category: category,
           tag: tags,
@@ -193,7 +128,7 @@ const Editor = ({
       dispatch(
         postQnaListDB({
           title,
-          content: quillRef.current.firstChild.innerHTML,
+          content,
           category: category,
           tag: tags,
         }),
@@ -204,21 +139,21 @@ const Editor = ({
     } else if (isCommentWrite) {
       dispatch(
         postCommentListDB({
-          content: quillRef.current.firstChild.innerHTML,
+          content,
           id: parseInt(id),
           honey_tip: 0,
           user_name: userName,
         }),
       );
       //작성 후 입력 값 초기화
-      quillRef.current.firstChild.innerHTML = "";
+      // quillRef.current.firstChild.innerHTML = "";
       //블로그 수정, 생성
     } else if (isBlogWrite) {
       navigate("/blog");
       dispatch(
         postBlogCommunityDB({
           title,
-          content: quillRef.current.firstChild.innerHTML,
+          content,
           tag,
         }),
       );
@@ -227,7 +162,7 @@ const Editor = ({
       dispatch(
         patchBlogCommunityDB({
           title,
-          content: quillRef.current.firstChild.innerHTML,
+          content,
           id: blogEditId,
         }),
       );
@@ -238,13 +173,12 @@ const Editor = ({
   const onTitleChangeHandler = e => {
     setTitle(e.target.value);
   };
-
   //edit상황이라면 타이틀, content 가져오기
   useEffect(() => {
     if (isEdit) {
       setTitle(editData.title);
       setCategory(editData.category);
-      quillRef.current.firstChild.innerHTML = editData.content;
+      // quillRef.current.firstChild.innerHTML = editData.content;
     }
   }, [isEdit, editData]);
 
@@ -304,9 +238,11 @@ const Editor = ({
             )}
           </div>
         )}
-        <SEditor>
-          <div ref={quillRef} />
-        </SEditor>
+        <ToastEditor
+          isCommentWrite={isCommentWrite}
+          content={content}
+          setContent={setContent}
+        />
         {(isEdit || isWrite || isBlogWrite || isBlogEdit) && (
           <STagContainer>
             <input
@@ -365,23 +301,6 @@ const Sform = styled.form`
       background-color: white;
       border: 1px solid #939393;
     }
-  }
-`;
-
-const SEditor = styled.div`
-  width: 100%;
-  height: 40vh;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-
-  & .ql-container.ql-snow {
-    flex: 1;
-    overflow: auto;
-  }
-
-  & .ql-snow .ql-editor pre.ql-syntax {
-    padding: 20px;
   }
 `;
 

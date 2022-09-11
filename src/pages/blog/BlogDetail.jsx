@@ -7,10 +7,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { getBlogDetailDB } from "../../redux/async/blog";
 import { useParams } from "react-router-dom";
 import { deleteBlogCommunityDB } from "../../redux/async/blog";
+import ToastViewer from "./../../components/editor/ToastViewer";
 import BlogLike from "../../components/blog/BlogLike";
+import BlogBookMark from "../../components/blog/BlogBookMark";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
-  console.log("디테일", response);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -29,14 +30,15 @@ const BlogCommunityDetail = () => {
         <div>BlogPersonalMain</div>
         <div>
           <div>{response?.title}</div>
-          <div>{response?.content}</div>
+          <ToastViewer content={response.content} />
+          {/* <div>{response?.content}</div> */}
           <div>{response?.createdAt}</div>
           <div
             onClick={() => {
               navigate(`/blog/my/${id}}`);
             }}
           >
-            {response?.User?.user_name}
+            {response.User?.user_name}
             <SProfile></SProfile> <div>프로필사진</div>
           </div>
         </div>
@@ -57,11 +59,12 @@ const BlogCommunityDetail = () => {
         >
           삭제하기
         </button>
+        <BlogLike />
+        <BlogBookMark />
         <div>
           <CommentAdd />
           <CommentList />
         </div>
-        <BlogLike />
       </STopBox>
     </form>
   );

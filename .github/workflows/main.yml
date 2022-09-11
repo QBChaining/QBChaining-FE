@@ -1,9 +1,10 @@
 name: main
 
 on:
+  # Branch에 push하면 실행
   push:
     branches:
-      - main # main 브랜치에서 push 했을 때 실행
+      - main
   pull_request:
     branches:
       - main
@@ -14,23 +15,19 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@main
-
+        # BakcEnd API
       - name: Generate Environment Varibles Fils for Production
-        # 변경된 코드
-        # run: echo ${{ secrets.REACT_APP_ENDPOINT }}
-        # echo ${{ secrets.REACT_APP_GITHUB_API }}
         run: |
           echo "REACT_APP_ENDPOINT=$REACT_APP_ENDPOINT" >> .env.production
         env:
           REACT_APP_ENDPOINT: ${{ secrets.REACT_APP_ENDPOINT }}
-
+        # Login API
       - name: Login API
         run: |
           echo "REACT_APP_GITHUB_API=$REACT_APP_GITHUB_API" >> .env.production
         env:
           REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_GITHUB_API }}
-
-      # 실행 속도를 빠르게 하기 위해 설치된 Node 모듈을 캐시하도록 설정합니다.
+      # 실행 속도를 빠르게 하기 위해 설치된 Node 모듈을 캐시
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -59,4 +56,4 @@ jobs:
 
 #CI 보류 코드
 # Gitgub repository Secrtets를 통해 변수 파일을 생성
-#test
+
