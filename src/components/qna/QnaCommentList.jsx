@@ -49,8 +49,6 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
     dispatch(dislikeCommentListDB(id));
   };
 
-  console.log(list);
-
   const onChoiceHandler = id => {
     Swal.fire({
       title: "채택 하시겠습니까?",

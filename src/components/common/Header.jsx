@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -13,6 +13,7 @@ import { removeUserInfo } from "../../redux/modules/qnaSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const search = useRef();
   const { isLogin } = useSelector(state => state.userSlice);
   const onLogoutHandler = () => {
     Swal.fire("로그아웃", "성공", "success")
@@ -24,6 +25,8 @@ const Header = () => {
         dispatch(removeUserInfo());
       });
   };
+
+  //임시검색창
 
   return (
     <SHeader>
@@ -72,8 +75,16 @@ const Header = () => {
         <div className="searchIcon">
           <AiOutlineSearch />
         </div>
-        <input type="text" placeholder="Javascript" />
-        <button>검색</button>
+        <input ref={search} type="text" placeholder="Javascript" />
+        <button
+          onClick={() => {
+            axios.get(`http://kpzzy.shop/api/search?q=node  `).then(res => {
+              console.log(res);
+            });
+          }}
+        >
+          검색
+        </button>
       </div>
       <div className="alarmLoginWrapper">
         <div className="alarmConatainer active">
