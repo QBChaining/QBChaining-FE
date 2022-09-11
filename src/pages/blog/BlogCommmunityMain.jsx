@@ -41,15 +41,15 @@ const BlogCommmunityMain = () => {
                     navigate(`/blog/detail/${posts.id}`);
                   }}
                 >
-                  <div>TITLE :: {posts.title}</div>
-                  <div>CONTENTS :: {posts.content}</div>
+                  <div>TITLE :: {posts?.title}</div>
+                  <div>CONTENTS :: {posts?.content}</div>
                   <div>NICKNAME :: {posts.user?.user_name}</div>
-                  <div>❤️{posts.like}</div>
-                  <div>💬{posts.cmtNum}</div>
-                  <div>CREATED_DATE :: {posts.created_at}</div>
+                  <div>❤️{posts?.like}</div>
+                  <div>💬{posts?.cmtNum}</div>
+                  <div>CREATED_DATE :: {posts?.created_at}</div>
                 </div>
                 <div>
-                  <p>TAGS :: {posts.tag}</p>
+                  <p>TAGS :: {posts?.tag}</p>
                 </div>
               </SBloglist>
             );

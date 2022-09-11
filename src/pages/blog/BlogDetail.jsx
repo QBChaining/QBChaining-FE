@@ -36,7 +36,7 @@ const BlogCommunityDetail = () => {
               navigate(`/blog/my/${id}}`);
             }}
           >
-            {response?.User?.user_name}
+            {response.User?.user_name}
             <SProfile></SProfile> <div>프로필사진</div>
           </div>
         </div>
