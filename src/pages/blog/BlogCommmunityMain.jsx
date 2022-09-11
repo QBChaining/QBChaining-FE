@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getBlogCommunityListDB } from "../../redux/async/blog";
 import { useNavigate } from "react-router-dom";
+import ToastViewer from "../../components/editor/ToastViewer";
 
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
@@ -42,7 +43,7 @@ const BlogCommmunityMain = () => {
                   }}
                 >
                   <div>TITLE :: {posts.title}</div>
-                  <div>CONTENTS :: {posts.content}</div>
+                  <ToastViewer content={posts.content} />
                   <div>NICKNAME :: {posts.user?.user_name}</div>
                   <div>❤️{posts.like}</div>
                   <div>💬{posts.cmtNum}</div>
