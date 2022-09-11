@@ -57,7 +57,8 @@ export const blogSlice = createSlice({
     },
     [postBlogCommunityDB.fulfilled]: (state, action) => {
       console.log(action.payload);
-      state.blogList.push(action.pay);
+      // state.blogList.push(action);
+      state.blogList = action.payload;
       state.isFetching = false;
       state.errorMessage = null;
     },

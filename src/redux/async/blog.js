@@ -47,6 +47,7 @@ export const postBlogCommunityDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.postBlogCommunity(data);
+      console.log(response);
       if (response.data.success === true) {
         return;
       }
