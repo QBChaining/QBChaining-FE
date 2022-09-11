@@ -121,6 +121,7 @@ const SHeader = styled.header`
       : props.theme.color.backgroundGradient};
   color: white;
   position: relative;
+  z-index: 1;
 
   & .logoContainer {
     display: flex;

@@ -7,7 +7,8 @@ const color = {
   gray1: "#F2F2F2",
   grey2: "#DCDCDC",
   grey3: "#C0C0C0",
-  grey4: "#9C9C9C",
+  grey4: "#C6C6C6",
+  grey5: "#9C9C9C",
   backgroundGradient:
     "linear-gradient(285.85deg, #2676ED -0.91%, #2AD798 97.98%)",
 };

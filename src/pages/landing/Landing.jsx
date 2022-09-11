@@ -65,6 +65,7 @@ const SLanding = styled.div`
     align-items: center;
     color: white;
     cursor: pointer;
+    z-index: 1;
     & .arrow {
       display: flex;
       justify-content: center;

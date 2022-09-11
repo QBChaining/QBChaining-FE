@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import QnaCommentList from "./QnaCommentList";
 import QnaAddComment from "./QnaAddComment";
 import styled from "styled-components";
+import ResolveList from "../../assets/images/ResolveList.png";
 import { useDispatch } from "react-redux";
 import { FiThumbsUp } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
@@ -40,7 +41,7 @@ const QnaList = ({ data }) => {
   const time = timeForToday(data.createdAt);
 
   return (
-    <StextMain resolve={data.is_resolve}>
+    <StextMain resolve={data.is_resolve} ResolveList={ResolveList}>
       <div
         className="wrapper"
         onClick={() => {
@@ -55,6 +56,13 @@ const QnaList = ({ data }) => {
           </div>
           <div className="categoryContainer">
             <div className="category">{data.category}</div>
+            <div className="bookmark">
+              {data.is_bookmark ? (
+                <div>즐겨찾기 함</div>
+              ) : (
+                <div>즐겨찾기 안함</div>
+              )}
+            </div>
           </div>
         </div>
         <div className="titleWrapper">
@@ -95,11 +103,14 @@ export default QnaList;
 const StextMain = styled.div`
   & .wrapper {
     width: 100%;
-    padding: 23px 49px 29px 29px;
-    border: ${props =>
-      props.resolve ? "1px solid #ff6e6e" : "1px solid #c6c6c6"};
+    padding: 23px 49px 32px 29px;
+
+    padding-left: ${props => (props.resolve ? "137px" : "23px")};
+    border: ${props => (props.resolve ? "" : "1px solid #c6c6c6")};
     border-radius: 30px;
     margin: 16px 0;
+    background-image: url(${props =>
+      props.resolve ? props.ResolveList : null}); // eslint-disable-line
     cursor: pointer;
     & .userInfo {
       display: flex;
@@ -115,7 +126,7 @@ const StextMain = styled.div`
         width: 33px;
         height: 33px;
         border-radius: 50%;
-        background-color: #c6c6c6;
+        background-color: black;
         margin-right: 11px;
       }
 
@@ -125,7 +136,7 @@ const StextMain = styled.div`
       }
 
       & .createdAt {
-        color: #c6c6c6;
+        color: ${props => props.theme.color.grey4};
         font-size: 15px;
       }
     }
@@ -134,7 +145,7 @@ const StextMain = styled.div`
       margin: 25px 0;
 
       & .title {
-        font-size: 20px;
+        font-size: 22px;
       }
     }
 

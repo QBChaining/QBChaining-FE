@@ -23,6 +23,23 @@ export const getQnaListDB = createAsyncThunk(
   },
 );
 
+//게시글 카테고리 조회
+export const getQnaCategoryListDB = createAsyncThunk(
+  "qna/getcategorylist",
+  async (data, thunkAPI) => {
+    try {
+      const response = await qnaApi.getCategoryList(data);
+      if (response.data.success === true) {
+        return response.data.data;
+      }
+    } catch (err) {
+      networkError();
+      Sentry.captureException(`error, 게시글 전체조회 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+
 //게시글 상세 조회
 export const getOneQnaListDB = createAsyncThunk(
   "qna/getOnelist",
