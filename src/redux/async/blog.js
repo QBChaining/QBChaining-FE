@@ -136,7 +136,6 @@ export const patchBlogCommentDB = createAsyncThunk(
     console.log(data);
     try {
       const response = await blogApi.patchBlogComment(data);
-      console.log("댓글수정", response);
       if (response.data.success === true) {
         successAlert("정상적으로 수정 되었습니다.");
         return response.data;
@@ -153,7 +152,6 @@ export const deleteBlogCommentDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.DeleteBlogComment(id);
-      console.log(response);
       if (response.data.success === true) {
         successAlert("정상적으로 삭제 되었습니다.");
         return id;
@@ -176,3 +174,67 @@ export const getMyBlogDB = createAsyncThunk("GET_MY_BLOG", async thunkAPI => {
     return thunkAPI.rejectWithValue(err.response.message);
   }
 });
+
+// 좋아요 추가
+export const postBlogLikeDB = createAsyncThunk(
+  "ADD_LIKE",
+  async (id, thunkAPI) => {
+    console.log(id);
+    try {
+      const response = await blogApi.postBlogLike(id);
+      console.log(response);
+      if (response.data.success === true) {
+        console.log(response.data.success);
+        successAlert("좋아요를 누르셨습니다.");
+        return response;
+      }
+    } catch (err) {
+      Sentry.captureException(`error, 좋아요 에러. ${err}`);
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+//좋아요 취소
+export const unBlogLikeDB = createAsyncThunk(
+  "UN_LIKE",
+  async (id, thunkAPI) => {
+    try {
+      const response = await blogApi.unBlogLike(id);
+      console.log(response);
+      successAlert("좋아요가 취소 되었습니다.");
+    } catch (err) {}
+  },
+);
+
+//블로그 북마크 추가
+export const postBlogBookMarkDB = createAsyncThunk(
+  "ADD_BOOK_MARK",
+  async (id, thunkAPI) => {
+    console.log("BookSliceNum", typeof id);
+    try {
+      const response = await blogApi.postBlogBookMark(id);
+      console.log("dfefef");
+      console.log("리스폰", response);
+      if (response.data.success === true) {
+        successAlert("블로그 즐겨찾기에 추가가 되었습니다.");
+        return response;
+      }
+    } catch (err) {}
+  },
+);
+
+//블로그 북마크 삭제
+export const deleteBlogBookMarkDB = createAsyncThunk(
+  "DEL_BOOK_MARK",
+  async (id, thunkAPI) => {
+    console.log("북마크 삭제 아이디", typeof id);
+    try {
+      const response = await blogApi.delBlogBookMark(id);
+      console.log(response);
+      if (response.data.success === true) {
+        successAlert("블로그 즐겨찾기에서 제거 되었습니다.");
+        return response;
+      }
+    } catch (err) {}
+  },
+);
