@@ -47,9 +47,8 @@ export const postBlogCommunityDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.postBlogCommunity(data);
-      console.log(response);
       if (response.data.success === true) {
-        return;
+        return response.data.data;
       }
     } catch (err) {
       networkError();
@@ -67,7 +66,7 @@ export const patchBlogCommunityDB = createAsyncThunk(
       const response = await blogApi.editBlogCommunity(data);
       if (response.data.success === true) {
         successAlert("수정 되었습니다!");
-        return;
+        return response.data.data;
       }
     } catch (err) {
       networkError();
@@ -86,7 +85,7 @@ export const deleteBlogCommunityDB = createAsyncThunk(
       const response = await blogApi.deleteBlogCommunity(id);
       console.log(response);
       if (response.data.success === true) {
-        return;
+        return response.data.data;
       }
     } catch (err) {
       Sentry.captureException(`error, 블로그 게시물 삭제 : ${err}`);

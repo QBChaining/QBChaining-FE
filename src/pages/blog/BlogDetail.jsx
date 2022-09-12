@@ -12,13 +12,14 @@ import BlogLike from "../../components/blog/BlogLike";
 import BlogBookMark from "../../components/blog/BlogBookMark";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
+  console.log(response);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
   //게시글 삭제
 
   const deleteBlogPost = () => {
-    dispatch(deleteBlogCommunityDB(parseInt(id)));
+    dispatch(deleteBlogCommunityDB(id));
   };
   useEffect(() => {
     dispatch(getBlogDetailDB(id));
@@ -39,7 +40,9 @@ const BlogCommunityDetail = () => {
             }}
           >
             {response.User?.user_name}
-            <SProfile></SProfile> <div>프로필사진</div>
+            <SProfile>
+              <div>프로필사진</div>
+            </SProfile>
           </div>
         </div>
         <button
