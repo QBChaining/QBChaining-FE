@@ -3,9 +3,15 @@ import { useNavigate } from "react-router-dom";
 import QnaCommentList from "./QnaCommentList";
 import QnaAddComment from "./QnaAddComment";
 import styled from "styled-components";
+import ResolveWrapper from "../../assets/images/ResolveList.png";
 import { useDispatch } from "react-redux";
 import { FiThumbsUp } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
+import QnaCategoryImage from "./QnaCategoryImage";
+import QnaBookmarkButton from "./../bookmark/QnaBookmarkButton";
+import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
+import QnaLikeIcon from "../../assets/images/QnaLike.png";
+import QnaCommentIcon from "../../assets/images/QnaComment.png";
 
 const QnaList = ({ data }) => {
   const navigate = useNavigate();
@@ -40,140 +46,150 @@ const QnaList = ({ data }) => {
   const time = timeForToday(data.createdAt);
 
   return (
-    <StextMain resolve={data.is_resolve}>
-      <div
-        className="wrapper"
-        onClick={() => {
-          navigate(`/qna/detail/${data.id}`);
-        }}
-      >
-        <div className="userInfo">
-          <div className="profileContainer">
-            <div className="profile"></div>
-            <div className="userName">{data.user?.user_name}</div>
-            <div className="createdAt">{time}</div>
-          </div>
-          <div className="categoryContainer">
-            <div className="category">{data.category}</div>
-          </div>
-        </div>
-        <div className="titleWrapper">
-          <div className="title">{data.title}</div>
-        </div>
-        <div className="tagWrapper">
-          <div className="tags">
+    <StextMain ResolveWrapper={ResolveWrapper}>
+      <SWrapper resolve={data.is_resolve}>
+        <SUserInfo>
+          <SProfileContainer>
+            <SProfile></SProfile>
+            <SUserName>{data.user?.user_name}</SUserName>
+            <SCreatedAt>{time}</SCreatedAt>
+          </SProfileContainer>
+          <SCategoryContainer>
+            <QnaCategoryImage item={data.category} />
+            <QnaBookmarkButton id={data.id} is_bookmark={data.is_bookmark} />
+          </SCategoryContainer>
+        </SUserInfo>
+        <STitleWrapper>
+          <STitle
+            onClick={() => {
+              navigate(`/qna/detail/${data.id}`);
+            }}
+          >
+            {data.title}
+          </STitle>
+        </STitleWrapper>
+        <STagWrapper>
+          <STags className="tags">
             {data.tag?.map((data, i) => {
-              return (
-                <div key={i} className="tag">
-                  {data}
-                </div>
-              );
+              return <Tag key={i}>{data}</Tag>;
             })}
-          </div>
-          <div className="count">
-            <div className="honeytip">
+          </STags>
+          <SCount>
+            <SHoneytip>
               {data.honey_tip}
-              <div className="icon">
-                <FiThumbsUp />
-              </div>
-            </div>
-            <div className="cntcomment">
+              <SIcon icon={QnaLikeIcon} />
+            </SHoneytip>
+            <SCntcomment>
               {data.cntcomment}
-              <div className="icon">
-                <BiComment />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              <SIcon icon={QnaCommentIcon} />
+            </SCntcomment>
+          </SCount>
+        </STagWrapper>
+      </SWrapper>
     </StextMain>
   );
 };
 
 export default QnaList;
 
-const StextMain = styled.div`
-  & .wrapper {
-    width: 100%;
-    padding: 23px 49px 29px 29px;
-    border: ${props =>
-      props.resolve ? "1px solid #ff6e6e" : "1px solid #c6c6c6"};
-    border-radius: 30px;
-    margin: 16px 0;
-    cursor: pointer;
-    & .userInfo {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+const StextMain = styled.div``;
 
-      & .profileContainer {
-        display: flex;
-        align-items: center;
-      }
+const SWrapper = styled.div`
+  width: 100%;
+  padding: 23px 49px 32px 29px;
+  /* padding-left: ${props => (props.resolve ? "137px" : "23px")}; */
+  border: ${props => (props.resolve ? "" : "1px solid #c6c6c6")};
+  box-shadow: ${props =>
+    props.resolve ? "4px 6px 15px rgba(0, 0, 0, 0.1);" : null};
+  border-radius: 30px;
+  margin: 16px 0;
+  /* background-image: url(${props =>
+    props.resolve ? props.ResolveWrapper : null}); */
+`;
 
-      & .profile {
-        width: 33px;
-        height: 33px;
-        border-radius: 50%;
-        background-color: #c6c6c6;
-        margin-right: 11px;
-      }
+const SUserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
-      & .userName {
-        margin-right: 9px;
-        font-size: 20px;
-      }
+const SProfileContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
-      & .createdAt {
-        color: #c6c6c6;
-        font-size: 15px;
-      }
-    }
+const SProfile = styled.div`
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  background-color: black;
+  margin-right: 11px;
+`;
+const SUserName = styled.div`
+  margin-right: 9px;
+  font-size: 20px;
+`;
+const SCreatedAt = styled.div`
+  color: ${props => props.theme.color.grey4};
+  font-size: 15px;
+`;
 
-    & .titleWrapper {
-      margin: 25px 0;
+const SCategoryContainer = styled.div`
+  display: flex;
 
-      & .title {
-        font-size: 20px;
-      }
-    }
-
-    & .tagWrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      & .tags {
-        display: flex;
-        flex-wrap: wrap;
-        & .tag {
-          padding: 3px 17px;
-          border-radius: 30px;
-          background-color: #354160;
-          margin-right: 12px;
-          margin-bottom: 12px;
-          color: white;
-        }
-      }
-
-      & .count {
-        display: flex;
-        align-self: flex-end;
-        & .icon {
-          margin-top: 2px;
-          margin-left: 6px;
-        }
-
-        & .honeytip {
-          margin-right: 20px;
-          display: flex;
-          align-items: center;
-        }
-
-        & .cntcomment {
-          display: flex;
-          align-items: center;
-        }
-      }
-    }
+  & > div:first-child {
+    margin-right: 20px;
   }
+`;
+
+const STitleWrapper = styled.div`
+  margin: 25px 0;
+  cursor: pointer;
+`;
+const STitle = styled.div`
+  font-size: 22px;
+`;
+
+const STagWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+const STags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+const Tag = styled.div`
+  padding: 3px 17px;
+  border-radius: 30px;
+  background-color: ${props => props.theme.color.mainGreen};
+  margin-right: 12px;
+  margin-bottom: 12px;
+  color: white;
+  cursor: pointer;
+`;
+
+const SCount = styled.div`
+  display: flex;
+  align-self: flex-start;
+  color: #999;
+`;
+const SHoneytip = styled.div`
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+`;
+const SIcon = styled.div`
+  margin-top: 2px;
+  margin-left: 6px;
+  width: 17px;
+  height: 17px;
+  background-image: url(${props => props.icon});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
+const SCntcomment = styled.div`
+  display: flex;
+  align-items: center;
 `;

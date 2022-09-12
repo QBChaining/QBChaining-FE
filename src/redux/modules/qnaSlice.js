@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getQnaListDB,
+  getQnaCategoryListDB,
   getOneQnaListDB,
   postQnaListDB,
   editQnaListDB,
@@ -46,6 +47,21 @@ const qnaSlice = createSlice({
       state.isFetching = true;
     },
     [getQnaListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+
+    //getQnaCategoryListDB,
+    [getQnaCategoryListDB.fulfilled]: (state, { payload }) => {
+      //payload에는 전체 리스트가 들어있다
+      state.qnaList = payload;
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [getQnaCategoryListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [getQnaCategoryListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },

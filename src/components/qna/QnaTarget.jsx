@@ -93,14 +93,6 @@ const QnaTarget = ({ data, isDatail }) => {
         </div>
         <div>제목 : {data.title}</div>
         <ToastViewer content={data.content} />
-        {/* <div className="ql-snow">
-          {isDatail && (
-            <div
-              className="ql-editor"
-              dangerouslySetInnerHTML={{ __html: data.content }}
-            ></div>
-          )}
-        </div> */}
         <div>
           <div>카테고리 : {data.category}</div>
           <div>추천수 : {data.honeytip}</div>

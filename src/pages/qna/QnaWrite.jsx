@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import BookmarkList from "../../components/bookmark/BookmarkList";
 import styled from "styled-components";
+import ModalBookmark from "./../../components/common/ModalBookmark";
 
 const QnaWrite = () => {
   return (
@@ -12,9 +13,10 @@ const QnaWrite = () => {
         <h2 className="title">질문글 업로드</h2>
         <Editor className="editor" isWrite={true} />
       </SEditor>
-      <SBookmark>
+      {/* <SBookmark>
         <BookmarkList />
-      </SBookmark>
+      </SBookmark> */}
+      <ModalBookmark isWrite={true} />
     </SQnaWrite>
   );
 };

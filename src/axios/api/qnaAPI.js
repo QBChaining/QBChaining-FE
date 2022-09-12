@@ -3,6 +3,8 @@ import instance from "../axios";
 export const qnaApi = {
   //게시글 조회
   getList: () => instance.get("/qna"),
+  //게시글 카테고리 조회
+  getCategoryList: name => instance.get(`/qna/category/${name}`),
   //게시글 상세조회
   getOneList: id => instance.get(`/qna/${id}`),
   //게시글 작성
