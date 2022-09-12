@@ -100,7 +100,6 @@ export const getBlogCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.getBlogCommentList(data);
-      console.log("댓글조회", response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -205,12 +204,25 @@ export const unBlogLikeDB = createAsyncThunk(
     } catch (err) {}
   },
 );
+//블로그 북마크 조회
+export const getBlogBookMarkDB = createAsyncThunk(
+  "GET_BOOK_MRRK",
+  async thunkAPI => {
+    try {
+      const response = await blogApi.getBlogBookMark();
+      console.log("북마크 조회 axios", response.data.data);
+      return response.data.data;
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  },
+);
 
 //블로그 북마크 추가
 export const postBlogBookMarkDB = createAsyncThunk(
   "ADD_BOOK_MARK",
   async (id, thunkAPI) => {
-    console.log("BookSliceNum", typeof id);
     try {
       const response = await blogApi.postBlogBookMark(id);
       console.log("dfefef");
