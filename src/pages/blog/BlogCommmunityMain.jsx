@@ -8,6 +8,7 @@ import BlogBookMark from "../../components/blog/BlogBookMark";
 import react from "../../assets/images/icon/react.png";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
+  console.log(blogMainLists);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

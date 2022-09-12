@@ -12,6 +12,7 @@ import BlogLike from "../../components/blog/BlogLike";
 import BlogBookMark from "../../components/blog/BlogBookMark";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
+  console.log(response);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
