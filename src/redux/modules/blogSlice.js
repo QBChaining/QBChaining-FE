@@ -57,8 +57,8 @@ export const blogSlice = createSlice({
     },
     [postBlogCommunityDB.fulfilled]: (state, action) => {
       console.log(action.payload);
-      // state.blogList.push(action);
-      state.blogList = action.payload;
+      state.blogList.push(action.payload);
+      // state.blogList = action.payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -72,8 +72,9 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [patchBlogCommunityDB.fulfilled]: (state, action) => {
-      console.log(action);
-      state.blogList = action.meta.arg;
+      // console.log(action);
+      state.blogList = action.payload;
+      // state.blogList.push(action);
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -115,9 +116,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogCommentDB.fulfilled]: (state, action) => {
-      console.log(action);
-      console.log("추가", state);
-      console.log("코멘츠", state.commentList);
       state.commentList.push(action.payload.data);
       state.isFetching = false;
 
@@ -134,7 +132,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [patchBlogCommentDB.fulfilled]: (state, action) => {
-      // console.log("dfsdf", action.payload.data.id);
       const idx = state.commentList.findIndex(data => {
         return data.id === action.payload.data.id;
       });

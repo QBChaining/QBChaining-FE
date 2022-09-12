@@ -18,7 +18,7 @@ const BlogCommunityDetail = () => {
   //게시글 삭제
 
   const deleteBlogPost = () => {
-    dispatch(deleteBlogCommunityDB(parseInt(id)));
+    dispatch(deleteBlogCommunityDB(id));
   };
   useEffect(() => {
     dispatch(getBlogDetailDB(id));
@@ -39,7 +39,9 @@ const BlogCommunityDetail = () => {
             }}
           >
             {response.User?.user_name}
-            <SProfile></SProfile> <div>프로필사진</div>
+            <SProfile>
+              <div>프로필사진</div>
+            </SProfile>
           </div>
         </div>
         <button

@@ -5,8 +5,10 @@ import Editor from "../../components/common/Editor";
 const BlogCommunityWrite = () => {
   return (
     <div>
+      <div>
+        <h1>블로그 업로드</h1>
+      </div>
       <Editor isBlogWrite={true} />
-      {/* <Tag /> */}
     </div>
   );
 };
