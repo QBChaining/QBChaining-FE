@@ -43,7 +43,7 @@ const Editor = ({
   const titleText = useRef();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("Javascript");
+  const [category, setCategory] = useState("JavaScript");
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
 
