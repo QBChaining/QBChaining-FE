@@ -6,12 +6,9 @@ import styled from "styled-components";
 import ToastViewer from "../../components/editor/ToastViewer";
 import BlogBookMark from "../../components/blog/BlogBookMark";
 import react from "../../assets/images/icon/react.png";
+import BlogHotList from "../../components/blog/BlogHotList";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
-  const blogMainTagList = useSelector(
-    state => state.blogSlice.blogList.postTag,
-  );
-  console.log(blogMainLists);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,8 +19,11 @@ const BlogCommmunityMain = () => {
 
   return (
     <div>
+      {/* <SLine /> */}
       <STopBox>
-        <SRecommend>selectsdfsdf</SRecommend>
+        <SRecommend>
+          <BlogHotList />
+        </SRecommend>
 
         <STopHelper
           onClick={() => {
@@ -59,9 +59,12 @@ const BlogCommmunityMain = () => {
                     </SContent>
                   </div>
                   <div>
-                    <STag>{posts.tag}</STag>
-                    {blogMainLists.map(tags => {
-                      return <div key={tags.id}></div>;
+                    {posts.tag?.map(tags => {
+                      return (
+                        <div>
+                          <STag>{tags}</STag>
+                        </div>
+                      );
                     })}
                   </div>
                   <div>
@@ -78,6 +81,11 @@ const BlogCommmunityMain = () => {
 };
 
 const SBody = styled.div``;
+// const SLine = styled.div`
+//   width: 1832px;
+//   height: 0px;
+//   border: 1px solid rgba(255, 255, 255, 1);
+// `;
 const STopBox = styled.div`
   width: 100%;
   max-width: 1920px;
@@ -85,13 +93,13 @@ const STopBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  background-color: #2776ed;
-  padding: 35px 20px;
-  j &::before {
+  justify-content: center;
+  background-color: #2676ed;
+  padding: 61px 61px;
+  &::before {
     content: "";
     position: absolute;
-    top: 0;
+    top: 0%;
     left: 50%;
     width: calc(100% - 88px);
     transform: translateX(-50%);
@@ -100,7 +108,6 @@ const STopBox = styled.div`
   }
 `;
 const SRecommend = styled.div`
-  position: absolute;
   width: 1020px;
   height: 300px;
 
@@ -116,8 +123,10 @@ const STopHelper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 61px;
   color: ${props => props.theme.color.white};
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='30' ry='30' stroke='white' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+
   border-radius: 30px;
   cursor: pointer;
   & .helpText {
@@ -158,6 +167,7 @@ const SContent = styled.div`
   }
 `;
 const STag = styled.div`
+  margin-right: 15px;
   border: 1px solid red;
 `;
 const SContentsGroup = styled.div`

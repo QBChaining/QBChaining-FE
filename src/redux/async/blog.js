@@ -178,10 +178,8 @@ export const getMyBlogDB = createAsyncThunk("GET_MY_BLOG", async thunkAPI => {
 export const postBlogLikeDB = createAsyncThunk(
   "ADD_LIKE",
   async (id, thunkAPI) => {
-    console.log(id);
     try {
       const response = await blogApi.postBlogLike(id);
-      console.log(response);
       if (response.data.success === true) {
         console.log(response.data.success);
         successAlert("좋아요를 누르셨습니다.");
@@ -210,7 +208,6 @@ export const getBlogBookMarkDB = createAsyncThunk(
   async thunkAPI => {
     try {
       const response = await blogApi.getBlogBookMark();
-      console.log("북마크 조회 axios", response.data.data);
       return response.data.data;
     } catch (err) {
       console.log(err);
@@ -225,8 +222,6 @@ export const postBlogBookMarkDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.postBlogBookMark(id);
-      console.log("dfefef");
-      console.log("리스폰", response);
       if (response.data.success === true) {
         successAlert("블로그 즐겨찾기에 추가가 되었습니다.");
         return response;
@@ -239,7 +234,6 @@ export const postBlogBookMarkDB = createAsyncThunk(
 export const deleteBlogBookMarkDB = createAsyncThunk(
   "DEL_BOOK_MARK",
   async (id, thunkAPI) => {
-    console.log("북마크 삭제 아이디", typeof id);
     try {
       const response = await blogApi.delBlogBookMark(id);
       console.log(response);
@@ -250,3 +244,12 @@ export const deleteBlogBookMarkDB = createAsyncThunk(
     } catch (err) {}
   },
 );
+
+// 추천 많이 받은 블로그
+export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
+  try {
+    const response = await blogApi.getHotBlog();
+    console.log("추천 많이 받은 게시판", response);
+    return response.data.data;
+  } catch (err) {}
+});

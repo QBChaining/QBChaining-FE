@@ -96,7 +96,7 @@ const Header = () => {
             <button onClick={onLogoutHandler}>로그아웃</button>
           ) : (
             // <a href={process.env.REACT_APP_GITHUB_API}>로그인</a>
-            <a href="http://kpzzy.shop/api/auth/github">로그인</a>
+            <a href="http://43.200.169.141/api/auth/github">로그인</a>
           )}
           <div className="loginProfile"></div>
         </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +8,7 @@ import QnaList from "./../../components/qna/QnaList";
 import QnaMainCatergory from "./../../components/qna/QnaMainCatergory";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import WritingButton from "../../assets/images/WritingButton.png";
-import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
-import NoResolvedListIcon from "../../assets/images/NoResolvedListIcon.png";
+
 const QnaMain = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -42,38 +41,17 @@ const QnaMain = () => {
       </SMainCategory>
       <SQnaWrapper>
         <SleftConatiner>
-          <SListHeader>
-            <p style={{ backgroundImage: `url(${ResolvedListIcon})` }}>
-              채택된 질문
-            </p>
-            <SListFilter>
-              <ul>
-                <li>추천순</li>
-                <li className="active">시간순</li>
-              </ul>
-            </SListFilter>
-          </SListHeader>
           {resolveList.map(data => (
             <QnaList data={data} key={data.id} />
           ))}
         </SleftConatiner>
         <SRightContainer>
-          <SListHeader>
-            <p style={{ backgroundImage: `url(${NoResolvedListIcon})` }}>
-              채택안된 질문
-            </p>
-            <SListFilter>
-              <ul>
-                <li>추천순</li>
-                <li className="active">시간순</li>
-              </ul>
-            </SListFilter>
-          </SListHeader>
           {disresolveList.map(data => (
             <QnaList data={data} key={data.id} />
           ))}
         </SRightContainer>
       </SQnaWrapper>
+      <ModalBookmark />
     </SQnaMain>
   );
 };
@@ -145,7 +123,7 @@ const SWritingButton = styled.button`
   border: none;
   background-image: url(${props => props.icon});
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center center;
   margin: 30px 0 43px 0;
 `;
 
@@ -162,7 +140,7 @@ const SQnaWrapper = styled.div`
   margin: 0 auto;
 `;
 const SleftConatiner = styled.div`
-  max-width: 912px;
+  max-width: 882px;
   width: 100%;
   margin-right: 46px;
 `;
@@ -170,44 +148,4 @@ const SleftConatiner = styled.div`
 const SRightContainer = styled.div`
   max-width: 600px;
   width: 100%;
-`;
-
-const SListHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 18px 24px 6px 24px;
-  & p {
-    padding-left: 26px;
-    background-repeat: no-repeat;
-    background-position: left 0 top 5px;
-  }
-`;
-const SListFilter = styled.div`
-  & ul {
-    display: flex;
-
-    & li {
-      padding: 20px;
-      cursor: pointer;
-      position: relative;
-      color: ${props => props.theme.color.grey5};
-
-      &.active {
-        color: ${props => props.theme.color.black};
-      }
-      &:first-child {
-        &::before {
-          content: "";
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          right: 0;
-          width: 1px;
-          height: 14px;
-          background-color: ${props => props.theme.color.grey2};
-        }
-      }
-    }
-  }
 `;
