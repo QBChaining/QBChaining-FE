@@ -6,15 +6,7 @@ import styled from "styled-components";
 const QnaAddComment = ({ id }) => {
   const style = { height: "300px" };
 
-  return (
-    <SQnaAddComment>
-      <Editor isCommentWrite={true} id={id} style={style} />
-    </SQnaAddComment>
-  );
+  return <Editor isCommentWrite={true} id={id} style={style} />;
 };
 
 export default QnaAddComment;
-
-const SQnaAddComment = styled.div`
-  color: black;
-`;

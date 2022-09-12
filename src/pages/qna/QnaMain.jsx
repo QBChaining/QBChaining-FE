@@ -44,7 +44,7 @@ const QnaMain = () => {
         <SleftConatiner>
           <SListHeader>
             <p style={{ backgroundImage: `url(${ResolvedListIcon})` }}>
-              채택된 질문
+              채택이 완료되었어요
             </p>
             <SListFilter>
               <ul>
@@ -60,7 +60,7 @@ const QnaMain = () => {
         <SRightContainer>
           <SListHeader>
             <p style={{ backgroundImage: `url(${NoResolvedListIcon})` }}>
-              채택안된 질문
+              채택을 기다리고 있어요
             </p>
             <SListFilter>
               <ul>
@@ -159,17 +159,18 @@ const SMainCategory = styled.div`
 
 const SQnaWrapper = styled.div`
   display: flex;
-  max-width: calc(100% - 400px);
+  max-width: 1560px;
+  padding: 0 20px;
   margin: 0 auto;
 `;
 const SleftConatiner = styled.div`
-  max-width: 912px;
+  max-width: 850px;
   width: 100%;
-  margin-right: 46px;
+  margin-right: 40px;
 `;
 
 const SRightContainer = styled.div`
-  max-width: 600px;
+  max-width: 650px;
   width: 100%;
 `;
 
@@ -177,11 +178,13 @@ const SListHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 18px 24px 6px 24px;
+  margin: 18px 20px 10px 20px;
   & p {
+    font-weight: 600;
     padding-left: 26px;
     background-repeat: no-repeat;
     background-position: left 0 top 5px;
+    font-size: 18px;
   }
 `;
 const SListFilter = styled.div`

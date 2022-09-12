@@ -8,6 +8,7 @@ import QnaCommentList from "./../../components/qna/QnaCommentList";
 import QnaTarget from "../../components/qna/QnaTarget";
 import styled from "styled-components";
 import ModalBookmark from "./../../components/common/ModalBookmark";
+import QnaWriteArrow from "../../assets/images/QnaWriteArrow.png";
 
 const QnaDetail = () => {
   const { id } = useParams();
@@ -21,19 +22,20 @@ const QnaDetail = () => {
 
   return (
     <SQnaDetail>
-      <div className="leftContainer">
-        {target && <QnaTarget isDatail={true} data={target} />}
-      </div>
-      <div className="rightContainer">
-        <h2>댓글</h2>
-        <QnaAddComment id={id} />
+      <SLeftContainer QnaWriteArrow={QnaWriteArrow}>
+        <QnaTarget isDatail={true} data={target} />
         <QnaCommentList
           author={target.user?.user_name}
           resolve={target.is_resolve}
           id={id}
           qnaId={id}
         />
-      </div>
+      </SLeftContainer>
+
+      <SRightContainer>
+        <SAddCommentTitle>댓글 작성</SAddCommentTitle>
+        <QnaAddComment id={id} />
+      </SRightContainer>
       <ModalBookmark />
     </SQnaDetail>
   );
@@ -44,18 +46,34 @@ export default QnaDetail;
 const SQnaDetail = styled.div`
   display: flex;
   min-height: calc(100vh - 100px);
-  & .leftContainer {
-    width: 50%;
-  }
+  margin: 0 auto;
+`;
 
-  & .rightContainer {
-    width: 50%;
-    background-color: #1c2030;
-    color: white;
-
-    & h2 {
-      font-size: 24px;
-      font-weight: 400;
-    }
+const SLeftContainer = styled.div`
+  width: 50%;
+  padding-left: 200px;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50px;
+    right: -50px;
+    width: 53px;
+    height: 53px;
+    background-image: url(${props => props.QnaWriteArrow});
+    background-repeat: no-repeat;
   }
+`;
+
+const SRightContainer = styled.div`
+  padding: 0 200px 0 50px;
+  width: 50%;
+  background-color: ${props => props.theme.color.mainGreen};
+  color: white;
+`;
+
+const SAddCommentTitle = styled.h2`
+  font-size: 20px;
+  font-weight: 400;
+  padding: 60px 0 30px 0;
 `;

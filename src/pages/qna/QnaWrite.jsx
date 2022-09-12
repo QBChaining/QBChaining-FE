@@ -30,8 +30,8 @@ const SQnaWrite = styled.div`
 `;
 
 const SEditor = styled.div`
-  margin-left: 100px;
-  margin-right: 170px;
+  margin-left: 200px;
+  margin-right: 200px;
   flex: 1;
   & .title {
     margin-top: 67px;

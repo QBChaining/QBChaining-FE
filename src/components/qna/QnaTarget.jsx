@@ -70,6 +70,8 @@ const QnaTarget = ({ data, isDatail }) => {
     }
   }, []);
 
+  console.log(data);
+
   return (
     <SQnaTarget>
       <div>

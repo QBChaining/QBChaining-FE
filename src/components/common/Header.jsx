@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -115,9 +115,9 @@ const SHeader = styled.header`
   padding: 0 40px;
   height: 100px;
   background: ${props =>
-    props.location === "/qna"
+    props.location.includes("/qna")
       ? props.theme.color.mainGreen
-      : props.location === "/blog"
+      : props.location.includes("/blog")
       ? props.theme.color.mainBlue
       : props.theme.color.backgroundGradient};
   color: white;
