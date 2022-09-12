@@ -7,6 +7,7 @@ import QnaAddComment from "./../../components/qna/QnaAddComment";
 import QnaCommentList from "./../../components/qna/QnaCommentList";
 import QnaTarget from "../../components/qna/QnaTarget";
 import styled from "styled-components";
+import ModalBookmark from "./../../components/common/ModalBookmark";
 
 const QnaDetail = () => {
   const { id } = useParams();
@@ -33,6 +34,7 @@ const QnaDetail = () => {
           qnaId={id}
         />
       </div>
+      <ModalBookmark />
     </SQnaDetail>
   );
 };

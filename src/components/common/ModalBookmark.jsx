@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { getBookmarkListDB } from "../../redux/async/qna";
 import BookmarkListItem from "./../bookmark/BookmarkListItem";
 import { needLoginAlert } from "./../../utils/swal";
-const ModalBookmark = () => {
+const ModalBookmark = ({ isWrite }) => {
   const dispatch = useDispatch();
   const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
   const { isLogin } = useSelector(state => state.userSlice);
@@ -61,7 +61,7 @@ const SModalBookmarkIcon = styled.div`
   right: 66px;
   width: 50px;
   height: 50px;
-  background: ${props => props.theme.color.bacgkroundGradient};
+  background: ${props => props.theme.color.backgroundGradient};
   border-radius: 50%;
   cursor: pointer;
   &::before {

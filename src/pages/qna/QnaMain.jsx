@@ -74,6 +74,7 @@ const QnaMain = () => {
           ))}
         </SRightContainer>
       </SQnaWrapper>
+      <ModalBookmark />
     </SQnaMain>
   );
 };
