@@ -154,7 +154,7 @@ const Editor = ({
         postBlogCommunityDB({
           title,
           content,
-          tag,
+          tag: tags,
         }),
       );
     } else if (isBlogEdit) {

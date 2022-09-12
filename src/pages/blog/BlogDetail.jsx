@@ -10,8 +10,11 @@ import { deleteBlogCommunityDB } from "../../redux/async/blog";
 import ToastViewer from "./../../components/editor/ToastViewer";
 import BlogLike from "../../components/blog/BlogLike";
 import BlogBookMark from "../../components/blog/BlogBookMark";
+import BlogBookMarkList from "../../components/blog/BlogBookMarkList";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
+  const blogMainLists = useSelector(state => state.blogSlice.blogList);
+
   console.log(response);
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -69,6 +72,7 @@ const BlogCommunityDetail = () => {
           <CommentList />
         </div>
       </STopBox>
+      <BlogBookMarkList />
     </form>
   );
 };

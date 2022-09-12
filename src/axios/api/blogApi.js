@@ -33,7 +33,8 @@ export const blogApi = {
   getYouBlog: id => instance.get(`/posts/you/${id}`),
 
   //즐겨찾기
-
+  //블로그즐겨찾기 조회
+  getBlogBookMark: () => instance.get(`/posts/bookmark/`),
   //블로그즐겨찾기 추가
   postBlogBookMark: id => instance.post(`/posts/bookmark/${id}`),
   //블로그즐겨찾기 삭제

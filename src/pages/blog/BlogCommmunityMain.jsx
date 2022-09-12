@@ -8,6 +8,9 @@ import BlogBookMark from "../../components/blog/BlogBookMark";
 import react from "../../assets/images/icon/react.png";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
+  const blogMainTagList = useSelector(
+    state => state.blogSlice.blogList.postTag,
+  );
   console.log(blogMainLists);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,21 +22,22 @@ const BlogCommmunityMain = () => {
 
   return (
     <div>
+      <STopBox>
+        <SRecommend>selectsdfsdf</SRecommend>
+
+        <STopHelper
+          onClick={() => {
+            navigate("/blog/write");
+          }}
+        >
+          <div className="helpText">궁금한걸 물어보세요!</div>
+          <div className="helpSubText">
+            클릭하시면 블로그 작성페이지로 이동합니다.
+          </div>
+        </STopHelper>
+      </STopBox>
       <SBody>
         <SListGroup>
-          <STopBox
-            onClick={() => {
-              navigate("/blog/write");
-            }}
-          >
-            <STopHelper>
-              <div className="helpText">궁금한걸 물어보세요!</div>
-              <div className="helpSubText">
-                클릭하시면 블로그 작성페이지로 이동합니다.
-              </div>
-            </STopHelper>
-          </STopBox>
-
           {blogMainLists?.map(posts => {
             return (
               <SBloglist data={posts} key={posts.id}>
@@ -55,7 +59,10 @@ const BlogCommmunityMain = () => {
                     </SContent>
                   </div>
                   <div>
-                    <p>TAGS :: {posts?.tag}</p>
+                    <STag>{posts.tag}</STag>
+                    {blogMainLists.map(tags => {
+                      return <div key={tags.id}></div>;
+                    })}
                   </div>
                   <div>
                     <BlogBookMark />
@@ -76,9 +83,9 @@ const STopBox = styled.div`
   max-width: 1920px;
   position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  flex-direction: column;
+  justify-content: space-between;
   background-color: #2776ed;
   padding: 35px 20px;
   j &::before {
@@ -92,7 +99,16 @@ const STopBox = styled.div`
     background-color: ${props => props.theme.color.white};
   }
 `;
-const Recommend = styled.div``;
+const SRecommend = styled.div`
+  position: absolute;
+  width: 1020px;
+  height: 300px;
+
+  background: #ffffff;
+
+  box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+`;
 const STopHelper = styled.div`
   width: 100%;
   max-width: 420px;
@@ -141,7 +157,9 @@ const SContent = styled.div`
     /* font-color: #9c9c9c; */
   }
 `;
-
+const STag = styled.div`
+  border: 1px solid red;
+`;
 const SContentsGroup = styled.div`
   display: flex;
   flex-direction: column;
@@ -155,8 +173,8 @@ const SPTitleBox = styled.div`
   flex-direction: row;
   justify-content: left;
   & .title {
-    font-size: 24.2px;
-    font-size: 24.2px;
+    font-size: 20px;
+
     margin-left: 5px;
   }
 `;
@@ -164,8 +182,8 @@ const Sprofile = styled.div`
   background-position: center;
   background-size: cover;
   background-image: url(${react});
-  width: 24.2px;
-  height: 24.2px;
+  width: 20px;
+  height: 20px;
 `;
 
 export default BlogCommmunityMain;

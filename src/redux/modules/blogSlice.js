@@ -9,6 +9,7 @@ import {
   deleteBlogCommentDB,
   patchBlogCommunityDB,
   getMyBlogDB,
+  getBlogBookMarkDB,
 } from "../async/blog";
 export const blogSlice = createSlice({
   name: "blog",
@@ -17,6 +18,7 @@ export const blogSlice = createSlice({
     blogDetail: {},
     commentList: [],
     myblog: [],
+    blogBookMark: [],
     isFetching: false,
     errorMessage: "",
   },
@@ -72,9 +74,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [patchBlogCommunityDB.fulfilled]: (state, action) => {
-      // console.log(action);
       state.blogList = action.payload;
-      // state.blogList.push(action);
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -164,13 +164,24 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getMyBlogDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.myblog = action.payload;
 
       state.isFetching = false;
       state.errorMessage = null;
     },
     [getMyBlogDB.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = action.payload.errorMessage;
+    },
+    // 북마크 조회
+    [getBlogBookMarkDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [getBlogBookMarkDB.fulfilled]: (state, action) => {
+      console.log("북마크 조회", action.payload);
+      state.blogBookMark = action.payload;
+    },
+    [getBlogBookMarkDB.rejected]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },
