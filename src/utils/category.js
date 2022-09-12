@@ -1,12 +1,16 @@
 const qnaCategory = [
   { langId: 1, langName: "JavaScript" },
-  { langId: 2, langName: "Java" },
-  { langId: 3, langName: "Python" },
-  { langId: 4, langName: "C" },
-  { langId: 5, langName: "C++" },
-  { langId: 6, langName: "C#" },
-  { langId: 7, langName: "SQL" },
-  { langId: 8, langName: "PHP" },
+  { langId: 2, langName: "Nodejs" },
+  { langId: 3, langName: "React" },
+  { langId: 4, langName: "Vue" },
+  { langId: 5, langName: "Kotline" },
+  { langId: 6, langName: "Java" },
+  { langId: 7, langName: "Python" },
+  { langId: 8, langName: "C" },
+  { langId: 9, langName: "C++" },
+  { langId: 10, langName: "C#" },
+  { langId: 11, langName: "CSS" },
+  { langId: 12, langName: "PHP" },
 ];
 
 const interestCategory = [
