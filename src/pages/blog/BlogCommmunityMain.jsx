@@ -8,6 +8,8 @@ import BlogBookMark from "../../components/blog/BlogBookMark";
 import react from "../../assets/images/icon/react.png";
 import BlogHotList from "../../components/blog/BlogHotList";
 import blogplus from "../../assets/images/blogplus.png";
+import ModalBookmark from "../../components/common/ModalBookmark";
+import { colorSetBlue } from "../../redux/modules/userSlice";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   console.log("태그", blogMainLists);
@@ -17,6 +19,7 @@ const BlogCommmunityMain = () => {
   //메인 블로그 게시글 조회
   useEffect(() => {
     dispatch(getBlogCommunityListDB());
+    dispatch(colorSetBlue());
   }, [dispatch]);
 
   return (
@@ -56,6 +59,7 @@ const BlogCommmunityMain = () => {
                       <div className="title">{posts.title}</div>
                     </SPTitleBox>
                     <SContent>
+                      {/* {posts.content} */}
                       <ToastViewer
                         className="content1"
                         content={posts.content}
@@ -82,6 +86,7 @@ const BlogCommmunityMain = () => {
           })}
         </SListGroup>
       </SBody>
+      <ModalBookmark />
     </div>
   );
 };
@@ -165,8 +170,10 @@ const SBloglist = styled.div`
 `;
 
 const SContent = styled.div`
-  width: 283;
+  width: 283px;
   height: 101px;
+  overflow: hidden;
+  /* border-radius: 30px; */
   & .content1 {
     font-weight: 400;
     font-size: 18px;

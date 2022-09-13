@@ -16,7 +16,7 @@ export const blogSlice = createSlice({
   name: "blog",
   initialState: {
     blogList: [],
-    blogDetail: {},
+    blogDetail: [],
     commentList: [],
     myblog: [],
     hotBlog: [],
@@ -76,7 +76,9 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [patchBlogCommunityDB.fulfilled]: (state, action) => {
-      state.blogList = action.payload;
+      // state.blogList = action.payload;
+      state.blogList.push(action.payload);
+
       state.isFetching = false;
       state.errorMessage = null;
     },

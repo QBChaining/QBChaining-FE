@@ -70,7 +70,5 @@ const CommentEditDel = ({ comments }) => {
   );
 };
 
-const SCommentList = styled.div`
-  border: 1px solid black;
-`;
+const SCommentList = styled.div``;
 export default CommentEditDel;
