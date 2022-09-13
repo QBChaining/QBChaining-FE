@@ -15,25 +15,49 @@ import styled from "styled-components";
 
 const ToastEditor = ({ isCommentWrite, content, setContent }) => {
   const editorRef = useRef();
+  const QnatoolbarItems = [
+    ["heading", "bold", "italic", "strike"],
+    ["codeblock"],
+    ["ul", "ol", "task"],
+    ["hr"],
+    ["table", "link"],
+    ["scrollSync"],
+  ];
+  const BlogtoolbarItems = [
+    ["heading", "bold", "italic", "strike"],
+    ["codeblock"],
+    ["ul", "ol", "task"],
+    ["table", "link"],
+    ["hr"],
+    ["image"],
+    ["scrollSync"],
+  ];
 
   const onChange = () => {
     const data = editorRef.current.getInstance().getMarkdown();
     setContent(data);
   };
 
+  const onBlur = () => {
+    // setContent("");
+    console.log(editorRef.current.getInstance().getHTML());
+  };
+
   return (
     <SEditor>
       <Editor
-        initialValue="마크다운으로 내용을 입력하세요!"
-        previewStyle={isCommentWrite ? "tap" : "vertical"}
+        placeholder="마크다운으로 내용을 입력하세요!"
+        previewStyle={isCommentWrite ? "tab" : "vertical"}
         height={isCommentWrite ? "600px" : "500px"}
         initialEditType="markdown"
+        toolbarItems={QnatoolbarItems}
         useCommandShortcut={false}
         hideModeSwitch={true}
         plugins={[colorSyntax, [codeSyntaxHighlight, { highligher: Prism }]]}
         language="ko-KR"
         ref={editorRef}
         onChange={onChange}
+        onBlur={onBlur}
       />
     </SEditor>
   );
@@ -45,5 +69,9 @@ const SEditor = styled.div`
   & .ProseMirror {
     background-color: white;
     height: 100%;
+  }
+
+  & .toastui-editor-main-container {
+    background-color: ${props => props.theme.color.white};
   }
 `;

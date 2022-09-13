@@ -70,8 +70,6 @@ const QnaTarget = ({ data, isDatail }) => {
     }
   }, []);
 
-  console.log(data.honey_tip);
-
   return (
     <SQnaTarget>
       <SUserInfo>
@@ -95,17 +93,17 @@ const QnaTarget = ({ data, isDatail }) => {
           </SHoneyTipButton>
         </SButtonWrapper>
       </SUserInfo>
-      <SContentTitle>{data.title}</SContentTitle>
-      <ToastViewer content={data.content} />
-      <div>
-        <div>카테고리 : {data.category}</div>
-        <div>추천수 : {data.honeytip}</div>
-        <div>
+      <SContent>
+        <SContentTitle>{data.title}</SContentTitle>
+        <SContentText>
+          <ToastViewer content={data.content} />
+        </SContentText>
+        <STags>
           {data.tag?.map((data, i) => {
-            return <div key={i}>{data}</div>;
+            return <STag key={i}>{data}</STag>;
           })}
-        </div>
-      </div>
+        </STags>
+      </SContent>
     </SQnaTarget>
   );
 };
@@ -124,6 +122,7 @@ const ButtonBackground = styled.button`
   border: none;
   background-color: transparent;
 `;
+
 const SBookmarkButton = styled(ButtonBackground)`
   background-position: center center;
   width: 24px;
@@ -152,8 +151,7 @@ const SUserInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 30px;
-  padding-top: 60px;
+  padding: 60px 20px 30px 40px;
   border-bottom: 1px solid ${props => props.theme.color.grey5};
 `;
 
@@ -168,14 +166,41 @@ const SUserProfile = styled.div`
 const SUserInfoText = styled.div`
   margin-left: 10px;
 `;
+
 const SUserName = styled.div`
   margin-bottom: 2px;
 `;
+
 const SCreateAt = styled.div`
   color: ${props => props.theme.color.grey6};
+`;
+
+const SContent = styled.div`
+  padding: 0 20px 0 40px;
+  border-bottom: 1px solid ${props => props.theme.color.grey5};
 `;
 
 const SContentTitle = styled.div`
   font-size: 22px;
   font-weight: 400;
+  padding: 30px 0;
+`;
+
+const SContentText = styled.div`
+  padding-bottom: 30px;
+`;
+
+const STags = styled.ul`
+  display: flex;
+  margin-bottom: 14px;
+`;
+
+const STag = styled.li`
+  padding: 10px 18px;
+  border: 1px solid ${props => props.theme.color.mainGreen};
+  border-radius: 30px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  color: ${props => props.theme.color.mainGreen};
+  font-weight: 600;
 `;

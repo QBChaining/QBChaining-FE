@@ -148,10 +148,11 @@ const Editor = ({
           id: parseInt(id),
           honey_tip: 0,
           user_name: userName,
+          // profile_img:
         }),
       );
       //작성 후 입력 값 초기화
-      // quillRef.current.firstChild.innerHTML = "";
+      setContent("");
       //블로그 수정, 생성
     } else if (isBlogWrite) {
       navigate("/blog");
