@@ -118,6 +118,7 @@ const qnaSlice = createSlice({
     //게시글 추천
     [likeQnaListDB.fulfilled]: (state, { payload }) => {
       state.qnaTarget.is_honey_tip = true;
+      state.qnaTarget.honey_tip += 1;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -131,6 +132,7 @@ const qnaSlice = createSlice({
     //게시글 추천 취소
     [dislikeQnaListDB.fulfilled]: (state, { payload }) => {
       state.qnaTarget.is_honey_tip = false;
+      state.qnaTarget.honey_tip -= 1;
       state.isFetching = false;
       state.errorMessage = null;
     },

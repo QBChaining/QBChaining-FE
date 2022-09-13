@@ -148,10 +148,11 @@ const Editor = ({
           id: parseInt(id),
           honey_tip: 0,
           user_name: userName,
+          // profile_img:
         }),
       );
       //작성 후 입력 값 초기화
-      // quillRef.current.firstChild.innerHTML = "";
+      setContent("");
       //블로그 수정, 생성
     } else if (isBlogWrite) {
       navigate("/blog");
@@ -272,15 +273,21 @@ const Editor = ({
             ))}
           </STagContainer>
         )}
-        <SSubmitButton
-          type="submit"
-          onClick={onSubmitHandler}
-          location={location}
-        >
-          {isEdit || isWrite || isBlogWrite || isBlogEdit
-            ? "제출하기"
-            : "댓글쓰기"}
-        </SSubmitButton>
+        {isCommentWrite ? (
+          <SCommentWriteButton type="submit" onClick={onSubmitHandler}>
+            제출하기
+          </SCommentWriteButton>
+        ) : (
+          <SSubmitButton
+            type="submit"
+            onClick={onSubmitHandler}
+            location={location}
+          >
+            {isEdit || isWrite || isBlogWrite || isBlogEdit
+              ? "제출하기"
+              : "댓글쓰기"}
+          </SSubmitButton>
+        )}
       </SSubmitWrapper>
     </Sform>
   );
@@ -304,6 +311,7 @@ const Sform = styled.form`
 `;
 
 const SSubmitWrapper = styled.div`
+  position: relative;
   width: 100%;
   justify-content: space-between;
   display: flex;
@@ -382,4 +390,16 @@ const SSubmitButton = styled.button`
         ? props.theme.color.mainGreen
         : props.theme.color.mainBlue};
   color: ${props => props.theme.color.white};
+`;
+
+const SCommentWriteButton = styled.button`
+  position: absolute;
+  right: 0;
+  bottom: -37px;
+  height: 38px;
+  min-width: 140px;
+  color: ${props => props.theme.color.mainGreen};
+  border: none;
+  background-color: ${props => props.theme.color.white};
+  font-weight: 600;
 `;
