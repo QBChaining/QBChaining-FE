@@ -49,7 +49,7 @@ export default QnaMainCatergory;
 const SQnaMainCatergory = styled.div`
   display: flex;
   justify-content: space-between;
-  max-width: 1230px;
+  max-width: 1560px;
   width: 100%;
 
   & div {
@@ -70,6 +70,7 @@ const SQnaCategoryList = styled.label`
   padding: 10px 30px;
   font-size: 20px;
   border-radius: 30px;
+  margin: 0 5px;
   cursor: pointer;
   color: ${props => props.theme.color.white};
   &:hover {

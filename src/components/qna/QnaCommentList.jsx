@@ -220,6 +220,7 @@ const SUserName = styled.div`
   font-weight: ${props => (props.winner ? "600" : "400")};
   color: ${props =>
     props.winner ? props.theme.color.white : props.theme.color.black};
+  cursor: pointer;
 `;
 
 const SCreateAt = styled.div`
@@ -271,7 +272,7 @@ const SWinnerButton = styled(SChoiceButton)`
   color: ${props => props.theme.color.mainGreen};
   background-color: ${props => props.theme.color.white};
   border: none;
-
+  line-height: 15px;
   &:hover {
     color: ${props => props.theme.color.mainGreen};
     background-color: ${props => props.theme.color.white};

@@ -70,13 +70,19 @@ const QnaTarget = ({ data, isDatail }) => {
     }
   }, []);
 
+  console.log(data);
+
   return (
     <SQnaTarget>
       <SUserInfo>
-        <SUserInfoWrapper>
+        <SUserInfoWrapper
+          onClick={() => {
+            navigate(`/mypage/${data.user?.user_name}`);
+          }}
+        >
           <SUserProfile profile={data.user?.profile_img} />
           <SUserInfoText>
-            <SUserName>{data.user?.email}</SUserName>
+            <SUserName>{data.user?.user_name}</SUserName>
             <SCreateAt>{data.user?.createdAt}</SCreateAt>
           </SUserInfoText>
         </SUserInfoWrapper>
@@ -145,6 +151,7 @@ const SHoneyTipButton = styled(ButtonBackground)`
 const SUserInfoWrapper = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const SUserInfo = styled.div`

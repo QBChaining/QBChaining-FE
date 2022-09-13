@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import ResolveWrapper from "../../assets/images/ResolveList.png";
 import { useDispatch } from "react-redux";
 import { FiThumbsUp } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
 import QnaCategoryImage from "./QnaCategoryImage";
 import QnaBookmarkButton from "./../bookmark/QnaBookmarkButton";
+import ResolveWrapper from "../../assets/images/ResolveList.png";
 import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
 import QnaLikeIcon from "../../assets/images/QnaLike.png";
 import QnaCommentIcon from "../../assets/images/QnaComment.png";
@@ -50,7 +50,7 @@ const QnaList = ({ data }) => {
       <SWrapper resolve={data.is_resolve} ResolveWrapper={ResolveWrapper}>
         <SUserInfo>
           <SProfileContainer>
-            <SProfile ProfileDefault={ProfileDefault}></SProfile>
+            <SProfile profile={data.user.profile_img}></SProfile>
             <SUserName>{data.user?.user_name}</SUserName>
             <SCreatedAt>{time}</SCreatedAt>
           </SProfileContainer>
@@ -109,7 +109,6 @@ const StextMain = styled.div``;
 const SWrapper = styled.div`
   width: 100%;
   padding: 30px 50px 18px 50px;
-  /* padding-left: ${props => (props.resolve ? "137px" : "23px")}; */
   border: ${props =>
     props.resolve
       ? `1px solid ${props.theme.color.mainGreen}`
@@ -132,6 +131,7 @@ const SUserInfo = styled.div`
 const SProfileContainer = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const SProfile = styled.div`
@@ -139,15 +139,18 @@ const SProfile = styled.div`
   height: 33px;
   border-radius: 50%;
   border: 1px solid ${props => props.theme.color.grey3};
-  background-image: url(${props => props.ProfileDefault});
+  background-image: url(${props => props.profile});
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
   margin-right: 11px;
 `;
+
 const SUserName = styled.div`
   margin-right: 9px;
   font-size: 20px;
 `;
+
 const SCreatedAt = styled.div`
   color: ${props => props.theme.color.grey4};
   font-size: 15px;
@@ -155,7 +158,6 @@ const SCreatedAt = styled.div`
 
 const SCategoryContainer = styled.div`
   display: flex;
-
   & > div:first-child {
     margin-right: 20px;
   }
@@ -165,6 +167,7 @@ const STitleWrapper = styled.div`
   margin: 25px 0;
   cursor: pointer;
 `;
+
 const STitle = styled.div`
   font-size: 22px;
 `;
@@ -174,10 +177,12 @@ const STagWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
 const STags = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
+
 const Tag = styled.div`
   display: flex;
   align-items: center;
@@ -200,11 +205,13 @@ const SCount = styled.div`
   align-self: flex-start;
   color: #999;
 `;
+
 const SHoneytip = styled.div`
   margin-right: 20px;
   display: flex;
   align-items: center;
 `;
+
 const SIcon = styled.div`
   margin-top: 2px;
   margin-left: 6px;
@@ -216,6 +223,7 @@ const SIcon = styled.div`
   background-image: url(${props =>
     props.resolve ? props.colorIcon : props.greyIcon});
 `;
+
 const SCntcomment = styled.div`
   display: flex;
   align-items: center;

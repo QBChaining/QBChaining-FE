@@ -72,7 +72,6 @@ const QnaMain = () => {
               </ul>
             </SListFilter>
           </SListHeader>
-
           {disresolveList.map(data => (
             <QnaList data={data} key={data.id} />
           ))}

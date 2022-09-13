@@ -9,12 +9,12 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, logOut } from "../../redux/modules/userSlice";
 import { removeUserInfo } from "../../redux/modules/qnaSlice";
+import SearchInput from "./../search/SearchInput";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = window.location.pathname;
-  const search = useRef();
   const { isLogin } = useSelector(state => state.userSlice);
   const onLogoutHandler = () => {
     Swal.fire("로그아웃", "성공", "success")
@@ -26,8 +26,6 @@ const Header = () => {
         dispatch(removeUserInfo());
       });
   };
-
-  //임시검색창
 
   return (
     <SHeader location={location}>
@@ -72,21 +70,7 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-      <div className="searchContainer">
-        <div className="searchIcon">
-          <AiOutlineSearch />
-        </div>
-        <input ref={search} type="text" placeholder="Javascript" />
-        <button
-          onClick={() => {
-            axios.get(`http://kpzzy.shop/api/search?q=node  `).then(res => {
-              console.log(res);
-            });
-          }}
-        >
-          검색
-        </button>
-      </div>
+      <SearchInput />
       <div className="alarmLoginWrapper">
         <div className="alarmConatainer active">
           <HiOutlineBell />
@@ -168,11 +152,6 @@ const SHeader = styled.header`
   }
 
   & .searchContainer {
-    max-width: 600px;
-    min-width: 200px;
-    width: 100%;
-    height: 42px;
-    position: relative;
     & .searchIcon {
       position: absolute;
       top: 12px;
@@ -186,31 +165,6 @@ const SHeader = styled.header`
         width: 100%;
         height: 100%;
       }
-    }
-    & input {
-      width: 100%;
-      height: 100%;
-      padding: 0 120px 0 40px;
-      border-radius: 30px;
-      border: 1px solid #939393;
-
-      &:active {
-        outline: none;
-      }
-      &:focus {
-        outline: none;
-      }
-    }
-    & button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-      width: 87px;
-      border-radius: 30px;
-      background-color: #1e1e1e;
-      color: white;
-      font-size: 15px;
     }
   }
 
