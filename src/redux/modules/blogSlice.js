@@ -10,6 +10,7 @@ import {
   patchBlogCommunityDB,
   getMyBlogDB,
   getBlogBookMarkDB,
+  getHotBlogDB,
 } from "../async/blog";
 export const blogSlice = createSlice({
   name: "blog",
@@ -18,6 +19,7 @@ export const blogSlice = createSlice({
     blogDetail: {},
     commentList: [],
     myblog: [],
+    hotBlog: [],
     blogBookMark: [],
     isFetching: false,
     errorMessage: "",
@@ -182,6 +184,19 @@ export const blogSlice = createSlice({
       state.blogBookMark = action.payload;
     },
     [getBlogBookMarkDB.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = action.payload.errorMessage;
+    },
+
+    //추천 많이 받은 블로그
+    [getHotBlogDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [getHotBlogDB.fulfilled]: (state, action) => {
+      console.log("조회", action);
+      state.hotBlog = action.payload;
+    },
+    [getHotBlogDB.rejected]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },

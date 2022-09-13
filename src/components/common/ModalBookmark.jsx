@@ -31,6 +31,7 @@ const ModalBookmark = ({ isWrite }) => {
           <div className="listWrapper">
             <div className="blog">
               <h2>블로그</h2>
+              
             </div>
             <div className="qna">
               <h2>Q&A</h2>

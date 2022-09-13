@@ -6,12 +6,11 @@ import styled from "styled-components";
 import ToastViewer from "../../components/editor/ToastViewer";
 import BlogBookMark from "../../components/blog/BlogBookMark";
 import react from "../../assets/images/icon/react.png";
+import BlogHotList from "../../components/blog/BlogHotList";
+import blogplus from "../../assets/images/blogplus.png";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
-  const blogMainTagList = useSelector(
-    state => state.blogSlice.blogList.postTag,
-  );
-  console.log(blogMainLists);
+  console.log("태그", blogMainLists);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,23 +21,28 @@ const BlogCommmunityMain = () => {
 
   return (
     <div>
+      {/* <SLine /> */}
       <STopBox>
-        <SRecommend>selectsdfsdf</SRecommend>
+        <SRecommend>
+          <BlogHotList />
+        </SRecommend>
 
         <STopHelper
           onClick={() => {
             navigate("/blog/write");
           }}
         >
-          <div className="helpText">궁금한걸 물어보세요!</div>
+          <div className="helpText">게시글을 작성해 보세요!</div>
           <div className="helpSubText">
             클릭하시면 블로그 작성페이지로 이동합니다.
           </div>
+          <SPlus />
         </STopHelper>
       </STopBox>
       <SBody>
         <SListGroup>
           {blogMainLists?.map(posts => {
+            const tagList = posts.tag.slice(0, 2);
             return (
               <SBloglist data={posts} key={posts.id}>
                 <SContentsGroup>
@@ -58,15 +62,20 @@ const BlogCommmunityMain = () => {
                       />
                     </SContent>
                   </div>
-                  <div>
-                    <STag>{posts.tag}</STag>
-                    {blogMainLists.map(tags => {
-                      return <div key={tags.id}></div>;
-                    })}
-                  </div>
-                  <div>
-                    <BlogBookMark />
-                  </div>
+                  <STagNMark>
+                    <div>
+                      {tagList?.map(tags => {
+                        return (
+                          <STags key={tags.id}>
+                            <STag>{tags}</STag>
+                          </STags>
+                        );
+                      })}
+                    </div>
+                    <div>
+                      <BlogBookMark />
+                    </div>
+                  </STagNMark>
                 </SContentsGroup>
               </SBloglist>
             );
@@ -76,8 +85,13 @@ const BlogCommmunityMain = () => {
     </div>
   );
 };
-
-const SBody = styled.div``;
+//전체
+const SBody = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: left;
+`;
+//탑박스
 const STopBox = styled.div`
   width: 100%;
   max-width: 1920px;
@@ -85,13 +99,14 @@ const STopBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  background-color: #2776ed;
-  padding: 35px 20px;
-  j &::before {
+  justify-content: center;
+  background-color: #2676ed;
+  padding: 61px 61px;
+  //라인
+  &::before {
     content: "";
     position: absolute;
-    top: 0;
+    top: 0%;
     left: 50%;
     width: calc(100% - 88px);
     transform: translateX(-50%);
@@ -100,7 +115,6 @@ const STopBox = styled.div`
   }
 `;
 const SRecommend = styled.div`
-  position: absolute;
   width: 1020px;
   height: 300px;
 
@@ -116,8 +130,10 @@ const STopHelper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 61px;
   color: ${props => props.theme.color.white};
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='30' ry='30' stroke='white' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+
   border-radius: 30px;
   cursor: pointer;
   & .helpText {
@@ -133,22 +149,24 @@ const STopHelper = styled.div`
 `;
 const SListGroup = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  /* align-items: center; */
   justify-content: center;
-  align-items: center;
+  max-width: 1492px;
 `;
 const SBloglist = styled.div`
   width: 342px;
-  height: 254px;
+  height: 253px;
   background: #ffffff;
-  margin: 36px 40px 36px 40px;
+  margin: 36px 0 36px 40px;
   box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
+  left: 200px;
 `;
 
 const SContent = styled.div`
-  /* border-radius: 20px; */
-
+  width: 283;
+  height: 101px;
   & .content1 {
     font-weight: 400;
     font-size: 18px;
@@ -158,14 +176,34 @@ const SContent = styled.div`
   }
 `;
 const STag = styled.div`
-  border: 1px solid red;
+  display: flex;
+  /* flex-wrap: wrap; */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #ffffff;
+  width: 108px;
+  height: 39px;
+  margin-right: 15px;
+  background: #c0c0c0;
+  border-radius: 30px;
+`;
+
+const STags = styled.div`
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
+  width: 200px;
+  height: 30px;
+  margin: 20px 5px 10px 5px;
 `;
 const SContentsGroup = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: left;
-  padding: 20px;
+  margin: 36px 28px 30px 28px;
 `;
 
 const SPTitleBox = styled.div`
@@ -174,8 +212,8 @@ const SPTitleBox = styled.div`
   justify-content: left;
   & .title {
     font-size: 20px;
-
     margin-left: 5px;
+    margin-bottom: 20px;
   }
 `;
 const Sprofile = styled.div`
@@ -184,6 +222,23 @@ const Sprofile = styled.div`
   background-image: url(${react});
   width: 20px;
   height: 20px;
+`;
+const SPlus = styled.div`
+  background-position: center;
+  background-size: cover;
+  background-image: url(${blogplus});
+  margin-top: 30px;
+  width: 38px;
+  height: 38px;
+`;
+
+const STagNMark = styled.div`
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: space-between;
+  width: 100%;
+  max-width: 300px;
+  height: 100px;
 `;
 
 export default BlogCommmunityMain;

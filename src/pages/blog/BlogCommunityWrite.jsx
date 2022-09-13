@@ -6,7 +6,7 @@ const BlogCommunityWrite = () => {
   return (
     <div>
       <div>
-        <h1>블로그 업로드</h1>
+        <h1>새 게시글 작성하기</h1>
       </div>
       <Editor isBlogWrite={true} />
     </div>
