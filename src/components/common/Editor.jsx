@@ -46,9 +46,9 @@ const Editor = ({
   const [category, setCategory] = useState("JavaScript");
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
+  const location = window.location.pathname;
 
-  const { isLogin } = useSelector(state => state.userSlice);
-  const { userName } = useSelector(state => state.userSlice);
+  const { isLogin, userName, color } = useSelector(state => state.userSlice);
 
   // const selectLocalImage = () => {
   //   const input = document.createElement("input");
@@ -91,7 +91,6 @@ const Editor = ({
   //생성 or 수정 함수
   const onSubmitHandler = e => {
     e.preventDefault();
-
     //로그인이 안되어있을때 알럿
     if (!isLogin) {
       errorAlert("로그인이 필요한 기능입니다!");
@@ -102,6 +101,12 @@ const Editor = ({
     if (titleText.current !== undefined && titleText.current.value.length < 1) {
       errorAlert("제목을 입력해주세요!");
       return;
+    }
+    if (!isCommentWrite) {
+      if (tags.length < 1) {
+        errorAlert("최소 1개의 태그가 필요합니다!");
+        return;
+      }
     }
 
     //본문이 빈칸일때 알럿
@@ -213,7 +218,7 @@ const Editor = ({
               onChange={onTitleChangeHandler}
               type="text"
               ref={titleText}
-              maxLength="20"
+              maxLength="30"
               placeholder="제목을 입력해주세요."
             />
             {(isEdit || isWrite) && (
@@ -243,34 +248,40 @@ const Editor = ({
           content={content}
           setContent={setContent}
         />
+      </div>
+      <SSubmitWrapper>
         {(isEdit || isWrite || isBlogWrite || isBlogEdit) && (
           <STagContainer>
-            <input
-              type="text"
-              id="tag"
-              ref={tagText}
-              onChange={onChangeTagHandler}
-              maxLength="20"
-              placeholder="태그를 추가해 주세요."
-            />
-            <button type="button" onClick={onAddTagHandler}>
-              태그 추가
-            </button>
+            <SInputContainer>
+              <input
+                type="text"
+                id="tag"
+                ref={tagText}
+                onChange={onChangeTagHandler}
+                maxLength="20"
+                placeholder="태그를 추가해 주세요."
+              />
+              <SAddButton type="button" onClick={onAddTagHandler}>
+                추가
+              </SAddButton>
+            </SInputContainer>
             {tags.map((data, i) => (
-              <div className="tags" key={i}>
+              <STags className="tags" key={i}>
                 {data}
-              </div>
+              </STags>
             ))}
           </STagContainer>
         )}
-      </div>
-      <div className="submitWrapper">
-        <button type="submit" onClick={onSubmitHandler}>
+        <SSubmitButton
+          type="submit"
+          onClick={onSubmitHandler}
+          location={location}
+        >
           {isEdit || isWrite || isBlogWrite || isBlogEdit
             ? "제출하기"
             : "댓글쓰기"}
-        </button>
-      </div>
+        </SSubmitButton>
+      </SSubmitWrapper>
     </Sform>
   );
 };
@@ -290,18 +301,14 @@ const Sform = styled.form`
       border: 1px solid #939393;
     }
   }
+`;
 
-  & .submitWrapper {
-    align-self: flex-end;
-    margin-top: 43px;
-    margin-bottom: 10px;
-
-    & button {
-      padding: 10px 41px;
-      background-color: white;
-      border: 1px solid #939393;
-    }
-  }
+const SSubmitWrapper = styled.div`
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 10px;
 `;
 
 const Select = styled.select`
@@ -322,33 +329,57 @@ const Select = styled.select`
 `;
 
 const STagContainer = styled.div`
-  margin-top: 44px;
   display: flex;
   flex-wrap: wrap;
-  margin-right: 140px;
+  /* margin-right: 50px; */
+`;
+
+const SInputContainer = styled.div`
+  position: relative;
   & input {
-    padding: 10px 32px;
+    padding: 10px 82px 10px 25px;
     border: 1px solid #939393;
     border-radius: 30px;
     margin-bottom: 10px;
   }
+`;
 
-  & button {
-    padding: 10px 32px;
-    border: none;
-    border-radius: 30px;
-    margin-left: 4px;
-    background: #d9d9d9;
-    margin-bottom: 10px;
-  }
-  & .tags {
-    padding: 10px 32px;
-    border: none;
-    border-radius: 30px;
-    margin: 0 10px 10px 10px;
-    background: #d9d9d9;
-    min-width: 100px;
-    display: flex;
-    justify-content: center;
-  }
+const SAddButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  margin-left: 4px;
+  background-color: ${props => props.theme.color.grey5};
+  border: 1px solid ${props => props.theme.color.grey5};
+  color: ${props => props.theme.color.white};
+`;
+
+const STags = styled.div`
+  padding: 10px 32px;
+  border: none;
+  border-radius: 30px;
+  margin: 0 10px 10px 10px;
+  background: ${props => props.theme.color.grey3};
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  color: ${props => props.theme.color.white};
+`;
+
+const SSubmitButton = styled.button`
+  height: 38px;
+  min-width: 140px;
+  background-color: ${props =>
+    props.location.includes("qna")
+      ? props.theme.color.mainGreen
+      : props.theme.color.mainBlue};
+  border: 1px solid
+    ${props =>
+      props.location.includes("qna")
+        ? props.theme.color.mainGreen
+        : props.theme.color.mainBlue};
+  color: ${props => props.theme.color.white};
 `;

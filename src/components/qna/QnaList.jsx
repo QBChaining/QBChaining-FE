@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import QnaCommentList from "./QnaCommentList";
-import QnaAddComment from "./QnaAddComment";
 import styled from "styled-components";
 import ResolveWrapper from "../../assets/images/ResolveList.png";
 import { useDispatch } from "react-redux";
@@ -12,7 +10,9 @@ import QnaBookmarkButton from "./../bookmark/QnaBookmarkButton";
 import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
 import QnaLikeIcon from "../../assets/images/QnaLike.png";
 import QnaCommentIcon from "../../assets/images/QnaComment.png";
-
+import GreyQnaLikeIcon from "../../assets/images/GreyQnaLike.png";
+import GreyQnaCommentIcon from "../../assets/images/GreyQnaComment.png";
+import ProfileDefault from "../../assets/images/ProfileDefault.png";
 const QnaList = ({ data }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,16 +47,20 @@ const QnaList = ({ data }) => {
 
   return (
     <StextMain ResolveWrapper={ResolveWrapper}>
-      <SWrapper resolve={data.is_resolve}>
+      <SWrapper resolve={data.is_resolve} ResolveWrapper={ResolveWrapper}>
         <SUserInfo>
           <SProfileContainer>
-            <SProfile></SProfile>
+            <SProfile ProfileDefault={ProfileDefault}></SProfile>
             <SUserName>{data.user?.user_name}</SUserName>
             <SCreatedAt>{time}</SCreatedAt>
           </SProfileContainer>
           <SCategoryContainer>
             <QnaCategoryImage item={data.category} />
-            <QnaBookmarkButton id={data.id} is_bookmark={data.is_bookmark} />
+            <QnaBookmarkButton
+              id={data.id}
+              resolve={data.is_resolve}
+              is_bookmark={data.is_bookmark}
+            />
           </SCategoryContainer>
         </SUserInfo>
         <STitleWrapper>
@@ -69,7 +73,7 @@ const QnaList = ({ data }) => {
           </STitle>
         </STitleWrapper>
         <STagWrapper>
-          <STags className="tags">
+          <STags>
             {data.tag?.map((data, i) => {
               return <Tag key={i}>{data}</Tag>;
             })}
@@ -77,11 +81,19 @@ const QnaList = ({ data }) => {
           <SCount>
             <SHoneytip>
               {data.honey_tip}
-              <SIcon icon={QnaLikeIcon} />
+              <SIcon
+                colorIcon={QnaLikeIcon}
+                greyIcon={GreyQnaLikeIcon}
+                resolve={data.is_resolve}
+              />
             </SHoneytip>
             <SCntcomment>
               {data.cntcomment}
-              <SIcon icon={QnaCommentIcon} />
+              <SIcon
+                colorIcon={QnaCommentIcon}
+                greyIcon={GreyQnaCommentIcon}
+                resolve={data.is_resolve}
+              />
             </SCntcomment>
           </SCount>
         </STagWrapper>
@@ -96,15 +108,19 @@ const StextMain = styled.div``;
 
 const SWrapper = styled.div`
   width: 100%;
-  padding: 23px 49px 32px 29px;
+  padding: 30px 50px 18px 50px;
   /* padding-left: ${props => (props.resolve ? "137px" : "23px")}; */
-  border: ${props => (props.resolve ? "" : "1px solid #c6c6c6")};
+  border: ${props =>
+    props.resolve
+      ? `1px solid ${props.theme.color.mainGreen}`
+      : `1px solid ${props.theme.color.grey3}`};
   box-shadow: ${props =>
-    props.resolve ? "4px 6px 15px rgba(0, 0, 0, 0.1);" : null};
+    props.resolve
+      ? "4px 6px 15px rgba(0, 0, 0, 0.1);"
+      : "-4px 6px 15px rgba(0, 0, 0, 0.1)"};
   border-radius: 30px;
-  margin: 16px 0;
-  /* background-image: url(${props =>
-    props.resolve ? props.ResolveWrapper : null}); */
+  margin: 30px 0;
+  min-height: 190px;
 `;
 
 const SUserInfo = styled.div`
@@ -122,7 +138,10 @@ const SProfile = styled.div`
   width: 33px;
   height: 33px;
   border-radius: 50%;
-  background-color: black;
+  border: 1px solid ${props => props.theme.color.grey3};
+  background-image: url(${props => props.ProfileDefault});
+  background-position: center;
+  background-repeat: no-repeat;
   margin-right: 11px;
 `;
 const SUserName = styled.div`
@@ -160,13 +179,20 @@ const STags = styled.div`
   flex-wrap: wrap;
 `;
 const Tag = styled.div`
-  padding: 3px 17px;
+  display: flex;
+  align-items: center;
+  padding: 4px 20px;
   border-radius: 30px;
-  background-color: ${props => props.theme.color.mainGreen};
+
+  background-color: ${props => props.theme.color.grey3};
   margin-right: 12px;
   margin-bottom: 12px;
   color: white;
   cursor: pointer;
+
+  &:hover {
+    background-color: ${props => props.theme.color.mainGreen};
+  }
 `;
 
 const SCount = styled.div`
@@ -184,10 +210,11 @@ const SIcon = styled.div`
   margin-left: 6px;
   width: 17px;
   height: 17px;
-  background-image: url(${props => props.icon});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  background-image: url(${props =>
+    props.resolve ? props.colorIcon : props.greyIcon});
 `;
 const SCntcomment = styled.div`
   display: flex;

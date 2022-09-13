@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -97,7 +97,6 @@ const Header = () => {
           ) : (
             // <a href={process.env.REACT_APP_GITHUB_API}>로그인</a>
             <a href="http://54.180.25.241/api/auth/github/callback">로그인</a>
-          
           )}
           <div className="loginProfile"></div>
         </div>
@@ -115,9 +114,9 @@ const SHeader = styled.header`
   padding: 0 40px;
   height: 100px;
   background: ${props =>
-    props.location === "/qna"
+    props.location.includes("/qna")
       ? props.theme.color.mainGreen
-      : props.location === "/blog"
+      : props.location.includes("/blog")
       ? props.theme.color.mainBlue
       : props.theme.color.backgroundGradient};
   color: white;

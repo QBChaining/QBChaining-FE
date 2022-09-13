@@ -8,6 +8,9 @@ import QnaList from "./../../components/qna/QnaList";
 import QnaMainCatergory from "./../../components/qna/QnaMainCatergory";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import WritingButton from "../../assets/images/WritingButton.png";
+import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
+import NoResolvedListIcon from "../../assets/images/NoResolvedListIcon.png";
+import { colorSetGreen } from "../../redux/modules/userSlice";
 
 const QnaMain = () => {
   const navigate = useNavigate();
@@ -21,6 +24,7 @@ const QnaMain = () => {
   //최초진입시 qnalistdb 요청
   useEffect(() => {
     dispatch(getQnaListDB());
+    dispatch(colorSetGreen());
   }, []);
 
   return (
@@ -41,11 +45,34 @@ const QnaMain = () => {
       </SMainCategory>
       <SQnaWrapper>
         <SleftConatiner>
+          <SListHeader>
+            <p style={{ backgroundImage: `url(${ResolvedListIcon})` }}>
+              채택이 완료되었어요
+            </p>
+            <SListFilter>
+              <ul>
+                <li>추천순</li>
+                <li className="active">시간순</li>
+              </ul>
+            </SListFilter>
+          </SListHeader>
           {resolveList.map(data => (
             <QnaList data={data} key={data.id} />
           ))}
         </SleftConatiner>
         <SRightContainer>
+          <SListHeader>
+            <p style={{ backgroundImage: `url(${NoResolvedListIcon})` }}>
+              채택을 기다리고 있어요
+            </p>
+            <SListFilter>
+              <ul>
+                <li>추천순</li>
+                <li className="active">시간순</li>
+              </ul>
+            </SListFilter>
+          </SListHeader>
+
           {disresolveList.map(data => (
             <QnaList data={data} key={data.id} />
           ))}
@@ -136,16 +163,59 @@ const SMainCategory = styled.div`
 
 const SQnaWrapper = styled.div`
   display: flex;
-  max-width: calc(100% - 400px);
+  max-width: 1560px;
+  padding: 0 20px;
   margin: 0 auto;
 `;
 const SleftConatiner = styled.div`
-  max-width: 882px;
+  max-width: 850px;
   width: 100%;
-  margin-right: 46px;
+  margin-right: 40px;
 `;
 
 const SRightContainer = styled.div`
-  max-width: 600px;
+  max-width: 650px;
   width: 100%;
+`;
+
+const SListHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 18px 20px 10px 20px;
+  & p {
+    font-weight: 600;
+    padding-left: 26px;
+    background-repeat: no-repeat;
+    background-position: left 0 top 5px;
+    font-size: 18px;
+  }
+`;
+const SListFilter = styled.div`
+  & ul {
+    display: flex;
+
+    & li {
+      padding: 20px;
+      cursor: pointer;
+      position: relative;
+      color: ${props => props.theme.color.grey5};
+
+      &.active {
+        color: ${props => props.theme.color.black};
+      }
+      &:first-child {
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 0;
+          width: 1px;
+          height: 14px;
+          background-color: ${props => props.theme.color.grey2};
+        }
+      }
+    }
+  }
 `;

@@ -3,11 +3,14 @@ import { useDispatch } from "react-redux";
 import { getCommentListDB, getOneQnaListDB } from "../../redux/async/qna";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import ToastViewer from "../editor/ToastViewer";
+import QnaLike from "../../assets/images/QnaLike.png";
+import GobackArrow from "../../assets/images/GobackArrow.png";
 
 const WriteBookmark = ({ id, onToggleHandler }) => {
   const dispatch = useDispatch();
-  const { qnaTarget } = useSelector(state => state.qnaSlice);
-  const { commentList } = useSelector(state => state.qnaSlice);
+  const { qnaTarget, commentList } = useSelector(state => state.qnaSlice);
+  const { color } = useSelector(state => state.userSlice);
 
   useEffect(() => {
     dispatch(getOneQnaListDB(id));
@@ -15,33 +18,50 @@ const WriteBookmark = ({ id, onToggleHandler }) => {
   }, []);
 
   return (
-    <SWriteBookmark>
-      <button onClick={onToggleHandler}>뒤로가기</button>
-      <div
-        style={{
-          padding: "20px",
-          border: "1px solid white",
-          maxHeight: "60vh",
-          overflow: "auto",
-        }}
-      >
-        질문
-        <div>{qnaTarget.title}</div>
-        <div>{qnaTarget.honey_tip}</div>
-        <div dangerouslySetInnerHTML={{ __html: qnaTarget.content }}></div>
-      </div>
-      <div style={{ padding: "20px", border: "1px solid white" }}>
-        댓글
-        {commentList.map(data => (
-          <div
-            key={data.id}
-            style={{ padding: "20px", border: "1px solid white" }}
-          >
-            <div>{data.title}</div>
-            <div dangerouslySetInnerHTML={{ __html: data.comment }}></div>
-          </div>
-        ))}
-      </div>
+    <SWriteBookmark color={color}>
+      <SWriteBookmarkWrapper>
+        <SBackButton color={color} onClick={onToggleHandler}>
+          돌아가기
+        </SBackButton>
+        <SUserInfo>
+          <SUserProfile profile={qnaTarget.user?.profile_img} />
+          <SUserInfoText>
+            <SUserName>{qnaTarget.user?.email}</SUserName>
+            <SCreateAt>{qnaTarget.user?.createdAt}</SCreateAt>
+          </SUserInfoText>
+        </SUserInfo>
+        <SContent>
+          <SContentTitle>{qnaTarget.title}</SContentTitle>
+          <SContentText>
+            <ToastViewer content={qnaTarget.content} />
+          </SContentText>
+          <SSubinfo>
+            <STags>
+              {qnaTarget.tag?.map((data, i) => {
+                return (
+                  <STag color={color} key={i}>
+                    {data}
+                  </STag>
+                );
+              })}
+            </STags>
+            <SHoneyTip>{qnaTarget.honey_tip}</SHoneyTip>
+          </SSubinfo>
+        </SContent>
+        <SCommentWrapper>
+          {commentList.map(data => (
+            <SComment key={data.id}>
+              <SUserInfo>
+                <SUserProfile profile={data.profile_img} />
+                <SUserInfoText>
+                  <SUserName>{qnaTarget.user?.email}</SUserName>
+                </SUserInfoText>
+              </SUserInfo>
+              <ToastViewer content={data.comment} />
+            </SComment>
+          ))}
+        </SCommentWrapper>
+      </SWriteBookmarkWrapper>
     </SWriteBookmark>
   );
 };
@@ -54,6 +74,122 @@ const SWriteBookmark = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: ${props => props.theme.color[props.color]};
   overflow: auto;
+  padding: 30px;
+  border-radius: 30px;
+`;
+
+const SWriteBookmarkWrapper = styled.div`
+  position: relative;
+  background-color: ${props => props.theme.color.white};
+  height: 100%;
+  border-radius: 30px;
+  padding: 20px;
+  overflow: auto;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const SUserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const SBackButton = styled.button`
+  position: fixed;
+  top: 190px;
+  right: 100px;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 40px 10px 20px;
+  background-color: ${props => props.theme.color[props.color]};
+  color: ${props => props.theme.color.white};
+  background-image: url(${GobackArrow});
+  background-repeat: no-repeat;
+  background-position: right 15px top 11px;
+  font-weight: 600;
+  background-size: 20px 20px;
+`;
+
+const SUserProfile = styled.div`
+  width: 44px;
+  height: 44px;
+  background-image: url(${props => props.profile});
+  background-size: cover;
+  border-radius: 50%;
+`;
+
+const SUserInfoText = styled.div`
+  margin-left: 10px;
+`;
+const SUserName = styled.div`
+  margin-bottom: 2px;
+`;
+const SCreateAt = styled.div`
+  color: ${props => props.theme.color.grey6};
+`;
+
+const SContent = styled.div`
+  padding-bottom: 9px;
+  border-bottom: 1px solid ${props => props.theme.color.grey5};
+  word-wrap: break-word;
+`;
+const SContentTitle = styled.p`
+  font-size: 18px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid ${props => props.theme.color.grey5};
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const SContentText = styled.div`
+  padding-top: 20px;
+  margin-bottom: 20px;
+  min-height: 100px;
+`;
+
+const SSubinfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const STags = styled.div`
+  display: flex;
+`;
+
+const STag = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  margin: 0 11px 11px 0;
+  border: 1px solid ${props => props.theme.color[props.color]};
+  color: ${props => props.theme.color[props.color]};
+  border-radius: 30px;
+`;
+
+const SHoneyTip = styled.div`
+  font-size: 18px;
+  height: 100%;
+  color: ${props => props.theme.color.grey6};
+  padding-right: 17px;
+  background-image: url(${QnaLike});
+  background-repeat: no-repeat;
+  background-position: right 0px top 9px;
+  background-size: 12px;
+`;
+
+const SCommentWrapper = styled.div``;
+
+const SComment = styled.div`
+  border-bottom: 1px solid ${props => props.theme.color.grey6};
+  padding: 20px 0;
+  &:last-child {
+    border-bottom: none;
+  }
 `;

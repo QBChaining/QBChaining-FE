@@ -8,6 +8,7 @@ export const userSlice = createSlice({
     isLogin: false,
     userToken: null,
     userName: null,
+    color: "backgroundGradient",
   },
   reducers: {
     logOut: (state, action) => {
@@ -21,8 +22,18 @@ export const userSlice = createSlice({
       state.userToken = getCookie("token");
       state.userName = jwt_decode(getCookie("token")).name;
     },
+    colorSetGreen: (state, action) => {
+      state.color = "mainGreen";
+    },
+    colorSetBlue: (state, action) => {
+      state.color = "mainBlue";
+    },
+    colorSetGrad: (state, action) => {
+      state.color = "backgroundGradient";
+    },
   },
 });
 
-export const { logOut, logIn } = userSlice.actions;
+export const { logOut, logIn, colorSetGreen, colorSetBlue, colorSetGrad } =
+  userSlice.actions;
 export default userSlice.reducer;
