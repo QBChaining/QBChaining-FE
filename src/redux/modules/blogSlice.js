@@ -9,6 +9,8 @@ import {
   deleteBlogCommentDB,
   patchBlogCommunityDB,
   getMyBlogDB,
+  getBlogBookMarkDB,
+  getHotBlogDB,
 } from "../async/blog";
 export const blogSlice = createSlice({
   name: "blog",
@@ -17,6 +19,8 @@ export const blogSlice = createSlice({
     blogDetail: {},
     commentList: [],
     myblog: [],
+    hotBlog: [],
+    blogBookMark: [],
     isFetching: false,
     errorMessage: "",
   },
@@ -57,8 +61,8 @@ export const blogSlice = createSlice({
     },
     [postBlogCommunityDB.fulfilled]: (state, action) => {
       console.log(action.payload);
-      // state.blogList.push(action);
-      state.blogList = action.payload;
+      state.blogList.push(action.payload);
+      // state.blogList = action.payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -72,8 +76,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [patchBlogCommunityDB.fulfilled]: (state, action) => {
-      console.log(action);
-      state.blogList = action.meta.arg;
+      state.blogList = action.payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -115,9 +118,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogCommentDB.fulfilled]: (state, action) => {
-      console.log(action);
-      console.log("추가", state);
-      console.log("코멘츠", state.commentList);
       state.commentList.push(action.payload.data);
       state.isFetching = false;
 
@@ -134,7 +134,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [patchBlogCommentDB.fulfilled]: (state, action) => {
-      // console.log("dfsdf", action.payload.data.id);
       const idx = state.commentList.findIndex(data => {
         return data.id === action.payload.data.id;
       });
@@ -167,13 +166,37 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getMyBlogDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.myblog = action.payload;
 
       state.isFetching = false;
       state.errorMessage = null;
     },
     [getMyBlogDB.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = action.payload.errorMessage;
+    },
+    // 북마크 조회
+    [getBlogBookMarkDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [getBlogBookMarkDB.fulfilled]: (state, action) => {
+      console.log("북마크 조회", action.payload);
+      state.blogBookMark = action.payload;
+    },
+    [getBlogBookMarkDB.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = action.payload.errorMessage;
+    },
+
+    //추천 많이 받은 블로그
+    [getHotBlogDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [getHotBlogDB.fulfilled]: (state, action) => {
+      console.log("조회", action);
+      state.hotBlog = action.payload;
+    },
+    [getHotBlogDB.rejected]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },

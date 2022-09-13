@@ -47,9 +47,8 @@ export const postBlogCommunityDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.postBlogCommunity(data);
-      console.log(response);
       if (response.data.success === true) {
-        return;
+        return response.data.data;
       }
     } catch (err) {
       networkError();
@@ -67,7 +66,7 @@ export const patchBlogCommunityDB = createAsyncThunk(
       const response = await blogApi.editBlogCommunity(data);
       if (response.data.success === true) {
         successAlert("수정 되었습니다!");
-        return;
+        return response.data.data;
       }
     } catch (err) {
       networkError();
@@ -86,7 +85,7 @@ export const deleteBlogCommunityDB = createAsyncThunk(
       const response = await blogApi.deleteBlogCommunity(id);
       console.log(response);
       if (response.data.success === true) {
-        return;
+        return response.data.data;
       }
     } catch (err) {
       Sentry.captureException(`error, 블로그 게시물 삭제 : ${err}`);
@@ -101,7 +100,6 @@ export const getBlogCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.getBlogCommentList(data);
-      console.log("댓글조회", response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -180,10 +178,8 @@ export const getMyBlogDB = createAsyncThunk("GET_MY_BLOG", async thunkAPI => {
 export const postBlogLikeDB = createAsyncThunk(
   "ADD_LIKE",
   async (id, thunkAPI) => {
-    console.log(id);
     try {
       const response = await blogApi.postBlogLike(id);
-      console.log(response);
       if (response.data.success === true) {
         console.log(response.data.success);
         successAlert("좋아요를 누르셨습니다.");
@@ -206,16 +202,26 @@ export const unBlogLikeDB = createAsyncThunk(
     } catch (err) {}
   },
 );
+//블로그 북마크 조회
+export const getBlogBookMarkDB = createAsyncThunk(
+  "GET_BOOK_MRRK",
+  async thunkAPI => {
+    try {
+      const response = await blogApi.getBlogBookMark();
+      return response.data.data;
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  },
+);
 
 //블로그 북마크 추가
 export const postBlogBookMarkDB = createAsyncThunk(
   "ADD_BOOK_MARK",
   async (id, thunkAPI) => {
-    console.log("BookSliceNum", typeof id);
     try {
       const response = await blogApi.postBlogBookMark(id);
-      console.log("dfefef");
-      console.log("리스폰", response);
       if (response.data.success === true) {
         successAlert("블로그 즐겨찾기에 추가가 되었습니다.");
         return response;
@@ -228,7 +234,6 @@ export const postBlogBookMarkDB = createAsyncThunk(
 export const deleteBlogBookMarkDB = createAsyncThunk(
   "DEL_BOOK_MARK",
   async (id, thunkAPI) => {
-    console.log("북마크 삭제 아이디", typeof id);
     try {
       const response = await blogApi.delBlogBookMark(id);
       console.log(response);
@@ -239,3 +244,12 @@ export const deleteBlogBookMarkDB = createAsyncThunk(
     } catch (err) {}
   },
 );
+
+// 추천 많이 받은 블로그
+export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
+  try {
+    const response = await blogApi.getHotBlog();
+    console.log("추천 많이 받은 게시판", response);
+    return response.data.data;
+  } catch (err) {}
+});

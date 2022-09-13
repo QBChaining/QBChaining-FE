@@ -5,7 +5,6 @@ import MyPage from "./../pages/myPage/MyPage";
 import QnaWrite from "./../pages/qna/QnaWrite";
 import QnaMain from "./../pages/qna/QnaMain";
 import BlogCommmunityMain from "./../pages/blog/BlogCommmunityMain";
-import BlogPersonalMain from "./../pages/blog/BlogPersonalMain";
 import BlogDetail from "../pages/blog/BlogDetail";
 import QnaEdit from "./../pages/qna/QnaEdit";
 import QnaDetail from "./../pages/qna/QnaDetail";
@@ -41,7 +40,6 @@ const Router = () => {
         element={isLogin ? <BlogWrite /> : <NoLogin />}
       />
       <Route path="/blog" element={<BlogCommmunityMain />} />
-      <Route path="/blog/:id" element={<BlogPersonalMain />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/blog/detail/:id" element={<BlogDetail />} />

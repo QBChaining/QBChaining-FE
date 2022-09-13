@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import WritingButton from "../../assets/images/WritingButton.png";
 import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
 import NoResolvedListIcon from "../../assets/images/NoResolvedListIcon.png";
 import { colorSetGreen } from "../../redux/modules/userSlice";
+
 const QnaMain = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -71,6 +72,7 @@ const QnaMain = () => {
               </ul>
             </SListFilter>
           </SListHeader>
+
           {disresolveList.map(data => (
             <QnaList data={data} key={data.id} />
           ))}
@@ -148,7 +150,7 @@ const SWritingButton = styled.button`
   border: none;
   background-image: url(${props => props.icon});
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center center;
   margin: 30px 0 43px 0;
 `;
 

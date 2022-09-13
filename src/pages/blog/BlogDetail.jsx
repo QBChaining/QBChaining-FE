@@ -10,24 +10,32 @@ import { deleteBlogCommunityDB } from "../../redux/async/blog";
 import ToastViewer from "./../../components/editor/ToastViewer";
 import BlogLike from "../../components/blog/BlogLike";
 import BlogBookMark from "../../components/blog/BlogBookMark";
+import BlogBookMarkList from "../../components/blog/BlogBookMarkList";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
+  console.log("detail", response);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
   //게시글 삭제
 
   const deleteBlogPost = () => {
-    dispatch(deleteBlogCommunityDB(parseInt(id)));
+    dispatch(deleteBlogCommunityDB(id));
   };
   useEffect(() => {
     dispatch(getBlogDetailDB(id));
   }, []);
 
   return (
-    <form>
+    <SContainer>
+      <STitleSection>
+        <STitle>개발자 언어란 무엇일까?</STitle>
+        <SProfileNickNameDate>
+          <SNickName>{response.user_name?.user_name}</SNickName>
+          <SDate></SDate>
+        </SProfileNickNameDate>
+      </STitleSection>
       <STopBox>
-        <div>BlogPersonalMain</div>
         <div>
           <div>{response?.title}</div>
           <ToastViewer content={response.content} />
@@ -38,8 +46,9 @@ const BlogCommunityDetail = () => {
               navigate(`/blog/my/${id}}`);
             }}
           >
-            {response.User?.user_name}
-            <SProfile></SProfile> <div>프로필사진</div>
+            <SProfile>
+              <div>프로필사진</div>
+            </SProfile>
           </div>
         </div>
         <button
@@ -66,9 +75,23 @@ const BlogCommunityDetail = () => {
           <CommentList />
         </div>
       </STopBox>
-    </form>
+      <BlogBookMarkList />
+    </SContainer>
   );
 };
+const SContainer = styled.form``;
+const SProfileNickNameDate = styled.div``;
+const SNickName = styled.div``;
+const SDate = styled.div``;
+const STitleSection = styled.div`
+  background-color: green;
+  width: 1220px;
+  border-bottom: 1px solid #939393;
+`;
+const STitle = styled.div`
+  font-size: 24px;
+  font-weight: 600;
+`;
 const STopBox = styled.div`
   border: 1px solid black;
 `;
