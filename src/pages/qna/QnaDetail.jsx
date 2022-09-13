@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOneQnaListDB } from "../../redux/async/qna";
+import { colorSetGrad } from "../../redux/modules/userSlice";
 import QnaList from "./../../components/qna/QnaList";
 import QnaAddComment from "./../../components/qna/QnaAddComment";
 import QnaCommentList from "./../../components/qna/QnaCommentList";
@@ -18,6 +19,7 @@ const QnaDetail = () => {
 
   useEffect(() => {
     dispatch(getOneQnaListDB(id));
+    dispatch(colorSetGrad());
   }, [dispatch, id]);
 
   return (
@@ -31,7 +33,6 @@ const QnaDetail = () => {
           qnaId={id}
         />
       </SLeftContainer>
-
       <SRightContainer>
         <SAddCommentTitle>댓글 작성</SAddCommentTitle>
         <QnaAddComment id={id} />

@@ -75,7 +75,7 @@ const QnaList = ({ data }) => {
           </STitle>
         </STitleWrapper>
         <STagWrapper>
-          <STags className="tags">
+          <STags>
             {data.tag?.map((data, i) => {
               return <Tag key={i}>{data}</Tag>;
             })}

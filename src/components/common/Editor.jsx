@@ -92,10 +92,6 @@ const Editor = ({
   //생성 or 수정 함수
   const onSubmitHandler = e => {
     e.preventDefault();
-    if (tags.length < 1) {
-      errorAlert("최소 1개의 태그가 필요합니다!");
-      return;
-    }
     //로그인이 안되어있을때 알럿
     if (!isLogin) {
       errorAlert("로그인이 필요한 기능입니다!");
@@ -106,6 +102,12 @@ const Editor = ({
     if (titleText.current !== undefined && titleText.current.value.length < 1) {
       errorAlert("제목을 입력해주세요!");
       return;
+    }
+    if (!isCommentWrite) {
+      if (tags.length < 1) {
+        errorAlert("최소 1개의 태그가 필요합니다!");
+        return;
+      }
     }
 
     //본문이 빈칸일때 알럿

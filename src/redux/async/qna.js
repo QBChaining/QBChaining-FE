@@ -16,6 +16,7 @@ export const getQnaListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
+      console.log(err);
       networkError();
       Sentry.captureException(`error, 게시글 전체조회 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);

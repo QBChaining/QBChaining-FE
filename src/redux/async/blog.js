@@ -36,7 +36,7 @@ export const getBlogDetailDB = createAsyncThunk(
     } catch (err) {
       networkError();
       Sentry.captureException(`error, 블로그 상세 조회 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err);
     }
   },
 );

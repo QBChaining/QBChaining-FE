@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BookmarkStar from "../../assets/images/BookmarkStar.png";
-import BookmarkModal1 from "../../assets/images/BookmarkModal1.png";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getBookmarkListDB } from "../../redux/async/qna";
 import BookmarkListItem from "./../bookmark/BookmarkListItem";
 import { needLoginAlert } from "./../../utils/swal";
-const ModalBookmark = ({ isWrite }) => {
+import Nodata from "./../bookmark/Nodata";
+
+const ModalBookmark = ({ isWrite, type }) => {
   const dispatch = useDispatch();
+  const location = window.location.pathname;
+
   const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
-  const { isLogin } = useSelector(state => state.userSlice);
+  const { isLogin, color } = useSelector(state => state.userSlice);
   const [modal, setModal] = useState(false);
   const toggle = () => {
     if (!isLogin) {
@@ -27,27 +30,38 @@ const ModalBookmark = ({ isWrite }) => {
   return (
     <>
       {modal && (
-        <SModalBookmark>
-          <div className="listWrapper">
-            <div className="blog">
-              <h2>블로그</h2>
-            </div>
-            <div className="qna">
-              <h2>Q&A</h2>
-              <ul>
+        <SModalBookmark isWrite={isWrite}>
+          <SListWrapper color={color}>
+            <SList className="blog">
+              <SListTitle>블로그</SListTitle>
+              <SUnorderedList>
                 {qnaBookmarkList.map(data => (
                   <BookmarkListItem
-                    isModal={true}
+                    isModal={!isWrite}
                     key={data.qna_id}
                     data={data}
                   />
                 ))}
-              </ul>
-            </div>
-          </div>
+                {qnaBookmarkList.length < 4 && <Nodata />}
+              </SUnorderedList>
+            </SList>
+            <SList className="qna">
+              <SListTitle>Q&A</SListTitle>
+              <SUnorderedList>
+                {qnaBookmarkList.map(data => (
+                  <BookmarkListItem
+                    isModal={!isWrite}
+                    key={data.qna_id}
+                    data={data}
+                  />
+                ))}
+                {qnaBookmarkList.length < 4 && <Nodata />}
+              </SUnorderedList>
+            </SList>
+          </SListWrapper>
         </SModalBookmark>
       )}
-      <SModalBookmarkIcon onClick={toggle} />
+      <SModalBookmarkIcon color={color} onClick={toggle} />
     </>
   );
 };
@@ -57,12 +71,12 @@ export default ModalBookmark;
 const SModalBookmarkIcon = styled.div`
   z-index: 100;
   position: fixed;
-  bottom: 44px;
-  right: 66px;
+  bottom: 50px;
+  right: 50px;
   width: 50px;
   height: 50px;
-  background: ${props => props.theme.color.backgroundGradient};
   border-radius: 50%;
+  background: ${props => props.theme.color[props.color]};
   cursor: pointer;
   &::before {
     content: "";
@@ -76,32 +90,43 @@ const SModalBookmarkIcon = styled.div`
 `;
 
 const SModalBookmark = styled.div`
-  position: fixed;
+  position: ${props => (props.isWrite ? "relative" : "fixed")};
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
+  width: 618px;
+`;
 
-  & .listWrapper {
-    position: fixed;
-    bottom: 176px;
-    right: 122px;
-    width: 468px;
-    height: 643px;
-    background-color: #1c2030;
-    color: white;
+const SListWrapper = styled.div`
+  position: fixed;
+  width: 618px;
+  height: calc(100vh - 190px);
+  bottom: 50px;
+  right: 50px;
+  background-color: ${props => props.theme.color[props.color]};
+  border-radius: 25px;
+  padding: 0 30px;
+`;
 
-    &::before {
-      content: "";
-      position: absolute;
-      bottom: 2px;
-      right: 0;
-      transform: translateY(100%);
-      width: 67px;
-      height: 42px;
-      background-image: url(${BookmarkModal1});
-      background-size: cover;
-    }
+const SList = styled.div`
+  &.blog {
+    padding-bottom: 10px;
   }
+`;
+
+const SUnorderedList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  overflow: auto;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const SListTitle = styled.h2`
+  margin: 30px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: ${props => props.theme.color.white};
 `;

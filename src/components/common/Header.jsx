@@ -97,7 +97,7 @@ const Header = () => {
           ) : (
             // <a href={process.env.REACT_APP_GITHUB_API}>로그인</a>
             // <a href="http://kpzzy.shop/api/auth/github">로그인</a>
-            <a href="http://localhost:5001/api/auth/github">로그인</a>
+            <a href="http://54.180.25.241/api/auth/github/callback">로그인</a>
           )}
           <div className="loginProfile"></div>
         </div>

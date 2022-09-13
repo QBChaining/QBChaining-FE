@@ -10,6 +10,7 @@ import ModalBookmark from "../../components/common/ModalBookmark";
 import WritingButton from "../../assets/images/WritingButton.png";
 import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
 import NoResolvedListIcon from "../../assets/images/NoResolvedListIcon.png";
+import { colorSetGrad } from "../../redux/modules/userSlice";
 const QnaMain = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const QnaMain = () => {
   //최초진입시 qnalistdb 요청
   useEffect(() => {
     dispatch(getQnaListDB());
+    dispatch(colorSetGrad());
   }, []);
 
   return (

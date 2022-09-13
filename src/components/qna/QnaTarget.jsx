@@ -70,51 +70,41 @@ const QnaTarget = ({ data, isDatail }) => {
     }
   }, []);
 
-  console.log(data);
-
   return (
     <SQnaTarget>
       <div>
+        {isBookmarked ? (
+          <button onClick={onDeleteBookmark}>즐겨찾기삭제</button>
+        ) : (
+          <button onClick={onAddBookmark}>즐겨찾기</button>
+        )}
+      </div>
+      <div>
+        {data.is_honey_tip ? (
+          <button onClick={onDislikeQna}>게시글 추천취소</button>
+        ) : (
+          <button onClick={onLikeQna}>게시글 추천</button>
+        )}
+      </div>
+      <div>
+        <div>유저이름 : {data.user?.user_name}</div>
+        <div>생성날짜 : {data.createdAt}</div>
+      </div>
+      <div>제목 : {data.title}</div>
+      <ToastViewer content={data.content} />
+      <div>
+        <div>카테고리 : {data.category}</div>
+        <div>추천수 : {data.honeytip}</div>
         <div>
-          {isBookmarked ? (
-            <button onClick={onDeleteBookmark}>즐겨찾기삭제</button>
-          ) : (
-            <button onClick={onAddBookmark}>즐겨찾기</button>
-          )}
-        </div>
-        <div>
-          {data.is_honey_tip ? (
-            <button onClick={onDislikeQna}>게시글 추천취소</button>
-          ) : (
-            <button onClick={onLikeQna}>게시글 추천</button>
-          )}
-        </div>
-        <div>
-          <div>유저이름 : {data.user?.user_name}</div>
-          <div>생성날짜 : {data.createdAt}</div>
-        </div>
-        <div>제목 : {data.title}</div>
-        <ToastViewer content={data.content} />
-        <div>
-          <div>카테고리 : {data.category}</div>
-          <div>추천수 : {data.honeytip}</div>
-          <div>
-            {data.tag?.map((data, i) => {
-              return <div key={i}>{data}</div>;
-            })}
-          </div>
+          {data.tag?.map((data, i) => {
+            return <div key={i}>{data}</div>;
+          })}
         </div>
       </div>
     </SQnaTarget>
   );
 };
+
 export default QnaTarget;
 
-const SQnaTarget = styled.div`
-  & .ql-snow .ql-editor {
-    background-color: white;
-  }
-  & .ql-snow .ql-editor pre.ql-syntax {
-    padding: 20px;
-  }
-`;
+const SQnaTarget = styled.div``;
