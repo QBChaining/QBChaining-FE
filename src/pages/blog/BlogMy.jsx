@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyBlogDB } from "../../redux/async/blog";
 // import styled from "styled-components";
-import BlogMyList from "../../components/blog/BlogMyList";
 import BlogBookMarkList from "../../components/blog/BlogBookMarkList";
-
+import BlogHotList from "../../components/blog/BlogHotList";
 const BlogMy = () => {
   const dispatch = useDispatch();
   useEffect(id => {
@@ -13,6 +12,7 @@ const BlogMy = () => {
   return (
     <div>
       <BlogBookMarkList />
+      <BlogHotList />
     </div>
   );
 };

@@ -20,7 +20,7 @@ const BlogBookMark = () => {
 
   const onAddBookMark = () => {
     // dispatch(postBlogBookMarkDB(parseInt(id)));
-    dispatch(postBlogBookMarkDB(id));
+    dispatch(postBlogBookMarkDB(parseInt(id)));
     setMark(!mark);
   };
   const onDeleteBookMark = () => {

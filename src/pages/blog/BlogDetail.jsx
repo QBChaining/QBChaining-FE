@@ -13,9 +13,7 @@ import BlogBookMark from "../../components/blog/BlogBookMark";
 import BlogBookMarkList from "../../components/blog/BlogBookMarkList";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
-  const blogMainLists = useSelector(state => state.blogSlice.blogList);
-
-  console.log(response);
+  console.log("detail", response);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -29,9 +27,15 @@ const BlogCommunityDetail = () => {
   }, []);
 
   return (
-    <form>
+    <SContainer>
+      <STitleSection>
+        <STitle>개발자 언어란 무엇일까?</STitle>
+        <SProfileNickNameDate>
+          <SNickName>{response.user_name?.user_name}</SNickName>
+          <SDate></SDate>
+        </SProfileNickNameDate>
+      </STitleSection>
       <STopBox>
-        <div>BlogPersonalMain</div>
         <div>
           <div>{response?.title}</div>
           <ToastViewer content={response.content} />
@@ -42,7 +46,6 @@ const BlogCommunityDetail = () => {
               navigate(`/blog/my/${id}}`);
             }}
           >
-            {response.User?.user_name}
             <SProfile>
               <div>프로필사진</div>
             </SProfile>
@@ -73,9 +76,22 @@ const BlogCommunityDetail = () => {
         </div>
       </STopBox>
       <BlogBookMarkList />
-    </form>
+    </SContainer>
   );
 };
+const SContainer = styled.form``;
+const SProfileNickNameDate = styled.div``;
+const SNickName = styled.div``;
+const SDate = styled.div``;
+const STitleSection = styled.div`
+  background-color: green;
+  width: 1220px;
+  border-bottom: 1px solid #939393;
+`;
+const STitle = styled.div`
+  font-size: 24px;
+  font-weight: 600;
+`;
 const STopBox = styled.div`
   border: 1px solid black;
 `;
