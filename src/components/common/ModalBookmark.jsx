@@ -27,6 +27,8 @@ const ModalBookmark = ({ isWrite, type }) => {
       dispatch(getBookmarkListDB());
     }
   }, []);
+
+  console.log(color);
   return (
     <>
       {modal && (
@@ -102,9 +104,10 @@ const SListWrapper = styled.div`
   height: calc(100vh - 190px);
   bottom: 50px;
   right: 50px;
-  background-color: ${props => props.theme.color[props.color]};
+  background: ${props => props.theme.color[props.color]};
   border-radius: 25px;
   padding: 0 30px;
+  box-shadow: -8px 14px 50px rgba(0, 0, 0, 0.15);
 `;
 
 const SList = styled.div`

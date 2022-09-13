@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOneQnaListDB } from "../../redux/async/qna";
 import { colorSetGrad } from "../../redux/modules/userSlice";
 import QnaList from "./../../components/qna/QnaList";
-import QnaAddComment from "./../../components/qna/QnaAddComment";
 import QnaCommentList from "./../../components/qna/QnaCommentList";
 import QnaTarget from "../../components/qna/QnaTarget";
 import styled from "styled-components";
 import ModalBookmark from "./../../components/common/ModalBookmark";
 import QnaWriteArrow from "../../assets/images/QnaWriteArrow.png";
+import Editor from "./../../components/common/Editor";
 
 const QnaDetail = () => {
   const { id } = useParams();
@@ -35,7 +35,7 @@ const QnaDetail = () => {
       </SLeftContainer>
       <SRightContainer>
         <SAddCommentTitle>댓글 작성</SAddCommentTitle>
-        <QnaAddComment id={id} />
+        <Editor isCommentWrite={true} id={id} />
       </SRightContainer>
       <ModalBookmark />
     </SQnaDetail>

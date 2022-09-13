@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import QnaCommentList from "./QnaCommentList";
-import QnaAddComment from "./QnaAddComment";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {

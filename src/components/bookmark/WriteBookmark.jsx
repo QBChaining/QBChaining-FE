@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import ToastViewer from "../editor/ToastViewer";
 import QnaLike from "../../assets/images/QnaLike.png";
+import GobackArrow from "../../assets/images/GobackArrow.png";
 
 const WriteBookmark = ({ id, onToggleHandler }) => {
   const dispatch = useDispatch();
@@ -19,7 +20,9 @@ const WriteBookmark = ({ id, onToggleHandler }) => {
   return (
     <SWriteBookmark color={color}>
       <SWriteBookmarkWrapper>
-        <button onClick={onToggleHandler}>뒤로가기</button>
+        <SBackButton color={color} onClick={onToggleHandler}>
+          돌아가기
+        </SBackButton>
         <SUserInfo>
           <SUserProfile profile={qnaTarget.user?.profile_img} />
           <SUserInfoText>
@@ -78,6 +81,7 @@ const SWriteBookmark = styled.div`
 `;
 
 const SWriteBookmarkWrapper = styled.div`
+  position: relative;
   background-color: ${props => props.theme.color.white};
   height: 100%;
   border-radius: 30px;
@@ -93,6 +97,22 @@ const SUserInfo = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+`;
+
+const SBackButton = styled.button`
+  position: fixed;
+  top: 190px;
+  right: 100px;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 40px 10px 20px;
+  background-color: ${props => props.theme.color[props.color]};
+  color: ${props => props.theme.color.white};
+  background-image: url(${GobackArrow});
+  background-repeat: no-repeat;
+  background-position: right 15px top 11px;
+  font-weight: 600;
+  background-size: 20px 20px;
 `;
 
 const SUserProfile = styled.div`
@@ -154,13 +174,13 @@ const STag = styled.div`
 `;
 
 const SHoneyTip = styled.div`
-  height: 14px;
-  font-size: 12px;
+  font-size: 18px;
+  height: 100%;
   color: ${props => props.theme.color.grey6};
   padding-right: 17px;
   background-image: url(${QnaLike});
   background-repeat: no-repeat;
-  background-position: right 0px top 4px;
+  background-position: right 0px top 9px;
   background-size: 12px;
 `;
 

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import QnaCommentList from "./QnaCommentList";
-import QnaAddComment from "./QnaAddComment";
 import styled from "styled-components";
 import ResolveWrapper from "../../assets/images/ResolveList.png";
 import { useDispatch } from "react-redux";

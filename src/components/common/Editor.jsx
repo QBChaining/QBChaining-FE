@@ -48,8 +48,7 @@ const Editor = ({
   const [tags, setTags] = useState([]);
   const location = window.location.pathname;
 
-  const { isLogin } = useSelector(state => state.userSlice);
-  const { userName } = useSelector(state => state.userSlice);
+  const { isLogin, userName, color } = useSelector(state => state.userSlice);
 
   // const selectLocalImage = () => {
   //   const input = document.createElement("input");
