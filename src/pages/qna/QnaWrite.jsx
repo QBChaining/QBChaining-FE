@@ -49,9 +49,3 @@ const SEditor = styled.div`
     padding-left: 38px;
   }
 `;
-
-const SBookmark = styled.div`
-  min-width: 600px;
-  background-color: ${props => props.theme.color.mainGreen};
-  position: relative;
-`;

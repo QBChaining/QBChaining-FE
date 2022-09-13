@@ -10,8 +10,11 @@ import {
 } from "../../redux/async/qna";
 import { deleteBookmarkListDB } from "./../../redux/async/qna";
 import { errorAlert, needLoginAlert } from "../../utils/swal";
-import { successAlert } from "./../../utils/swal";
 
+import QnaLike from "../../assets/images/QnaLike.png";
+import QnaLikeFill from "../../assets/images/QnaLikeFill.png";
+import BookmarkNoFillIcon from "../../assets/images/BookmarkNoFillIcon.png";
+import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 import ToastViewer from "../editor/ToastViewer";
 
 const QnaTarget = ({ data, isDatail }) => {
@@ -64,31 +67,35 @@ const QnaTarget = ({ data, isDatail }) => {
   useEffect(() => {
     if (isLogin) {
       dispatch(getBookmarkListDB());
-      // dispatch(getQnaLikeListDB())
     }
   }, []);
 
+  console.log(data.honey_tip);
+
   return (
     <SQnaTarget>
-      <div>
-        {isBookmarked ? (
-          <button onClick={onDeleteBookmark}>즐겨찾기삭제</button>
-        ) : (
-          <button onClick={onAddBookmark}>즐겨찾기</button>
-        )}
-      </div>
-      <div>
-        {data.is_honey_tip ? (
-          <button onClick={onDislikeQna}>게시글 추천취소</button>
-        ) : (
-          <button onClick={onLikeQna}>게시글 추천</button>
-        )}
-      </div>
-      <div>
-        <div>유저이름 : {data.user?.user_name}</div>
-        <div>생성날짜 : {data.createdAt}</div>
-      </div>
-      <div>제목 : {data.title}</div>
+      <SUserInfo>
+        <SUserInfoWrapper>
+          <SUserProfile profile={data.user?.profile_img} />
+          <SUserInfoText>
+            <SUserName>{data.user?.email}</SUserName>
+            <SCreateAt>{data.user?.createdAt}</SCreateAt>
+          </SUserInfoText>
+        </SUserInfoWrapper>
+        <SButtonWrapper>
+          <SBookmarkButton
+            isBookmarked={isBookmarked}
+            onClick={isBookmarked ? onDeleteBookmark : onAddBookmark}
+          ></SBookmarkButton>
+          <SHoneyTipButton
+            isHoneyTip={data.is_honey_tip}
+            onClick={data.is_honey_tip ? onDislikeQna : onLikeQna}
+          >
+            {data.honey_tip}
+          </SHoneyTipButton>
+        </SButtonWrapper>
+      </SUserInfo>
+      <SContentTitle>{data.title}</SContentTitle>
       <ToastViewer content={data.content} />
       <div>
         <div>카테고리 : {data.category}</div>
@@ -106,3 +113,69 @@ const QnaTarget = ({ data, isDatail }) => {
 export default QnaTarget;
 
 const SQnaTarget = styled.div``;
+
+const SButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonBackground = styled.button`
+  background-repeat: no-repeat;
+  border: none;
+  background-color: transparent;
+`;
+const SBookmarkButton = styled(ButtonBackground)`
+  background-position: center center;
+  width: 24px;
+  height: 24px;
+  background-size: 100%;
+  margin-right: 20px;
+  background-image: url(${props =>
+    props.isBookmarked ? BookmarkFillIcon : BookmarkNoFillIcon});
+`;
+
+const SHoneyTipButton = styled(ButtonBackground)`
+  padding-right: 24px;
+  background-position: right center;
+  background-size: 16px 16px;
+  background-image: url(${props => (props.isHoneyTip ? QnaLikeFill : QnaLike)});
+  color: ${props => props.theme.color.grey7};
+  font-size: 16px;
+`;
+
+const SUserInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const SUserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 30px;
+  padding-top: 60px;
+  border-bottom: 1px solid ${props => props.theme.color.grey5};
+`;
+
+const SUserProfile = styled.div`
+  width: 44px;
+  height: 44px;
+  background-image: url(${props => props.profile});
+  background-size: cover;
+  border-radius: 50%;
+`;
+
+const SUserInfoText = styled.div`
+  margin-left: 10px;
+`;
+const SUserName = styled.div`
+  margin-bottom: 2px;
+`;
+const SCreateAt = styled.div`
+  color: ${props => props.theme.color.grey6};
+`;
+
+const SContentTitle = styled.div`
+  font-size: 22px;
+  font-weight: 400;
+`;

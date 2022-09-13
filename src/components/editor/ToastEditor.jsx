@@ -26,7 +26,7 @@ const ToastEditor = ({ isCommentWrite, content, setContent }) => {
       <Editor
         initialValue="마크다운으로 내용을 입력하세요!"
         previewStyle={isCommentWrite ? "tap" : "vertical"}
-        height={isCommentWrite ? "600px" : "400px"}
+        height={isCommentWrite ? "600px" : "500px"}
         initialEditType="markdown"
         useCommandShortcut={false}
         hideModeSwitch={true}

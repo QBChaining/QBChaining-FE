@@ -28,7 +28,6 @@ const ModalBookmark = ({ isWrite, type }) => {
     }
   }, []);
 
-  console.log(color);
   return (
     <>
       {modal && (
