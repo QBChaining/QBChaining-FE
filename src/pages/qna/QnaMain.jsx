@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { getQnaListDB } from "./../../redux/async/qna";
+import { getQnaCategoryListDB, getQnaListDB } from "./../../redux/async/qna";
 import QnaList from "./../../components/qna/QnaList";
 import QnaMainCatergory from "./../../components/qna/QnaMainCatergory";
 import ModalBookmark from "../../components/common/ModalBookmark";
@@ -11,26 +11,56 @@ import WritingButton from "../../assets/images/WritingButton.png";
 import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
 import NoResolvedListIcon from "../../assets/images/NoResolvedListIcon.png";
 import { colorSetGreen } from "../../redux/modules/userSlice";
+import { useInView } from "react-intersection-observer";
+import { removeQnaList } from "../../redux/modules/qnaSlice";
+import { nanoid } from "@reduxjs/toolkit";
 
 const QnaMain = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const qnaList = useSelector(state => state.qnaSlice.qnaList);
+  const { qnaList, isFetching } = useSelector(state => state.qnaSlice);
 
   const resolveList = qnaList.filter(data => data.is_resolve);
   const disresolveList = qnaList.filter(data => data.is_resolve === false);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [hasNextPage, setHasNextPage] = useState(true);
 
-  //최초진입시 qnalistdb 요청
+  const [category, setCategory] = useState("");
+
   useEffect(() => {
-    dispatch(getQnaListDB());
+    //다음페이지가 있다면
+    console.log(hasNextPage);
+    if (hasNextPage) {
+      if (category.length === 0) {
+        dispatch(getQnaListDB(pageNumber)).then(res => {
+          setHasNextPage(res.payload.length === 10);
+        });
+      } else if (category.length > 0) {
+        dispatch(getQnaCategoryListDB({ category, pageNumber })).then(res => {
+          console.log(res);
+          setHasNextPage(res.payload.length === 10);
+        });
+      }
+      //qnalist 조회 후 res.payload.length가 10이라면 다음페이지 존재
+    }
     dispatch(colorSetGreen());
-  }, []);
+  }, [pageNumber, category]);
 
-  // const [pageNumber, setPageNumber] = useState(1);
-  // const getList = async () => {
-  //   await axios.get("http://54.180.25.241/api/qna");
-  // };
+  //페이지가 바닥에 닿을때마다 pageNumber+1 처리
+  const [target, inView] = useInView();
+  useEffect(() => {
+    if (qnaList.length !== 0 && inView && hasNextPage) {
+      setPageNumber(pageNumber => pageNumber + 1);
+    }
+  }, [inView]);
+
+  //페이지 언마운트 되면 qnalist 제거
+  useEffect(() => {
+    return () => {
+      dispatch(removeQnaList());
+    };
+  }, [category]);
 
   return (
     <SQnaMain>
@@ -46,7 +76,12 @@ const QnaMain = () => {
         </SWritingButtonWrapper>
       </SHeader>
       <SMainCategory>
-        <QnaMainCatergory />
+        <QnaMainCatergory
+          pageNumber={pageNumber}
+          setPageNumber={setPageNumber}
+          setCategory={setCategory}
+          setHasNextPage={setHasNextPage}
+        />
       </SMainCategory>
       <SQnaWrapper>
         <SleftConatiner>
@@ -62,7 +97,7 @@ const QnaMain = () => {
             </SListFilter>
           </SListHeader>
           {resolveList.map(data => (
-            <QnaList data={data} key={data.id} />
+            <QnaList data={data} key={nanoid()} />
           ))}
         </SleftConatiner>
         <SRightContainer>
@@ -78,10 +113,11 @@ const QnaMain = () => {
             </SListFilter>
           </SListHeader>
           {disresolveList.map(data => (
-            <QnaList data={data} key={data.id} />
+            <QnaList data={data} key={nanoid()} />
           ))}
         </SRightContainer>
       </SQnaWrapper>
+      {!isFetching && <div ref={target} style={{ height: "1px" }}></div>}
       <ModalBookmark />
     </SQnaMain>
   );
