@@ -16,19 +16,25 @@ import QnaLikeFill from "../../assets/images/QnaLikeFill.png";
 import BookmarkNoFillIcon from "../../assets/images/BookmarkNoFillIcon.png";
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 import ToastViewer from "../editor/ToastViewer";
+import { getToday } from "../../utils/today";
 
-const QnaTarget = ({ data, isDatail }) => {
+const QnaTarget = ({ isDatail }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const target = useSelector(state => state.qnaSlice.qnaTarget);
   const bookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
-  const { isLogin } = useSelector(state => state.userSlice);
+  const { isLogin, userName } = useSelector(state => state.userSlice);
   //내 즐겨찾기 목록에 있는지 확인
   const isBookmarked =
-    bookmarkList.filter(mark => mark.qna_id === data.id).length > 0;
+    bookmarkList.filter(mark => mark.id === target.id).length > 0;
+
+  console.log(isBookmarked);
 
   const totalId = {
-    qna_id: data.id,
-    Qna: { title: data.title },
+    id: target.id,
+    title: target.title,
+    user_name: userName,
+    createdAt: getToday(),
   };
 
   //즐겨찾기 추가
@@ -75,13 +81,13 @@ const QnaTarget = ({ data, isDatail }) => {
       <SUserInfo>
         <SUserInfoWrapper
           onClick={() => {
-            navigate(`/mypage/${data.user_name}`);
+            navigate(`/mypage/${target.user_name}`);
           }}
         >
-          <SUserProfile profile={data.profile_img} />
+          <SUserProfile profile={target.profile_img} />
           <SUserInfoText>
-            <SUserName>{data.user_name}</SUserName>
-            <SCreateAt>{data.createdAt}</SCreateAt>
+            <SUserName>{target.user_name}</SUserName>
+            <SCreateAt>{target.createdAt}</SCreateAt>
           </SUserInfoText>
         </SUserInfoWrapper>
         <SButtonWrapper>
@@ -90,20 +96,20 @@ const QnaTarget = ({ data, isDatail }) => {
             onClick={isBookmarked ? onDeleteBookmark : onAddBookmark}
           ></SBookmarkButton>
           <SHoneyTipButton
-            isHoneyTip={data.is_honey_tip}
-            onClick={data.is_honey_tip ? onDislikeQna : onLikeQna}
+            isHoneyTip={target.is_honey_tip}
+            onClick={target.is_honey_tip ? onDislikeQna : onLikeQna}
           >
-            {data.honey_tip}
+            {target.honey_tip}
           </SHoneyTipButton>
         </SButtonWrapper>
       </SUserInfo>
       <SContent>
-        <SContentTitle>{data.title}</SContentTitle>
+        <SContentTitle>{target.title}</SContentTitle>
         <SContentText>
-          <ToastViewer content={data.content} />
+          <ToastViewer content={target.content} />
         </SContentText>
         <STags>
-          {data.tag?.map((data, i) => {
+          {target.tag?.map((data, i) => {
             return <STag key={i}>{data}</STag>;
           })}
         </STags>

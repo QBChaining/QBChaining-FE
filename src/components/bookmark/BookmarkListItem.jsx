@@ -23,14 +23,14 @@ const BookmarkListItem = ({ isModal, data }) => {
         onClick={
           isModal
             ? () => {
-                goDetail("qna", data.qna_id);
+                goDetail("qna", data.id);
               }
             : onToggleHandler
         }
       >
-        <SUserName>dubyduba9898</SUserName>
-        <STitle>{data.Qna?.title}</STitle>
-        <SDate>2022.08.08</SDate>
+        <SUserName>{data.user_name}</SUserName>
+        <STitle>{data.title}</STitle>
+        <SDate>{data.createdAt}</SDate>
       </SBookmarkListItem>
       {modal && (
         <WriteBookmark

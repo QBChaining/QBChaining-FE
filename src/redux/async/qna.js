@@ -315,7 +315,7 @@ export const deleteBookmarkListDB = createAsyncThunk(
       const response = await qnaApi.deleteBookmarkList(data);
       if (response.data.success === true) {
         successAlert("정상적으로 즐겨찾기 삭제 되었습니다.");
-        return data.qna_id;
+        return data.id;
       }
     } catch (err) {
       networkError();

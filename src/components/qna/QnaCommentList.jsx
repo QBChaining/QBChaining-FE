@@ -19,13 +19,15 @@ import {
   dislikeCommentListDB,
 } from "./../../redux/async/qna";
 
-const QnaCommentList = ({ author, resolve, id, qnaId }) => {
+const QnaCommentList = ({ id, qnaId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [winner, setWinner] = useState([]);
   //commentList 구독
   const list = useSelector(state => state.qnaSlice.commentList);
+  const target = useSelector(state => state.qnaSlice.qnaTarget);
+
   const { isLogin } = useSelector(state => state.userSlice);
   //로그인 유저 이름 구독
   const userName = useSelector(state => state.userSlice.userName);
@@ -33,7 +35,7 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
   useEffect(() => {
     dispatch(getCommentListDB(id));
   }, [id]);
-  console.log(list);
+
   //코멘트 삭제 dispatch
   const onDeleteHandler = id => {
     if (!isLogin) {
@@ -76,7 +78,6 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
 
   useEffect(() => {
     setWinner(list.find(data => data.is_choose));
-    // setWinner()
   }, [list]);
 
   const goMypage = username => {
@@ -98,7 +99,7 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
                 <SUserInfoText>
                   <SUserNameWrapper>
                     <SUserName winner={true}>{winner.user_name}</SUserName>
-                    {resolve && <SWinnerButton>채택</SWinnerButton>}
+                    {target.is_resolve && <SWinnerButton>채택</SWinnerButton>}
                   </SUserNameWrapper>
                   <SCreateAt winner={true}>{winner.createdAt}</SCreateAt>
                 </SUserInfoText>
@@ -138,7 +139,7 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
                 <SUserInfoText>
                   <SUserNameWrapper>
                     <SUserName>{data.user_name}</SUserName>
-                    {!resolve && (
+                    {!target.is_resolve && (
                       <SChoiceButton
                         onClick={e => {
                           onChoiceHandler(e, data.id);

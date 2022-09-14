@@ -233,6 +233,7 @@ const qnaSlice = createSlice({
     },
     //게시글 즐겨찾기 조회
     [getBookmarkListDB.fulfilled]: (state, { payload }) => {
+      console.log("조회", payload);
       state.bookmarkList = payload;
       state.isFetching = false;
       state.errorMessage = null;
@@ -246,6 +247,7 @@ const qnaSlice = createSlice({
     },
     //게시글 즐겨찾기 추가
     [postBookmarkListDB.fulfilled]: (state, { payload }) => {
+      console.log("추가", payload);
       state.bookmarkList.push(payload);
       state.isFetching = false;
       state.errorMessage = null;
@@ -260,7 +262,7 @@ const qnaSlice = createSlice({
     //게시글 즐겨찾기 삭제
     [deleteBookmarkListDB.fulfilled]: (state, { payload }) => {
       const newBookmarkList = state.bookmarkList.filter(
-        data => data.qna_id !== payload,
+        data => data.id !== payload,
       );
       state.bookmarkList = newBookmarkList;
       state.isFetching = false;

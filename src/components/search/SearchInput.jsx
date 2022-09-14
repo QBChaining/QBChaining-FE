@@ -8,6 +8,7 @@ const SearchInput = () => {
   const navigate = useNavigate();
   const goSearch = () => {
     navigate(`/search?q=${search.current.value}`);
+    search.current.value = "";
   };
 
   return (
