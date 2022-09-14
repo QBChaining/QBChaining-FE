@@ -8,6 +8,7 @@ export const userSlice = createSlice({
     isLogin: false,
     userToken: null,
     userName: null,
+    userProfile: null,
     color: "backgroundGradient",
   },
   reducers: {
@@ -21,6 +22,7 @@ export const userSlice = createSlice({
       state.isLogin = true;
       state.userToken = getCookie("token");
       state.userName = jwt_decode(getCookie("token")).name;
+      state.userProfile = jwt_decode(getCookie("token")).profile_img;
     },
     colorSetGreen: (state, action) => {
       state.color = "mainGreen";

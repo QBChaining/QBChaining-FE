@@ -13,6 +13,7 @@ const ModalBookmark = ({ isWrite, type }) => {
   const location = window.location.pathname;
 
   const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
+  console.log(qnaBookmarkList);
   const { isLogin, color } = useSelector(state => state.userSlice);
   const [modal, setModal] = useState(false);
   const toggle = () => {
@@ -39,7 +40,7 @@ const ModalBookmark = ({ isWrite, type }) => {
                 {qnaBookmarkList.map(data => (
                   <BookmarkListItem
                     isModal={!isWrite}
-                    key={data.qna_id}
+                    key={data.id}
                     data={data}
                   />
                 ))}
@@ -52,7 +53,7 @@ const ModalBookmark = ({ isWrite, type }) => {
                 {qnaBookmarkList.map(data => (
                   <BookmarkListItem
                     isModal={!isWrite}
-                    key={data.qna_id}
+                    key={data.id}
                     data={data}
                   />
                 ))}

@@ -19,11 +19,11 @@ const Header = () => {
   const onLogoutHandler = () => {
     Swal.fire("로그아웃", "성공", "success")
       .then(() => {
-        navigate("/");
-      })
-      .then(() => {
         dispatch(logOut());
         dispatch(removeUserInfo());
+      })
+      .then(() => {
+        navigate("/");
       });
   };
 

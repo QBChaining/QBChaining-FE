@@ -25,7 +25,7 @@ const QnaDetail = () => {
   return (
     <SQnaDetail>
       <SLeftContainer>
-        <QnaTarget isDatail={true} data={target} />
+        <QnaTarget isDatail={true} />
         <QnaCommentList
           author={target.user?.user_name}
           resolve={target.is_resolve}

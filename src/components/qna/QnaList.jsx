@@ -45,13 +45,21 @@ const QnaList = ({ data }) => {
 
   const time = timeForToday(data.createdAt);
 
+  const goMypage = name => {
+    navigate(`/mypage/${name}`);
+  };
+
   return (
     <StextMain ResolveWrapper={ResolveWrapper}>
       <SWrapper resolve={data.is_resolve} ResolveWrapper={ResolveWrapper}>
         <SUserInfo>
-          <SProfileContainer>
-            <SProfile profile={data.user.profile_img}></SProfile>
-            <SUserName>{data.user?.user_name}</SUserName>
+          <SProfileContainer
+            onClick={() => {
+              goMypage(data.user_name);
+            }}
+          >
+            <SProfile profile={data.profile_img}></SProfile>
+            <SUserName>{data.user_name}</SUserName>
             <SCreatedAt>{time}</SCreatedAt>
           </SProfileContainer>
           <SCategoryContainer>
