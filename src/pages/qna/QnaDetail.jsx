@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOneQnaListDB } from "../../redux/async/qna";
-import { colorSetGrad } from "../../redux/modules/userSlice";
+import { colorSetGreen } from "../../redux/modules/userSlice";
 import QnaList from "./../../components/qna/QnaList";
 import QnaCommentList from "./../../components/qna/QnaCommentList";
 import QnaTarget from "../../components/qna/QnaTarget";
@@ -19,12 +19,12 @@ const QnaDetail = () => {
 
   useEffect(() => {
     dispatch(getOneQnaListDB(id));
-    dispatch(colorSetGrad());
+    dispatch(colorSetGreen());
   }, [dispatch, id]);
 
   return (
     <SQnaDetail>
-      <SLeftContainer QnaWriteArrow={QnaWriteArrow}>
+      <SLeftContainer>
         <QnaTarget isDatail={true} data={target} />
         <QnaCommentList
           author={target.user?.user_name}
@@ -53,24 +53,29 @@ const SQnaDetail = styled.div`
 const SLeftContainer = styled.div`
   width: 50%;
   padding-left: 200px;
-  position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50px;
-    right: -50px;
-    width: 53px;
-    height: 53px;
-    background-image: url(${props => props.QnaWriteArrow});
-    background-repeat: no-repeat;
-  }
+  padding-right: 30px;
 `;
 
 const SRightContainer = styled.div`
-  padding: 0 200px 0 50px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  padding: 100px 200px 0 50px;
   width: 50%;
   background-color: ${props => props.theme.color.mainGreen};
   color: white;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 150px;
+    left: -4px;
+    width: 53px;
+    height: 53px;
+    background-image: url(${QnaWriteArrow});
+    background-repeat: no-repeat;
+    z-index: 1;
+  }
 `;
 
 const SAddCommentTitle = styled.h2`

@@ -12,7 +12,7 @@ import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
-  console.log("태그", blogMainLists);
+  console.log("블로그전체", blogMainLists);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -67,18 +67,18 @@ const BlogCommmunityMain = () => {
                     </SContent>
                   </div>
                   <STagNMark>
-                    <div>
+                    <STagList>
                       {tagList?.map(tags => {
                         return (
-                          <STags key={tags.id}>
+                          <div key={tags.id}>
                             <STag>{tags}</STag>
-                          </STags>
+                          </div>
                         );
                       })}
-                    </div>
-                    <div>
-                      <BlogBookMark />
-                    </div>
+                    </STagList>
+                    <SBookMark>
+                      <BlogBookMark isbookmark={posts.is_bookmark} />
+                    </SBookMark>
                   </STagNMark>
                 </SContentsGroup>
               </SBloglist>
@@ -99,7 +99,7 @@ const SBody = styled.div`
 //탑박스
 const STopBox = styled.div`
   width: 100%;
-  max-width: 1920px;
+
   position: relative;
   display: flex;
   flex-direction: row;
@@ -182,6 +182,10 @@ const SContent = styled.div`
     /* font-color: #9c9c9c; */
   }
 `;
+const STagList = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 const STag = styled.div`
   display: flex;
   /* flex-wrap: wrap; */
@@ -192,19 +196,14 @@ const STag = styled.div`
   color: #ffffff;
   width: 108px;
   height: 39px;
-  margin-right: 15px;
+  /* margin-right: 15px; */
   background: #c0c0c0;
   border-radius: 30px;
 `;
-
-const STags = styled.div`
+const SBookMark = styled.div`
   display: flex;
-  flex-direction: row;
-  /* flex-wrap: wrap; */
-  width: 200px;
-  height: 30px;
-  margin: 20px 5px 10px 5px;
 `;
+
 const SContentsGroup = styled.div`
   display: flex;
   flex-direction: column;
@@ -241,9 +240,7 @@ const SPlus = styled.div`
 
 const STagNMark = styled.div`
   display: flex;
-  /* flex-direction: row; */
-  justify-content: space-between;
-  width: 100%;
+  flex-direction: row;
   max-width: 300px;
   height: 100px;
 `;

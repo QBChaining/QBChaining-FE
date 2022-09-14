@@ -7,11 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { getBlogDetailDB } from "../../redux/async/blog";
 import { useParams } from "react-router-dom";
 import { deleteBlogCommunityDB } from "../../redux/async/blog";
+import ModalBookmark from "../../components/common/ModalBookmark";
 import ToastViewer from "./../../components/editor/ToastViewer";
 import BlogLike from "../../components/blog/BlogLike";
 import BlogBookMark from "../../components/blog/BlogBookMark";
-import BlogBookMarkList from "../../components/blog/BlogBookMarkList";
 import profiletest from "../../assets/images/profiletest.png";
+
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
   console.log("detail", response);
@@ -31,9 +32,12 @@ const BlogCommunityDetail = () => {
     <SContainer>
       {response?.map(detail => {
         return (
-          <div>
+          <div isLike={response.is_like} key={detail.id}>
             <STitleSection>
-              <STitle>{detail.title}</STitle>
+              <div className="bookMark">
+                <BlogBookMark />
+                <STitle>{detail.title}</STitle>
+              </div>
               <SProfileNickNameDate>
                 <SDate>
                   <div className="name">{detail.user_name?.user_name}</div>
@@ -70,8 +74,21 @@ const BlogCommunityDetail = () => {
             <SContents>
               <ToastViewer className="content1" content={detail.content} />
             </SContents>
-            <BlogLike />
-            <BlogBookMark />
+            <SLikeNtags>
+              <div className="tagList">
+                {detail.tag.map(tags => {
+                  return (
+                    <STag>
+                      <div>{tags}</div>
+                    </STag>
+                  );
+                })}
+              </div>
+              <BlogLike
+                islike={detail.is_like}
+                isbookmark={detail.is_bookmark}
+              />
+            </SLikeNtags>
           </div>
         );
       })}
@@ -80,12 +97,12 @@ const BlogCommunityDetail = () => {
         <CommentAdd />
         <CommentList />
       </div>
-      <BlogBookMarkList />
+      <ModalBookmark isWrite={true} />
     </SContainer>
   );
 };
 const SContainer = styled.form`
-  width: 1220px;
+  max-width: 1220px;
 `;
 const SNickName = styled.div``;
 const ButtonGroup = styled.div`
@@ -104,8 +121,14 @@ const ButtonGroup = styled.div`
   }
 `;
 const STitleSection = styled.div`
+  display: flex;
+  justify-content: space-between;
   width: 1220px;
   border-bottom: 1px solid #939393;
+  & .bookMark {
+    display: flex;
+    flex-direction: row;
+  }
 `;
 const STitle = styled.div`
   font-size: 24px;
@@ -118,7 +141,7 @@ const SProfileNickNameDate = styled.div`
 const SDate = styled.div`
   & .name {
     font-size: 18px;
-    right: 0px;
+    margin-left: 50px;
   }
   & .date {
     font-size: 14px;
@@ -137,6 +160,28 @@ const Sprofile = styled.div`
 
 const SContents = styled.div`
   margin: 20px 0px 0px 40px;
+`;
+const SLikeNtags = styled.div`
+  & .tagList {
+    display: flex;
+    flex-direction: row;
+  }
+`;
+
+const STag = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #2776ed;
+  width: 108px;
+  height: 39px;
+  margin-right: 15px;
+  border: 1px solid #2776ed;
+  border-radius: 30px;
+  margin: 40px 16px 20.2px 0px;
 `;
 
 export default BlogCommunityDetail;

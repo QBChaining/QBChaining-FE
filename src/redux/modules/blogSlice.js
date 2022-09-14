@@ -60,7 +60,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogCommunityDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.blogList.push(action.payload);
       // state.blogList = action.payload;
       state.isFetching = false;
@@ -182,7 +181,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogBookMarkDB.fulfilled]: (state, action) => {
-      console.log("북마크 조회", action.payload);
       state.blogBookMark = action.payload;
     },
     [getBlogBookMarkDB.rejected]: (state, action) => {
@@ -195,12 +193,19 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getHotBlogDB.fulfilled]: (state, action) => {
-      console.log("조회", action);
       state.hotBlog = action.payload;
     },
     [getHotBlogDB.rejected]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
+    },
+
+    // 좋아요 추가
+    [postBlogLikeDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [postBlogLikeDB.fulfilled]: (state, action) => {
+      state.blogDetail = action.payload;
     },
   },
 });
