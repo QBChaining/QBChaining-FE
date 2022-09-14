@@ -12,8 +12,6 @@ import styled from "styled-components";
 import { errorAlert, needLoginAlert } from "../../utils/swal";
 const BlogLike = ({ islike }) => {
   const { isLogin } = useSelector(state => state.userSlice);
-  const [like, setLike] = useState(`${islike}`);
-
   const dispatch = useDispatch();
   const { id } = useParams();
   // const [Like, setLike] = useState(false);
@@ -24,12 +22,10 @@ const BlogLike = ({ islike }) => {
       return;
     }
     dispatch(postBlogLikeDB(id));
-    // setLike(`${islike}`);
   };
 
   const onUnLikeBlog = () => {
     dispatch(unBlogLikeDB(id));
-    // setLike(`${islike}`);
   };
 
   return (

@@ -8,19 +8,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import blogbookmark from "../../assets/images/blogbookmark.png";
 import blogbookmarkadd from "../../assets/images/bookmarkadd.png";
-const BlogBookMark = ({ isbookmark }) => {
-  console.log(isbookmark);
+const BlogBookMark = () => {
   //북마크 새로고침 상태유지를 위한 useSeloctor
-  // const is_bookmark = useSelector(state => state.blogSlice.blogList);
+  const is_bookmark = useSelector(state => state.blogSlice.blogList);
   const blogDetailBookMark = useSelector(state => state.blogSlice.blogList);
   console.log(blogDetailBookMark);
-  console.log(blogDetailBookMark.is_bookmark);
+  // console.log(blogDetailBookMark.is_bookmark);
   const [mark, setMark] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
 
   const onAddBookMark = () => {
-    // dispatch(postBlogBookMarkDB(parseInt(id)));
     dispatch(postBlogBookMarkDB(parseInt(id)));
     setMark(!mark);
   };
@@ -30,13 +28,13 @@ const BlogBookMark = ({ isbookmark }) => {
   };
   return (
     <div>
-      {isbookmark === false ? (
+      {is_bookmark === true ? (
         <>
-          <SbookMarkBtnAdd onClick={onAddBookMark} />
+          <SBookMarkBtn onClick={onAddBookMark} />
         </>
       ) : (
         <>
-          <SBookMarkBtn onClick={onDeleteBookMark} />
+          <SbookMarkBtnAdd onClick={onDeleteBookMark} />
         </>
       )}
     </div>
