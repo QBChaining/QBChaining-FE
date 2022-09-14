@@ -2,9 +2,10 @@ import instance from "../axios";
 
 export const qnaApi = {
   //게시글 조회
-  getList: () => instance.get("/qna"),
+  getList: () => instance.get("/qna?page_count=10&page=0"),
   //게시글 카테고리 조회
-  getCategoryList: name => instance.get(`/qna/category/${name}`),
+  getCategoryList: name =>
+    instance.get(`/qna/categories/${name}?page_count=10&page=0`),
   //게시글 상세조회
   getOneList: id => instance.get(`/qna/${id}`),
   //게시글 작성
@@ -12,19 +13,20 @@ export const qnaApi = {
   //게시글 수정
   editList: data => instance.put(`/qna/${data.id}`, data),
   //게시글 즐겨찾기 조회
-  getBookmarkList: () => instance.get("/qna/bookmark"),
+  getBookmarkList: () => instance.get("/qna/bookmark?page_count=10&page=0"),
   //게시글 즐겨찾기 추가
-  postBookmarkList: data => instance.post(`/qna/${data.qna_id}/bookmark`),
+  postBookmarkList: data => instance.post(`/qna/${data.id}/bookmark`),
   //게시글 즐겨찾기 삭제
-  deleteBookmarkList: data => instance.delete(`/qna/${data.qna_id}/bookmark`),
+  deleteBookmarkList: data => instance.delete(`/qna/${data.id}/bookmark`),
   //게시글 추천목록 조회
   getQnaLikeList: () => instance.get(`qna/like`),
   //게시글 추천
-  likeQnaList: data => instance.post(`qna/${data.qna_id}/like`),
+  likeQnaList: data => instance.post(`qna/${data.id}/like`),
   //게시글 추천 취소
-  dislikeQnaList: data => instance.delete(`qna/${data.qna_id}/like`),
+  dislikeQnaList: data => instance.delete(`qna/${data.id}/like`),
   //댓글 조회
-  getCommentList: id => instance.get(`/qna/${id}/comments`),
+  getCommentList: id =>
+    instance.get(`/qna/${id}/comments?page_count=10&page=0`),
   //댓글 작성
   postCommentList: data =>
     instance.post(`/qna/${data.id}/comments`, { comment: data.content }),

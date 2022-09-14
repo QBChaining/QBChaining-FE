@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -9,25 +9,23 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, logOut } from "../../redux/modules/userSlice";
 import { removeUserInfo } from "../../redux/modules/qnaSlice";
+import SearchInput from "./../search/SearchInput";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = window.location.pathname;
-  const search = useRef();
   const { isLogin } = useSelector(state => state.userSlice);
   const onLogoutHandler = () => {
     Swal.fire("로그아웃", "성공", "success")
       .then(() => {
-        navigate("/");
-      })
-      .then(() => {
         dispatch(logOut());
         dispatch(removeUserInfo());
+      })
+      .then(() => {
+        navigate("/");
       });
   };
-
-  //임시검색창
 
   return (
     <SHeader location={location}>
@@ -72,21 +70,7 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-      <div className="searchContainer">
-        <div className="searchIcon">
-          <AiOutlineSearch />
-        </div>
-        <input ref={search} type="text" placeholder="Javascript" />
-        <button
-          onClick={() => {
-            axios.get(`http://kpzzy.shop/api/search?q=node  `).then(res => {
-              console.log(res);
-            });
-          }}
-        >
-          검색
-        </button>
-      </div>
+      <SearchInput />
       <div className="alarmLoginWrapper">
         <div className="alarmConatainer active">
           <HiOutlineBell />
@@ -96,8 +80,7 @@ const Header = () => {
             <button onClick={onLogoutHandler}>로그아웃</button>
           ) : (
             // <a href={process.env.REACT_APP_GITHUB_API}>로그인</a>
-            // <a href="http://kpzzy.shop/api/auth/github">로그인</a>
-            <a href="http://localhost:5001/api/auth/github">로그인</a>
+            <a href="http://taesik.shop/api/auth/github">로그인</a>
           )}
           <div className="loginProfile"></div>
         </div>
@@ -115,9 +98,9 @@ const SHeader = styled.header`
   padding: 0 40px;
   height: 100px;
   background: ${props =>
-    props.location === "/qna"
+    props.location.includes("/qna")
       ? props.theme.color.mainGreen
-      : props.location === "/blog"
+      : props.location.includes("/blog")
       ? props.theme.color.mainBlue
       : props.theme.color.backgroundGradient};
   color: white;
@@ -169,11 +152,6 @@ const SHeader = styled.header`
   }
 
   & .searchContainer {
-    max-width: 600px;
-    min-width: 200px;
-    width: 100%;
-    height: 42px;
-    position: relative;
     & .searchIcon {
       position: absolute;
       top: 12px;
@@ -187,31 +165,6 @@ const SHeader = styled.header`
         width: 100%;
         height: 100%;
       }
-    }
-    & input {
-      width: 100%;
-      height: 100%;
-      padding: 0 120px 0 40px;
-      border-radius: 30px;
-      border: 1px solid #939393;
-
-      &:active {
-        outline: none;
-      }
-      &:focus {
-        outline: none;
-      }
-    }
-    & button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-      width: 87px;
-      border-radius: 30px;
-      background-color: #1e1e1e;
-      color: white;
-      font-size: 15px;
     }
   }
 

@@ -1,5 +1,5 @@
 const color = {
-  mainGreen: "#2AD798",
+  mainGreen: "#00D98B",
   mainBlue: "#2676ED",
   white: "#fff",
   black: "#000",
@@ -9,6 +9,8 @@ const color = {
   grey3: "#C0C0C0",
   grey4: "#C6C6C6",
   grey5: "#9C9C9C",
+  grey6: "#939393",
+  grey7: "#999999",
   backgroundGradient:
     "linear-gradient(285.85deg, #2676ED -0.91%, #2AD798 97.98%)",
 };

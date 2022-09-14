@@ -4,6 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import Editor from "../common/Editor";
 import { successAlert, errorAlert } from "./../../utils/swal";
+import styled from "styled-components";
+import QnaLike from "../../assets/images/QnaLike.png";
+import QnaLikeFill from "../../assets/images/QnaLikeFill.png";
+import WinnerCrown from "../../assets/images/WinnerCrown.png";
+import ToastViewer from "./../editor/ToastViewer";
+import { useNavigate } from "react-router-dom";
 import {
   choiceCommentListDB,
   deleteCommentListDB,
@@ -13,11 +19,15 @@ import {
   dislikeCommentListDB,
 } from "./../../redux/async/qna";
 
-const QnaCommentList = ({ author, resolve, id, qnaId }) => {
+const QnaCommentList = ({ id, qnaId }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const [winner, setWinner] = useState([]);
   //commentList 구독
   const list = useSelector(state => state.qnaSlice.commentList);
+  const target = useSelector(state => state.qnaSlice.qnaTarget);
+
   const { isLogin } = useSelector(state => state.userSlice);
   //로그인 유저 이름 구독
   const userName = useSelector(state => state.userSlice.userName);
@@ -49,7 +59,8 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
     dispatch(dislikeCommentListDB(id));
   };
 
-  const onChoiceHandler = id => {
+  const onChoiceHandler = (e, id) => {
+    e.stopPropagation();
     Swal.fire({
       title: "채택 하시겠습니까?",
       icon: "warning",
@@ -65,58 +76,222 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
     });
   };
 
+  useEffect(() => {
+    setWinner(list.find(data => data.is_choose));
+  }, [list]);
+
+  const goMypage = username => {
+    navigate(`/mypage/${username}`);
+  };
+
   return (
-    <>
-      <div className="ql-snow">
+    <SQnaCommentList>
+      <SCommentWrapper>
+        {winner && (
+          <SItemWrapper id={winner.id}>
+            <SUserInfo>
+              <SWinnerUserInfo
+                onClick={() => {
+                  goMypage(winner.user_name);
+                }}
+              >
+                <SUserProfile profile={winner.profile_img} />
+                <SUserInfoText>
+                  <SUserNameWrapper>
+                    <SUserName winner={true}>{winner.user_name}</SUserName>
+                    {target.is_resolve && <SWinnerButton>채택</SWinnerButton>}
+                  </SUserNameWrapper>
+                  <SCreateAt winner={true}>{winner.createdAt}</SCreateAt>
+                </SUserInfoText>
+              </SWinnerUserInfo>
+              <SButtonWrapper>
+                <SHoneyTipButton
+                  isHoneyTip={winner.is_honey_tip}
+                  onClick={
+                    winner.is_honey_tip
+                      ? () => {
+                          onDisLikeHandler(winner.id);
+                        }
+                      : () => {
+                          onLikeHandler(winner.id);
+                        }
+                  }
+                >
+                  {winner?.honey_tip}
+                </SHoneyTipButton>
+              </SButtonWrapper>
+            </SUserInfo>
+            <SContentText>
+              <ToastViewer content={winner?.comment} />
+            </SContentText>
+          </SItemWrapper>
+        )}
         {list.map(data => (
-          <div key={data.id}>
-            <div>{data.user_name}</div>
-            <div className="ql-editor">
-              <div dangerouslySetInnerHTML={{ __html: data.comment }}></div>
-            </div>
-            <div>{data.honey_tip}</div>
-            {/* 유저이름과 작성자이름이 같고 채택이 없을때 삭제 가능 */}
-            {userName === data.user_name && !resolve && (
-              <button
+          <SItemWrapper key={data.id}>
+            <SUserInfo>
+              <SUserInfoWrapper
                 onClick={() => {
-                  onDeleteHandler(data.id);
+                  goMypage(data.user_name);
                 }}
               >
-                삭제하기
-              </button>
-            )}
-            {data.is_honey_tip ? (
-              <button
-                onClick={() => {
-                  onDisLikeHandler(data.id);
-                }}
-              >
-                추천취소
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  onLikeHandler(data.id);
-                }}
-              >
-                추천하기
-              </button>
-            )}
-            {/* 글작성자와 유저이름이 같고 채택이 없을때 채택 가능 */}
-            {author === userName && !resolve && (
-              <button
-                onClick={() => {
-                  onChoiceHandler(data.id);
-                }}
-              >
-                채택하기
-              </button>
-            )}
-          </div>
+                <SUserProfile profile={data.profile_img} />
+
+                <SUserInfoText>
+                  <SUserNameWrapper>
+                    <SUserName>{data.user_name}</SUserName>
+                    {!target.is_resolve && (
+                      <SChoiceButton
+                        onClick={e => {
+                          onChoiceHandler(e, data.id);
+                        }}
+                      >
+                        채택
+                      </SChoiceButton>
+                    )}
+                  </SUserNameWrapper>
+                  <SCreateAt>{data.createdAt}</SCreateAt>
+                </SUserInfoText>
+              </SUserInfoWrapper>
+              <SButtonWrapper>
+                <SHoneyTipButton
+                  isHoneyTip={data.is_honey_tip}
+                  onClick={
+                    data.is_honey_tip
+                      ? () => {
+                          onDisLikeHandler(data.id);
+                        }
+                      : () => {
+                          onLikeHandler(data.id);
+                        }
+                  }
+                >
+                  {data.honey_tip}
+                </SHoneyTipButton>
+              </SButtonWrapper>
+            </SUserInfo>
+            <SContentText>
+              <ToastViewer content={data.comment} />
+            </SContentText>
+          </SItemWrapper>
         ))}
-      </div>
-    </>
+      </SCommentWrapper>
+    </SQnaCommentList>
   );
 };
 
 export default QnaCommentList;
+
+const SQnaCommentList = styled.div``;
+const SCommentWrapper = styled.div``;
+const SItemWrapper = styled.div``;
+
+const SUserInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const SUserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 20px 30px 40px;
+`;
+
+const SWinnerUserInfo = styled(SUserInfoWrapper)`
+  background-color: ${props => props.theme.color.mainGreen};
+  border-radius: 30px;
+  padding: 1px 30px 1px 2px;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 11px;
+    background-image: url(${WinnerCrown});
+    width: 28px;
+    height: 28px;
+    z-index: -1;
+  }
+`;
+
+const SUserProfile = styled.div`
+  width: 44px;
+  height: 44px;
+  background-image: url(${props => props.profile});
+  background-size: cover;
+  border-radius: 50%;
+`;
+
+const SUserInfoText = styled.div`
+  margin-left: 10px;
+`;
+
+const SUserNameWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const SUserName = styled.div`
+  margin-bottom: 2px;
+  font-weight: ${props => (props.winner ? "600" : "400")};
+  color: ${props =>
+    props.winner ? props.theme.color.white : props.theme.color.black};
+  cursor: pointer;
+`;
+
+const SCreateAt = styled.div`
+  color: ${props =>
+    props.winner ? props.theme.color.white : props.theme.color.grey6};
+`;
+
+const ButtonBackground = styled.button`
+  background-repeat: no-repeat;
+  border: none;
+  background-color: transparent;
+`;
+
+const SHoneyTipButton = styled(ButtonBackground)`
+  padding-right: 24px;
+  background-position: right center;
+  background-size: 16px 16px;
+  background-image: url(${props => (props.isHoneyTip ? QnaLikeFill : QnaLike)});
+  color: ${props => props.theme.color.grey7};
+  font-size: 16px;
+`;
+
+const SButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const SContentText = styled.div`
+  padding: 0 20px 40px 40px;
+  border-bottom: 1px solid ${props => props.theme.color.grey5};
+`;
+
+const SChoiceButton = styled.button`
+  margin-left: 10px;
+  padding: 2px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: ${props => props.theme.color.mainGreen};
+  background-color: ${props => props.theme.color.white};
+  border: 1px solid ${props => props.theme.color.mainGreen};
+  border-radius: 30px;
+
+  &:hover {
+    color: ${props => props.theme.color.white};
+    background-color: ${props => props.theme.color.mainGreen};
+  }
+`;
+
+const SWinnerButton = styled(SChoiceButton)`
+  color: ${props => props.theme.color.mainGreen};
+  background-color: ${props => props.theme.color.white};
+  border: none;
+  line-height: 15px;
+  &:hover {
+    color: ${props => props.theme.color.mainGreen};
+    background-color: ${props => props.theme.color.white};
+  }
+`;

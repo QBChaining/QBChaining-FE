@@ -118,6 +118,7 @@ const qnaSlice = createSlice({
     //게시글 추천
     [likeQnaListDB.fulfilled]: (state, { payload }) => {
       state.qnaTarget.is_honey_tip = true;
+      state.qnaTarget.honey_tip += 1;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -131,6 +132,7 @@ const qnaSlice = createSlice({
     //게시글 추천 취소
     [dislikeQnaListDB.fulfilled]: (state, { payload }) => {
       state.qnaTarget.is_honey_tip = false;
+      state.qnaTarget.honey_tip -= 1;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -231,6 +233,7 @@ const qnaSlice = createSlice({
     },
     //게시글 즐겨찾기 조회
     [getBookmarkListDB.fulfilled]: (state, { payload }) => {
+      console.log("조회", payload);
       state.bookmarkList = payload;
       state.isFetching = false;
       state.errorMessage = null;
@@ -244,6 +247,7 @@ const qnaSlice = createSlice({
     },
     //게시글 즐겨찾기 추가
     [postBookmarkListDB.fulfilled]: (state, { payload }) => {
+      console.log("추가", payload);
       state.bookmarkList.push(payload);
       state.isFetching = false;
       state.errorMessage = null;
@@ -258,7 +262,7 @@ const qnaSlice = createSlice({
     //게시글 즐겨찾기 삭제
     [deleteBookmarkListDB.fulfilled]: (state, { payload }) => {
       const newBookmarkList = state.bookmarkList.filter(
-        data => data.qna_id !== payload,
+        data => data.id !== payload,
       );
       state.bookmarkList = newBookmarkList;
       state.isFetching = false;
@@ -273,6 +277,10 @@ const qnaSlice = createSlice({
     },
     //댓글 채택
     [choiceCommentListDB.fulfilled]: (state, { payload }) => {
+      const idx = state.commentList.findIndex(data => {
+        return data.id === payload.id;
+      });
+      state.commentList[idx].is_choose = true;
       state.qnaTarget.is_resolve = true;
       state.isFetching = false;
       state.errorMessage = null;

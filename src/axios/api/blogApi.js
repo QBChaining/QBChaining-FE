@@ -33,7 +33,8 @@ export const blogApi = {
   getYouBlog: id => instance.get(`/posts/you/${id}`),
 
   //즐겨찾기
-
+  //블로그즐겨찾기 조회
+  getBlogBookMark: () => instance.get(`/posts/bookmark/`),
   //블로그즐겨찾기 추가
   postBlogBookMark: id => instance.post(`/posts/bookmark/${id}`),
   //블로그즐겨찾기 삭제
@@ -45,4 +46,10 @@ export const blogApi = {
   postBlogLike: id => instance.post(`/posts/like/${id}`),
   //블로그 추천삭제
   unBlogLike: id => instance.delete(`/posts/like/${id}`),
+
+  // 추천 많이 받은 블로그 조회
+
+  getHotBlog: () => instance.get(`/posts/hits`),
+
+  //
 };

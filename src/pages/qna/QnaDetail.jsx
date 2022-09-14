@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOneQnaListDB } from "../../redux/async/qna";
+import { colorSetGreen } from "../../redux/modules/userSlice";
 import QnaList from "./../../components/qna/QnaList";
-import QnaAddComment from "./../../components/qna/QnaAddComment";
 import QnaCommentList from "./../../components/qna/QnaCommentList";
 import QnaTarget from "../../components/qna/QnaTarget";
 import styled from "styled-components";
 import ModalBookmark from "./../../components/common/ModalBookmark";
+import QnaWriteArrow from "../../assets/images/QnaWriteArrow.png";
+import Editor from "./../../components/common/Editor";
 
 const QnaDetail = () => {
   const { id } = useParams();
@@ -17,23 +19,24 @@ const QnaDetail = () => {
 
   useEffect(() => {
     dispatch(getOneQnaListDB(id));
+    dispatch(colorSetGreen());
   }, [dispatch, id]);
 
   return (
     <SQnaDetail>
-      <div className="leftContainer">
-        {target && <QnaTarget isDatail={true} data={target} />}
-      </div>
-      <div className="rightContainer">
-        <h2>댓글</h2>
-        <QnaAddComment id={id} />
+      <SLeftContainer>
+        <QnaTarget isDatail={true} />
         <QnaCommentList
           author={target.user?.user_name}
           resolve={target.is_resolve}
           id={id}
           qnaId={id}
         />
-      </div>
+      </SLeftContainer>
+      <SRightContainer>
+        <SAddCommentTitle>댓글 작성</SAddCommentTitle>
+        <Editor isCommentWrite={true} id={id} />
+      </SRightContainer>
       <ModalBookmark />
     </SQnaDetail>
   );
@@ -44,18 +47,39 @@ export default QnaDetail;
 const SQnaDetail = styled.div`
   display: flex;
   min-height: calc(100vh - 100px);
-  & .leftContainer {
-    width: 50%;
-  }
+  margin: 0 auto;
+`;
 
-  & .rightContainer {
-    width: 50%;
-    background-color: #1c2030;
-    color: white;
+const SLeftContainer = styled.div`
+  width: 50%;
+  padding-left: 200px;
+  padding-right: 30px;
+`;
 
-    & h2 {
-      font-size: 24px;
-      font-weight: 400;
-    }
+const SRightContainer = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  padding: 100px 200px 0 50px;
+  width: 50%;
+  background-color: ${props => props.theme.color.mainGreen};
+  color: white;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 150px;
+    left: -4px;
+    width: 53px;
+    height: 53px;
+    background-image: url(${QnaWriteArrow});
+    background-repeat: no-repeat;
+    z-index: 1;
   }
+`;
+
+const SAddCommentTitle = styled.h2`
+  font-size: 20px;
+  font-weight: 400;
+  padding: 60px 0 30px 0;
 `;

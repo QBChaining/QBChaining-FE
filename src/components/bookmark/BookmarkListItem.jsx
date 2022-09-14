@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import WriteBookmark from "./WriteBookmark";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 
 const BookmarkListItem = ({ isModal, data }) => {
   const navigate = useNavigate();
@@ -10,31 +12,26 @@ const BookmarkListItem = ({ isModal, data }) => {
     setModal(!modal);
   };
 
-  const goDetail = (content, id) => {
-    navigate(`/${content}/detail/${id}`);
+  const goDetail = (type, id) => {
+    navigate(`/${type}/detail/${id}`);
   };
 
   return (
     <>
-      <li
-        style={{
-          padding: "20px",
-          border: "1px solid black",
-          margin: "10px",
-          cursor: "pointer",
-          backgroundColor: "white",
-          color: "black",
-        }}
+      <SBookmarkListItem
+        style={{}}
         onClick={
           isModal
             ? () => {
-                goDetail("qna", data.qna_id);
+                goDetail("qna", data.id);
               }
             : onToggleHandler
         }
       >
-        {data.Qna?.title}
-      </li>
+        <SUserName>{data.user_name}</SUserName>
+        <STitle>{data.title}</STitle>
+        <SDate>{data.createdAt}</SDate>
+      </SBookmarkListItem>
       {modal && (
         <WriteBookmark
           modal={modal}
@@ -48,3 +45,41 @@ const BookmarkListItem = ({ isModal, data }) => {
 };
 
 export default BookmarkListItem;
+
+const SBookmarkListItem = styled.li`
+  padding: 10px 40px 10px 54px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: url(${BookmarkFillIcon});
+  background-repeat: no-repeat;
+  background-position: left 30px top 17px;
+  background-size: 14px;
+  text-overflow: ellipsis;
+  font-size: 14px;
+`;
+
+const SUserName = styled.p`
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: ${props => props.theme.color.grey6};
+`;
+
+const STitle = styled.p`
+  width: 200px;
+  font-size: 16px;
+  color: ${props => props.theme.color.black};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+const SDate = styled.p`
+  color: ${props => props.theme.color.grey6};
+`;

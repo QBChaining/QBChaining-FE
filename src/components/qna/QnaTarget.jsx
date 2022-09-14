@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import QnaCommentList from "./QnaCommentList";
-import QnaAddComment from "./QnaAddComment";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,22 +10,31 @@ import {
 } from "../../redux/async/qna";
 import { deleteBookmarkListDB } from "./../../redux/async/qna";
 import { errorAlert, needLoginAlert } from "../../utils/swal";
-import { successAlert } from "./../../utils/swal";
 
+import QnaLike from "../../assets/images/QnaLike.png";
+import QnaLikeFill from "../../assets/images/QnaLikeFill.png";
+import BookmarkNoFillIcon from "../../assets/images/BookmarkNoFillIcon.png";
+import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 import ToastViewer from "../editor/ToastViewer";
+import { getToday } from "../../utils/today";
 
-const QnaTarget = ({ data, isDatail }) => {
+const QnaTarget = ({ isDatail }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const target = useSelector(state => state.qnaSlice.qnaTarget);
   const bookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
-  const { isLogin } = useSelector(state => state.userSlice);
+  const { isLogin, userName } = useSelector(state => state.userSlice);
   //내 즐겨찾기 목록에 있는지 확인
   const isBookmarked =
-    bookmarkList.filter(mark => mark.qna_id === data.id).length > 0;
+    bookmarkList.filter(mark => mark.id === target.id).length > 0;
+
+  console.log(isBookmarked);
 
   const totalId = {
-    qna_id: data.id,
-    Qna: { title: data.title },
+    id: target.id,
+    title: target.title,
+    user_name: userName,
+    createdAt: getToday(),
   };
 
   //즐겨찾기 추가
@@ -66,53 +73,145 @@ const QnaTarget = ({ data, isDatail }) => {
   useEffect(() => {
     if (isLogin) {
       dispatch(getBookmarkListDB());
-      // dispatch(getQnaLikeListDB())
     }
   }, []);
 
   return (
     <SQnaTarget>
-      <div>
-        <div>
-          {isBookmarked ? (
-            <button onClick={onDeleteBookmark}>즐겨찾기삭제</button>
-          ) : (
-            <button onClick={onAddBookmark}>즐겨찾기</button>
-          )}
-        </div>
-        <div>
-          {data.is_honey_tip ? (
-            <button onClick={onDislikeQna}>게시글 추천취소</button>
-          ) : (
-            <button onClick={onLikeQna}>게시글 추천</button>
-          )}
-        </div>
-        <div>
-          <div>유저이름 : {data.user?.user_name}</div>
-          <div>생성날짜 : {data.createdAt}</div>
-        </div>
-        <div>제목 : {data.title}</div>
-        <ToastViewer content={data.content} />
-        <div>
-          <div>카테고리 : {data.category}</div>
-          <div>추천수 : {data.honeytip}</div>
-          <div>
-            {data.tag?.map((data, i) => {
-              return <div key={i}>{data}</div>;
-            })}
-          </div>
-        </div>
-      </div>
+      <SUserInfo>
+        <SUserInfoWrapper
+          onClick={() => {
+            navigate(`/mypage/${target.user_name}`);
+          }}
+        >
+          <SUserProfile profile={target.profile_img} />
+          <SUserInfoText>
+            <SUserName>{target.user_name}</SUserName>
+            <SCreateAt>{target.createdAt}</SCreateAt>
+          </SUserInfoText>
+        </SUserInfoWrapper>
+        <SButtonWrapper>
+          <SBookmarkButton
+            isBookmarked={isBookmarked}
+            onClick={isBookmarked ? onDeleteBookmark : onAddBookmark}
+          ></SBookmarkButton>
+          <SHoneyTipButton
+            isHoneyTip={target.is_honey_tip}
+            onClick={target.is_honey_tip ? onDislikeQna : onLikeQna}
+          >
+            {target.honey_tip}
+          </SHoneyTipButton>
+        </SButtonWrapper>
+      </SUserInfo>
+      <SContent>
+        <SContentTitle>{target.title}</SContentTitle>
+        <SContentText>
+          <ToastViewer content={target.content} />
+        </SContentText>
+        <STags>
+          {target.tag?.map((data, i) => {
+            return <STag key={i}>{data}</STag>;
+          })}
+        </STags>
+      </SContent>
     </SQnaTarget>
   );
 };
+
 export default QnaTarget;
 
-const SQnaTarget = styled.div`
-  & .ql-snow .ql-editor {
-    background-color: white;
-  }
-  & .ql-snow .ql-editor pre.ql-syntax {
-    padding: 20px;
-  }
+const SQnaTarget = styled.div``;
+
+const SButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonBackground = styled.button`
+  background-repeat: no-repeat;
+  border: none;
+  background-color: transparent;
+`;
+
+const SBookmarkButton = styled(ButtonBackground)`
+  background-position: center center;
+  width: 24px;
+  height: 24px;
+  background-size: 100%;
+  margin-right: 20px;
+  background-image: url(${props =>
+    props.isBookmarked ? BookmarkFillIcon : BookmarkNoFillIcon});
+`;
+
+const SHoneyTipButton = styled(ButtonBackground)`
+  padding-right: 24px;
+  background-position: right center;
+  background-size: 16px 16px;
+  background-image: url(${props => (props.isHoneyTip ? QnaLikeFill : QnaLike)});
+  color: ${props => props.theme.color.grey7};
+  font-size: 16px;
+`;
+
+const SUserInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const SUserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 20px 30px 40px;
+  border-bottom: 1px solid ${props => props.theme.color.grey5};
+`;
+
+const SUserProfile = styled.div`
+  width: 44px;
+  height: 44px;
+  background-image: url(${props => props.profile});
+  background-size: cover;
+  border-radius: 50%;
+`;
+
+const SUserInfoText = styled.div`
+  margin-left: 10px;
+`;
+
+const SUserName = styled.div`
+  margin-bottom: 2px;
+`;
+
+const SCreateAt = styled.div`
+  color: ${props => props.theme.color.grey6};
+`;
+
+const SContent = styled.div`
+  padding: 0 20px 0 40px;
+  border-bottom: 1px solid ${props => props.theme.color.grey5};
+`;
+
+const SContentTitle = styled.div`
+  font-size: 22px;
+  font-weight: 400;
+  padding: 30px 0;
+`;
+
+const SContentText = styled.div`
+  padding-bottom: 30px;
+`;
+
+const STags = styled.ul`
+  display: flex;
+  margin-bottom: 14px;
+`;
+
+const STag = styled.li`
+  padding: 10px 18px;
+  border: 1px solid ${props => props.theme.color.mainGreen};
+  border-radius: 30px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  color: ${props => props.theme.color.mainGreen};
+  font-weight: 600;
 `;

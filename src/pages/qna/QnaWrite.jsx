@@ -4,18 +4,23 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import BookmarkList from "../../components/bookmark/BookmarkList";
 import styled from "styled-components";
-import ModalBookmark from "./../../components/common/ModalBookmark";
+import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
+import ModalBookmark from "../../components/common/ModalBookmark";
+import { useDispatch } from "react-redux";
+import { colorSetGreen } from "../../redux/modules/userSlice";
 
 const QnaWrite = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(colorSetGreen());
+  }, []);
+
   return (
     <SQnaWrite>
       <SEditor>
-        <h2 className="title">질문글 업로드</h2>
+        <h2 className="title">새 질문 작성하기</h2>
         <Editor className="editor" isWrite={true} />
       </SEditor>
-      {/* <SBookmark>
-        <BookmarkList />
-      </SBookmark> */}
       <ModalBookmark isWrite={true} />
     </SQnaWrite>
   );
@@ -30,19 +35,17 @@ const SQnaWrite = styled.div`
 `;
 
 const SEditor = styled.div`
-  margin-left: 100px;
-  margin-right: 170px;
+  margin-left: 200px;
+  margin-right: 200px;
   flex: 1;
   & .title {
-    margin-top: 67px;
-    margin-bottom: 41px;
-    font-size: 36px;
-    font-weight: 400;
+    margin-top: 40px;
+    margin-bottom: 50px;
+    font-size: 30px;
+    font-weight: 600;
+    background-image: url(${QnaWriteIcon});
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 38px;
   }
-`;
-
-const SBookmark = styled.div`
-  width: 35%;
-  background-color: #1c2030;
-  position: relative;
 `;
