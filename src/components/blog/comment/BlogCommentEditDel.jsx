@@ -70,5 +70,7 @@ const CommentEditDel = ({ comments }) => {
   );
 };
 
-const SCommentList = styled.div``;
+const SCommentList = styled.div`
+
+`;
 export default CommentEditDel;
