@@ -15,15 +15,15 @@ export const qnaApi = {
   //게시글 즐겨찾기 조회
   getBookmarkList: () => instance.get("/qna/bookmark?page_count=10&page=0"),
   //게시글 즐겨찾기 추가
-  postBookmarkList: data => instance.post(`/qna/${data.qna_id}/bookmark`),
+  postBookmarkList: data => instance.post(`/qna/${data.id}/bookmark`),
   //게시글 즐겨찾기 삭제
-  deleteBookmarkList: data => instance.delete(`/qna/${data.qna_id}/bookmark`),
+  deleteBookmarkList: data => instance.delete(`/qna/${data.id}/bookmark`),
   //게시글 추천목록 조회
   getQnaLikeList: () => instance.get(`qna/like`),
   //게시글 추천
-  likeQnaList: data => instance.post(`qna/${data.qna_id}/like`),
+  likeQnaList: data => instance.post(`qna/${data.id}/like`),
   //게시글 추천 취소
-  dislikeQnaList: data => instance.delete(`qna/${data.qna_id}/like`),
+  dislikeQnaList: data => instance.delete(`qna/${data.id}/like`),
   //댓글 조회
   getCommentList: id =>
     instance.get(`/qna/${id}/comments?page_count=10&page=0`),

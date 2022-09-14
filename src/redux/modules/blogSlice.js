@@ -11,6 +11,7 @@ import {
   getMyBlogDB,
   getBlogBookMarkDB,
   getHotBlogDB,
+  postBlogLikeDB,
 } from "../async/blog";
 export const blogSlice = createSlice({
   name: "blog",
@@ -206,6 +207,9 @@ export const blogSlice = createSlice({
     },
     [postBlogLikeDB.fulfilled]: (state, action) => {
       state.blogDetail = action.payload;
+    },
+    [postBlogLikeDB.rejected]: (state, action) => {
+      state.errorMessage = action.payload.errorMessage;
     },
   },
 });

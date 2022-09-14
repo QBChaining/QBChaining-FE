@@ -48,7 +48,9 @@ const Editor = ({
   const [tags, setTags] = useState([]);
   const location = window.location.pathname;
 
-  const { isLogin, userName, color } = useSelector(state => state.userSlice);
+  const { isLogin, userName, userProfile } = useSelector(
+    state => state.userSlice,
+  );
 
   // const selectLocalImage = () => {
   //   const input = document.createElement("input");
@@ -148,7 +150,7 @@ const Editor = ({
           id: parseInt(id),
           honey_tip: 0,
           user_name: userName,
-          // profile_img:
+          profile_img: userProfile,
         }),
       );
       //작성 후 입력 값 초기화

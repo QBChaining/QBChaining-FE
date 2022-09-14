@@ -27,6 +27,11 @@ const QnaMain = () => {
     dispatch(colorSetGreen());
   }, []);
 
+  // const [pageNumber, setPageNumber] = useState(1);
+  // const getList = async () => {
+  //   await axios.get("http://54.180.25.241/api/qna");
+  // };
+
   return (
     <SQnaMain>
       <SHeader>

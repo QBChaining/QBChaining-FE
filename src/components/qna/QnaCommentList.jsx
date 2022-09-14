@@ -9,6 +9,7 @@ import QnaLike from "../../assets/images/QnaLike.png";
 import QnaLikeFill from "../../assets/images/QnaLikeFill.png";
 import WinnerCrown from "../../assets/images/WinnerCrown.png";
 import ToastViewer from "./../editor/ToastViewer";
+import { useNavigate } from "react-router-dom";
 import {
   choiceCommentListDB,
   deleteCommentListDB,
@@ -18,12 +19,15 @@ import {
   dislikeCommentListDB,
 } from "./../../redux/async/qna";
 
-const QnaCommentList = ({ author, resolve, id, qnaId }) => {
+const QnaCommentList = ({ id, qnaId }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [winner, setWinner] = useState([]);
   //commentList 구독
   const list = useSelector(state => state.qnaSlice.commentList);
+  const target = useSelector(state => state.qnaSlice.qnaTarget);
+
   const { isLogin } = useSelector(state => state.userSlice);
   //로그인 유저 이름 구독
   const userName = useSelector(state => state.userSlice.userName);
@@ -55,7 +59,8 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
     dispatch(dislikeCommentListDB(id));
   };
 
-  const onChoiceHandler = id => {
+  const onChoiceHandler = (e, id) => {
+    e.stopPropagation();
     Swal.fire({
       title: "채택 하시겠습니까?",
       icon: "warning",
@@ -73,8 +78,11 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
 
   useEffect(() => {
     setWinner(list.find(data => data.is_choose));
-    // setWinner()
   }, [list]);
+
+  const goMypage = username => {
+    navigate(`/mypage/${username}`);
+  };
 
   return (
     <SQnaCommentList>
@@ -82,12 +90,16 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
         {winner && (
           <SItemWrapper id={winner.id}>
             <SUserInfo>
-              <SWinnerUserInfo>
+              <SWinnerUserInfo
+                onClick={() => {
+                  goMypage(winner.user_name);
+                }}
+              >
                 <SUserProfile profile={winner.profile_img} />
                 <SUserInfoText>
                   <SUserNameWrapper>
                     <SUserName winner={true}>{winner.user_name}</SUserName>
-                    {resolve && <SWinnerButton>채택</SWinnerButton>}
+                    {target.is_resolve && <SWinnerButton>채택</SWinnerButton>}
                   </SUserNameWrapper>
                   <SCreateAt winner={true}>{winner.createdAt}</SCreateAt>
                 </SUserInfoText>
@@ -117,16 +129,20 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
         {list.map(data => (
           <SItemWrapper key={data.id}>
             <SUserInfo>
-              <SUserInfoWrapper>
+              <SUserInfoWrapper
+                onClick={() => {
+                  goMypage(data.user_name);
+                }}
+              >
                 <SUserProfile profile={data.profile_img} />
 
                 <SUserInfoText>
                   <SUserNameWrapper>
                     <SUserName>{data.user_name}</SUserName>
-                    {!resolve && (
+                    {!target.is_resolve && (
                       <SChoiceButton
-                        onClick={() => {
-                          onChoiceHandler(data.id);
+                        onClick={e => {
+                          onChoiceHandler(e, data.id);
                         }}
                       >
                         채택
@@ -172,6 +188,7 @@ const SItemWrapper = styled.div``;
 const SUserInfoWrapper = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const SUserInfo = styled.div`

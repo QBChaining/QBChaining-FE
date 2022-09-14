@@ -179,8 +179,9 @@ export const postCommentListDB = createAsyncThunk(
       if (response.data.success === true) {
         successAlert("정상적으로 추가 되었습니다.");
         response.data.data.honey_tip = 0;
-        response.data.data.user_name = data.user_name;
         response.data.data.is_choose = false;
+        response.data.data.user_name = data.user_name;
+        response.data.data.profile_img = data.profile_img;
         return response.data.data;
       }
     } catch (err) {
@@ -314,7 +315,7 @@ export const deleteBookmarkListDB = createAsyncThunk(
       const response = await qnaApi.deleteBookmarkList(data);
       if (response.data.success === true) {
         successAlert("정상적으로 즐겨찾기 삭제 되었습니다.");
-        return data.qna_id;
+        return data.id;
       }
     } catch (err) {
       networkError();

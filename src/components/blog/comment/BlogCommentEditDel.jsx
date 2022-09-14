@@ -4,9 +4,10 @@ import {
   patchBlogCommentDB,
   deleteBlogCommentDB,
 } from "../../../redux/async/blog";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const CommentEditDel = ({ comments }) => {
+  // console.log(user);
   const [show, setShow] = useState(false);
   const editRef = useRef();
 
@@ -36,6 +37,7 @@ const CommentEditDel = ({ comments }) => {
           <div>홍길동</div>
           <div>👍</div>
           <small>{comments.comment}</small>
+
           <div>
             <button
               type="button"
@@ -70,7 +72,5 @@ const CommentEditDel = ({ comments }) => {
   );
 };
 
-const SCommentList = styled.div`
-
-`;
+const SCommentList = styled.div``;
 export default CommentEditDel;

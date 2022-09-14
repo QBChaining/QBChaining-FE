@@ -45,7 +45,6 @@ const BlogCommmunityMain = () => {
       <SBody>
         <SListGroup>
           {blogMainLists?.map(posts => {
-            const tagList = posts.tag.slice(0, 2);
             return (
               <SBloglist data={posts} key={posts.id}>
                 <SContentsGroup>
@@ -68,7 +67,7 @@ const BlogCommmunityMain = () => {
                   </div>
                   <STagNMark>
                     <STagList>
-                      {tagList?.map(tags => {
+                      {posts.tag?.map(tags => {
                         return (
                           <div key={tags.id}>
                             <STag>{tags}</STag>
@@ -120,7 +119,7 @@ const STopBox = styled.div`
   }
 `;
 const SRecommend = styled.div`
-  width: 1020px;
+  min-width: 1020px;
   height: 300px;
 
   background: #ffffff;
@@ -130,7 +129,7 @@ const SRecommend = styled.div`
 `;
 const STopHelper = styled.div`
   width: 100%;
-  max-width: 420px;
+  min-width: 420px;
   height: 300px;
   display: flex;
   flex-direction: column;
@@ -157,7 +156,7 @@ const SListGroup = styled.div`
   flex-wrap: wrap;
   /* align-items: center; */
   justify-content: center;
-  max-width: 1492px;
+  min-width: 1492px;
 `;
 const SBloglist = styled.div`
   width: 342px;
@@ -202,6 +201,7 @@ const STag = styled.div`
 `;
 const SBookMark = styled.div`
   display: flex;
+  margin-top: 20px;
 `;
 
 const SContentsGroup = styled.div`

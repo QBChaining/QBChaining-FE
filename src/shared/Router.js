@@ -14,7 +14,7 @@ import BlogWrite from "../pages/blog/BlogCommunityWrite";
 import BlogEdit from "../pages/blog/BlogCommentEdit";
 import { useSelector } from "react-redux";
 import NoLogin from "../pages/NoLogin";
-import Search from "../pages/Search";
+import Search from "../pages/search/Search";
 
 const Router = () => {
   const { isLogin } = useSelector(state => state.userSlice);
