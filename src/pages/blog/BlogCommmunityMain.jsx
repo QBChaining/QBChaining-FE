@@ -99,7 +99,6 @@ const SBody = styled.div`
 //탑박스
 const STopBox = styled.div`
   width: 100%;
-
   position: relative;
   display: flex;
   flex-direction: row;
