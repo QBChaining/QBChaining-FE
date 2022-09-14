@@ -275,6 +275,10 @@ const qnaSlice = createSlice({
     },
     //댓글 채택
     [choiceCommentListDB.fulfilled]: (state, { payload }) => {
+      const idx = state.commentList.findIndex(data => {
+        return data.id === payload.id;
+      });
+      state.commentList[idx].is_choose = true;
       state.qnaTarget.is_resolve = true;
       state.isFetching = false;
       state.errorMessage = null;

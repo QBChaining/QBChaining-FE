@@ -45,13 +45,15 @@ const QnaList = ({ data }) => {
 
   const time = timeForToday(data.createdAt);
 
+  console.log(data);
+
   return (
     <StextMain ResolveWrapper={ResolveWrapper}>
       <SWrapper resolve={data.is_resolve} ResolveWrapper={ResolveWrapper}>
         <SUserInfo>
           <SProfileContainer>
-            <SProfile profile={data.user.profile_img}></SProfile>
-            <SUserName>{data.user?.user_name}</SUserName>
+            <SProfile profile={data.profile_img}></SProfile>
+            <SUserName>{data.user_name}</SUserName>
             <SCreatedAt>{time}</SCreatedAt>
           </SProfileContainer>
           <SCategoryContainer>

@@ -17,6 +17,7 @@ const QnaDetail = () => {
 
   const target = useSelector(state => state.qnaSlice.qnaTarget);
 
+  console.log(target);
   useEffect(() => {
     dispatch(getOneQnaListDB(id));
     dispatch(colorSetGreen());

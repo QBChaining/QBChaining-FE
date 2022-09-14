@@ -9,6 +9,7 @@ import QnaLike from "../../assets/images/QnaLike.png";
 import QnaLikeFill from "../../assets/images/QnaLikeFill.png";
 import WinnerCrown from "../../assets/images/WinnerCrown.png";
 import ToastViewer from "./../editor/ToastViewer";
+import { useNavigate } from "react-router-dom";
 import {
   choiceCommentListDB,
   deleteCommentListDB,
@@ -20,6 +21,7 @@ import {
 
 const QnaCommentList = ({ author, resolve, id, qnaId }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [winner, setWinner] = useState([]);
   //commentList 구독
@@ -31,7 +33,7 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
   useEffect(() => {
     dispatch(getCommentListDB(id));
   }, [id]);
-
+  console.log(list);
   //코멘트 삭제 dispatch
   const onDeleteHandler = id => {
     if (!isLogin) {
@@ -55,7 +57,8 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
     dispatch(dislikeCommentListDB(id));
   };
 
-  const onChoiceHandler = id => {
+  const onChoiceHandler = (e, id) => {
+    e.stopPropagation();
     Swal.fire({
       title: "채택 하시겠습니까?",
       icon: "warning",
@@ -76,13 +79,21 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
     // setWinner()
   }, [list]);
 
+  const goMypage = username => {
+    navigate(`/mypage/${username}`);
+  };
+
   return (
     <SQnaCommentList>
       <SCommentWrapper>
         {winner && (
           <SItemWrapper id={winner.id}>
             <SUserInfo>
-              <SWinnerUserInfo>
+              <SWinnerUserInfo
+                onClick={() => {
+                  goMypage(winner.user_name);
+                }}
+              >
                 <SUserProfile profile={winner.profile_img} />
                 <SUserInfoText>
                   <SUserNameWrapper>
@@ -117,7 +128,11 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
         {list.map(data => (
           <SItemWrapper key={data.id}>
             <SUserInfo>
-              <SUserInfoWrapper>
+              <SUserInfoWrapper
+                onClick={() => {
+                  goMypage(data.user_name);
+                }}
+              >
                 <SUserProfile profile={data.profile_img} />
 
                 <SUserInfoText>
@@ -125,8 +140,8 @@ const QnaCommentList = ({ author, resolve, id, qnaId }) => {
                     <SUserName>{data.user_name}</SUserName>
                     {!resolve && (
                       <SChoiceButton
-                        onClick={() => {
-                          onChoiceHandler(data.id);
+                        onClick={e => {
+                          onChoiceHandler(e, data.id);
                         }}
                       >
                         채택
@@ -172,6 +187,7 @@ const SItemWrapper = styled.div``;
 const SUserInfoWrapper = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const SUserInfo = styled.div`

@@ -70,20 +70,18 @@ const QnaTarget = ({ data, isDatail }) => {
     }
   }, []);
 
-  console.log(data);
-
   return (
     <SQnaTarget>
       <SUserInfo>
         <SUserInfoWrapper
           onClick={() => {
-            navigate(`/mypage/${data.user?.user_name}`);
+            navigate(`/mypage/${data.user_name}`);
           }}
         >
-          <SUserProfile profile={data.user?.profile_img} />
+          <SUserProfile profile={data.profile_img} />
           <SUserInfoText>
-            <SUserName>{data.user?.user_name}</SUserName>
-            <SCreateAt>{data.user?.createdAt}</SCreateAt>
+            <SUserName>{data.user_name}</SUserName>
+            <SCreateAt>{data.createdAt}</SCreateAt>
           </SUserInfoText>
         </SUserInfoWrapper>
         <SButtonWrapper>
