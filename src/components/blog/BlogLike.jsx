@@ -1,48 +1,66 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { postBlogLikeDB, unBlogLikeDB } from "../../redux/async/blog";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  postBlogLikeDB,
+  unBlogLikeDB,
+  // getBlogDetailDB,
+} from "../../redux/async/blog";
 import { useParams } from "react-router-dom";
-const BlogLike = ({ data }) => {
-  // 내일 할 일
-  // response props로 받아서 버튼 삼항연산자로 표현하기
-  // 즐겨찾기, 마이블로그 다 끝내기!
+import addlike from "../../assets/images/addLike.png";
+import unlike from "../../assets/images/unlike.png";
+import styled from "styled-components";
+import { errorAlert, needLoginAlert } from "../../utils/swal";
+const BlogLike = ({ islike }) => {
+  const { isLogin } = useSelector(state => state.userSlice);
+  const [like, setLike] = useState(`${islike}`);
+
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [Like, setLike] = useState(false);
+  // const [Like, setLike] = useState(false);
 
-  const onClickHandler = () => {
+  const onLikeBlog = () => {
+    if (!isLogin) {
+      needLoginAlert();
+      return;
+    }
     dispatch(postBlogLikeDB(id));
+    // setLike(`${islike}`);
   };
 
-  const onUnHandler = () => {
+  const onUnLikeBlog = () => {
     dispatch(unBlogLikeDB(id));
+    // setLike(`${islike}`);
   };
 
   return (
     <div>
-      {Like === true ? (
-        <button
-          type="button"
-          onClick={() => {
-            onClickHandler();
-            setLike(!Like);
-          }}
-        >
-          🤍
-        </button>
+      {islike === false ? (
+        <>
+          <UnLike onClick={onLikeBlog} />
+        </>
       ) : (
-        <button
-          type="button"
-          onClick={() => {
-            onUnHandler();
-            setLike(!Like);
-          }}
-        >
-          ❤️
-        </button>
+        <>
+          <AddLike onClick={onUnLikeBlog} />
+        </>
       )}
     </div>
   );
 };
+const AddLike = styled.div`
+  width: 18px;
+  height: 18px;
 
+  background-position: center;
+  background-size: cover;
+  background-image: url(${addlike});
+  cursor: pointer;
+`;
+const UnLike = styled.div`
+  width: 18px;
+  height: 18px;
+  background-position: center;
+  background-size: cover;
+  background-image: url(${unlike});
+  cursor: pointer;
+`;
 export default BlogLike;

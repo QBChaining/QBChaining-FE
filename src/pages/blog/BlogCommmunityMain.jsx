@@ -8,15 +8,18 @@ import BlogBookMark from "../../components/blog/BlogBookMark";
 import react from "../../assets/images/icon/react.png";
 import BlogHotList from "../../components/blog/BlogHotList";
 import blogplus from "../../assets/images/blogplus.png";
+import ModalBookmark from "../../components/common/ModalBookmark";
+import { colorSetBlue } from "../../redux/modules/userSlice";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
-  console.log("태그", blogMainLists);
+  console.log("블로그전체", blogMainLists);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //메인 블로그 게시글 조회
   useEffect(() => {
     dispatch(getBlogCommunityListDB());
+    dispatch(colorSetBlue());
   }, [dispatch]);
 
   return (
@@ -42,7 +45,6 @@ const BlogCommmunityMain = () => {
       <SBody>
         <SListGroup>
           {blogMainLists?.map(posts => {
-            const tagList = posts.tag.slice(0, 2);
             return (
               <SBloglist data={posts} key={posts.id}>
                 <SContentsGroup>
@@ -56,6 +58,7 @@ const BlogCommmunityMain = () => {
                       <div className="title">{posts.title}</div>
                     </SPTitleBox>
                     <SContent>
+                      {/* {posts.content} */}
                       <ToastViewer
                         className="content1"
                         content={posts.content}
@@ -63,18 +66,18 @@ const BlogCommmunityMain = () => {
                     </SContent>
                   </div>
                   <STagNMark>
-                    <div>
-                      {tagList?.map(tags => {
+                    <STagList>
+                      {posts.tag?.map(tags => {
                         return (
-                          <STags key={tags.id}>
+                          <div key={tags.id}>
                             <STag>{tags}</STag>
-                          </STags>
+                          </div>
                         );
                       })}
-                    </div>
-                    <div>
-                      <BlogBookMark />
-                    </div>
+                    </STagList>
+                    <SBookMark>
+                      <BlogBookMark isbookmark={posts.is_bookmark} />
+                    </SBookMark>
                   </STagNMark>
                 </SContentsGroup>
               </SBloglist>
@@ -82,6 +85,7 @@ const BlogCommmunityMain = () => {
           })}
         </SListGroup>
       </SBody>
+      <ModalBookmark />
     </div>
   );
 };
@@ -94,7 +98,7 @@ const SBody = styled.div`
 //탑박스
 const STopBox = styled.div`
   width: 100%;
-  max-width: 1920px;
+
   position: relative;
   display: flex;
   flex-direction: row;
@@ -115,7 +119,7 @@ const STopBox = styled.div`
   }
 `;
 const SRecommend = styled.div`
-  width: 1020px;
+  min-width: 1020px;
   height: 300px;
 
   background: #ffffff;
@@ -125,7 +129,7 @@ const SRecommend = styled.div`
 `;
 const STopHelper = styled.div`
   width: 100%;
-  max-width: 420px;
+  min-width: 420px;
   height: 300px;
   display: flex;
   flex-direction: column;
@@ -152,7 +156,7 @@ const SListGroup = styled.div`
   flex-wrap: wrap;
   /* align-items: center; */
   justify-content: center;
-  max-width: 1492px;
+  min-width: 1492px;
 `;
 const SBloglist = styled.div`
   width: 342px;
@@ -165,8 +169,10 @@ const SBloglist = styled.div`
 `;
 
 const SContent = styled.div`
-  width: 283;
+  width: 283px;
   height: 101px;
+  overflow: hidden;
+  /* border-radius: 30px; */
   & .content1 {
     font-weight: 400;
     font-size: 18px;
@@ -174,6 +180,10 @@ const SContent = styled.div`
 
     /* font-color: #9c9c9c; */
   }
+`;
+const STagList = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 const STag = styled.div`
   display: flex;
@@ -185,19 +195,15 @@ const STag = styled.div`
   color: #ffffff;
   width: 108px;
   height: 39px;
-  margin-right: 15px;
+  /* margin-right: 15px; */
   background: #c0c0c0;
   border-radius: 30px;
 `;
-
-const STags = styled.div`
+const SBookMark = styled.div`
   display: flex;
-  flex-direction: row;
-  /* flex-wrap: wrap; */
-  width: 200px;
-  height: 30px;
-  margin: 20px 5px 10px 5px;
+  margin-top: 20px;
 `;
+
 const SContentsGroup = styled.div`
   display: flex;
   flex-direction: column;
@@ -234,9 +240,7 @@ const SPlus = styled.div`
 
 const STagNMark = styled.div`
   display: flex;
-  /* flex-direction: row; */
-  justify-content: space-between;
-  width: 100%;
+  flex-direction: row;
   max-width: 300px;
   height: 100px;
 `;

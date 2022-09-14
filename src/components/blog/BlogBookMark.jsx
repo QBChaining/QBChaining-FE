@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import blogbookmark from "../../assets/images/blogbookmark.png";
 import blogbookmarkadd from "../../assets/images/bookmarkadd.png";
-const BlogBookMark = () => {
+const BlogBookMark = ({ isbookmark }) => {
+  console.log(isbookmark);
   //북마크 새로고침 상태유지를 위한 useSeloctor
   // const is_bookmark = useSelector(state => state.blogSlice.blogList);
   const blogDetailBookMark = useSelector(state => state.blogSlice.blogList);
@@ -29,14 +30,14 @@ const BlogBookMark = () => {
   };
   return (
     <div>
-      {mark === false ? (
-        <div type="button" onClick={onAddBookMark}>
-          <SBookMarkBtn />
-        </div>
+      {isbookmark === false ? (
+        <>
+          <SbookMarkBtnAdd onClick={onAddBookMark} />
+        </>
       ) : (
-        <div type="button" onClick={onDeleteBookMark}>
-          <SbookMarkBtnAdd />
-        </div>
+        <>
+          <SBookMarkBtn onClick={onDeleteBookMark} />
+        </>
       )}
     </div>
   );

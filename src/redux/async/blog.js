@@ -80,10 +80,8 @@ export const patchBlogCommunityDB = createAsyncThunk(
 export const deleteBlogCommunityDB = createAsyncThunk(
   "BLOG_DELETE",
   async (id, thunkAPI) => {
-    console.log(id);
     try {
       const response = await blogApi.deleteBlogCommunity(id);
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -113,10 +111,8 @@ export const getBlogCommentListDB = createAsyncThunk(
 export const postBlogCommentDB = createAsyncThunk(
   "POST_BLOG_COMMENTLIST",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await blogApi.postBlogComment(data);
-      console.log("댓글추가", response);
       if (response.data.success === true) {
         successAlert("정상적으로 추가 되었습니다.");
         return response.data;
@@ -132,7 +128,6 @@ export const postBlogCommentDB = createAsyncThunk(
 export const patchBlogCommentDB = createAsyncThunk(
   "PATCH_BLOG_COMMENTLIST",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await blogApi.patchBlogComment(data);
       if (response.data.success === true) {
@@ -180,8 +175,8 @@ export const postBlogLikeDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.postBlogLike(id);
+      console.log(response);
       if (response.data.success === true) {
-        console.log(response.data.success);
         successAlert("좋아요를 누르셨습니다.");
         return response;
       }
@@ -197,7 +192,6 @@ export const unBlogLikeDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.unBlogLike(id);
-      console.log(response);
       successAlert("좋아요가 취소 되었습니다.");
     } catch (err) {}
   },
@@ -249,7 +243,6 @@ export const deleteBlogBookMarkDB = createAsyncThunk(
 export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
   try {
     const response = await blogApi.getHotBlog();
-    console.log("추천 많이 받은 게시판", response);
     return response.data.data;
   } catch (err) {}
 });

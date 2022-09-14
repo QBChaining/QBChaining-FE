@@ -1,4 +1,4 @@
-import REACT, { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getBlogBookMarkDB } from "../../redux/async/blog";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,9 +7,6 @@ const BlogBookMarkList = () => {
   const bookMarkList = useSelector(state => state.blogSlice.blogBookMark);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useParams();
-
-  console.log(bookMarkList);
 
   useEffect(() => {
     dispatch(getBlogBookMarkDB());

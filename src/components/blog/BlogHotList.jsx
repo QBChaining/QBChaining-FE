@@ -6,7 +6,6 @@ import unlike from "../../assets/images/unlike.png";
 const BlogHotList = () => {
   const hotcommunits = useSelector(state => state.blogSlice.hotBlog);
   const hotcommunity = hotcommunits.slice(0, 4);
-  console.log("최근", hotcommunity);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,7 +14,7 @@ const BlogHotList = () => {
   return (
     <div>
       <SHotTitle>최근에 추천 많이 받은 게시글 🔥</SHotTitle>
-      {hotcommunity.map(hot => {
+      {hotcommunity?.map(hot => {
         return (
           <div key={hot.id}>
             <STitle>

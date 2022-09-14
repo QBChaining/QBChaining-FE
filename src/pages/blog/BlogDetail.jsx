@@ -7,10 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { getBlogDetailDB } from "../../redux/async/blog";
 import { useParams } from "react-router-dom";
 import { deleteBlogCommunityDB } from "../../redux/async/blog";
+import ModalBookmark from "../../components/common/ModalBookmark";
 import ToastViewer from "./../../components/editor/ToastViewer";
 import BlogLike from "../../components/blog/BlogLike";
 import BlogBookMark from "../../components/blog/BlogBookMark";
-import BlogBookMarkList from "../../components/blog/BlogBookMarkList";
+import profiletest from "../../assets/images/profiletest.png";
+
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
   console.log("detail", response);
@@ -28,78 +30,158 @@ const BlogCommunityDetail = () => {
 
   return (
     <SContainer>
-      <STitleSection>
-        <STitle>개발자 언어란 무엇일까?</STitle>
-        <SProfileNickNameDate>
-          <SNickName>{response.user_name?.user_name}</SNickName>
-          <SDate></SDate>
-        </SProfileNickNameDate>
-      </STitleSection>
-      <STopBox>
-        <div>
-          <div>{response?.title}</div>
-          <ToastViewer content={response.content} />
-          {/* <div>{response?.content}</div> */}
-          <div>{response?.createdAt}</div>
-          <div
-            onClick={() => {
-              navigate(`/blog/my/${id}}`);
-            }}
-          >
-            <SProfile>
-              <div>프로필사진</div>
-            </SProfile>
+      {response?.map(detail => {
+        return (
+          <div isLike={response.is_like} key={detail.id}>
+            <STitleSection>
+              <div className="bookMark">
+                <BlogBookMark />
+                <STitle>{detail.title}</STitle>
+              </div>
+              <SProfileNickNameDate>
+                <SDate>
+                  <div className="name">{detail.user_name?.user_name}</div>
+                  <div className="date">
+                    {detail.created_at?.slice(0, 10)} /{" "}
+                    {detail.created_at?.slice(11, 16)}
+                  </div>
+                </SDate>
+                <Sprofile />
+              </SProfileNickNameDate>
+            </STitleSection>
+            <ButtonGroup>
+              <div
+                className="editbtn"
+                type="button"
+                onClick={() => {
+                  navigate(`/blog/edit/${id}`);
+                }}
+              >
+                수정
+              </div>
+              <div>|</div>
+              <div
+                className="delbtn"
+                type="button"
+                onClick={id => {
+                  navigate("/blog");
+                  deleteBlogPost(id);
+                }}
+              >
+                삭제
+              </div>
+            </ButtonGroup>
+            <SContents>
+              <ToastViewer className="content1" content={detail.content} />
+            </SContents>
+            <SLikeNtags>
+              <div className="tagList">
+                {detail.tag.map(tags => {
+                  return (
+                    <STag>
+                      <div>{tags}</div>
+                    </STag>
+                  );
+                })}
+              </div>
+              <BlogLike
+                islike={detail.is_like}
+                isbookmark={detail.is_bookmark}
+              />
+            </SLikeNtags>
           </div>
-        </div>
-        <button
-          type="button"
-          onClick={() => {
-            navigate(`/blog/edit/${id}`);
-          }}
-        >
-          블로그게시글수정
-        </button>
-        <button
-          type="button"
-          onClick={id => {
-            navigate("/blog");
-            deleteBlogPost(id);
-          }}
-        >
-          삭제하기
-        </button>
-        <BlogLike />
-        <BlogBookMark />
-        <div>
-          <CommentAdd />
-          <CommentList />
-        </div>
-      </STopBox>
-      <BlogBookMarkList />
+        );
+      })}
+
+      <div>
+        <CommentAdd />
+        <CommentList />
+      </div>
+      <ModalBookmark isWrite={true} />
     </SContainer>
   );
 };
-const SContainer = styled.form``;
-const SProfileNickNameDate = styled.div``;
+const SContainer = styled.form`
+  max-width: 1220px;
+`;
 const SNickName = styled.div``;
-const SDate = styled.div``;
+const ButtonGroup = styled.div`
+  float: right;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  margin: 20px 40px 0px 0px;
+  font-size: 16px;
+  color: #7a7a7a;
+  & .editbtn {
+    cursor: pointer;
+  }
+  & .delbtn {
+    cursor: pointer;
+  }
+`;
 const STitleSection = styled.div`
-  background-color: green;
+  display: flex;
+  justify-content: space-between;
   width: 1220px;
   border-bottom: 1px solid #939393;
+  & .bookMark {
+    display: flex;
+    flex-direction: row;
+  }
 `;
 const STitle = styled.div`
   font-size: 24px;
   font-weight: 600;
 `;
-const STopBox = styled.div`
-  border: 1px solid black;
+
+const SProfileNickNameDate = styled.div`
+  display: flex;
 `;
-const SProfile = styled.div`
-  background-color: lightgray;
-  width: 30px;
-  height: 30px;
-  border-radius: 20px;
-  border: 0.1px solid white;
+const SDate = styled.div`
+  & .name {
+    font-size: 18px;
+    margin-left: 50px;
+  }
+  & .date {
+    font-size: 14px;
+    color: #939393;
+  }
 `;
+
+const Sprofile = styled.div`
+  background-position: center;
+  background-size: cover;
+  background-image: url(${profiletest});
+  margin-left: 14px;
+  width: 44px;
+  height: 44px;
+`;
+
+const SContents = styled.div`
+  margin: 20px 0px 0px 40px;
+`;
+const SLikeNtags = styled.div`
+  & .tagList {
+    display: flex;
+    flex-direction: row;
+  }
+`;
+
+const STag = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #2776ed;
+  width: 108px;
+  height: 39px;
+  margin-right: 15px;
+  border: 1px solid #2776ed;
+  border-radius: 30px;
+  margin: 40px 16px 20.2px 0px;
+`;
+
 export default BlogCommunityDetail;

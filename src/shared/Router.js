@@ -12,7 +12,6 @@ import Register from "./../pages/register/Register";
 import Login from "../pages/register/Login";
 import BlogWrite from "../pages/blog/BlogCommunityWrite";
 import BlogEdit from "../pages/blog/BlogCommentEdit";
-import BlogMy from "../pages/blog/BlogMy";
 import { useSelector } from "react-redux";
 import NoLogin from "../pages/NoLogin";
 import Search from "../pages/search/Search";
@@ -48,7 +47,6 @@ const Router = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/blog/detail/:id" element={<BlogDetail />} />
-      <Route path="/blog/my/:id" element={<BlogMy />} />
     </Routes>
   );
 };
