@@ -2,12 +2,20 @@ import React, { useRef } from "react";
 import SearchIcon from "../../assets/images/SearchIcon.png";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  getBlogSearchListDB,
+  getQnaSearchListDB,
+} from "./../../redux/async/search";
 
 const SearchInput = () => {
   const search = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const goSearch = () => {
     navigate(`/search?q=${search.current.value}`);
+    dispatch(getQnaSearchListDB(search.current.value));
+    dispatch(getBlogSearchListDB(search.current.value));
     search.current.value = "";
   };
 

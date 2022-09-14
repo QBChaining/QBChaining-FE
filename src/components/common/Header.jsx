@@ -30,53 +30,52 @@ const Header = () => {
 
   return (
     <SHeader location={location}>
-      <div
-        className="logoContainer"
+      <SLogoContainer
         onClick={() => {
           navigate("/");
         }}
       >
-        <div className="logoImage"></div>
-        <h1>CHAINING</h1>
-      </div>
-      <nav>
-        <ul>
-          <li
+        <SLogoImage />
+        <STitle>CHAINING</STitle>
+      </SLogoContainer>
+      <SNav>
+        <SNavInner>
+          <SNavItem
             onClick={() => {
               navigate("/mypage");
             }}
           >
             마이페이지
-          </li>
-          <li
+          </SNavItem>
+          <SNavItem
             onClick={() => {
               navigate("/ranking");
             }}
           >
             랭킹
-          </li>
-          <li
+          </SNavItem>
+          <SNavItem
             onClick={() => {
               navigate("/qna");
             }}
           >
             QNA
-          </li>
-          <li
+          </SNavItem>
+          <SNavItem
             onClick={() => {
               navigate("/blog");
             }}
           >
             블로그
-          </li>
-        </ul>
-      </nav>
+          </SNavItem>
+        </SNavInner>
+      </SNav>
       <SearchInput />
-      <div className="alarmLoginWrapper">
-        <div className="alarmConatainer active">
+      <SAlarmLoginWrapper>
+        <SAlarmConatainer className="alarmConatainer active">
           <HiOutlineBell />
-        </div>
-        <div className="loginConatainer">
+        </SAlarmConatainer>
+        <SLoginConatainer className="loginConatainer">
           {isLogin ? (
             <button onClick={onLogoutHandler}>로그아웃</button>
           ) : (
@@ -84,8 +83,8 @@ const Header = () => {
             <a href={process.env.REACT_APP_ENDPOINT + "/auth/github"}>로그인</a>
           )}
           <div className="loginProfile"></div>
-        </div>
-      </div>
+        </SLoginConatainer>
+      </SAlarmLoginWrapper>
     </SHeader>
   );
 };
@@ -108,123 +107,110 @@ const SHeader = styled.header`
   color: white;
   position: relative;
   z-index: 1;
+`;
 
-  & .logoContainer {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    & .logoImage {
-      width: 50px;
-      height: 50px;
-      background-color: white;
-      border-radius: 50%;
-      margin-right: 20px;
-    }
-    & h1 {
-      font-size: 16px;
-      font-weight: 500;
-    }
-  }
-  & ul {
-    display: flex;
-    justify-content: center;
-    flex-wrap: no-wrap;
-    align-items: center;
-  }
-  & li {
-    cursor: pointer;
-    padding: 20px 40px;
-    position: relative;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    &::before {
-      content: "";
-      width: 1px;
-      height: 24px;
-      position: absolute;
-      top: 20px;
-      right: 0;
-      display: block;
-      background-color: white;
-    }
+const SLogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
 
-    &:last-child::before {
-      display: none;
-    }
-  }
+const SLogoImage = styled.div`
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  margin-right: 20px;
+`;
 
-  & .searchContainer {
-    & .searchIcon {
-      position: absolute;
-      top: 12px;
-      left: 18px;
-      z-index: 1;
-      color: black;
-      width: 18px;
-      height: 18px;
+const STitle = styled.h1`
+  font-size: 16px;
+  font-weight: 500;
+`;
 
-      & svg {
-        width: 100%;
-        height: 100%;
-      }
-    }
+const SNav = styled.nav``;
+
+const SNavInner = styled.ul`
+  display: flex;
+  justify-content: center;
+  flex-wrap: no-wrap;
+  align-items: center;
+`;
+
+const SNavItem = styled.li`
+  cursor: pointer;
+  padding: 20px 40px;
+  position: relative;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  &::before {
+    content: "";
+    width: 1px;
+    height: 24px;
+    position: absolute;
+    top: 20px;
+    right: 0;
+    display: block;
+    background-color: white;
   }
 
-  & .alarmLoginWrapper {
-    display: flex;
-    align-items: center;
+  &:last-child::before {
+    display: none;
+  }
+`;
 
-    & .alarmConatainer {
-      margin-right: 64px;
-      cursor: pointer;
-      position: relative;
-      padding: 10px;
-      & svg {
-        width: 24px;
-        height: 26px;
-      }
+const SAlarmLoginWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const SAlarmConatainer = styled.div`
+  margin-right: 64px;
+  cursor: pointer;
+  position: relative;
+  padding: 10px;
+  & svg {
+    width: 24px;
+    height: 26px;
+  }
 
-      &.active::before {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 11px;
-        height: 11px;
-        border-radius: 50%;
-        background-color: #ff2626;
-      }
-    }
+  &.active::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background-color: #ff2626;
+  }
+`;
+const SLoginConatainer = styled.div`
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
-    & .loginConatainer {
-      display: flex;
-      align-items: center;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+  & button {
+    margin-right: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+  }
 
-      & button {
-        margin-right: 10px;
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-        background-color: transparent;
-        border: none;
-      }
+  & a {
+    margin-right: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
 
-      & a {
-        margin-right: 10px;
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-      }
-
-      & .loginProfile {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background-color: white;
-      }
-    }
+  & .loginProfile {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: white;
   }
 `;
