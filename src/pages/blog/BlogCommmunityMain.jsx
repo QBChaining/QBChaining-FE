@@ -14,6 +14,7 @@ const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   console.log("블로그전체", blogMainLists);
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   //메인 블로그 게시글 조회
@@ -21,7 +22,7 @@ const BlogCommmunityMain = () => {
     dispatch(getBlogCommunityListDB());
     dispatch(colorSetBlue());
   }, [dispatch]);
-
+  //머지
   return (
     <div>
       {/* <SLine /> */}
