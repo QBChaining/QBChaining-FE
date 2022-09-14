@@ -50,7 +50,7 @@ const Header = () => {
           </li>
           <li
             onClick={() => {
-              navigate("/");
+              navigate("/ranking");
             }}
           >
             랭킹
