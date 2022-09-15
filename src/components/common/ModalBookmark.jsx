@@ -4,18 +4,23 @@ import BookmarkStar from "../../assets/images/BookmarkStar.png";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getBookmarkListDB } from "../../redux/async/qna";
+import { getBlogBookMarkDB } from "../../redux/async/blog";
 import BookmarkListItem from "./../bookmark/BookmarkListItem";
 import { needLoginAlert } from "./../../utils/swal";
 import Nodata from "./../bookmark/Nodata";
-
+import { useNavigate } from "react-router-dom";
 const ModalBookmark = ({ isWrite, type }) => {
   const dispatch = useDispatch();
   const location = window.location.pathname;
 
   const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
-  const blogBookmarkList = useSelector(state => state);
+  console.log(qnaBookmarkList);
+  const blogBookmarkList = useSelector(state => state.blogSlice.blogBookMark);
+  console.log(blogBookmarkList);
+
   const { isLogin, color } = useSelector(state => state.userSlice);
   const [modal, setModal] = useState(false);
+  const navigate = useNavigate();
   const toggle = () => {
     if (!isLogin) {
       return needLoginAlert();
@@ -23,8 +28,12 @@ const ModalBookmark = ({ isWrite, type }) => {
     setModal(!modal);
   };
 
+  // const goBlog = id => {
+  //   navigate(`/blog/detail/${id}`);
+  // };
   useEffect(() => {
     if (isLogin) {
+      dispatch(getBlogBookMarkDB());
       dispatch(getBookmarkListDB());
     }
   }, []);
@@ -32,19 +41,19 @@ const ModalBookmark = ({ isWrite, type }) => {
   return (
     <>
       {modal && (
-        <SModalBookmark isWrite={isWrite}>
+        <SModalBookmark>
           <SListWrapper color={color}>
             <SList className="blog">
               <SListTitle>블로그</SListTitle>
               <SUnorderedList>
-                {/* {blogBookmarkList.map(data => (
+                {blogBookmarkList.map(data => (
                   <BookmarkListItem
                     isModal={!isWrite}
                     key={data.id}
                     data={data}
                   />
-                ))} */}
-                {qnaBookmarkList.length < 4 && <Nodata />}
+                ))}
+                {blogBookmarkList.length < 4 && <Nodata />}
               </SUnorderedList>
             </SList>
             <SList className="qna">

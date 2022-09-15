@@ -10,6 +10,7 @@ import BlogHotList from "../../components/blog/BlogHotList";
 import blogplus from "../../assets/images/blogplus.png";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
+import BlogMainList from "../../components/blog/BlogMainList";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   const userProfile = useSelector(state => state.userSlice.userProfile);
@@ -50,41 +51,9 @@ const BlogCommmunityMain = () => {
         <SListGroup>
           {blogMainLists?.map(posts => {
             return (
-              <SBloglist data={posts} key={posts.id}>
-                <SContentsGroup>
-                  <div
-                    onClick={() => {
-                      navigate(`/blog/detail/${posts.id}`);
-                    }}
-                  >
-                    <SPTitleBox>
-                      <SProfile url={userProfile} />
-                      <div className="title">{posts.title}</div>
-                    </SPTitleBox>
-                    <SContent>
-                      {/* {posts.content} */}
-                      <ToastViewer
-                        className="content1"
-                        content={posts.content}
-                      />
-                    </SContent>
-                  </div>
-                  <STagNMark>
-                    <STagList>
-                      {posts.tag?.map(tags => {
-                        return (
-                          <div key={tags.id}>
-                            <STag>{tags}</STag>
-                          </div>
-                        );
-                      })}
-                    </STagList>
-                    <SBookMark>
-                      <BlogBookMark isbookmark={posts.is_bookmark} />
-                    </SBookMark>
-                  </STagNMark>
-                </SContentsGroup>
-              </SBloglist>
+              <div key={posts.id}>
+                <BlogMainList posts={posts} />
+              </div>
             );
           })}
         </SListGroup>
@@ -122,6 +91,7 @@ const STopBox = styled.div`
   }
 `;
 const SRecommend = styled.div`
+  width: 1020px;
   min-width: 1020px;
   height: 300px;
 

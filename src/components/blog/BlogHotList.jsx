@@ -20,7 +20,7 @@ const BlogHotList = () => {
             <STitle>
               <SText>{hot.title}</SText>
               <SLike>
-                <SLikeNum>{hot.cmtNum}</SLikeNum>
+                <SLikeNum>{hot.like}</SLikeNum>
                 <SImg />
               </SLike>
             </STitle>

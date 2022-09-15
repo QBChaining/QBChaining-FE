@@ -12,7 +12,6 @@ const CommentEditDel = ({ comments, userdata }) => {
   const { id } = useParams();
   const userProfile = useSelector(state => state.userSlice.userProfile);
   const userNick = useSelector(state => state.userSlice.userName);
-  // console.log(userNick);
   const [show, setShow] = useState(false);
   const editRef = useRef();
 
@@ -50,36 +49,50 @@ const CommentEditDel = ({ comments, userdata }) => {
           <small>{comments.comment}</small>
 
           {userNick === comments.User?.user_name ? (
-            <div>
-              <button
+            <ButtonGroup>
+              <div
+                className="editbtn"
                 type="button"
                 onClick={() => {
                   setShow(!show);
                 }}
               >
                 수정
-              </button>
-              <button onClick={onClickDeleteHandler}>삭제</button>
-            </div>
+              </div>
+              <div>|</div>
+              <div
+                className="delbtn"
+                type="button"
+                onClick={onClickDeleteHandler}
+              >
+                삭제
+              </div>
+            </ButtonGroup>
           ) : null}
         </SCommentList>
       ) : (
-        <>
-          <div>프로필사진</div>
-          <div>홍길동</div>
-          <div>👍</div>
+        <SCommentList>
+          <SProfile url={userProfile} />
+          <div>{comments.User?.user_name}</div>
+          <SDate>
+            {" "}
+            {comments.createdAt?.slice(0, 10)} /{" "}
+            {comments.createdAt?.slice(11, 16)}
+          </SDate>
+          <small>{comments.comment}</small>
           <input type="text" placeholder={comments.comment} ref={editRef} />
-          <div>
-            <button
+          <ButtonGroup>
+            <div
+              className="editcomplet"
               onClick={() => {
                 onClickEditHandler(comments.id);
                 setShow(!show);
               }}
             >
               수정완료
-            </button>
-          </div>
-        </>
+            </div>
+          </ButtonGroup>
+        </SCommentList>
       )}
     </div>
   );
@@ -101,5 +114,23 @@ const SProfile = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   margin-right: 11px;
+`;
+const ButtonGroup = styled.div`
+  float: right;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  margin: 20px 40px 0px 0px;
+  font-size: 16px;
+  color: #7a7a7a;
+  & .editbtn {
+    cursor: pointer;
+  }
+  & .delbtn {
+    cursor: pointer;
+  }
+  & .editcomplet {
+    cursor: pointer;
+  }
 `;
 export default CommentEditDel;
