@@ -16,7 +16,6 @@ const BlogCommmunityMain = () => {
   const userProfile = useSelector(state => state.userSlice.userProfile);
   // const resolveList = blogMainLists.filter(data => data.is_resolve);
 
-  console.log("블로그전체", blogMainLists);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();

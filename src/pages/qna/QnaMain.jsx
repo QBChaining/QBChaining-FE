@@ -26,7 +26,6 @@ const QnaMain = () => {
 
   useEffect(() => {
     //다음페이지가 있다면
-    console.log(hasNextPage);
     if (hasNextPage) {
       if (category.length === 0) {
         dispatch(getQnaListDB(pageNumber)).then(res => {

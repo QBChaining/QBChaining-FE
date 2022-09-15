@@ -79,7 +79,7 @@ const CommentEditDel = ({ comments, userdata }) => {
             {comments.createdAt?.slice(0, 10)} /{" "}
             {comments.createdAt?.slice(11, 16)}
           </SDate>
-          <small>{comments.comment}</small>
+          {/* <small>{comments.comment}</small> */}
           <input type="text" placeholder={comments.comment} ref={editRef} />
           <ButtonGroup>
             <div
