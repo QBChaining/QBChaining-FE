@@ -1,45 +1,53 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getQnaSearchListDB, getBlogSearchListDB } from "./../async/search";
 
-export const searchSlice = createSlice({
+const searchSlice = createSlice({
   name: "search",
   initialState: {
     qnaSearchList: [],
     blogSearchList: [],
+    searchWord: "",
   },
-  reducers: {},
+  reducers: {
+    removeSearchList: (state, { payload }) => {
+      state.qnaSearchList = [];
+      state.blogSearchList = [];
+      state.searchWord = "";
+    },
+    setSearchWord: (state, { payload }) => {
+      state.searchWord = payload;
+    },
+  },
   extraReducers: {
     //qna검색결과 조회
-    [getQnaSearchListDB.pending]: state => {
+    [getQnaSearchListDB.pending]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getQnaSearchListDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      state.qnaSearchList = action.payload;
+    [getQnaSearchListDB.fulfilled]: (state, { payload }) => {
+      state.qnaSearchList = state.qnaSearchList.concat(payload);
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getQnaSearchListDB.rejected]: (state, action) => {
+    [getQnaSearchListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
-      state.errorMessage = action.payload.errorMessage;
+      state.errorMessage = errorMessage;
     },
 
     //블로그 검색결과 조회
-    [getBlogSearchListDB.pending]: state => {
+    [getBlogSearchListDB.pending]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getBlogSearchListDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      state.blogSearchList = action.payload;
+    [getBlogSearchListDB.fulfilled]: (state, { payload }) => {
+      state.blogSearchList = state.blogSearchList.concat(payload);
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getBlogSearchListDB.rejected]: (state, action) => {
+    [getBlogSearchListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
-      state.errorMessage = action.payload.errorMessage;
+      state.errorMessage = errorMessage;
     },
   },
 });
 
-export const {} = searchSlice.actions;
+export const { removeSearchList, setSearchWord } = searchSlice.actions;
 export default searchSlice.reducer;

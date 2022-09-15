@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { getQnaCategoryListDB, getQnaListDB } from "./../../redux/async/qna";
-import QnaList from "./../../components/qna/QnaList";
+import ContentList from "../../components/common/ContentList";
 import QnaMainCatergory from "./../../components/qna/QnaMainCatergory";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import WritingButton from "../../assets/images/WritingButton.png";
@@ -13,7 +13,6 @@ import NoResolvedListIcon from "../../assets/images/NoResolvedListIcon.png";
 import { colorSetGreen } from "../../redux/modules/userSlice";
 import { useInView } from "react-intersection-observer";
 import { removeQnaList } from "../../redux/modules/qnaSlice";
-import { nanoid } from "@reduxjs/toolkit";
 
 const QnaMain = () => {
   const navigate = useNavigate();
@@ -23,10 +22,9 @@ const QnaMain = () => {
 
   const resolveList = qnaList.filter(data => data.is_resolve);
   const disresolveList = qnaList.filter(data => data.is_resolve === false);
+  const [category, setCategory] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
-
-  const [category, setCategory] = useState("");
 
   useEffect(() => {
     //다음페이지가 있다면
@@ -97,7 +95,7 @@ const QnaMain = () => {
             </SListFilter>
           </SListHeader>
           {resolveList.map(data => (
-            <QnaList data={data} key={nanoid()} />
+            <ContentList data={data} key={data.id} />
           ))}
         </SleftConatiner>
         <SRightContainer>
@@ -113,7 +111,7 @@ const QnaMain = () => {
             </SListFilter>
           </SListHeader>
           {disresolveList.map(data => (
-            <QnaList data={data} key={nanoid()} />
+            <ContentList data={data} key={data.id} />
           ))}
         </SRightContainer>
       </SQnaWrapper>

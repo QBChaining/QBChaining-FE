@@ -11,8 +11,16 @@ export const getQnaSearchListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await searchApi.getQnaSearchList(data);
-      if (response.data.success === true) {
+      if (
+        response.data.success === true &&
+        response.data.data !== "검색 결과가 없습니다."
+      ) {
         return response.data.data;
+      } else if (
+        response.data.success === true &&
+        response.data.data === "검색 결과가 없습니다."
+      ) {
+        return [];
       }
     } catch (err) {
       networkError();
@@ -27,8 +35,16 @@ export const getBlogSearchListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await searchApi.getBlogSearchList(data);
-      if (response.data.success === true) {
+      if (
+        response.data.success === true &&
+        response.data.data !== "검색 결과가 없습니다."
+      ) {
         return response.data.data;
+      } else if (
+        response.data.success === true &&
+        response.data.data === "검색 결과가 없습니다."
+      ) {
+        return [];
       }
     } catch (err) {
       networkError();

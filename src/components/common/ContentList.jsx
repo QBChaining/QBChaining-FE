@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { FiThumbsUp } from "react-icons/fi";
 import { BiComment } from "react-icons/bi";
-import QnaCategoryImage from "./QnaCategoryImage";
-import QnaBookmarkButton from "./../bookmark/QnaBookmarkButton";
+import QnaCategoryImage from "../qna/QnaCategoryImage";
+import QnaBookmarkButton from "../bookmark/QnaBookmarkButton";
 import ResolveWrapper from "../../assets/images/ResolveList.png";
 import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
 import QnaLikeIcon from "../../assets/images/QnaLike.png";
@@ -13,7 +13,7 @@ import QnaCommentIcon from "../../assets/images/QnaComment.png";
 import GreyQnaLikeIcon from "../../assets/images/GreyQnaLike.png";
 import GreyQnaCommentIcon from "../../assets/images/GreyQnaComment.png";
 import ProfileDefault from "../../assets/images/ProfileDefault.png";
-const QnaList = ({ data }) => {
+const ContentList = ({ data }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -110,7 +110,7 @@ const QnaList = ({ data }) => {
   );
 };
 
-export default QnaList;
+export default ContentList;
 
 const StextMain = styled.div``;
 

@@ -4,16 +4,28 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
+  removeSearchList,
+  setSearchWord,
+} from "../../redux/modules/searchSlice";
+import {
   getBlogSearchListDB,
   getQnaSearchListDB,
 } from "./../../redux/async/search";
+import { errorAlert } from "../../utils/swal";
 
 const SearchInput = () => {
   const search = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const goSearch = () => {
+    if (search.current.value.length === 0) {
+      errorAlert("검색어를 입력해주세요!");
+      return;
+    }
     navigate(`/search?q=${search.current.value}`);
+
+    dispatch(removeSearchList());
+    dispatch(setSearchWord(search.current.value));
     dispatch(getQnaSearchListDB(search.current.value));
     dispatch(getBlogSearchListDB(search.current.value));
     search.current.value = "";
@@ -22,16 +34,7 @@ const SearchInput = () => {
   return (
     <SSearchInput>
       <SInput ref={search} type="text" placeholder="Javascript" />
-      <SSearchButton
-        onClick={
-          goSearch
-          // axios.get(`http://kpzzy.shop/api/search?q=node`).then(res => {
-          //   console.log(res);
-          // });
-        }
-      >
-        검색
-      </SSearchButton>
+      <SSearchButton onClick={goSearch}>검색</SSearchButton>
     </SSearchInput>
   );
 };
