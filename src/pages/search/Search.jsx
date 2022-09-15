@@ -22,6 +22,7 @@ const Search = () => {
       dispatch(getBlogSearchListDB(searchWord));
     }
   }, [searchWord]);
+  console.log(qnaSearchList);
 
   return (
     <SSearch>
