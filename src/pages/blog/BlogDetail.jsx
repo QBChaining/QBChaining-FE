@@ -11,11 +11,13 @@ import ModalBookmark from "../../components/common/ModalBookmark";
 import ToastViewer from "./../../components/editor/ToastViewer";
 import BlogLike from "../../components/blog/BlogLike";
 import BlogBookMark from "../../components/blog/BlogBookMark";
-import profiletest from "../../assets/images/profiletest.png";
 
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
-  console.log("detail", response);
+  console.log(response);
+  const userNick = useSelector(state => state.userSlice.userName);
+  const userProfile = useSelector(state => state.userSlice.userProfile);
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ const BlogCommunityDetail = () => {
           <div isLike={response.is_like} key={detail.id}>
             <STitleSection>
               <div className="bookMark">
-                <BlogBookMark />
+                <BlogBookMark isbookmark={detail.is_bookmark} />
                 <STitle>{detail.title}</STitle>
               </div>
               <SProfileNickNameDate>
@@ -46,31 +48,34 @@ const BlogCommunityDetail = () => {
                     {detail.created_at?.slice(11, 16)}
                   </div>
                 </SDate>
-                <Sprofile />
+                <SProfile url={userProfile} />
               </SProfileNickNameDate>
             </STitleSection>
-            <ButtonGroup>
-              <div
-                className="editbtn"
-                type="button"
-                onClick={() => {
-                  navigate(`/blog/edit/${id}`);
-                }}
-              >
-                수정
-              </div>
-              <div>|</div>
-              <div
-                className="delbtn"
-                type="button"
-                onClick={id => {
-                  navigate("/blog");
-                  deleteBlogPost(id);
-                }}
-              >
-                삭제
-              </div>
-            </ButtonGroup>
+            {userNick === detail.user_name?.user_name ? (
+              <ButtonGroup>
+                <div
+                  className="editbtn"
+                  type="button"
+                  onClick={() => {
+                    navigate(`/blog/edit/${id}`);
+                  }}
+                >
+                  수정
+                </div>
+                <div>|</div>
+                <div
+                  className="delbtn"
+                  type="button"
+                  onClick={id => {
+                    navigate("/blog");
+                    deleteBlogPost(id);
+                  }}
+                >
+                  삭제
+                </div>
+              </ButtonGroup>
+            ) : null}
+
             <SContents>
               <ToastViewer className="content1" content={detail.content} />
             </SContents>
@@ -149,15 +154,6 @@ const SDate = styled.div`
   }
 `;
 
-const Sprofile = styled.div`
-  background-position: center;
-  background-size: cover;
-  background-image: url(${profiletest});
-  margin-left: 14px;
-  width: 44px;
-  height: 44px;
-`;
-
 const SContents = styled.div`
   margin: 20px 0px 0px 40px;
 `;
@@ -166,6 +162,18 @@ const SLikeNtags = styled.div`
     display: flex;
     flex-direction: row;
   }
+`;
+
+const SProfile = styled.div`
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid ${props => props.theme.color.grey3};
+  background-image: url(${props => props.url});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-right: 11px;
 `;
 
 const STag = styled.div`

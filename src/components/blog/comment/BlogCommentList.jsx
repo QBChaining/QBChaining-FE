@@ -1,22 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { getBlogCommentListDB } from "../../../redux/async/blog";
 import CommentEditDel from "./BlogCommentEditDel";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-//image
-// import { containerRegistryDomain } from "firebase-tools/lib/api";
 
-// get,
 const CommentList = () => {
   const commentLists = useSelector(state => state.blogSlice.commentList);
-  const userNick = useSelector(state => state.userSlice.userName);
-  console.log(commentLists);
-  console.log(userNick);
+
   const dispatch = useDispatch();
   const { id } = useParams();
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(getBlogCommentListDB(id));
   }, [dispatch]);
 

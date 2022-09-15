@@ -12,6 +12,9 @@ import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
+  const userProfile = useSelector(state => state.userSlice.userProfile);
+  // const resolveList = blogMainLists.filter(data => data.is_resolve);
+
   console.log("블로그전체", blogMainLists);
   const dispatch = useDispatch();
 
@@ -55,7 +58,7 @@ const BlogCommmunityMain = () => {
                     }}
                   >
                     <SPTitleBox>
-                      <Sprofile />
+                      <SProfile url={userProfile} />
                       <div className="title">{posts.title}</div>
                     </SPTitleBox>
                     <SContent>
@@ -177,9 +180,19 @@ const SContent = styled.div`
     font-weight: 400;
     font-size: 18px;
     line-height: 25px;
-
-    /* font-color: #9c9c9c; */
   }
+`;
+
+const SProfile = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid ${props => props.theme.color.grey3};
+  background-image: url(${props => props.url});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-right: 11px;
 `;
 const STagList = styled.div`
   display: flex;
@@ -225,7 +238,7 @@ const SPTitleBox = styled.div`
 const Sprofile = styled.div`
   background-position: center;
   background-size: cover;
-  background-image: url(${react});
+  background-image: url(${props => props.url});
   width: 20px;
   height: 20px;
 `;
