@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Editor from "../../components/common/Editor";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import BookmarkList from "../../components/bookmark/BookmarkList";
 import styled from "styled-components";
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 import ModalBookmark from "../../components/common/ModalBookmark";

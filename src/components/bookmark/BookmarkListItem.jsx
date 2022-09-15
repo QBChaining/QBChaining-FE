@@ -3,7 +3,7 @@ import WriteBookmark from "./WriteBookmark";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
-const BookmarkListItem = ({ isModal, data }) => {
+const BookmarkListItem = ({ type, isModal, data }) => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
 
@@ -15,30 +15,32 @@ const BookmarkListItem = ({ isModal, data }) => {
     navigate(`/${type}/detail/${id}`);
   };
 
-  <>
-    <SBookmarkListItem
-      style={{}}
-      onClick={
-        isModal
-          ? () => {
-              goDetail("qna", data.id);
-            }
-          : onToggleHandler
-      }
-    >
-      <SUserName>{data.user_name}</SUserName>
-      <STitle>{data.title}</STitle>
-      <SDate>{data.createdAt}</SDate>
-    </SBookmarkListItem>
-    {modal && (
-      <WriteBookmark
-        modal={modal}
-        setModal={setModal}
-        onToggleHandler={onToggleHandler}
-        id={data.qna_id}
-      />
-    )}
-  </>;
+  return (
+    <>
+      <SBookmarkListItem
+        style={{}}
+        onClick={
+          isModal
+            ? () => {
+                goDetail(type, data.id);
+              }
+            : onToggleHandler
+        }
+      >
+        <SUserName>{data.user_name}</SUserName>
+        <STitle>{data.title}</STitle>
+        <SDate>{data.createdAt}</SDate>
+      </SBookmarkListItem>
+      {modal && (
+        <WriteBookmark
+          modal={modal}
+          setModal={setModal}
+          onToggleHandler={onToggleHandler}
+          id={data.qna_id}
+        />
+      )}
+    </>
+  );
 };
 
 export default BookmarkListItem;

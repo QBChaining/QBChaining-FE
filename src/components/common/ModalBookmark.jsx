@@ -51,6 +51,7 @@ const ModalBookmark = ({ isWrite, type }) => {
                     isModal={!isWrite}
                     key={data.id}
                     data={data}
+                    type={"blog"}
                   />
                 ))}
                 {blogBookmarkList.length < 4 && <Nodata />}
@@ -64,6 +65,7 @@ const ModalBookmark = ({ isWrite, type }) => {
                     isModal={!isWrite}
                     key={data.id}
                     data={data}
+                    type={"qna"}
                   />
                 ))}
                 {qnaBookmarkList.length < 4 && <Nodata />}
