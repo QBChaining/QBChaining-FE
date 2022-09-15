@@ -1,41 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   postBlogBookMarkDB,
   deleteBlogBookMarkDB,
+  getBlogBookMarkDB,
 } from "../../redux/async/blog.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { errorAlert, needLoginAlert } from "../../utils/swal";
+
 import blogbookmark from "../../assets/images/blogbookmark.png";
 import blogbookmarkadd from "../../assets/images/bookmarkadd.png";
-const BlogBookMark = () => {
+// const { isLogin, userName } = useSelector(state => state.userSlice);
+// console.log(userName);
+const BlogBookMark = ({ isbookmark }) => {
   //북마크 새로고침 상태유지를 위한 useSeloctor
-  const is_bookmark = useSelector(state => state.blogSlice.blogList);
-  const blogDetailBookMark = useSelector(state => state.blogSlice.blogList);
-  console.log(blogDetailBookMark);
-  // console.log(blogDetailBookMark.is_bookmark);
-  const [mark, setMark] = useState(false);
+
   const dispatch = useDispatch();
   const { id } = useParams();
 
   const onAddBookMark = () => {
-    dispatch(postBlogBookMarkDB(parseInt(id)));
-    setMark(!mark);
+    // if (!isLogin) {
+    //   needLoginAlert();
+    //   return;
+    // }
+    dispatch(postBlogBookMarkDB(id));
   };
   const onDeleteBookMark = () => {
-    dispatch(deleteBlogBookMarkDB(parseInt(id)));
-    setMark(!mark);
+    dispatch(deleteBlogBookMarkDB(id));
   };
+  useEffect(() => {
+    dispatch(getBlogBookMarkDB());
+  }, []);
   return (
     <div>
-      {is_bookmark === true ? (
-        <>
-          <SBookMarkBtn onClick={onAddBookMark} />
-        </>
+      {/* <SbookMarkBtnAdd
+        isbookmark={isbookmark}
+        onClick={isbookmark === true ? onDeleteBookMark : onAddBookMark}
+      />
+      <SbookMarkBtnAdd onClick={onDeleteBookMark} /> */}
+      {isbookmark == true ? (
+        <SBookMarkBtn onClick={onDeleteBookMark} />
       ) : (
-        <>
-          <SbookMarkBtnAdd onClick={onDeleteBookMark} />
-        </>
+        <SbookMarkBtnAdd onClick={onAddBookMark} />
       )}
     </div>
   );
@@ -45,7 +52,7 @@ const SBookMarkBtn = styled.div`
   height: 30px;
   background-position: center;
   background-size: cover;
-  background-image: url(${blogbookmark});
+  background-image: url(${blogbookmarkadd});
 `;
 
 const SbookMarkBtnAdd = styled.div`
@@ -53,6 +60,6 @@ const SbookMarkBtnAdd = styled.div`
   height: 30px;
   background-position: center;
   background-size: cover;
-  background-image: url(${blogbookmarkadd});
+  background-image: url(${blogbookmark});
 `;
 export default BlogBookMark;

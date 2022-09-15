@@ -8,9 +8,7 @@ import styled from "styled-components";
 
 const CommentList = () => {
   const commentLists = useSelector(state => state.blogSlice.commentList);
-  const userNick = useSelector(state => state.userSlice.userName);
-  console.log(commentLists);
-  console.log(userNick);
+
   const dispatch = useDispatch();
   const { id } = useParams();
   useEffect(() => {

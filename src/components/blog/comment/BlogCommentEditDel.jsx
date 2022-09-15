@@ -9,11 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../../redux/modules/userSlice";
 import { useParams } from "react-router-dom";
 const CommentEditDel = ({ comments, userdata }) => {
-  console.log(logIn);
-  console.log(userdata);
   const { id } = useParams();
   const userProfile = useSelector(state => state.userSlice.userProfile);
-  console.log(comments);
   const userNick = useSelector(state => state.userSlice.userName);
   // console.log(userNick);
   const [show, setShow] = useState(false);

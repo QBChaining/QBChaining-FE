@@ -14,6 +14,7 @@ import BlogBookMark from "../../components/blog/BlogBookMark";
 
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
+  console.log(response);
   const userNick = useSelector(state => state.userSlice.userName);
   const userProfile = useSelector(state => state.userSlice.userProfile);
 
@@ -36,7 +37,7 @@ const BlogCommunityDetail = () => {
           <div isLike={response.is_like} key={detail.id}>
             <STitleSection>
               <div className="bookMark">
-                <BlogBookMark />
+                <BlogBookMark isbookmark={detail.is_bookmark} />
                 <STitle>{detail.title}</STitle>
               </div>
               <SProfileNickNameDate>

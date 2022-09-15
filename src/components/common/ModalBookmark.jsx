@@ -14,6 +14,8 @@ const ModalBookmark = ({ isWrite, type }) => {
 
   const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
   console.log(qnaBookmarkList);
+  const blogBookmarkList = useSelector(state => state);
+  console.log(blogBookmarkList);
   const { isLogin, color } = useSelector(state => state.userSlice);
   const [modal, setModal] = useState(false);
   const toggle = () => {
@@ -37,13 +39,13 @@ const ModalBookmark = ({ isWrite, type }) => {
             <SList className="blog">
               <SListTitle>블로그</SListTitle>
               <SUnorderedList>
-                {qnaBookmarkList.map(data => (
+                {/* {blogBookmarkList.map(data => (
                   <BookmarkListItem
                     isModal={!isWrite}
                     key={data.id}
                     data={data}
                   />
-                ))}
+                ))} */}
                 {qnaBookmarkList.length < 4 && <Nodata />}
               </SUnorderedList>
             </SList>
