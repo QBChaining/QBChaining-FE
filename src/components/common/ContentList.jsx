@@ -13,7 +13,9 @@ import QnaCommentIcon from "../../assets/images/QnaComment.png";
 import GreyQnaLikeIcon from "../../assets/images/GreyQnaLike.png";
 import GreyQnaCommentIcon from "../../assets/images/GreyQnaComment.png";
 import ProfileDefault from "../../assets/images/ProfileDefault.png";
-const ContentList = ({ data }) => {
+import unlike from "../../assets/images/unlike.png";
+import BlogComment from "../../assets/images/BlogComment.png";
+const ContentList = ({ data, type, isSearch }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -49,9 +51,17 @@ const ContentList = ({ data }) => {
     navigate(`/mypage/${name}`);
   };
 
+  const goSearch = content => {
+    navigate(`/search?q=${content}`);
+  };
+
   return (
     <StextMain ResolveWrapper={ResolveWrapper}>
-      <SWrapper resolve={data.is_resolve} ResolveWrapper={ResolveWrapper}>
+      <SWrapper
+        type={type}
+        resolve={data.is_resolve}
+        ResolveWrapper={ResolveWrapper}
+      >
         <SUserInfo>
           <SProfileContainer
             onClick={() => {
@@ -65,6 +75,7 @@ const ContentList = ({ data }) => {
           <SCategoryContainer>
             <QnaCategoryImage item={data.category} />
             <QnaBookmarkButton
+              type={type}
               id={data.id}
               resolve={data.is_resolve}
               is_bookmark={data.is_bookmark}
@@ -74,7 +85,7 @@ const ContentList = ({ data }) => {
         <STitleWrapper>
           <STitle
             onClick={() => {
-              navigate(`/qna/detail/${data.id}`);
+              navigate(`/${type}/detail/${data.id}`);
             }}
           >
             {data.title}
@@ -83,25 +94,27 @@ const ContentList = ({ data }) => {
         <STagWrapper>
           <STags>
             {data.tag?.map((data, i) => {
-              return <Tag key={i}>{data}</Tag>;
+              return (
+                <Tag
+                  type={type}
+                  key={i}
+                  onClick={() => {
+                    goSearch(data);
+                  }}
+                >
+                  {data}
+                </Tag>
+              );
             })}
           </STags>
           <SCount>
             <SHoneytip>
               {data.honey_tip}
-              <SIcon
-                colorIcon={QnaLikeIcon}
-                greyIcon={GreyQnaLikeIcon}
-                resolve={data.is_resolve}
-              />
+              <SLikeIcon type={type} resolve={data.is_resolve} />
             </SHoneytip>
             <SCntcomment>
               {data.cntcomment}
-              <SIcon
-                colorIcon={QnaCommentIcon}
-                greyIcon={GreyQnaCommentIcon}
-                resolve={data.is_resolve}
-              />
+              <SCommentIcon type={type} resolve={data.is_resolve} />
             </SCntcomment>
           </SCount>
         </STagWrapper>
@@ -117,10 +130,13 @@ const StextMain = styled.div``;
 const SWrapper = styled.div`
   width: 100%;
   padding: 30px 50px 18px 50px;
+  background-color: ${props => props.theme.color.white};
   border: ${props =>
-    props.resolve
-      ? `1px solid ${props.theme.color.mainGreen}`
-      : `1px solid ${props.theme.color.grey3}`};
+    props.type === "qna"
+      ? props.resolve
+        ? `1px solid ${props.theme.color.mainGreen}`
+        : `1px solid ${props.theme.color.grey3}`
+      : `1px solid ${props.theme.color.mainBlue}`};
   box-shadow: ${props =>
     props.resolve
       ? "4px 6px 15px rgba(0, 0, 0, 0.1);"
@@ -204,7 +220,10 @@ const Tag = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: ${props => props.theme.color.mainGreen};
+    background-color: ${props =>
+      props.type === "qna"
+        ? props.theme.color.mainGreen
+        : props.theme.color.mainBlue};
   }
 `;
 
@@ -228,8 +247,23 @@ const SIcon = styled.div`
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+`;
+
+const SLikeIcon = styled(SIcon)`
   background-image: url(${props =>
-    props.resolve ? props.colorIcon : props.greyIcon});
+    props.type === "qna"
+      ? props.resolve
+        ? QnaLikeIcon
+        : GreyQnaLikeIcon
+      : unlike});
+`;
+const SCommentIcon = styled(SIcon)`
+  background-image: url(${props =>
+    props.type === "qna"
+      ? props.resolve
+        ? QnaCommentIcon
+        : GreyQnaCommentIcon
+      : BlogComment});
 `;
 
 const SCntcomment = styled.div`

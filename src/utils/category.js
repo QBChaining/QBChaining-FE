@@ -8,9 +8,8 @@ const qnaCategory = [
   { langId: 7, langName: "Python" },
   { langId: 8, langName: "C" },
   { langId: 9, langName: "C++" },
-  { langId: 10, langName: "C#" },
-  { langId: 11, langName: "CSS" },
-  { langId: 12, langName: "PHP" },
+  { langId: 10, langName: "CSS" },
+  { langId: 11, langName: "PHP" },
 ];
 
 const interestCategory = [
