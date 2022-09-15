@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOneQnaListDB } from "../../redux/async/qna";
 import { colorSetGreen } from "../../redux/modules/userSlice";
-import QnaList from "./../../components/qna/QnaList";
+import ContentList from "./../../components/common/ContentList";
 import QnaCommentList from "./../../components/qna/QnaCommentList";
 import QnaTarget from "../../components/qna/QnaTarget";
 import styled from "styled-components";

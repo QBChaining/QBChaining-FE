@@ -17,6 +17,7 @@ const ModalBookmark = ({ isWrite, type }) => {
   console.log(qnaBookmarkList);
   const blogBookmarkList = useSelector(state => state.blogSlice.blogBookMark);
   console.log(blogBookmarkList);
+
   const { isLogin, color } = useSelector(state => state.userSlice);
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
