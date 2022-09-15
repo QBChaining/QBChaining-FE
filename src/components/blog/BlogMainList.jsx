@@ -6,34 +6,36 @@ import ToastViewer from "../editor/ToastViewer";
 import BlogBookMark from "./BlogBookMark";
 const BlogMainList = ({ posts }) => {
   const userProfile = useSelector(state => state.userSlice.userProfile);
-
   const navigate = useNavigate();
   return (
     <div>
       <SBloglist>
         <SContentsGroup>
-          <div
-            onClick={() => {
-              navigate(`/blog/detail/${posts.id}`);
-            }}
-          >
+          <div>
             <SPTitleBox>
               <SProfile url={userProfile} />
-              <div className="title">{posts.title}</div>
+              <div
+                className="title"
+                onClick={() => {
+                  navigate(`/blog/detail/${posts.id}`);
+                }}
+              >
+                {posts.title}
+              </div>
             </SPTitleBox>
           </div>
           <STagNMark>
             <STagList>
-              {posts.tag?.map(tags => {
+              {posts.tag?.map((tags, i) => {
                 return (
-                  <div key={tags.id}>
+                  <div key={i}>
                     <STag>{tags}</STag>
                   </div>
                 );
               })}
             </STagList>
             <SBookMark>
-              <BlogBookMark isbookmark={posts.is_bookmark} />
+              <BlogBookMark isbookmark={posts.is_bookmark} posts={posts} />
             </SBookMark>
           </STagNMark>
         </SContentsGroup>
@@ -112,6 +114,7 @@ const SPTitleBox = styled.div`
     font-size: 20px;
     margin-left: 5px;
     margin-bottom: 20px;
+    cursor: pointer;
   }
 `;
 const Sprofile = styled.div`

@@ -13,7 +13,7 @@ import {
   getHotBlogDB,
   postBlogLikeDB,
   deleteBlogBookMarkDB,
-  deleteBlogBookMarDB,
+  unBlogLikeDB,
 } from "../async/blog";
 import { postBookmarkListDB } from "../async/qna";
 export const blogSlice = createSlice({
@@ -27,7 +27,7 @@ export const blogSlice = createSlice({
     blogBookMark: [],
     isFetching: false,
     errorMessage: "",
-    type: {},
+    likebookmark: {},
   },
   reducers: {},
   extraReducers: {
@@ -191,7 +191,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogBookMarkDB.fulfilled]: (state, action) => {
-      console.log(action.type);
       state.type = action.type;
       state.blogBookMark = action.payload;
     },
@@ -205,7 +204,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBookmarkListDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.blogBookMark = action.payload;
     },
     [postBlogCommentDB.rejected]: (state, action) => {
@@ -217,7 +215,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [deleteBlogBookMarkDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.blogBookMark = action.payload;
     },
     [deleteBlogBookMarkDB.rejected]: (state, action) => {
@@ -242,17 +239,22 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogLikeDB.fulfilled]: (state, action) => {
-      state.blogDetail = action.payload;
+      state.like = action.payload;
     },
     [postBlogLikeDB.rejected]: (state, action) => {
       state.errorMessage = action.payload.errorMessage;
     },
 
-    // // 좋아요 삭제
-    // [deleteBlogBookMarDB]: state => {
-    //   state.isFetching = true;
-    // },
-    // [deleteBlogBookMarDB]
+    // 좋아요 삭제
+    [unBlogLikeDB]: state => {
+      state.isFetching = true;
+    },
+    [unBlogLikeDB]: (state, action) => {
+      state.likebookmark = action.payload;
+    },
+    [unBlogLikeDB]: (state, action) => {
+      state.errorMessage = action.payload.errorMessage;
+    },
   },
 });
 

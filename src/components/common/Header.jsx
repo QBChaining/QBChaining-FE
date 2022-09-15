@@ -12,7 +12,6 @@ import { removeUserInfo } from "../../redux/modules/qnaSlice";
 import SearchInput from "./../search/SearchInput";
 
 const Header = () => {
-  console.log();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = window.location.pathname;

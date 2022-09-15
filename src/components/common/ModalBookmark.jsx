@@ -14,9 +14,7 @@ const ModalBookmark = ({ isWrite, type }) => {
   const location = window.location.pathname;
 
   const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
-  console.log(qnaBookmarkList);
   const blogBookmarkList = useSelector(state => state.blogSlice.blogBookMark);
-  console.log(blogBookmarkList);
 
   const { isLogin, color } = useSelector(state => state.userSlice);
   const [modal, setModal] = useState(false);
@@ -28,9 +26,6 @@ const ModalBookmark = ({ isWrite, type }) => {
     setModal(!modal);
   };
 
-  // const goBlog = id => {
-  //   navigate(`/blog/detail/${id}`);
-  // };
   useEffect(() => {
     if (isLogin) {
       dispatch(getBlogBookMarkDB());

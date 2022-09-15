@@ -17,15 +17,13 @@ const CommentList = () => {
 
   return (
     <div>
-      {commentLists?.map(comments => {
-        return (
-          <SCommentList>
-            <div key={comments.id}>
-              <CommentEditDel comments={comments} />
-            </div>
-          </SCommentList>
-        );
-      })}
+      {commentLists?.map(comments => (
+        <SCommentList key={comments.id}>
+          <div key={comments.id}>
+            <CommentEditDel comments={comments} />
+          </div>
+        </SCommentList>
+      ))}
     </div>
   );
 };

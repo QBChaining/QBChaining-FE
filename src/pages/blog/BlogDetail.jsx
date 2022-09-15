@@ -10,12 +10,12 @@ import { deleteBlogCommunityDB } from "../../redux/async/blog";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import ToastViewer from "./../../components/editor/ToastViewer";
 import BlogLike from "../../components/blog/BlogLike";
-import BlogBookMark from "../../components/blog/BlogBookMark";
+// import BlogBookMark from "../../components/blog/BlogBookMark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
+import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
 
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
-  console.log(response);
   const userNick = useSelector(state => state.userSlice.userName);
   const userProfile = useSelector(state => state.userSlice.userProfile);
 
@@ -34,71 +34,64 @@ const BlogCommunityDetail = () => {
 
   return (
     <SContainer>
-      {response?.map(detail => {
-        return (
-          <div isLike={response?.is_like} key={detail.id}>
-            <STitleSection>
-              <div className="bookMark">
-                <BlogBookMark isbookmark={detail?.is_bookmark} />
-                <STitle>{detail?.title}</STitle>
+      {response?.map(detail => (
+        <div key={detail.id}>
+          <STitleSection>
+            <div className="bookMark">
+              <BlogDetailBookMark isbookmark={detail?.is_bookmark} />
+              <STitle>{detail?.title}</STitle>
+            </div>
+            <SProfileNickNameDate>
+              <SDate>
+                <div className="name">{detail.user_name?.user_name}</div>
+                <div className="date">
+                  {detail.created_at?.slice(0, 10)} /{" "}
+                  {detail.created_at?.slice(11, 16)}
+                </div>
+              </SDate>
+              <SProfile url={userProfile} />
+            </SProfileNickNameDate>
+          </STitleSection>
+          {userNick === detail.user_name?.user_name ? (
+            <ButtonGroup>
+              <div
+                className="editbtn"
+                onClick={() => {
+                  navigate(`/blog/edit/${id}`);
+                }}
+              >
+                수정
               </div>
-              <SProfileNickNameDate>
-                <SDate>
-                  <div className="name">{detail.user_name?.user_name}</div>
-                  <div className="date">
-                    {detail.created_at?.slice(0, 10)} /{" "}
-                    {detail.created_at?.slice(11, 16)}
-                  </div>
-                </SDate>
-                <SProfile url={userProfile} />
-              </SProfileNickNameDate>
-            </STitleSection>
-            {userNick === detail.user_name?.user_name ? (
-              <ButtonGroup>
-                <div
-                  className="editbtn"
-                  type="button"
-                  onClick={() => {
-                    navigate(`/blog/edit/${id}`);
-                  }}
-                >
-                  수정
-                </div>
-                <div>|</div>
-                <div
-                  className="delbtn"
-                  type="button"
-                  onClick={id => {
-                    navigate("/blog");
-                    deleteBlogPost(id);
-                  }}
-                >
-                  삭제
-                </div>
-              </ButtonGroup>
-            ) : null}
+              <div>|</div>
+              <div
+                className="delbtn"
+                onClick={id => {
+                  navigate("/blog");
+                  deleteBlogPost(id);
+                }}
+              >
+                삭제
+              </div>
+            </ButtonGroup>
+          ) : null}
 
-            <SContents>
-              <ToastViewer className="content1" content={detail.content} />
-            </SContents>
-            <SLikeNtags>
-              <div className="tagList">
-                {detail?.tag.map(tags => {
-                  return (
-                    <STag>
-                      <div>{tags}</div>
-                    </STag>
-                  );
-                })}
-              </div>
-              <BlogLike
-                islike={detail.is_like}
-                isbookmark={detail.is_bookmark}
-              />
-            </SLikeNtags>
-          </div>
-        );
-      })}
+          <SContents>
+            <ToastViewer className="content1" content={detail.content} />
+          </SContents>
+          <SLikeNtags>
+            <div className="tagList">
+              {detail?.tag.map((tags, i) => {
+                return (
+                  <STag key={(tags, i)}>
+                    <div>{tags}</div>
+                  </STag>
+                );
+              })}
+            </div>
+            <BlogLike love={detail.is_like} isbookmark={detail.is_bookmark} />
+          </SLikeNtags>
+        </div>
+      ))}
 
       <div>
         <CommentAdd />
@@ -108,7 +101,7 @@ const BlogCommunityDetail = () => {
     </SContainer>
   );
 };
-const SContainer = styled.form`
+const SContainer = styled.div`
   max-width: 1220px;
 `;
 const SNickName = styled.div``;

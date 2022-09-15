@@ -28,8 +28,6 @@ const QnaTarget = ({ isDatail }) => {
   const isBookmarked =
     bookmarkList.filter(mark => mark.id === target.id).length > 0;
 
-  console.log(isBookmarked);
-
   const totalId = {
     id: target.id,
     title: target.title,
