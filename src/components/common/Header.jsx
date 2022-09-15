@@ -82,9 +82,7 @@ const Header = () => {
           ) : (
             // <a href={process.env.REACT_APP_GITHUB_API}>로그인</a>
 
-            {/* <a href="http://taesik.shop/api/auth/github">로그인</a> */}
-            <a href={process.env.REACT_APP_ENDPOINT + "/auth/github"}>로그인</a>
-
+            <a href="http://http://3.38.97.40/api/auth/github">로그인</a>
           )}
           <div className="loginProfile"></div>
         </div>
