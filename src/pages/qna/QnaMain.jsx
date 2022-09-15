@@ -17,7 +17,6 @@ const QnaMain = () => {
   const dispatch = useDispatch();
 
   const qnaList = useSelector(state => state.qnaSlice.qnaList);
-
   const resolveList = qnaList.filter(data => data.is_resolve);
   const disresolveList = qnaList.filter(data => data.is_resolve === false);
 
