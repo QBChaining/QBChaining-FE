@@ -112,6 +112,7 @@ const SLeftContainer = styled(STip)`
     }
   }
 `;
+
 const SRightContainer = styled(STip)`
   & > div:first-child {
     &::before {
