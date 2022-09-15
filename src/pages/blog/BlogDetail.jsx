@@ -11,6 +11,7 @@ import ModalBookmark from "../../components/common/ModalBookmark";
 import ToastViewer from "./../../components/editor/ToastViewer";
 import BlogLike from "../../components/blog/BlogLike";
 import BlogBookMark from "../../components/blog/BlogBookMark";
+import { colorSetBlue } from "../../redux/modules/userSlice";
 
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
@@ -28,17 +29,18 @@ const BlogCommunityDetail = () => {
   };
   useEffect(() => {
     dispatch(getBlogDetailDB(id));
+    dispatch(colorSetBlue());
   }, []);
 
   return (
     <SContainer>
       {response?.map(detail => {
         return (
-          <div isLike={response.is_like} key={detail.id}>
+          <div isLike={response?.is_like} key={detail.id}>
             <STitleSection>
               <div className="bookMark">
-                <BlogBookMark isbookmark={detail.is_bookmark} />
-                <STitle>{detail.title}</STitle>
+                <BlogBookMark isbookmark={detail?.is_bookmark} />
+                <STitle>{detail?.title}</STitle>
               </div>
               <SProfileNickNameDate>
                 <SDate>
@@ -81,7 +83,7 @@ const BlogCommunityDetail = () => {
             </SContents>
             <SLikeNtags>
               <div className="tagList">
-                {detail.tag.map(tags => {
+                {detail?.tag.map(tags => {
                   return (
                     <STag>
                       <div>{tags}</div>

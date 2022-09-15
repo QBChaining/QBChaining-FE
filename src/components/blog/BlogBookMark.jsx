@@ -53,6 +53,7 @@ const SBookMarkBtn = styled.div`
   background-position: center;
   background-size: cover;
   background-image: url(${blogbookmarkadd});
+  cursor: pointer;
 `;
 
 const SbookMarkBtnAdd = styled.div`
@@ -61,5 +62,6 @@ const SbookMarkBtnAdd = styled.div`
   background-position: center;
   background-size: cover;
   background-image: url(${blogbookmark});
+  cursor: pointer;
 `;
 export default BlogBookMark;
