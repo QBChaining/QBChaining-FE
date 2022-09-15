@@ -21,6 +21,7 @@ const ToastEditor = ({ isCommentWrite, content, setContent }) => {
     ["ul", "ol", "task"],
     ["hr"],
     ["table", "link"],
+    ["image"],
     ["scrollSync"],
   ];
   const BlogtoolbarItems = [
@@ -52,7 +53,6 @@ const ToastEditor = ({ isCommentWrite, content, setContent }) => {
         height={isCommentWrite ? "600px" : "500px"}
         initialEditType="markdown"
         toolbarItems={QnatoolbarItems}
-        
         useCommandShortcut={false}
         hideModeSwitch={true}
         plugins={[colorSyntax, [codeSyntaxHighlight, { highligher: Prism }]]}

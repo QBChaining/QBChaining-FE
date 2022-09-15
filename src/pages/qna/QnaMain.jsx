@@ -23,6 +23,7 @@ const QnaMain = () => {
   const [category, setCategory] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
+  const [target, inView] = useInView();
 
   useEffect(() => {
     //다음페이지가 있다면
@@ -43,7 +44,6 @@ const QnaMain = () => {
   }, [pageNumber, category]);
 
   //페이지가 바닥에 닿을때마다 pageNumber+1 처리
-  const [target, inView] = useInView();
   useEffect(() => {
     if (qnaList.length !== 0 && inView && hasNextPage) {
       setPageNumber(pageNumber => pageNumber + 1);
@@ -92,7 +92,7 @@ const QnaMain = () => {
             </SListFilter>
           </SListHeader>
           {resolveList.map(data => (
-            <ContentList data={data} key={data.id} />
+            <ContentList type={"qna"} data={data} key={data.id} />
           ))}
         </SleftConatiner>
         <SRightContainer>
@@ -108,7 +108,7 @@ const QnaMain = () => {
             </SListFilter>
           </SListHeader>
           {disresolveList.map(data => (
-            <ContentList data={data} key={data.id} />
+            <ContentList type={"qna"} data={data} key={data.id} />
           ))}
         </SRightContainer>
       </SQnaWrapper>

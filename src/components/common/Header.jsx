@@ -15,7 +15,7 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = window.location.pathname;
-  const { isLogin } = useSelector(state => state.userSlice);
+  const { isLogin, userProfile } = useSelector(state => state.userSlice);
   const onLogoutHandler = () => {
     Swal.fire("로그아웃", "성공", "success")
       .then(() => {
@@ -26,6 +26,8 @@ const Header = () => {
         navigate("/");
       });
   };
+
+  console.log(userProfile);
 
   return (
     <SHeader location={location}>
@@ -78,11 +80,12 @@ const Header = () => {
           {isLogin ? (
             <button onClick={onLogoutHandler}>로그아웃</button>
           ) : (
-            // <a href={process.env.REACT_APP_GITHUB_API}>로그인</a>
-
             <a href={process.env.REACT_APP_ENDPOINT + "/auth/github"}>로그인</a>
           )}
-          <div className="loginProfile"></div>
+          <SUserProfile
+            className="loginProfile"
+            userProfile={userProfile}
+          ></SUserProfile>
         </SLoginConatainer>
       </SAlarmLoginWrapper>
     </SHeader>
@@ -208,9 +211,13 @@ const SLoginConatainer = styled.div`
   }
 
   & .loginProfile {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: white;
   }
+`;
+
+const SUserProfile = styled.div`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-image: url(${props => props.userProfile});
+  background-size: cover;
 `;
