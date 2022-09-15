@@ -17,9 +17,7 @@ import { removeQnaList } from "../../redux/modules/qnaSlice";
 const QnaMain = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const { qnaList, isFetching } = useSelector(state => state.qnaSlice);
-
   const resolveList = qnaList.filter(data => data.is_resolve);
   const disresolveList = qnaList.filter(data => data.is_resolve === false);
   const [category, setCategory] = useState("");

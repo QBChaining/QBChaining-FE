@@ -12,7 +12,9 @@ import {
   getBlogBookMarkDB,
   getHotBlogDB,
   postBlogLikeDB,
+  deleteBlogBookMarkDB,
 } from "../async/blog";
+import { postBookmarkListDB } from "../async/qna";
 export const blogSlice = createSlice({
   name: "blog",
   initialState: {
@@ -182,9 +184,35 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogBookMarkDB.fulfilled]: (state, action) => {
+      console.log(action);
       state.blogBookMark = action.payload;
     },
     [getBlogBookMarkDB.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = action.payload.errorMessage;
+    },
+
+    // 북마크 추가
+    [postBookmarkListDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [postBookmarkListDB.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      state.blogBookMark = action.payload;
+    },
+    [postBlogCommentDB.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = action.payload.errorMessage;
+    },
+    //북마크 삭제
+    [deleteBlogBookMarkDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [deleteBlogBookMarkDB.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      state.blogBookMark = action.payload;
+    },
+    [deleteBlogBookMarkDB.rejected]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },

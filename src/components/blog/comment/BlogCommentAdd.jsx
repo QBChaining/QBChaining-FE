@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { postBlogCommentDB } from "../../../redux/async/blog.js";
 import { useParams } from "react-router-dom";
-import profilecomment from "../../../assets/images/porfilecomment.png";
 const CommentAdd = () => {
+  const userProfile = useSelector(state => state.userSlice.userProfile);
   const dispatch = useDispatch();
   const commentRefInput = useRef();
   const { id } = useParams();
@@ -23,8 +23,7 @@ const CommentAdd = () => {
 
   return (
     <SComment>
-      <SProFile />
-
+      <SProfile url={userProfile} />
       <input
         type="text"
         ref={commentRefInput}
@@ -60,12 +59,16 @@ const SComment = styled.div`
     border-radius: 30px;
   }
 `;
-const SProFile = styled.div`
-  background-position: center;
-  background-size: cover;
-  background-image: url(${profilecomment});
+const SProfile = styled.div`
   width: 44px;
   height: 44px;
+  border-radius: 50%;
+  border: 1px solid ${props => props.theme.color.grey3};
+  background-image: url(${props => props.url});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-right: 11px;
 `;
 
 export default CommentAdd;
