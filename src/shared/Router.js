@@ -15,6 +15,8 @@ import BlogEdit from "../pages/blog/BlogCommentEdit";
 import { useSelector } from "react-redux";
 import NoLogin from "../pages/NoLogin";
 import Search from "../pages/search/Search";
+import Preparing from "./../pages/Preparing";
+import Undefind from "./../pages/Undefind";
 
 const Router = () => {
   const { isLogin } = useSelector(state => state.userSlice);
@@ -22,11 +24,13 @@ const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
-      <Route path="/*" element={<Navigate to="/" />} />
+      <Route path="/*" element={<Undefind />} />
       <Route path="/search" element={<Search />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/ranking" element={<Preparing />} />
       <Route
         path="/mypage/:userName"
-        element={isLogin ? <MyPage /> : <NoLogin />}
+        element={isLogin ? <Preparing /> : <Preparing />}
       />
       <Route path="/qna" element={<QnaMain />} />
       <Route path="/qna/write" element={isLogin ? <QnaWrite /> : <NoLogin />} />
@@ -44,7 +48,6 @@ const Router = () => {
         element={isLogin ? <BlogWrite /> : <NoLogin />}
       />
       <Route path="/blog" element={<BlogCommmunityMain />} />
-      <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/blog/detail/:id" element={<BlogDetail />} />
     </Routes>

@@ -13,9 +13,7 @@ const ModalBookmark = ({ isWrite, type }) => {
   const location = window.location.pathname;
 
   const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
-  console.log(qnaBookmarkList);
   const blogBookmarkList = useSelector(state => state);
-  console.log(blogBookmarkList);
   const { isLogin, color } = useSelector(state => state.userSlice);
   const [modal, setModal] = useState(false);
   const toggle = () => {
