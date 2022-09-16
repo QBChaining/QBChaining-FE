@@ -16,7 +16,7 @@ const CommentList = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <SCommentWrapper>
       {commentLists?.map(comments => (
         <SCommentList key={comments.id}>
           <div key={comments.id}>
@@ -24,15 +24,15 @@ const CommentList = () => {
           </div>
         </SCommentList>
       ))}
-    </div>
+    </SCommentWrapper>
   );
 };
 
 const SCommentList = styled.div`
-  width: 1046px;
-  height: 148px;
-  background: #dcdcdc;
-  border-radius: 20px;
-  margin: 20px 87px 0px 87px;
+  padding: 20px 0;
+`;
+
+const SCommentWrapper = styled.div`
+  padding: 20px 0;
 `;
 export default CommentList;

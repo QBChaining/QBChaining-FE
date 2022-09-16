@@ -25,6 +25,7 @@ const CommentEditDel = ({ comments, userdata }) => {
         id: comments.id,
       }),
     );
+    setShow(!show);
   };
 
   //댓글 삭제 버튼
@@ -35,80 +36,83 @@ const CommentEditDel = ({ comments, userdata }) => {
   useEffect(() => {
     dispatch(getBlogCommentListDB(id));
   }, [dispatch]);
-  return (
-    <div>
-      {!show ? (
-        <SCommentList>
-          <SProfile url={userProfile} />
-          <div>{comments.User?.user_name}</div>
-          <SDate>
-            {" "}
-            {comments.createdAt?.slice(0, 10)} /{" "}
-            {comments.createdAt?.slice(11, 16)}
-          </SDate>
-          <small>{comments.comment}</small>
 
-          {userNick === comments.User?.user_name ? (
-            <ButtonGroup>
-              <div
-                className="editbtn"
-                type="button"
-                onClick={() => {
-                  setShow(!show);
-                }}
-              >
-                수정
-              </div>
-              <div>|</div>
-              <div
-                className="delbtn"
-                type="button"
-                onClick={onClickDeleteHandler}
-              >
-                삭제
-              </div>
-            </ButtonGroup>
-          ) : null}
-        </SCommentList>
-      ) : (
-        <SCommentList>
+  return (
+    <>
+      <SCommentList>
+        <SProfileWrapper>
           <SProfile url={userProfile} />
           <div>{comments.User?.user_name}</div>
           <SDate>
-            {" "}
-            {comments.createdAt?.slice(0, 10)} /{" "}
+            {comments.createdAt?.slice(0, 10)} /
             {comments.createdAt?.slice(11, 16)}
           </SDate>
-          {/* <small>{comments.comment}</small> */}
-          <input type="text" placeholder={comments.comment} ref={editRef} />
+        </SProfileWrapper>
+        {!show ? (
+          <SComment>{comments.comment}</SComment>
+        ) : (
+          <STextArea type="text" placeholder={comments.comment} ref={editRef} />
+        )}
+        {userNick === comments.User?.user_name && (
           <ButtonGroup>
             <div
-              className="editcomplet"
-              onClick={() => {
-                onClickEditHandler(comments.id);
-                setShow(!show);
-              }}
+              className="editbtn"
+              type="button"
+              onClick={
+                show
+                  ? () => {
+                      onClickEditHandler();
+                    }
+                  : () => {
+                      setShow(!show);
+                    }
+              }
             >
-              수정완료
+              {show ? "수정완료" : "수정하기"}
+            </div>
+            <div
+              className="delbtn"
+              type="button"
+              onClick={onClickDeleteHandler}
+            >
+              삭제
             </div>
           </ButtonGroup>
-        </SCommentList>
-      )}
-    </div>
+        )}
+      </SCommentList>
+    </>
   );
 };
 
-const SCommentList = styled.div``;
+export default CommentEditDel;
+
+const SCommentList = styled.div`
+  background: ${props => props.theme.color.grey2};
+  border-radius: 20px;
+  padding: 20px 40px;
+  position: relative;
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+`;
 const SDate = styled.div`
+  margin-left: 10px;
   font-size: 14px;
   color: #939393;
+`;
+
+const SProfileWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${props => props.theme.color.grey5};
 `;
 
 const SProfile = styled.div`
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid ${props => props.theme.color.grey3};
   background-image: url(${props => props.url});
   background-position: center;
   background-repeat: no-repeat;
@@ -116,21 +120,43 @@ const SProfile = styled.div`
   margin-right: 11px;
 `;
 const ButtonGroup = styled.div`
-  float: right;
+  position: absolute;
+  top: 20px;
+  right: 40px;
   display: flex;
   flex-direction: row;
-  gap: 6px;
-  margin: 20px 40px 0px 0px;
   font-size: 16px;
   color: #7a7a7a;
-  & .editbtn {
+
+  & > div {
+    padding: 0 10px;
     cursor: pointer;
   }
-  & .delbtn {
-    cursor: pointer;
-  }
-  & .editcomplet {
-    cursor: pointer;
+
+  & > div:first-child {
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 6px;
+      right: 0;
+      width: 1px;
+      height: 12px;
+      background-color: #7a7a7a;
+    }
   }
 `;
-export default CommentEditDel;
+
+const SComment = styled.div`
+  padding: 10px 0 10px 55px;
+  font-size: 18px;
+`;
+
+const STextArea = styled.textarea`
+  display: block;
+  float: right;
+  width: calc(100% - 55px);
+  padding: 10px;
+  font-size: 18px;
+  resize: none;
+`;
