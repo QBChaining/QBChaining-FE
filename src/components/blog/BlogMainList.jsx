@@ -15,7 +15,7 @@ const BlogMainList = ({ posts }) => {
       <SContentsGroup>
         <SPTitleBox>
           <SUserInfo>
-            <SProfile url={userProfile} />
+            <SProfile url={posts.profile_img} />
             <SContentTitle
               className="title"
               onClick={() => {
