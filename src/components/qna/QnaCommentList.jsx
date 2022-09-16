@@ -2,7 +2,7 @@ import { legacy_createStore } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import Editor from "../common/Editor";
+import Editor from "../common/EditorComponent";
 import { successAlert, errorAlert } from "./../../utils/swal";
 import styled from "styled-components";
 import QnaLike from "../../assets/images/QnaLike.png";
@@ -26,11 +26,15 @@ const QnaCommentList = ({ id, qnaId }) => {
   const [winner, setWinner] = useState([]);
   //commentList 구독
   const list = useSelector(state => state.qnaSlice.commentList);
+
+  //디테일정보 구독
   const target = useSelector(state => state.qnaSlice.qnaTarget);
 
   const { isLogin } = useSelector(state => state.userSlice);
+
   //로그인 유저 이름 구독
   const userName = useSelector(state => state.userSlice.userName);
+
   //최초진입시 commentList 받아오기
   useEffect(() => {
     dispatch(getCommentListDB(id));
@@ -135,11 +139,10 @@ const QnaCommentList = ({ id, qnaId }) => {
                 }}
               >
                 <SUserProfile profile={data.profile_img} />
-
                 <SUserInfoText>
                   <SUserNameWrapper>
                     <SUserName>{data.user_name}</SUserName>
-                    {!target.is_resolve && (
+                    {!target.is_resolve && target.user_name !== data.user_name && (
                       <SChoiceButton
                         onClick={e => {
                           onChoiceHandler(e, data.id);

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -10,24 +10,35 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 //로딩이미지
 import loadingImage from "../../assets/images/Loading_icon.gif";
 import selectArrow from "../../assets/images/SelectArrow.png";
-//에디터
-import ToastEditor from "../editor/ToastEditor";
+import DeleteButton from "../../assets/images/DeleteButton.png";
 
 //에러알럿
 import { errorAlert } from "../../utils/swal";
+import { nanoid } from "@reduxjs/toolkit";
+import { Editor } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+import "tui-color-picker/dist/tui-color-picker.css";
+import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
+import "@toast-ui/editor/dist/i18n/ko-kr";
+
+import Prism from "prismjs";
+import "prismjs/themes/prism.css";
+import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
 
 import {
   patchBlogCommunityDB,
   postBlogCommunityDB,
 } from "../../redux/async/blog";
-
 import {
   editQnaListDB,
   postCommentListDB,
   postQnaListDB,
 } from "../../redux/async/qna";
+import { async } from "@firebase/util";
 
-const Editor = ({
+const EditorComponent = ({
   isEdit,
   isWrite,
   isCommentWrite,
@@ -44,14 +55,39 @@ const Editor = ({
   const titleText = useRef();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [contents, setContents] = useState(isComment);
   const [category, setCategory] = useState("JavaScript");
+  const nextId = useRef(1);
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
   const location = window.location.pathname;
   const { isLogin, userName, userProfile } = useSelector(
     state => state.userSlice,
   );
+
+  const editorRef = useRef();
+  const QnatoolbarItems = [
+    ["heading", "bold", "italic", "strike"],
+    ["codeblock"],
+    ["ul", "ol", "task"],
+    ["hr"],
+    ["table", "link"],
+    ["image"],
+    ["scrollSync"],
+  ];
+  const BlogtoolbarItems = [
+    ["heading", "bold", "italic", "strike"],
+    ["codeblock"],
+    ["ul", "ol", "task"],
+    ["table", "link"],
+    ["hr"],
+    ["image"],
+    ["scrollSync"],
+  ];
+
+  const onChangeContent = () => {
+    const data = editorRef.current.getInstance().getMarkdown();
+    setContent(data);
+  };
 
   // const selectLocalImage = () => {
   //   const input = document.createElement("input");
@@ -141,10 +177,14 @@ const Editor = ({
           tag: tags,
         }),
       ).then(res => {
-        navigate("/qna");
+        navigate(`/qna/detail/${res.payload.data.id}`);
       });
       //코멘트작성
     } else if (isCommentWrite) {
+      if (editorRef.current.getInstance().getMarkdown().length === 0) {
+        errorAlert("텍스트를 입력해주세요!");
+        return;
+      }
       dispatch(
         postCommentListDB({
           content,
@@ -155,7 +195,7 @@ const Editor = ({
         }),
       );
       //작성 후 입력 값 초기화
-      setContents(!contents);
+      editorRef.current.getInstance().setMarkdown("", true);
       setContent("");
       //블로그 수정, 생성
     } else if (isBlogWrite) {
@@ -206,9 +246,20 @@ const Editor = ({
       errorAlert("빈칸입니다.");
       return;
     }
+    if (tags.filter(data => data === tagText.current.value).length === 1) {
+      errorAlert("이미 추가된 태그입니다!");
+      return;
+    }
+
     setTags([...tags, tag]);
     setTag("");
+    nextId.current += 1;
     tagText.current.value = "";
+  };
+
+  //태그 삭제
+  const onDeleteTagHandler = data => {
+    setTags(tags.filter(tag => tag !== data));
   };
 
   return (
@@ -247,11 +298,38 @@ const Editor = ({
             )}
           </div>
         )}
-        <ToastEditor
-          isCommentWrite={isCommentWrite}
-          content={content}
-          setContent={setContent}
-        />
+        <SEditor>
+          <Editor
+            // initialValue="마크다운으로 내용을 입력하세요!"
+            placeholder="마크다운으로 내용을 입력하세요!"
+            previewStyle={isCommentWrite ? "tab" : "vertical"}
+            height={isCommentWrite ? "600px" : "500px"}
+            initialEditType="markdown"
+            toolbarItems={QnatoolbarItems}
+            useCommandShortcut={false}
+            hideModeSwitch={true}
+            plugins={[
+              colorSyntax,
+              [codeSyntaxHighlight, { highligher: Prism }],
+            ]}
+            language="ko-KR"
+            ref={editorRef}
+            onChange={onChangeContent}
+            hooks={{
+              addImageBlobHook: async (blob, callback) => {
+                //firebase에 이미지 업로드
+                const uploaded_file = await uploadBytes(
+                  ref(storage, `images/${Date.now()}`),
+                  blob,
+                );
+                //firebase에 올라간 이미지url 저장
+                const file_url = await getDownloadURL(uploaded_file.ref);
+                //firebase에 이미지 업로드 완료 후 url 추출후 textEditor에 삽입
+                callback(file_url);
+              },
+            }}
+          />
+        </SEditor>
       </div>
       <SSubmitWrapper>
         {(isEdit || isWrite || isBlogWrite || isBlogEdit) && (
@@ -269,10 +347,16 @@ const Editor = ({
                 추가
               </SAddButton>
             </SInputContainer>
-            {tags.map((data, i) => (
-              <STags className="tags" key={i}>
-                {data}
-              </STags>
+            {tags.map(data => (
+              <STagsWrapper key={nanoid()}>
+                <STags className="tags">{data}</STags>
+                <STagRemove
+                  onClick={() => {
+                    onDeleteTagHandler(data);
+                  }}
+                  type="button"
+                />
+              </STagsWrapper>
             ))}
           </STagContainer>
         )}
@@ -296,7 +380,7 @@ const Editor = ({
   );
 };
 
-export default Editor;
+export default EditorComponent;
 
 const Sform = styled.form`
   display: flex;
@@ -405,4 +489,31 @@ const SCommentWriteButton = styled.button`
   border: none;
   background-color: ${props => props.theme.color.white};
   font-weight: 600;
+`;
+
+const STagRemove = styled.button`
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  width: 20px;
+  height: 20px;
+  right: 5px;
+  top: -10px;
+  background-image: url(${DeleteButton});
+  background-size: contain;
+`;
+const STagsWrapper = styled.div`
+  display: flex;
+  position: relative;
+`;
+
+const SEditor = styled.div`
+  & .ProseMirror {
+    background-color: white;
+    height: 100%;
+  }
+
+  & .toastui-editor-main-container {
+    background-color: ${props => props.theme.color.white};
+  }
 `;
