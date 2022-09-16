@@ -31,6 +31,7 @@ const BlogBookMark = ({ isbookmark }) => {
   useEffect(() => {
     dispatch(getBlogBookMarkDB());
   }, []);
+
   return (
     <div>
       {bookMark === true ? (

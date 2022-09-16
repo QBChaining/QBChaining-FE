@@ -8,6 +8,7 @@ import QnaCategoryImage from "../qna/QnaCategoryImage";
 import QnaBookmarkButton from "../bookmark/QnaBookmarkButton";
 import ResolveWrapper from "../../assets/images/ResolveList.png";
 import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
+import NoResolvedListIcon from "../../assets/images/NoResolvedListIcon.png";
 import QnaLikeIcon from "../../assets/images/QnaLike.png";
 import QnaCommentIcon from "../../assets/images/QnaComment.png";
 import GreyQnaLikeIcon from "../../assets/images/GreyQnaLike.png";
@@ -57,10 +58,16 @@ const ContentList = ({ data, type, isSearch }) => {
 
   return (
     <StextMain ResolveWrapper={ResolveWrapper}>
+      {isSearch && type === "qna" && (
+        <SSolveText resolve={data.is_resolve}>
+          {data.is_resolve ? "채택 완료" : "채택미완료"}
+        </SSolveText>
+      )}
       <SWrapper
         type={type}
         resolve={data.is_resolve}
         ResolveWrapper={ResolveWrapper}
+        isSearch={isSearch}
       >
         <SUserInfo>
           <SProfileContainer
@@ -125,7 +132,25 @@ const ContentList = ({ data, type, isSearch }) => {
 
 export default ContentList;
 
-const StextMain = styled.div``;
+const StextMain = styled.div`
+  position: relative;
+`;
+
+const SSolveText = styled.div`
+  position: absolute;
+  right: 30px;
+  top: -35px;
+  padding-left: 26px;
+  background-position: left 0 top 6px;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  font-size: 18px;
+  font-weight: 700;
+  color: ${props =>
+    props.resolve ? props.theme.color.black : props.theme.color.grey5};
+  background-image: url(${props =>
+    props.resolve ? ResolvedListIcon : NoResolvedListIcon});
+`;
 
 const SWrapper = styled.div`
   width: 100%;
@@ -142,7 +167,8 @@ const SWrapper = styled.div`
       ? "4px 6px 15px rgba(0, 0, 0, 0.1);"
       : "-4px 6px 15px rgba(0, 0, 0, 0.1)"};
   border-radius: 30px;
-  margin: 30px 0;
+  margin: 30px 0
+    ${props => (props.isSearch && props.type === "qna" ? "55px" : "30px")} 0;
   min-height: 190px;
 `;
 

@@ -52,65 +52,69 @@ const BlogCommunityDetail = () => {
               <SProfile url={userProfile} />
             </SProfileNickNameDate>
           </STitleSection>
-          {userNick === detail.user_name?.user_name ? (
-            <ButtonGroup>
-              <div
-                className="editbtn"
-                onClick={() => {
-                  navigate(`/blog/edit/${id}`);
-                }}
-              >
-                수정
-              </div>
-              <div>|</div>
-              <div
-                className="delbtn"
-                onClick={id => {
-                  navigate("/blog");
-                  deleteBlogPost(id);
-                }}
-              >
-                삭제
-              </div>
-            </ButtonGroup>
-          ) : null}
-
-          <SContents>
-            <ToastViewer className="content1" content={detail.content} />
-          </SContents>
-          <SLikeNtags>
-            <div className="tagList">
-              {detail?.tag.map((tags, i) => {
-                return (
-                  <STag key={(tags, i)}>
+          <SContentWrapper>
+            {userNick === detail.user_name?.user_name && (
+              <ButtonGroup>
+                <div
+                  className="editbtn"
+                  onClick={() => {
+                    navigate(`/blog/edit/${id}`);
+                  }}
+                >
+                  수정
+                </div>
+                <div>|</div>
+                <div
+                  className="delbtn"
+                  onClick={id => {
+                    navigate("/blog");
+                    deleteBlogPost(id);
+                  }}
+                >
+                  삭제
+                </div>
+              </ButtonGroup>
+            )}
+            <SContents>
+              <ToastViewer className="content1" content={detail.content} />
+            </SContents>
+            <SLikeNtags>
+              <div className="tagList">
+                {detail?.tag.map((tags, i) => (
+                  <STag key={i}>
                     <div>{tags}</div>
                   </STag>
-                );
-              })}
-            </div>
-            <BlogLike love={detail.is_like} isbookmark={detail.is_bookmark} />
-          </SLikeNtags>
+                ))}
+              </div>
+              <BlogLike love={detail.is_like} isbookmark={detail.is_bookmark} />
+            </SLikeNtags>
+          </SContentWrapper>
         </div>
       ))}
-
-      <div>
+      <SCommentWrapper>
         <CommentAdd />
         <CommentList />
-      </div>
+      </SCommentWrapper>
       <ModalBookmark isWrite={true} />
     </SContainer>
   );
 };
+
+export default BlogCommunityDetail;
+
 const SContainer = styled.div`
-  max-width: 1220px;
+  width: 1260px;
+  margin: 0 auto;
+  margin-top: 40px;
+  padding-bottom: 20px;
 `;
 const SNickName = styled.div``;
 const ButtonGroup = styled.div`
-  float: right;
+  position: absolute;
+  top: 20px;
+  right: 40px;
   display: flex;
-  flex-direction: row;
   gap: 6px;
-  margin: 20px 40px 0px 0px;
   font-size: 16px;
   color: #7a7a7a;
   & .editbtn {
@@ -123,8 +127,9 @@ const ButtonGroup = styled.div`
 const STitleSection = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 1220px;
   border-bottom: 1px solid #939393;
+  padding: 30px;
+  align-items: center;
   & .bookMark {
     display: flex;
     flex-direction: row;
@@ -133,15 +138,18 @@ const STitleSection = styled.div`
 const STitle = styled.div`
   font-size: 24px;
   font-weight: 600;
+  line-height: 30px;
+  padding-left: 7px;
 `;
 
 const SProfileNickNameDate = styled.div`
   display: flex;
 `;
 const SDate = styled.div`
+  margin-right: 10px;
+  text-align: right;
   & .name {
     font-size: 18px;
-    margin-left: 50px;
   }
   & .date {
     font-size: 14px;
@@ -150,12 +158,16 @@ const SDate = styled.div`
 `;
 
 const SContents = styled.div`
-  margin: 20px 0px 0px 40px;
+  margin-top: 15px;
+  min-height: 200px;
 `;
 const SLikeNtags = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   & .tagList {
     display: flex;
-    flex-direction: row;
+    padding-top: 40px;
   }
 `;
 
@@ -178,13 +190,20 @@ const STag = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  color: #2776ed;
-  width: 108px;
-  height: 39px;
+  color: ${props => props.theme.color.mainBlue};
+  padding: 10px 15px;
   margin-right: 15px;
-  border: 1px solid #2776ed;
+  border: 1px solid ${props => props.theme.color.mainBlue};
   border-radius: 30px;
-  margin: 40px 16px 20.2px 0px;
+  margin: 0 16px 20px 0;
 `;
 
-export default BlogCommunityDetail;
+const SContentWrapper = styled.div`
+  padding: 40px 40px 20px 40px;
+  position: relative;
+  border-bottom: 1px solid ${props => props.theme.color.grey5};
+`;
+
+const SCommentWrapper = styled.div`
+  padding: 0 40px;
+`;
