@@ -34,7 +34,6 @@ const QnaMain = () => {
         });
       } else if (category.length > 0) {
         dispatch(getQnaCategoryListDB({ category, pageNumber })).then(res => {
-          console.log(res);
           setHasNextPage(res.payload.length === 10);
         });
       }

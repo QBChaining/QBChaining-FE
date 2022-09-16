@@ -32,8 +32,6 @@ const ModalBookmark = ({ isWrite, type }) => {
     }
   }, []);
 
-  console.log("조회", blogBookmarkList);
-
   return (
     <>
       {modal && (

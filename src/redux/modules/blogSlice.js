@@ -13,8 +13,8 @@ import {
   getHotBlogDB,
   postBlogLikeDB,
   deleteBlogBookMarkDB,
-  unBlogLikeDB,
   postBlogBookMarkDB,
+  unBlogLikeDB,
 } from "../async/blog";
 export const blogSlice = createSlice({
   name: "blog",
@@ -191,7 +191,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogBookMarkDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.blogBookMark = action.payload;
       state.isFetching = false;
     },
@@ -205,7 +204,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogBookMarkDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.blogBookMark.push(action.payload);
     },
     [postBlogBookMarkDB.rejected]: (state, action) => {
@@ -245,7 +243,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogLikeDB.fulfilled]: (state, action) => {
-      state.like = action.payload;
+      // state.like = action.payload;
     },
     [postBlogLikeDB.rejected]: (state, action) => {
       state.errorMessage = action.payload.errorMessage;

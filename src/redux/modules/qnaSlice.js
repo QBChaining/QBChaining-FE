@@ -253,6 +253,7 @@ const qnaSlice = createSlice({
     },
     //게시글 즐겨찾기 추가
     [postBookmarkListDB.fulfilled]: (state, { payload }) => {
+      console.log(payload);
       state.bookmarkList.push(payload);
       state.isFetching = false;
       state.errorMessage = null;
