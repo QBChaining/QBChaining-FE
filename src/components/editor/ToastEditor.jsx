@@ -46,13 +46,13 @@ const ToastEditor = ({ isCommentWrite, content, setContent }) => {
   return (
     <SEditor>
       <Editor
-        initialValue="마크다운으로 내용을 입력하세요!"
+        //코드
+        // initialValue="마크다운으로 내용을 입력하세요!"
         placeholder="마크다운으로 내용을 입력하세요!"
         previewStyle={isCommentWrite ? "tab" : "vertical"}
         height={isCommentWrite ? "600px" : "500px"}
         initialEditType="markdown"
         toolbarItems={QnatoolbarItems}
-        
         useCommandShortcut={false}
         hideModeSwitch={true}
         plugins={[colorSyntax, [codeSyntaxHighlight, { highligher: Prism }]]}

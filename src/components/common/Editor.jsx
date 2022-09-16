@@ -37,17 +37,18 @@ const Editor = ({
   blogEditId,
   editData,
 }) => {
+  const isComment = useSelector(state => state.qnaSlice.isCommentWrite);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const tagText = useRef();
   const titleText = useRef();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [contents, setContents] = useState(isComment);
   const [category, setCategory] = useState("JavaScript");
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
   const location = window.location.pathname;
-
   const { isLogin, userName, userProfile } = useSelector(
     state => state.userSlice,
   );
@@ -154,6 +155,7 @@ const Editor = ({
         }),
       );
       //작성 후 입력 값 초기화
+      setContents(!contents);
       setContent("");
       //블로그 수정, 생성
     } else if (isBlogWrite) {
@@ -188,8 +190,8 @@ const Editor = ({
       setCategory(editData.category);
       // quillRef.current.firstChild.innerHTML = editData.content;
     }
-  }, [isEdit, editData]);
-
+  }, [isEdit, editData, isComment]);
+  console.log(isComment);
   const onCategoryChangeHandler = e => {
     setCategory(e.target.value);
   };

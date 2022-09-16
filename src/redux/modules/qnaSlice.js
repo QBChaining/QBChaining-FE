@@ -28,6 +28,7 @@ const qnaSlice = createSlice({
     commentList: [],
     bookmarkList: [],
     isFetching: false,
+    isCommentWrite: false,
     errorMessage: "",
   },
   reducers: {
@@ -164,10 +165,12 @@ const qnaSlice = createSlice({
     [postCommentListDB.fulfilled]: (state, { payload }) => {
       state.commentList.push(payload);
       state.isFetching = false;
+      state.isCommentWrite = true;
       state.errorMessage = null;
     },
     [postCommentListDB.pending]: (state, { payload }) => {
       state.isFetching = true;
+      state.isCommentWrite = false;
     },
     [postCommentListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;

@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import qnaSlice from "./../modules/qnaSlice";
 import blogSlice from "../modules/blogSlice";
-// import commentSlice from '../modules/commentSlice'
 import userSlice from "./../modules/userSlice";
 import searchSlice from "./../modules/searchSlice";
+import notificationSlice from "../modules/notificationSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,6 +11,7 @@ const store = configureStore({
     blogSlice,
     userSlice,
     searchSlice,
+    notificationSlice,
   },
 });
 
