@@ -7,10 +7,6 @@ import {
   removeSearchList,
   setSearchWord,
 } from "../../redux/modules/searchSlice";
-import {
-  getBlogSearchListDB,
-  getQnaSearchListDB,
-} from "./../../redux/async/search";
 import { errorAlert } from "../../utils/swal";
 
 const SearchInput = () => {
@@ -22,12 +18,9 @@ const SearchInput = () => {
       errorAlert("검색어를 입력해주세요!");
       return;
     }
-    navigate(`/search?q=${search.current.value}`);
-
     dispatch(removeSearchList());
     dispatch(setSearchWord(search.current.value));
-    dispatch(getQnaSearchListDB(search.current.value));
-    dispatch(getBlogSearchListDB(search.current.value));
+    navigate(`/search?q=${search.current.value}`);
     search.current.value = "";
   };
 

@@ -21,6 +21,7 @@ const ToastEditor = ({ isCommentWrite, content, setContent }) => {
     ["ul", "ol", "task"],
     ["hr"],
     ["table", "link"],
+    ["image"],
     ["scrollSync"],
   ];
   const BlogtoolbarItems = [

@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import categories from "./../../utils/category";
-import { useDispatch, useSelector } from "react-redux";
 
 const QnaMainCatergory = ({
   pageNumber,
@@ -10,13 +9,8 @@ const QnaMainCatergory = ({
   setHasNextPage,
 }) => {
   const category = categories.qnaCategory;
-  const dispatch = useDispatch();
 
   const lists = useRef();
-
-  const onGetCategory = (name, pageNumber) => {
-    // dispatch(getQnaCategoryListDB({ name, pageNumber }));
-  };
 
   return (
     <SQnaMainCatergory ref={lists}>

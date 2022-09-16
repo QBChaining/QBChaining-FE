@@ -36,27 +36,31 @@ const CommentAdd = () => {
   );
 };
 const SComment = styled.div`
-  width: 1220px;
-  border-top: 1px solid #939393;
   display: flex;
-  flex-direction: row;
-  margin-bottom: 40px;
-
+  width: 100%;
+  position: relative;
+  padding-top: 40px;
   input {
-    width: 962px;
+    flex: 1;
     margin-left: 27px;
-
-    border: 1px solid #c0c0c0;
+    border: 1px solid ${props => props.theme.color.grey5};
     border-radius: 30px;
-  }
-  button {
-    position: relative;
-    right: 3%;
-    width: 114px;
     height: 44px;
-    background: #2776ed;
-    border: 1px solid #2776ed;
+    padding: 0 60px 0 20px;
+  }
+
+  button {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    padding: 9px 40px;
+    background: ${props => props.theme.color.mainBlue};
+    border: none;
+    color: ${props => props.theme.color.white};
     border-radius: 30px;
+    font-weight: 700;
+    font-size: 18px;
+    height: 44px;
   }
 `;
 const SProfile = styled.div`
@@ -68,7 +72,6 @@ const SProfile = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  margin-right: 11px;
 `;
 
 export default CommentAdd;

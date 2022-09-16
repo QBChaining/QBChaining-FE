@@ -43,15 +43,17 @@ const AddLike = styled.div`
   height: 18px;
 
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-image: url(${addlike});
+  background-repeat: no-repeat;
   cursor: pointer;
 `;
 const UnLike = styled.div`
   width: 18px;
   height: 18px;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-image: url(${unlike});
   cursor: pointer;
 `;
