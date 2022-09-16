@@ -9,7 +9,6 @@ const BlogMainList = ({ posts }) => {
   const userProfile = useSelector(state => state.userSlice.userProfile);
   const navigate = useNavigate();
 
-  console.log(posts);
   return (
     <SBloglist>
       <SContentsGroup>
@@ -26,7 +25,11 @@ const BlogMainList = ({ posts }) => {
             </SContentTitle>
           </SUserInfo>
           <SBookMark>
-            <BlogBookMark isbookmark={posts.is_bookmark} posts={posts} />
+            <BlogBookMark
+              ismainlist={true}
+              isbookmark={posts.is_bookmark}
+              posts={posts}
+            />
           </SBookMark>
         </SPTitleBox>
         <STagNMark>

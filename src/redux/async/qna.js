@@ -28,10 +28,8 @@ export const getQnaListDB = createAsyncThunk(
 export const getQnaCategoryListDB = createAsyncThunk(
   "qna/getcategorylist",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await qnaApi.getCategoryList(data);
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }

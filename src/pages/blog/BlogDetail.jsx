@@ -18,7 +18,6 @@ const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
   const userNick = useSelector(state => state.userSlice.userName);
   const { blogBookMark } = useSelector(state => state.blogSlice);
-  console.log("디테일", blogBookMark);
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -40,6 +39,7 @@ const BlogCommunityDetail = () => {
           <STitleSection>
             <div className="bookMark">
               <BlogDetailBookMark
+                isdetailbookmark={true}
                 target={detail}
                 isbookmark={detail?.is_bookmark}
               />
@@ -80,6 +80,7 @@ const BlogCommunityDetail = () => {
               </ButtonGroup>
             )}
             <SContents>
+              {/* <Notification /> */}
               <ToastViewer className="content1" content={detail.content} />
             </SContents>
             <SLikeNtags>

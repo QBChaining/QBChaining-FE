@@ -175,7 +175,6 @@ export const postBlogLikeDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.postBlogLike(id);
-      console.log(response);
       if (response.data.success === true) {
         successAlert("좋아요를 누르셨습니다.");
         return response.data;
@@ -203,7 +202,6 @@ export const getBlogBookMarkDB = createAsyncThunk(
   async thunkAPI => {
     try {
       const response = await blogApi.getBlogBookMark();
-      console.log(typeof response.data.data);
       return response.data.data;
     } catch (err) {
       Sentry.captureException(`error, 좋아요 에러. ${err}`);
@@ -233,7 +231,6 @@ export const postBlogBookMarkDB = createAsyncThunk(
 export const deleteBlogBookMarkDB = createAsyncThunk(
   "DEL_BOOK_MARK",
   async (id, thunkAPI) => {
-    console.log(id);
     try {
       const response = await blogApi.delBlogBookMark(id);
       if (response.data.success === true) {
