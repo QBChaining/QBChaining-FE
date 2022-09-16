@@ -13,7 +13,7 @@ import BlogLike from "../../components/blog/BlogLike";
 // import BlogBookMark from "../../components/blog/BlogBookMark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
-
+import Notification from "../../components/common/Notification";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
   const userNick = useSelector(state => state.userSlice.userName);
@@ -43,13 +43,13 @@ const BlogCommunityDetail = () => {
             </div>
             <SProfileNickNameDate>
               <SDate>
-                <div className="name">{detail.user_name?.user_name}</div>
+                <div className="name">{detail.user_name}</div>
                 <div className="date">
                   {detail.created_at?.slice(0, 10)} /{" "}
                   {detail.created_at?.slice(11, 16)}
                 </div>
               </SDate>
-              <SProfile url={userProfile} />
+              <SProfile url={detail.profile_img} />
             </SProfileNickNameDate>
           </STitleSection>
           <SContentWrapper>

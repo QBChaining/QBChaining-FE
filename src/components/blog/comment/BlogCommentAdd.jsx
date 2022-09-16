@@ -60,6 +60,7 @@ const SComment = styled.div`
     border-radius: 30px;
     font-weight: 700;
     font-size: 18px;
+    height: 44px;
   }
 `;
 const SProfile = styled.div`

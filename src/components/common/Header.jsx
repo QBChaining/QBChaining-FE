@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logIn, logOut } from "../../redux/modules/userSlice";
 import { removeUserInfo } from "../../redux/modules/qnaSlice";
 import SearchInput from "./../search/SearchInput";
+// import Notification from "./Notification";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ const Header = () => {
       <SAlarmLoginWrapper>
         <SAlarmConatainer className="alarmConatainer active">
           <HiOutlineBell />
+          {/* <Notification /> */}
         </SAlarmConatainer>
         <SLoginConatainer className="loginConatainer">
           {isLogin ? (
