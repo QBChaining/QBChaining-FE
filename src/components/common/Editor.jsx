@@ -191,7 +191,6 @@ const Editor = ({
       // quillRef.current.firstChild.innerHTML = editData.content;
     }
   }, [isEdit, editData, isComment]);
-  console.log(isComment);
   const onCategoryChangeHandler = e => {
     setCategory(e.target.value);
   };

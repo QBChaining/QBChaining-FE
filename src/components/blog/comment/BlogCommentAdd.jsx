@@ -30,7 +30,6 @@ const CommentAdd = () => {
         placeholder={"20자이하"}
         maxLength="20"
       />
-
       <button onClick={addComment}>추가하기</button>
     </SComment>
   );

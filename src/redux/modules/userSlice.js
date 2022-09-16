@@ -17,6 +17,7 @@ export const userSlice = createSlice({
       state.isLogin = false;
       state.userToken = null;
       state.userName = null;
+      state.userProfile = null;
     },
     logIn: (state, action) => {
       state.isLogin = true;

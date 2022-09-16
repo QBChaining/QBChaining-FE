@@ -15,7 +15,7 @@ const BlogLike = ({ love }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [Like, setLike] = useState(love);
-  console.log(love);
+
   const onLikeBlog = () => {
     if (!isLogin) {
       needLoginAlert();

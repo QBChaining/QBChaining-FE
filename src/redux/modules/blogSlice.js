@@ -14,8 +14,8 @@ import {
   postBlogLikeDB,
   deleteBlogBookMarkDB,
   unBlogLikeDB,
+  postBlogBookMarkDB,
 } from "../async/blog";
-import { postBookmarkListDB } from "../async/qna";
 export const blogSlice = createSlice({
   name: "blog",
   initialState: {
@@ -25,9 +25,9 @@ export const blogSlice = createSlice({
     myblog: [],
     hotBlog: [],
     blogBookMark: [],
+    likebookmark: {},
     isFetching: false,
     errorMessage: "",
-    likebookmark: {},
   },
   reducers: {},
   extraReducers: {
@@ -191,9 +191,9 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogBookMarkDB.fulfilled]: (state, action) => {
-      console.log(action);
-      // state.type = action.type;
+      console.log(action.payload);
       state.blogBookMark = action.payload;
+      state.isFetching = false;
     },
     [getBlogBookMarkDB.rejected]: (state, action) => {
       state.isFetching = false;
@@ -201,13 +201,14 @@ export const blogSlice = createSlice({
     },
 
     // 북마크 추가
-    [postBookmarkListDB.pending]: state => {
+    [postBlogBookMarkDB.pending]: state => {
       state.isFetching = true;
     },
-    [postBookmarkListDB.fulfilled]: (state, action) => {
-      state.blogBookMark = action.payload;
+    [postBlogBookMarkDB.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      state.blogBookMark.push(action.payload);
     },
-    [postBlogCommentDB.rejected]: (state, action) => {
+    [postBlogBookMarkDB.rejected]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },
@@ -216,7 +217,11 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [deleteBlogBookMarkDB.fulfilled]: (state, action) => {
-      state.likebookmark = action.payload;
+      const newBlogBookMark = state.blogBookMark.filter(
+        data => data.id !== parseInt(action.payload),
+      );
+      state.blogBookMark = newBlogBookMark;
+      state.isFetching = false;
     },
     [deleteBlogBookMarkDB.rejected]: (state, action) => {
       state.isFetching = false;

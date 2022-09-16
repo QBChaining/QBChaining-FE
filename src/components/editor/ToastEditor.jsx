@@ -39,11 +39,6 @@ const ToastEditor = ({ isCommentWrite, content, setContent }) => {
     setContent(data);
   };
 
-  const onBlur = () => {
-    // setContent("");
-    console.log(editorRef.current.getInstance().getHTML());
-  };
-
   return (
     <SEditor>
       <Editor
@@ -60,7 +55,6 @@ const ToastEditor = ({ isCommentWrite, content, setContent }) => {
         language="ko-KR"
         ref={editorRef}
         onChange={onChange}
-        onBlur={onBlur}
       />
     </SEditor>
   );

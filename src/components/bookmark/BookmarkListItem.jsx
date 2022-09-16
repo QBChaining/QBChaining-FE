@@ -36,7 +36,7 @@ const BookmarkListItem = ({ type, isModal, data }) => {
           modal={modal}
           setModal={setModal}
           onToggleHandler={onToggleHandler}
-          id={data.qna_id}
+          id={data.id}
         />
       )}
     </>

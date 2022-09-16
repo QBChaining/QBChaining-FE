@@ -10,18 +10,26 @@ import { errorAlert, needLoginAlert } from "../../utils/swal";
 import blogbookmark from "../../assets/images/blogbookmark.png";
 import blogbookmarkadd from "../../assets/images/bookmarkadd.png";
 import { useParams } from "react-router-dom";
-const BlogBookMark = ({ isbookmark }) => {
-  console.log(isbookmark);
+import { getToday } from "./../../utils/today";
+const BlogBookMark = ({ target, isbookmark }) => {
   const [bookMark, setBookMark] = useState(isbookmark);
   const dispatch = useDispatch();
   const { isLogin } = useSelector(state => state.userSlice);
   const { id } = useParams();
+
+  const totalData = {
+    id: target.id,
+    title: target.title,
+    user_name: target.user_name,
+    createdAt: getToday(),
+  };
+
   const onAddBookMark = () => {
     if (!isLogin) {
       needLoginAlert();
       return;
     }
-    dispatch(postBlogBookMarkDB(id));
+    dispatch(postBlogBookMarkDB(totalData));
     setBookMark(!bookMark);
   };
   const onDeleteBookMark = () => {

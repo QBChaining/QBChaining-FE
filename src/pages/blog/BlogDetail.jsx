@@ -13,10 +13,12 @@ import BlogLike from "../../components/blog/BlogLike";
 // import BlogBookMark from "../../components/blog/BlogBookMark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
+
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
-  console.log(response);
   const userNick = useSelector(state => state.userSlice.userName);
+  const { blogBookMark } = useSelector(state => state.blogSlice);
+  console.log("디테일", blogBookMark);
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -37,7 +39,10 @@ const BlogCommunityDetail = () => {
         <div key={detail.id}>
           <STitleSection>
             <div className="bookMark">
-              <BlogDetailBookMark isbookmark={detail?.is_bookmark} />
+              <BlogDetailBookMark
+                target={detail}
+                isbookmark={detail?.is_bookmark}
+              />
               <STitle>{detail?.title}</STitle>
             </div>
             <SProfileNickNameDate>
@@ -52,7 +57,7 @@ const BlogCommunityDetail = () => {
             </SProfileNickNameDate>
           </STitleSection>
           <SContentWrapper>
-            {userNick === detail.user_name?.user_name && (
+            {userNick === detail.user_name && (
               <ButtonGroup>
                 <div
                   className="editbtn"
@@ -94,7 +99,7 @@ const BlogCommunityDetail = () => {
         <CommentAdd />
         <CommentList />
       </SCommentWrapper>
-      <ModalBookmark isWrite={true} />
+      <ModalBookmark />
     </SContainer>
   );
 };
