@@ -13,12 +13,12 @@ import BlogLike from "../../components/blog/BlogLike";
 // import BlogBookMark from "../../components/blog/BlogBookMark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
-import Notification from "../../components/common/Notification";
+
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
-  console.log("detail", response);
   const userNick = useSelector(state => state.userSlice.userName);
-  console.log(userNick);
+  const { blogBookMark } = useSelector(state => state.blogSlice);
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -38,7 +38,11 @@ const BlogCommunityDetail = () => {
         <div key={detail.id}>
           <STitleSection>
             <div className="bookMark">
-              <BlogDetailBookMark isbookmark={detail?.is_bookmark} />
+              <BlogDetailBookMark
+                isdetailbookmark={true}
+                target={detail}
+                isbookmark={detail?.is_bookmark}
+              />
               <STitle>{detail?.title}</STitle>
             </div>
             <SProfileNickNameDate>
@@ -76,7 +80,7 @@ const BlogCommunityDetail = () => {
               </ButtonGroup>
             )}
             <SContents>
-              <Notification />
+              {/* <Notification /> */}
               <ToastViewer className="content1" content={detail.content} />
             </SContents>
             <SLikeNtags>
@@ -96,7 +100,7 @@ const BlogCommunityDetail = () => {
         <CommentAdd />
         <CommentList />
       </SCommentWrapper>
-      <ModalBookmark isWrite={true} />
+      <ModalBookmark />
     </SContainer>
   );
 };

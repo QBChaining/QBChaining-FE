@@ -10,18 +10,26 @@ import { errorAlert, needLoginAlert } from "../../utils/swal";
 import blogbookmark from "../../assets/images/blogbookmark.png";
 import blogbookmarkadd from "../../assets/images/bookmarkadd.png";
 import { useParams } from "react-router-dom";
-const BlogBookMark = ({ isbookmark }) => {
-  console.log(isbookmark);
+import { getToday } from "./../../utils/today";
+const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
   const [bookMark, setBookMark] = useState(isbookmark);
   const dispatch = useDispatch();
   const { isLogin } = useSelector(state => state.userSlice);
   const { id } = useParams();
+
+  const totalData = {
+    id: target.id,
+    title: target.title,
+    user_name: target.user_name,
+    createdAt: getToday(),
+  };
+
   const onAddBookMark = () => {
     if (!isLogin) {
       needLoginAlert();
       return;
     }
-    dispatch(postBlogBookMarkDB(id));
+    dispatch(postBlogBookMarkDB(totalData));
     setBookMark(!bookMark);
   };
   const onDeleteBookMark = () => {
@@ -33,16 +41,32 @@ const BlogBookMark = ({ isbookmark }) => {
   }, []);
 
   return (
-    <div>
-      {bookMark === true ? (
-        <SBookMarkBtn onClick={onDeleteBookMark} />
+    <>
+      {isdetailbookmark ? (
+        <div>
+          {bookMark === true ? (
+            <SBookMarkBtn onClick={onDeleteBookMark} />
+          ) : (
+            <SbookMarkBtnAdd onClick={onAddBookMark} />
+          )}
+        </div>
       ) : (
-        <SbookMarkBtnAdd onClick={onAddBookMark} />
+        <div>
+          {bookMark === true ? <SBookMarkBtn1 /> : <SbookMarkBtnAdd1 />}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 const SBookMarkBtn = styled.div`
+  width: 30px;
+  height: 30px;
+  background-position: center;
+  background-size: cover;
+  background-image: url(${blogbookmarkadd});
+  cursor: pointer;
+`;
+const SBookMarkBtn1 = styled.div`
   width: 30px;
   height: 30px;
   background-position: center;
@@ -57,6 +81,12 @@ const SbookMarkBtnAdd = styled.div`
   background-position: center;
   background-size: cover;
   background-image: url(${blogbookmark});
-  cursor: pointer;
+`;
+const SbookMarkBtnAdd1 = styled.div`
+  width: 30px;
+  height: 30px;
+  background-position: center;
+  background-size: cover;
+  background-image: url(${blogbookmark});
 `;
 export default BlogBookMark;

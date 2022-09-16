@@ -26,7 +26,11 @@ const BlogMainList = ({ posts }) => {
             </SContentTitle>
           </SUserInfo>
           <SBookMark>
-            <BlogBookMark isbookmark={posts.is_bookmark} posts={posts} />
+            <BlogBookMark
+              ismainlist={true}
+              isbookmark={posts.is_bookmark}
+              posts={posts}
+            />
           </SBookMark>
         </SPTitleBox>
         <STagNMark>

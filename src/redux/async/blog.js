@@ -203,7 +203,7 @@ export const getBlogBookMarkDB = createAsyncThunk(
   async thunkAPI => {
     try {
       const response = await blogApi.getBlogBookMark();
-      console.log("에싱크", response.data.data);
+      console.log(typeof response.data.data);
       return response.data.data;
     } catch (err) {
       Sentry.captureException(`error, 좋아요 에러. ${err}`);
@@ -221,7 +221,7 @@ export const postBlogBookMarkDB = createAsyncThunk(
       console.log("북마크", response);
       if (response.data.success === true) {
         successAlert("블로그 즐겨찾기에 추가가 되었습니다.");
-        return response.data;
+        return data;
       }
     } catch (err) {
       Sentry.captureException(`error, 좋아요 에러. ${err}`);
@@ -234,11 +234,12 @@ export const postBlogBookMarkDB = createAsyncThunk(
 export const deleteBlogBookMarkDB = createAsyncThunk(
   "DEL_BOOK_MARK",
   async (id, thunkAPI) => {
+    console.log(id);
     try {
       const response = await blogApi.delBlogBookMark(id);
       if (response.data.success === true) {
         successAlert("블로그 즐겨찾기에서 제거 되었습니다.");
-        return response.data;
+        return id;
       }
     } catch (err) {
       Sentry.captureException(`error, 좋아요 에러. ${err}`);

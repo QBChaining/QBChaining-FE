@@ -31,7 +31,7 @@ const QnaTarget = ({ isDatail }) => {
   const totalId = {
     id: target.id,
     title: target.title,
-    user_name: userName,
+    user_name: target.user_name,
     createdAt: getToday(),
   };
 
@@ -85,7 +85,10 @@ const QnaTarget = ({ isDatail }) => {
           <SUserProfile profile={target.profile_img} />
           <SUserInfoText>
             <SUserName>{target.user_name}</SUserName>
-            <SCreateAt>{target.createdAt}</SCreateAt>
+            <SCreateAt>
+              {target.createdAt?.slice(0, 10)} /{" "}
+              {target.createdAt?.slice(11, 16)}
+            </SCreateAt>
           </SUserInfoText>
         </SUserInfoWrapper>
         <SButtonWrapper>

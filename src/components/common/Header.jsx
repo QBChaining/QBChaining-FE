@@ -18,17 +18,11 @@ const Header = () => {
   const location = window.location.pathname;
   const { isLogin, userProfile } = useSelector(state => state.userSlice);
   const onLogoutHandler = () => {
-    Swal.fire("로그아웃", "성공", "success")
-      .then(() => {
-        dispatch(logOut());
-        dispatch(removeUserInfo());
-      })
-      .then(() => {
-        navigate("/");
-      });
+    Swal.fire("로그아웃", "성공", "success").then(() => {
+      dispatch(logOut());
+      dispatch(removeUserInfo());
+    });
   };
-
-  console.log(userProfile);
 
   return (
     <SHeader location={location}>
