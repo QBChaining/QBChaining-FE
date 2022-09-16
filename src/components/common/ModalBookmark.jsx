@@ -15,10 +15,10 @@ const ModalBookmark = ({ isWrite, type }) => {
 
   const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
   const blogBookmarkList = useSelector(state => state.blogSlice.blogBookMark);
+  console.log(blogBookmarkList);
 
   const { isLogin, color } = useSelector(state => state.userSlice);
   const [modal, setModal] = useState(false);
-  const navigate = useNavigate();
   const toggle = () => {
     if (!isLogin) {
       return needLoginAlert();

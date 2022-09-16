@@ -191,7 +191,8 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogBookMarkDB.fulfilled]: (state, action) => {
-      state.type = action.type;
+      console.log(action);
+      // state.type = action.type;
       state.blogBookMark = action.payload;
     },
     [getBlogBookMarkDB.rejected]: (state, action) => {
@@ -215,7 +216,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [deleteBlogBookMarkDB.fulfilled]: (state, action) => {
-      state.blogBookMark = action.payload;
+      state.likebookmark = action.payload;
     },
     [deleteBlogBookMarkDB.rejected]: (state, action) => {
       state.isFetching = false;
