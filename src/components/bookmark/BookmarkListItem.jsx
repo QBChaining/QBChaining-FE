@@ -27,9 +27,9 @@ const BookmarkListItem = ({ type, isModal, data }) => {
             : onToggleHandler
         }
       >
-        <SUserName>{data.user_name}</SUserName>
-        <STitle>{data.title}</STitle>
-        <SDate>{data.createdAt}</SDate>
+        <SUserName>{data?.user_name}</SUserName>
+        <STitle>{data?.title}</STitle>
+        <SDate>{data?.createdAt}</SDate>
       </SBookmarkListItem>
       {modal && (
         <WriteBookmark
