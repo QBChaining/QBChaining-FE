@@ -34,8 +34,8 @@ const SQnaWrite = styled.div`
 `;
 
 const SEditor = styled.div`
-  margin-left: 200px;
-  margin-right: 200px;
+  padding-left: 200px;
+  padding-right: 150px;
   flex: 1;
   & .title {
     margin-top: 40px;

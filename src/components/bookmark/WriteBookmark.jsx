@@ -6,15 +6,23 @@ import styled from "styled-components";
 import ToastViewer from "../editor/ToastViewer";
 import QnaLike from "../../assets/images/QnaLike.png";
 import GobackArrow from "../../assets/images/GobackArrow.png";
+import { getBlogCommentListDB, getBlogDetailDB } from "../../redux/async/blog";
 
-const WriteBookmark = ({ id, onToggleHandler }) => {
+const WriteBookmark = ({ type, id, onToggleHandler }) => {
   const dispatch = useDispatch();
-  const { qnaTarget, commentList } = useSelector(state => state.qnaSlice);
   const { color } = useSelector(state => state.userSlice);
 
+  const target = useSelector(state =>
+    type === "qna" ? state.qnaSlice.qnaTarget : state.blogSlice.blogDetail,
+  );
+
+  const commentList = useSelector(state =>
+    type === "qna" ? state.qnaSlice.commentList : state.blogSlice.commentList,
+  );
+
   useEffect(() => {
-    dispatch(getOneQnaListDB(id));
-    dispatch(getCommentListDB(id));
+    dispatch(type === "qna" ? getOneQnaListDB(id) : getBlogDetailDB(id));
+    dispatch(type === "qna" ? getCommentListDB(id) : getBlogCommentListDB(id));
   }, []);
 
   return (
@@ -24,20 +32,20 @@ const WriteBookmark = ({ id, onToggleHandler }) => {
           돌아가기
         </SBackButton>
         <SUserInfo>
-          <SUserProfile profile={qnaTarget.user?.profile_img} />
+          <SUserProfile profile={target.profile_img} />
           <SUserInfoText>
-            <SUserName>{qnaTarget.user?.email}</SUserName>
-            <SCreateAt>{qnaTarget.user?.createdAt}</SCreateAt>
+            <SUserName>{target.user_name}</SUserName>
+            <SCreateAt>{target.createdAt}</SCreateAt>
           </SUserInfoText>
         </SUserInfo>
         <SContent>
-          <SContentTitle>{qnaTarget.title}</SContentTitle>
+          <SContentTitle>{target.title}</SContentTitle>
           <SContentText>
-            <ToastViewer content={qnaTarget.content} />
+            <ToastViewer content={target.content} />
           </SContentText>
           <SSubinfo>
             <STags>
-              {qnaTarget.tag?.map((data, i) => {
+              {target.tag?.map((data, i) => {
                 return (
                   <STag color={color} key={i}>
                     {data}
@@ -45,16 +53,20 @@ const WriteBookmark = ({ id, onToggleHandler }) => {
                 );
               })}
             </STags>
-            <SHoneyTip>{qnaTarget.honey_tip}</SHoneyTip>
+            <SHoneyTip>{target.honey_tip}</SHoneyTip>
           </SSubinfo>
         </SContent>
         <SCommentWrapper>
           {commentList.map(data => (
             <SComment key={data.id}>
               <SUserInfo>
-                <SUserProfile profile={data.profile_img} />
+                {type === "qna" ? (
+                  <SUserProfile profile={data.profile_img} />
+                ) : (
+                  <SUserProfile profile={data.User?.profile_img} />
+                )}
                 <SUserInfoText>
-                  <SUserName>{qnaTarget.user?.email}</SUserName>
+                  <SUserName>{target.user_name}</SUserName>
                 </SUserInfoText>
               </SUserInfo>
               <ToastViewer content={data.comment} />

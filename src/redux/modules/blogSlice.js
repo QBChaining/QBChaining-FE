@@ -20,7 +20,7 @@ export const blogSlice = createSlice({
   name: "blog",
   initialState: {
     blogList: [],
-    blogDetail: [],
+    blogDetail: {},
     commentList: [],
     myblog: [],
     hotBlog: [],
@@ -52,7 +52,7 @@ export const blogSlice = createSlice({
     },
     [getBlogDetailDB.fulfilled]: (state, action) => {
       //블로그 디테일 게시물
-      state.blogDetail = action.payload;
+      state.blogDetail = action.payload[0];
       state.isFetching = false;
     },
     [getBlogDetailDB.rejected]: (state, action) => {

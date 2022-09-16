@@ -37,7 +37,7 @@ const ModalBookmark = ({ isWrite, type }) => {
   return (
     <>
       {modal && (
-        <SModalBookmark>
+        <SModalBookmark isWrite={isWrite}>
           <SListWrapper color={color}>
             <SList className="blog">
               <SListTitle>블로그</SListTitle>

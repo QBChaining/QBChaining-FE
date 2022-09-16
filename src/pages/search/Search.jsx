@@ -7,7 +7,10 @@ import {
   getBlogSearchListDB,
   getQnaSearchListDB,
 } from "./../../redux/async/search";
-import { setSearchWord } from "../../redux/modules/searchSlice";
+import {
+  removeSearchList,
+  setSearchWord,
+} from "../../redux/modules/searchSlice";
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -23,6 +26,12 @@ const Search = () => {
     }
   }, [searchWord]);
   console.log(qnaSearchList);
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeSearchList());
+    };
+  }, []);
 
   return (
     <SSearch>

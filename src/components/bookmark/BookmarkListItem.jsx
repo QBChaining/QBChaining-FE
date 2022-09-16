@@ -29,7 +29,7 @@ const BookmarkListItem = ({ type, isModal, data }) => {
       >
         <SUserName>{data?.user_name}</SUserName>
         <STitle>{data?.title}</STitle>
-        <SDate>{data?.createdAt}</SDate>
+        <SDate>{data?.createdAt?.slice(0, 10)}</SDate>
       </SBookmarkListItem>
       {modal && (
         <WriteBookmark
@@ -37,6 +37,7 @@ const BookmarkListItem = ({ type, isModal, data }) => {
           setModal={setModal}
           onToggleHandler={onToggleHandler}
           id={data.id}
+          type={type}
         />
       )}
     </>
