@@ -41,7 +41,7 @@ const CommentEditDel = ({ comments, userdata }) => {
     <>
       <SCommentList>
         <SProfileWrapper>
-          <SProfile url={userProfile} />
+          <SProfile url={comments.User.profile_img} />
           <div>{comments.User?.user_name}</div>
           <SDate>
             {comments.createdAt?.slice(0, 10)} /
