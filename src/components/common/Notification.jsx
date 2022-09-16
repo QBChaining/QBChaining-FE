@@ -6,10 +6,11 @@ import {
   postNotificationDB,
 } from "../../redux/async/notification";
 import styled from "styled-components";
+import { notInitialized } from "react-redux/es/utils/useSyncExternalStore";
 const Notification = () => {
-  const notification = useSelector(state => state);
-  console.log(notification);
-
+  const notificationResponse = useSelector(
+    state => state.notificationSlice.notification,
+  );
   const notificationUser = useSelector(state => state.userSlice.userName);
   console.log(notificationUser);
 
@@ -18,7 +19,7 @@ const Notification = () => {
   const [modal, setModal] = useState(false);
 
   const onCheck = () => {
-    dispatch(postNotificationDB({ id: notification }));
+    dispatch(postNotificationDB([{ id: notificationUser }]));
   };
   useEffect(() => {
     dispatch(getNotificationDB());
@@ -32,7 +33,16 @@ const Notification = () => {
       />
       {modal === true ? (
         <SBox>
-          <button onClick={onCheck}>버튼</button>
+          <SNotifyList>
+            {notificationResponse?.map(noti => (
+              <div key={noti.id}>
+                <SItem>
+                  <div>{noti.post_title}</div>
+                  <button onClick={onCheck}>확인</button>
+                </SItem>
+              </div>
+            ))}
+          </SNotifyList>
         </SBox>
       ) : null}
     </div>
@@ -49,4 +59,8 @@ const SBox = styled.div`
     margin-top: 50px;
   }
 `;
+
+const SNotifyList = styled.div``;
+
+const SItem = styled.div``;
 export default Notification;

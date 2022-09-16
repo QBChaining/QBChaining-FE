@@ -218,6 +218,7 @@ export const postBlogBookMarkDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.postBlogBookMark(data);
+      console.log("북마크", response);
       if (response.data.success === true) {
         successAlert("블로그 즐겨찾기에 추가가 되었습니다.");
         return response.data;

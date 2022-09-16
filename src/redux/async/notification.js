@@ -21,10 +21,12 @@ export const getNotificationDB = createAsyncThunk(
 
 export const postNotificationDB = createAsyncThunk(
   "POST_NOTIFICATION",
-  async thunkAPI => {
+  async (id, thunkAPI) => {
+    console.log(id);
     try {
-      const response = await notification.postNotification();
+      const response = await notification.postNotification(id);
       console.log("알람확인POST", response);
+      return response;
     } catch (err) {
       console.log(err);
     }

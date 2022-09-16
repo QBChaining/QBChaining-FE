@@ -13,11 +13,12 @@ import BlogLike from "../../components/blog/BlogLike";
 // import BlogBookMark from "../../components/blog/BlogBookMark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
+import Notification from "../../components/common/Notification";
 const BlogCommunityDetail = () => {
   const response = useSelector(state => state.blogSlice.blogDetail);
-  console.log(response);
+  console.log("detail", response);
   const userNick = useSelector(state => state.userSlice.userName);
-
+  console.log(userNick);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const BlogCommunityDetail = () => {
             </SProfileNickNameDate>
           </STitleSection>
           <SContentWrapper>
-            {userNick === detail.user_name?.user_name && (
+            {userNick === detail.user_name && (
               <ButtonGroup>
                 <div
                   className="editbtn"
@@ -75,6 +76,7 @@ const BlogCommunityDetail = () => {
               </ButtonGroup>
             )}
             <SContents>
+              <Notification />
               <ToastViewer className="content1" content={detail.content} />
             </SContents>
             <SLikeNtags>
