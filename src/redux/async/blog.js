@@ -31,7 +31,7 @@ export const getBlogDetailDB = createAsyncThunk(
     try {
       const response = await blogApi.getBlogDetail(id);
       if (response.data.success === true) {
-        return response.data.data;
+        return response.data.data[0];
       }
     } catch (err) {
       networkError();

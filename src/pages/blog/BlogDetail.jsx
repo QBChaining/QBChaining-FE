@@ -15,7 +15,7 @@ import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
 
 const BlogCommunityDetail = () => {
-  const response = useSelector(state => state.blogSlice.blogDetail);
+  const detail = useSelector(state => state.blogSlice.blogDetail);
   const userNick = useSelector(state => state.userSlice.userName);
   const { blogBookMark } = useSelector(state => state.blogSlice);
 
@@ -27,75 +27,74 @@ const BlogCommunityDetail = () => {
   const deleteBlogPost = () => {
     dispatch(deleteBlogCommunityDB(id));
   };
+
   useEffect(() => {
     dispatch(getBlogDetailDB(id));
     dispatch(colorSetBlue());
-  }, []);
+  }, [id]);
 
   return (
     <SContainer>
-      {response?.map(detail => (
-        <div key={detail.id}>
-          <STitleSection>
-            <div className="bookMark">
-              <BlogDetailBookMark
-                isdetailbookmark={true}
-                target={detail}
-                isbookmark={detail?.is_bookmark}
-              />
-              <STitle>{detail?.title}</STitle>
-            </div>
-            <SProfileNickNameDate>
-              <SDate>
-                <div className="name">{detail.user_name}</div>
-                <div className="date">
-                  {detail.created_at?.slice(0, 10)} /{" "}
-                  {detail.created_at?.slice(11, 16)}
-                </div>
-              </SDate>
-              <SProfile url={detail.profile_img} />
-            </SProfileNickNameDate>
-          </STitleSection>
-          <SContentWrapper>
-            {userNick === detail.user_name && (
-              <ButtonGroup>
-                <div
-                  className="editbtn"
-                  onClick={() => {
-                    navigate(`/blog/edit/${id}`);
-                  }}
-                >
-                  수정
-                </div>
-                <div>|</div>
-                <div
-                  className="delbtn"
-                  onClick={id => {
-                    navigate("/blog");
-                    deleteBlogPost(id);
-                  }}
-                >
-                  삭제
-                </div>
-              </ButtonGroup>
-            )}
-            <SContents>
-              {/* <Notification /> */}
-              <ToastViewer className="content1" content={detail.content} />
-            </SContents>
-            <SLikeNtags>
-              <div className="tagList">
-                {detail?.tag.map((tags, i) => (
-                  <STag key={i}>
-                    <div>{tags}</div>
-                  </STag>
-                ))}
+      <div key={detail.id}>
+        <STitleSection>
+          <div className="bookMark">
+            <BlogDetailBookMark
+              isdetailbookmark={true}
+              target={detail}
+              isbookmark={detail?.is_bookmark}
+            />
+            <STitle>{detail?.title}</STitle>
+          </div>
+          <SProfileNickNameDate>
+            <SDate>
+              <div className="name">{detail.user_name}</div>
+              <div className="date">
+                {detail.created_at?.slice(0, 10)} /{" "}
+                {detail.created_at?.slice(11, 16)}
               </div>
-              <BlogLike love={detail.is_like} isbookmark={detail.is_bookmark} />
-            </SLikeNtags>
-          </SContentWrapper>
-        </div>
-      ))}
+            </SDate>
+            <SProfile url={detail.profile_img} />
+          </SProfileNickNameDate>
+        </STitleSection>
+        <SContentWrapper>
+          {userNick === detail.user_name && (
+            <ButtonGroup>
+              <div
+                className="editbtn"
+                onClick={() => {
+                  navigate(`/blog/edit/${id}`);
+                }}
+              >
+                수정
+              </div>
+              <div>|</div>
+              <div
+                className="delbtn"
+                onClick={id => {
+                  navigate("/blog");
+                  deleteBlogPost(id);
+                }}
+              >
+                삭제
+              </div>
+            </ButtonGroup>
+          )}
+          <SContents>
+            {/* <Notification /> */}
+            <ToastViewer className="content1" content={detail.content} />
+          </SContents>
+          <SLikeNtags>
+            <div className="tagList">
+              {detail.tag?.map((tags, i) => (
+                <STag key={i}>
+                  <div>{tags}</div>
+                </STag>
+              ))}
+            </div>
+            <BlogLike love={detail.is_like} isbookmark={detail.is_bookmark} />
+          </SLikeNtags>
+        </SContentWrapper>
+      </div>
       <SCommentWrapper>
         <CommentAdd />
         <CommentList />

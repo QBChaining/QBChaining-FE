@@ -52,7 +52,7 @@ export const blogSlice = createSlice({
     },
     [getBlogDetailDB.fulfilled]: (state, action) => {
       //블로그 디테일 게시물
-      state.blogDetail = action.payload[0];
+      state.blogDetail = action.payload;
       state.isFetching = false;
     },
     [getBlogDetailDB.rejected]: (state, action) => {
