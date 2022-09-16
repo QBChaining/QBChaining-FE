@@ -7,9 +7,7 @@ import categories from "../../utils/category";
 // firebase storage
 import { storage } from "../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-//로딩이미지
-import loadingImage from "../../assets/images/Loading_icon.gif";
-import selectArrow from "../../assets/images/SelectArrow.png";
+
 import DeleteButton from "../../assets/images/DeleteButton.png";
 
 //에러알럿
@@ -37,6 +35,7 @@ import {
   postQnaListDB,
 } from "../../redux/async/qna";
 import { async } from "@firebase/util";
+import Select from "./Select";
 
 const EditorComponent = ({
   isEdit,
@@ -55,7 +54,7 @@ const EditorComponent = ({
   const titleText = useRef();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("JavaScript");
+  const [category, setCategory] = useState("");
   const nextId = useRef(1);
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
@@ -66,19 +65,18 @@ const EditorComponent = ({
 
   const editorRef = useRef();
   const QnatoolbarItems = [
-    ["heading", "bold", "italic", "strike"],
     ["codeblock"],
-    ["ul", "ol", "task"],
+    ["heading", "bold", "italic", "strike"],
+    ["ul", "ol"],
     ["hr"],
-    ["table", "link"],
-    ["image"],
+    ["table"],
     ["scrollSync"],
   ];
   const BlogtoolbarItems = [
-    ["heading", "bold", "italic", "strike"],
     ["codeblock"],
-    ["ul", "ol", "task"],
-    ["table", "link"],
+    ["heading", "bold", "italic", "strike"],
+    ["ul", "ol"],
+    ["table"],
     ["hr"],
     ["image"],
     ["scrollSync"],
@@ -89,44 +87,6 @@ const EditorComponent = ({
     setContent(data);
   };
 
-  // const selectLocalImage = () => {
-  //   const input = document.createElement("input");
-  //   input.setAttribute("type", "file");
-  //   input.setAttribute("accept", "image/*");
-  //   input.click();
-
-  //   input.onchange = async () => {
-  //     const file = input.files[0];
-
-  //     //현재 커서의 위치 저장
-  //     const range = quill.getSelection(true);
-  //     //업로드중 로딩이미지 삽입
-  //     quill.insertEmbed(range.index, "image", loadingImage);
-  //     try {
-  //       //firebase에 이미지 업로드
-  //       const uploaded_file = await uploadBytes(
-  //         ref(storage, `images/${Date.now()}`),
-  //         file,
-  //       );
-
-  //       //firebase에 올라간 이미지url 저장
-  //       const file_url = await getDownloadURL(uploaded_file.ref);
-
-  //       //로딩중 이미지 삭제
-  //       quill.deleteText(range.index, 1);
-
-  //       //firebase에 이미지 업로드 완료 후 url 추출후 textEditor에 삽입
-  //       quill.insertEmbed(range.index, "image", file_url);
-
-  //       //유저 편의를 위해 커서를 이미지 오른쪽에 위치
-  //       quill.setSelection(range.index + 1);
-  //     } catch (error) {
-  //       //이미지 업로드 실패시 로딩이미지 삭제
-  //       quill.deleteText(range.index, 1);
-  //     }
-  //   };
-  // };
-
   //생성 or 수정 함수
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -136,9 +96,13 @@ const EditorComponent = ({
       return;
     }
 
-    //제목이 빈칸일때 알럿
+    //빈칸 알럿
     if (titleText.current !== undefined && titleText.current.value.length < 1) {
       errorAlert("제목을 입력해주세요!");
+      return;
+    }
+    if (editorRef.current.getInstance().getMarkdown().length === 0) {
+      errorAlert("본문을 입력해주세요!");
       return;
     }
     if (!isCommentWrite) {
@@ -148,11 +112,10 @@ const EditorComponent = ({
       }
     }
 
-    //본문이 빈칸일때 알럿
-    // if (quill.getText().length < 2) {
-    //   errorAlert("본문을 입력해주세요!");
-    //   return;
-    // }
+    if ((isEdit || isWrite) && category === "") {
+      errorAlert("카테고리를 선택해주세요!");
+      return;
+    }
 
     //수정중이라면
     if (isEdit) {
@@ -181,10 +144,6 @@ const EditorComponent = ({
       });
       //코멘트작성
     } else if (isCommentWrite) {
-      if (editorRef.current.getInstance().getMarkdown().length === 0) {
-        errorAlert("텍스트를 입력해주세요!");
-        return;
-      }
       dispatch(
         postCommentListDB({
           content,
@@ -240,6 +199,8 @@ const EditorComponent = ({
     setTag(e.target.value);
   };
 
+  console.log(category);
+
   //태그추가
   const onAddTagHandler = () => {
     if (tagText.current.value.length < 1) {
@@ -266,37 +227,24 @@ const EditorComponent = ({
     <Sform>
       <div>
         {(isEdit || isWrite || isBlogWrite || isBlogEdit) && (
-          <div className="titleWrapper">
+          <STitleWrapper>
             <input
               id="title"
               value={title || ""}
               onChange={onTitleChangeHandler}
               type="text"
               ref={titleText}
-              maxLength="30"
+              maxLength="40"
               placeholder="제목을 입력해주세요."
             />
             {(isEdit || isWrite) && (
               <Select
-                onChange={onCategoryChangeHandler}
-                defaultValue={category}
-                value={isEdit && category}
-                name="category"
-                id="category"
-                required
-                arrow={selectArrow}
-              >
-                <option disabled hidden value="카테고리를 선택해 주세요">
-                  카테고리를 선택해 주세요
-                </option>
-                {categories.qnaCategory.map(data => (
-                  <option key={data.langId} value={data.langName}>
-                    {data.langName}
-                  </option>
-                ))}
-              </Select>
+                setOption={setCategory}
+                options={categories.qnaCategory}
+                initialText={"카테고리"}
+              />
             )}
-          </div>
+          </STitleWrapper>
         )}
         <SEditor>
           <Editor
@@ -305,7 +253,9 @@ const EditorComponent = ({
             previewStyle={isCommentWrite ? "tab" : "vertical"}
             height={isCommentWrite ? "600px" : "500px"}
             initialEditType="markdown"
-            toolbarItems={QnatoolbarItems}
+            toolbarItems={
+              isBlogEdit || isBlogWrite ? BlogtoolbarItems : QnatoolbarItems
+            }
             useCommandShortcut={false}
             hideModeSwitch={true}
             plugins={[
@@ -385,15 +335,16 @@ export default EditorComponent;
 const Sform = styled.form`
   display: flex;
   flex-direction: column;
-  & .titleWrapper {
-    display: flex;
-    margin-bottom: 18px;
-    & #title {
-      width: 70%;
-      margin-right: 26px;
-      padding: 10px 13px;
-      border: 1px solid #939393;
-    }
+`;
+
+const STitleWrapper = styled.div`
+  display: flex;
+  margin-bottom: 18px;
+  & #title {
+    width: 70%;
+    margin-right: 26px;
+    padding: 10px 13px;
+    border: 1px solid #939393;
   }
 `;
 
@@ -406,7 +357,7 @@ const SSubmitWrapper = styled.div`
   margin-bottom: 10px;
 `;
 
-const Select = styled.select`
+const SelectWrapper = styled.select`
   min-width: 251px;
   width: 30%;
   padding: 10px 30px;

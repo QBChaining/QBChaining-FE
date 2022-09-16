@@ -3,7 +3,9 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { getHotBlogDB } from "../../redux/async/blog";
 import unlike from "../../assets/images/unlike.png";
+import { useNavigate } from "react-router-dom";
 const BlogHotList = () => {
+  const navigate = useNavigate();
   const hotcommunits = useSelector(state => state.blogSlice.hotBlog);
   const hotcommunity = hotcommunits.slice(0, 4);
   const dispatch = useDispatch();
@@ -11,12 +13,19 @@ const BlogHotList = () => {
   useEffect(() => {
     dispatch(getHotBlogDB());
   }, []);
+
   return (
     <SBlogHotList>
       <SHotTitle>최근에 추천 많이 받은 게시글 🔥</SHotTitle>
       {hotcommunity?.map(hot => (
         <STitle key={hot.id}>
-          <SText>{hot.title}</SText>
+          <SText
+            onClick={() => {
+              navigate(`/blog/detail/${hot.id}`);
+            }}
+          >
+            {hot.title}
+          </SText>
           <SLike>
             <SLikeNum>{hot.like}</SLikeNum>
             <SImg />
@@ -53,6 +62,7 @@ const STitle = styled.div`
 
 const SText = styled.div`
   padding: 0 10px;
+  cursor: pointer;
 `;
 
 const SLike = styled.div`

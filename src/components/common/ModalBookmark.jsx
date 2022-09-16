@@ -113,6 +113,7 @@ const SListWrapper = styled.div`
   border-radius: 25px;
   padding: 0 30px;
   box-shadow: -8px 14px 50px rgba(0, 0, 0, 0.15);
+  z-index: 100;
 `;
 
 const SList = styled.div`
