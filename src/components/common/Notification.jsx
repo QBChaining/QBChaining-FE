@@ -12,7 +12,6 @@ const Notification = () => {
     state => state.notificationSlice.notification,
   );
   const notificationUser = useSelector(state => state.userSlice.userName);
-  console.log(notificationUser);
 
   const dispatch = useDispatch();
 

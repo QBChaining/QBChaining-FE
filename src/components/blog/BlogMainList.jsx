@@ -9,7 +9,6 @@ const BlogMainList = ({ posts }) => {
   const userProfile = useSelector(state => state.userSlice.userProfile);
   const navigate = useNavigate();
 
-  console.log(posts);
   return (
     <SBloglist>
       <SContentsGroup>

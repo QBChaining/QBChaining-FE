@@ -191,7 +191,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogBookMarkDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.blogBookMark = action.payload;
       state.isFetching = false;
     },
