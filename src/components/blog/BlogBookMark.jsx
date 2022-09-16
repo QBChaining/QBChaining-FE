@@ -26,9 +26,6 @@ const BlogBookMark = ({ isbookmark, posts, isdetailbookmark }) => {
     dispatch(deleteBlogBookMarkDB(posts.id));
     setBookMark(!bookMark);
   };
-  useEffect(() => {
-    dispatch(getBlogBookMarkDB());
-  }, []);
   return (
     <>
       {isdetailbookmark ? (

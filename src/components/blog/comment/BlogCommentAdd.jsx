@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { postBlogCommentDB } from "../../../redux/async/blog.js";
 import { useParams } from "react-router-dom";
+import porfilecomment from "../../../assets/images/porfilecomment.png";
 const CommentAdd = () => {
-  const userProfile = useSelector(state => state.userSlice.userProfile);
+  const { userProfile, isLogin } = useSelector(state => state.userSlice);
   const dispatch = useDispatch();
   const commentRefInput = useRef();
   const { id } = useParams();
@@ -23,7 +24,7 @@ const CommentAdd = () => {
 
   return (
     <SComment>
-      <SProfile url={userProfile} />
+      <SProfile url={isLogin ? userProfile : porfilecomment} />
       <input
         type="text"
         ref={commentRefInput}

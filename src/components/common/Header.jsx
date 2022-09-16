@@ -16,11 +16,14 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = window.location.pathname;
-  const { isLogin, userProfile } = useSelector(state => state.userSlice);
+  const { isLogin, userProfile, userName } = useSelector(
+    state => state.userSlice,
+  );
   const onLogoutHandler = () => {
+    dispatch(logOut());
+    dispatch(removeUserInfo());
     Swal.fire("로그아웃", "성공", "success").then(() => {
-      dispatch(logOut());
-      dispatch(removeUserInfo());
+      navigate("/", { replace: true });
     });
   };
 
@@ -38,7 +41,7 @@ const Header = () => {
         <SNavInner>
           <SNavItem
             onClick={() => {
-              navigate("/mypage");
+              navigate(`/mypage/${userName}`);
             }}
           >
             마이페이지

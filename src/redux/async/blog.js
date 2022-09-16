@@ -132,7 +132,7 @@ export const patchBlogCommentDB = createAsyncThunk(
       const response = await blogApi.patchBlogComment(data);
       if (response.data.success === true) {
         successAlert("정상적으로 수정 되었습니다.");
-        return response.data;
+        return response.data.data;
       }
     } catch (err) {
       Sentry.captureException(`error, 블로그 댓글 수정 : ${err}`);

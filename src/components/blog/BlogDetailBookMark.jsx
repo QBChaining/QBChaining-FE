@@ -36,9 +36,6 @@ const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
     dispatch(deleteBlogBookMarkDB(id));
     setBookMark(!bookMark);
   };
-  useEffect(() => {
-    dispatch(getBlogBookMarkDB());
-  }, []);
 
   return (
     <>
@@ -81,6 +78,7 @@ const SbookMarkBtnAdd = styled.div`
   background-position: center;
   background-size: cover;
   background-image: url(${blogbookmark});
+  cursor: pointer;
 `;
 const SbookMarkBtnAdd1 = styled.div`
   width: 30px;

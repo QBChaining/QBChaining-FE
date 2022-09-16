@@ -30,7 +30,7 @@ const Router = () => {
       <Route path="/ranking" element={<Preparing />} />
       <Route
         path="/mypage/:userName"
-        element={isLogin ? <Preparing /> : <Preparing />}
+        element={isLogin ? <Preparing /> : <NoLogin />}
       />
       <Route path="/qna" element={<QnaMain />} />
       <Route path="/qna/write" element={isLogin ? <QnaWrite /> : <NoLogin />} />

@@ -7,21 +7,28 @@ import {
 } from "../../../redux/async/blog";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../../redux/modules/userSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { errorAlert } from "../../../utils/swal";
 const CommentEditDel = ({ comments, userdata }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const userProfile = useSelector(state => state.userSlice.userProfile);
   const userNick = useSelector(state => state.userSlice.userName);
   const [show, setShow] = useState(false);
+  const [textAreaText, setTextAreaText] = useState("");
   const editRef = useRef();
 
   const dispatch = useDispatch();
 
   //댓글 수정 완료 버튼
   const onClickEditHandler = () => {
+    if (editRef.current.value.length < 1) {
+      errorAlert("빈칸입니다!");
+      return;
+    }
     dispatch(
       patchBlogCommentDB({
-        comment: editRef.current.value,
+        comment: textAreaText,
         id: comments.id,
       }),
     );
@@ -37,13 +44,33 @@ const CommentEditDel = ({ comments, userdata }) => {
     dispatch(getBlogCommentListDB(id));
   }, [dispatch]);
 
+  const goMypage = name => {
+    navigate(`/mypage/${name}`);
+  };
+
   return (
     <>
       <SCommentList>
         <SProfileWrapper>
-          <SProfile url={comments.User?.profile_img} />
-          <div>{comments.User?.user_name}</div>
-          <SDate>
+          <SProfile
+            onClick={() => {
+              goMypage(comments.User?.user_name);
+            }}
+            url={comments.User?.profile_img}
+          />
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              goMypage(comments.User?.user_name);
+            }}
+          >
+            {comments.User?.user_name}
+          </div>
+          <SDate
+            onClick={() => {
+              goMypage(comments.User?.user_name);
+            }}
+          >
             {comments.createdAt?.slice(0, 10)} /
             {comments.createdAt?.slice(11, 16)}
           </SDate>
@@ -51,7 +78,14 @@ const CommentEditDel = ({ comments, userdata }) => {
         {!show ? (
           <SComment>{comments.comment}</SComment>
         ) : (
-          <STextArea type="text" placeholder={comments.comment} ref={editRef} />
+          <STextArea
+            type="text"
+            value={textAreaText}
+            onChange={e => {
+              setTextAreaText(e.target.value);
+            }}
+            ref={editRef}
+          />
         )}
         {userNick === comments.User?.user_name && (
           <ButtonGroup>
@@ -64,6 +98,7 @@ const CommentEditDel = ({ comments, userdata }) => {
                       onClickEditHandler();
                     }
                   : () => {
+                      setTextAreaText(comments.comment);
                       setShow(!show);
                     }
               }
@@ -101,6 +136,7 @@ const SDate = styled.div`
   margin-left: 10px;
   font-size: 14px;
   color: #939393;
+  cursor: pointer;
 `;
 
 const SProfileWrapper = styled.div`
@@ -118,6 +154,7 @@ const SProfile = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   margin-right: 11px;
+  cursor: pointer;
 `;
 const ButtonGroup = styled.div`
   position: absolute;

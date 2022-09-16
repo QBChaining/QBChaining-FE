@@ -141,14 +141,9 @@ export const blogSlice = createSlice({
     },
     [patchBlogCommentDB.fulfilled]: (state, action) => {
       const idx = state.commentList.findIndex(data => {
-        return data.id === action.payload.data.id;
+        return data.id === action.payload.id;
       });
-      state.commentList[idx] = [
-        {
-          ...state.commentList[idx],
-          comment: action.payload.data,
-        },
-      ];
+      state.commentList[idx].comment = action.payload.comment;
       state.isFetching = false;
       state.errorMessage = null;
     },

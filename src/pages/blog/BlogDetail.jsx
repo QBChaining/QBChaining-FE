@@ -33,6 +33,10 @@ const BlogCommunityDetail = () => {
     dispatch(colorSetBlue());
   }, [id]);
 
+  const goMypage = name => {
+    navigate(`/mypage/${name}`);
+  };
+
   return (
     <SContainer>
       <div key={detail.id}>
@@ -45,7 +49,11 @@ const BlogCommunityDetail = () => {
             />
             <STitle>{detail?.title}</STitle>
           </div>
-          <SProfileNickNameDate>
+          <SProfileNickNameDate
+            onClick={() => {
+              goMypage(detail.user_name);
+            }}
+          >
             <SDate>
               <div className="name">{detail.user_name}</div>
               <div className="date">
@@ -148,6 +156,7 @@ const STitle = styled.div`
 
 const SProfileNickNameDate = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 const SDate = styled.div`
   margin-right: 10px;
