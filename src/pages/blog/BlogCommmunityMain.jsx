@@ -67,17 +67,17 @@ const BlogCommmunityMain = () => {
           <SLeftContainer>
             <SUserInfo>
 
-              <SProfile />
+
+            
               <SPreviewTitle>
-                {/* <SPreviewTitle targetData={targetData}> */}
-              <SProfile url={userProfile} />
+             <SProfile />
                 <p>개발자와 개발자들의 커뮤니티 사이트 QB-CHAINING</p>
               </SPreviewTitle>
             </SUserInfo>
             <SPreviewContent>
               <ToastViewer />
-              {targetData ? "안녕하세요" : "없어요"}
             </SPreviewContent>
+
           </SLeftContainer>
           <SRightContainer>
             {blogMainLists?.map(posts => (
