@@ -5,9 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import ToastViewer from "../editor/ToastViewer";
 import BlogBookMark from "./BlogBookMark";
 import unlike from "../../assets/images/unlike.png";
+import { getBlogDetailDB } from "../../redux/async/blog";
 const BlogMainList = ({ posts }) => {
   const userProfile = useSelector(state => state.userSlice.userProfile);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <SBloglist>
