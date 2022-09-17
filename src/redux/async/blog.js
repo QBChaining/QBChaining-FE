@@ -30,7 +30,6 @@ export const getBlogDetailDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.getBlogDetail(id);
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data[0];
       }
@@ -260,9 +259,6 @@ export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
 export const getPreViewDB = createAsyncThunk("PREVIEW", async thunkAPI => {
   try {
     const response = await blogApi.getPreView();
-    console.log(response);
     return response;
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 });

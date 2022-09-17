@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getBlogCommunityListDB } from "../../redux/async/blog";
+import {
+  getBlogCommunityListDB,
+  getBlogDetailDB,
+} from "../../redux/async/blog";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ToastViewer from "../../components/editor/ToastViewer";
@@ -11,11 +14,12 @@ import blogplus from "../../assets/images/blogplus.png";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogMainList from "../../components/blog/BlogMainList";
+import mainpage from "../../assets/images/mainpage.png";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   const userProfile = useSelector(state => state.userSlice.userProfile);
   // const resolveList = blogMainLists.filter(data => data.is_resolve);
-
+  const targetData = useSelector(state => state.blogSlice.blogDetail);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -26,6 +30,11 @@ const BlogCommmunityMain = () => {
     dispatch(colorSetBlue());
   }, [dispatch]);
   //머지
+
+  const getBlogDetail = id => {
+    dispatch(getBlogDetailDB(id));
+  };
+
   return (
     <SBlogCommmunityMain>
       <STopBox>
@@ -57,13 +66,23 @@ const BlogCommmunityMain = () => {
           <SLeftContainer>
             <SUserInfo>
               <SProfile url={userProfile} />
-              <SPreviewTitle>HTML은 뭐하는건가요</SPreviewTitle>
+              <SPreviewTitle targetData={targetData}>
+                <p>개발자와 개발자들의 커뮤니티 사이트 QB-CHAINING</p>
+              </SPreviewTitle>
             </SUserInfo>
-            <SPreviewContent></SPreviewContent>
+            <SPreviewContent>
+              <ToastViewer />
+            </SPreviewContent>
           </SLeftContainer>
           <SRightContainer>
             {blogMainLists?.map(posts => (
-              <BlogMainList posts={posts} key={posts.id} />
+              <BlogMainList
+                onClick={() => {
+                  getBlogDetail(posts.id);
+                }}
+                posts={posts}
+                key={posts.id}
+              />
             ))}
           </SRightContainer>
         </SContentWrapper>
@@ -177,7 +196,7 @@ const SLeftContainer = styled.div`
   height: 700px;
   position: sticky;
   top: 100px;
-  padding: 20px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
@@ -186,12 +205,15 @@ const SLeftContainer = styled.div`
 `;
 
 const SPreviewTitle = styled.div`
-  padding-bottom: 20px;
+  font-size: 20px;
 `;
 const SPreviewContent = styled.div`
   flex: 1;
   min-width: 700px;
-  background-color: ${props => props.theme.color.grey3};
+  /* background-color: ${props => props.theme.color.grey3}; */
+  background-position: center;
+  background-size: cover;
+  background-image: url(${mainpage});
 `;
 
 const SRightContainer = styled.div`
@@ -246,4 +268,6 @@ const SPlus = styled.div`
 
 const SUserInfo = styled.div`
   display: flex;
+  padding-bottom: 20px;
+  align-items: center;
 `;

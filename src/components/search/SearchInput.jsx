@@ -35,9 +35,7 @@ const SearchInput = () => {
 export default SearchInput;
 
 const SSearchInput = styled.div`
-  max-width: 600px;
-  min-width: 200px;
-  width: 100%;
+  width: 600px;
   position: relative;
   &::before {
     position: absolute;

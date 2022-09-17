@@ -6,7 +6,6 @@ import unlike from "../../assets/images/unlike.png";
 import { useNavigate } from "react-router-dom";
 const BlogHotList = () => {
   const hotcommunits = useSelector(state => state.blogSlice.hotBlog);
-  console.log(hotcommunits);
   const hotcommunity = hotcommunits.slice(0, 4);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,9 +19,9 @@ const BlogHotList = () => {
       {hotcommunity?.map(hot => (
         <STitle key={hot.id}>
           <SText
-          // onClick={() => {
-          //   navigate(`/blog/detail/${hot.id}`);
-          // }}
+            onClick={() => {
+              navigate(`/blog/detail/${hot.id}`);
+            }}
           >
             {hot.title}
           </SText>
@@ -62,6 +61,7 @@ const STitle = styled.div`
 
 const SText = styled.div`
   padding: 0 10px;
+  cursor: pointer;
 `;
 
 const SLike = styled.div`

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Editor from "../../components/common/Editor";
+import Editor from "../../components/common/EditorComponent";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import styled from "styled-components";

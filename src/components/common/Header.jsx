@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import { AiOutlineSearch } from "react-icons/ai";
 import { HiOutlineBell } from "react-icons/hi";
 import { getCookie } from "../../utils/cookie";
 import Swal from "sweetalert2";
@@ -10,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logIn, logOut } from "../../redux/modules/userSlice";
 import { removeUserInfo } from "../../redux/modules/qnaSlice";
 import SearchInput from "./../search/SearchInput";
+import MainLogo from "../../assets/images/MainLogo.png";
 // import Notification from "./Notification";
 
 const Header = () => {
@@ -118,11 +118,13 @@ const SLogoContainer = styled.div`
 `;
 
 const SLogoImage = styled.div`
-  width: 50px;
-  height: 50px;
-  background-color: white;
-  border-radius: 50%;
-  margin-right: 20px;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  background-image: url(${MainLogo});
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 `;
 
 const STitle = styled.h1`

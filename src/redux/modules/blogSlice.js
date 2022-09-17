@@ -27,7 +27,6 @@ export const blogSlice = createSlice({
     hotBlog: [],
     blogBookMark: [],
     likebookmark: {},
-    preView: [],
     isFetching: false,
     errorMessage: "",
   },
@@ -53,7 +52,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogDetailDB.fulfilled]: (state, action) => {
-      console.log(action);
       state.blogDetail = action.payload;
       state.isFetching = false;
     },

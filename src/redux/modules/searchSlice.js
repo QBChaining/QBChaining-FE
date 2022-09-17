@@ -7,6 +7,7 @@ const searchSlice = createSlice({
     qnaSearchList: [],
     blogSearchList: [],
     searchWord: "",
+    isFetching: false,
   },
   reducers: {
     removeSearchList: (state, { payload }) => {

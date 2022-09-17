@@ -9,7 +9,7 @@ import QnaTarget from "../../components/qna/QnaTarget";
 import styled from "styled-components";
 import ModalBookmark from "./../../components/common/ModalBookmark";
 import QnaWriteArrow from "../../assets/images/QnaWriteArrow.png";
-import Editor from "./../../components/common/Editor";
+import EditorComponent from "../../components/common/EditorComponent";
 
 const QnaDetail = () => {
   const { id } = useParams();
@@ -35,7 +35,7 @@ const QnaDetail = () => {
       </SLeftContainer>
       <SRightContainer>
         <SAddCommentTitle>댓글 작성</SAddCommentTitle>
-        <Editor isCommentWrite={true} id={id} />
+        <EditorComponent isCommentWrite={true} id={id} />
       </SRightContainer>
       <ModalBookmark />
     </SQnaDetail>
