@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import EditorComponent from "../../components/common/EditorComponent";
+import Editor from "../../components/common/EditorComponent";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import styled from "styled-components";
@@ -18,7 +18,7 @@ const QnaWrite = () => {
     <SQnaWrite>
       <SEditor>
         <h2 className="title">새 질문 작성하기</h2>
-        <EditorComponent className="editor" isWrite={true} />
+        <Editor className="editor" isWrite={true} />
       </SEditor>
       <ModalBookmark isWrite={true} />
     </SQnaWrite>

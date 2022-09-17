@@ -14,6 +14,7 @@ import blogplus from "../../assets/images/blogplus.png";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogMainList from "../../components/blog/BlogMainList";
+import mainpage from "../../assets/images/mainpage.png";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   const userProfile = useSelector(state => state.userSlice.userProfile);
@@ -28,7 +29,12 @@ const BlogCommmunityMain = () => {
     dispatch(getBlogCommunityListDB());
     dispatch(colorSetBlue());
   }, [dispatch]);
-  //머지
+ 
+
+  const getBlogDetail = id => {
+    dispatch(getBlogDetailDB(id));
+  };
+
 
   return (
     <SBlogCommmunityMain>
@@ -61,7 +67,11 @@ const BlogCommmunityMain = () => {
           <SLeftContainer>
             <SUserInfo>
               <SProfile url={userProfile} />
-              <SPreviewTitle targetData={targetData}></SPreviewTitle>
+
+              <SPreviewTitle targetData={targetData}>
+                <p>개발자와 개발자들의 커뮤니티 사이트 QB-CHAINING</p>
+              </SPreviewTitle>
+
             </SUserInfo>
             <SPreviewContent>
               <ToastViewer />
@@ -192,11 +202,17 @@ const SLeftContainer = styled.div`
   margin-right: 50px;
 `;
 
-const SPreviewTitle = styled.div``;
+const SPreviewTitle = styled.div`
+  font-size: 20px;
+`;
 const SPreviewContent = styled.div`
   flex: 1;
   min-width: 700px;
   /* background-color: ${props => props.theme.color.grey3}; */
+
+  background-position: center;
+  background-size: cover;
+  background-image: url(${mainpage});
 `;
 
 const SRightContainer = styled.div`
