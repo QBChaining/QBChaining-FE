@@ -1,24 +1,16 @@
-import React, { Fragment, useEffect, useRef } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import categories from "./../../utils/category";
-import { useDispatch } from "react-redux";
-import { getQnaCategoryListDB } from "../../redux/async/qna";
 
-const QnaMainCatergory = () => {
+const QnaMainCatergory = ({
+  pageNumber,
+  setPageNumber,
+  setCategory,
+  setHasNextPage,
+}) => {
   const category = categories.qnaCategory;
-  const dispatch = useDispatch();
+
   const lists = useRef();
-
-  //초기카테고리 선택이 필요하면 활성화
-  // useEffect(() => {
-  //   if (lists) {
-  //     lists.current.firstChild.firstChild.checked = true;
-  //   }
-  // }, []);
-
-  const onGetCategory = name => {
-    dispatch(getQnaCategoryListDB(name));
-  };
 
   return (
     <SQnaMainCatergory ref={lists}>
@@ -33,7 +25,9 @@ const QnaMainCatergory = () => {
           <SQnaCategoryList
             htmlFor={list.langName}
             onClick={() => {
-              onGetCategory(list.langName);
+              setPageNumber(0);
+              setCategory(list.langName);
+              setHasNextPage(true);
             }}
           >
             {list.langName}

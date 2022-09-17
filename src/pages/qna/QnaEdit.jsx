@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import Editor from "../../components/common/Editor";
+import EditorComponent from "../../components/common/EditorComponent";
 import axios from "axios";
 import qnaSlice from "./../../redux/modules/qnaSlice";
 import { getOneQnaListDB, getQnaListDB } from "./../../redux/async/qna";
@@ -25,9 +25,9 @@ const QnaEdit = () => {
   }, [target]);
 
   if (editData) {
-    return <Editor isEdit={true} editData={editData} />;
+    return <EditorComponent isEdit={true} editData={editData} />;
   } else {
-    return <Editor />;
+    return <EditorComponent />;
   }
 };
 

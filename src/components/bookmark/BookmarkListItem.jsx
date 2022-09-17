@@ -3,8 +3,7 @@ import WriteBookmark from "./WriteBookmark";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
-
-const BookmarkListItem = ({ isModal, data }) => {
+const BookmarkListItem = ({ type, isModal, data }) => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
 
@@ -23,21 +22,23 @@ const BookmarkListItem = ({ isModal, data }) => {
         onClick={
           isModal
             ? () => {
-                goDetail("qna", data.id);
+                console.log(type, data.id);
+                goDetail(type, data.id);
               }
             : onToggleHandler
         }
       >
-        <SUserName>{data.user_name}</SUserName>
-        <STitle>{data.title}</STitle>
-        <SDate>{data.createdAt}</SDate>
+        <SUserName>{data?.user_name}</SUserName>
+        <STitle>{data?.title}</STitle>
+        <SDate>{data?.createdAt?.slice(0, 10)}</SDate>
       </SBookmarkListItem>
       {modal && (
         <WriteBookmark
           modal={modal}
           setModal={setModal}
           onToggleHandler={onToggleHandler}
-          id={data.qna_id}
+          id={data.id}
+          type={type}
         />
       )}
     </>

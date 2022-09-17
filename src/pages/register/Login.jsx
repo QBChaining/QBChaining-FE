@@ -22,29 +22,31 @@ const Login = () => {
       let decoded = jwt_decode(getCookie("token"));
 
       //추출한 값중에 is_new값에 따라 분기처리
-      if (decoded.is_new === "true") {
-        navigate("/register", { replace: true });
-        dispatch(logIn());
-      } else if (decoded.is_new === "false") {
-        navigate("/", { replace: true });
-        dispatch(logIn());
-      }
-    }
-  }, []);
-
-  const alerts = () => {
-    Swal.fire({ icon: "error", text: "로그아웃 후 이용해주세요" }).then(res => {
+      // if (decoded.is_new === "true") {
+      //   navigate("/register", { replace: true });
+      //   dispatch(logIn());
+      // } else if (decoded.is_new === "false") {
+      //   navigate("/", { replace: true });
+      //   dispatch(logIn());
+      // }
       navigate("/", { replace: true });
-    });
-  };
-
-  useEffect(() => {
-    //login상태라면 로그아웃 하라는 alert
-    if (isLogin) {
-      alerts();
-      return;
+      dispatch(logIn());
     }
   }, []);
+
+  // const alerts = () => {
+  //   Swal.fire({ icon: "error", text: "로그아웃 후 이용해주세요" }).then(res => {
+  //     navigate("/", { replace: true });
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   //login상태라면 로그아웃 하라는 alert
+  //   if (isLogin) {
+  //     alerts();
+  //     return;
+  //   }
+  // }, []);
 
   return <div></div>;
 };

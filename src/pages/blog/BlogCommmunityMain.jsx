@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getBlogCommunityListDB } from "../../redux/async/blog";
+import {
+  getBlogCommunityListDB,
+  getBlogDetailDB,
+} from "../../redux/async/blog";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ToastViewer from "../../components/editor/ToastViewer";
@@ -10,12 +13,12 @@ import BlogHotList from "../../components/blog/BlogHotList";
 import blogplus from "../../assets/images/blogplus.png";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
+import BlogMainList from "../../components/blog/BlogMainList";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   const userProfile = useSelector(state => state.userSlice.userProfile);
   // const resolveList = blogMainLists.filter(data => data.is_resolve);
-
-  console.log("블로그전체", blogMainLists);
+  const targetData = useSelector(state => state.blogSlice.blogDetail);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -26,89 +29,81 @@ const BlogCommmunityMain = () => {
     dispatch(colorSetBlue());
   }, [dispatch]);
   //머지
-  return (
-    <div>
-      {/* <SLine /> */}
-      <STopBox>
-        <SRecommend>
-          <BlogHotList />
-        </SRecommend>
 
-        <STopHelper
-          onClick={() => {
-            navigate("/blog/write");
-          }}
-        >
-          <div className="helpText">게시글을 작성해 보세요!</div>
-          <div className="helpSubText">
-            클릭하시면 블로그 작성페이지로 이동합니다.
-          </div>
-          <SPlus />
-        </STopHelper>
+  const getBlogDetail = id => {
+    dispatch(getBlogDetailDB(id));
+  };
+
+  console.log(targetData);
+
+  return (
+    <SBlogCommmunityMain>
+      <STopBox>
+        <STopBoxWrapper>
+          <SRecommend>
+            <BlogHotList />
+          </SRecommend>
+          <STopHelper
+            onClick={() => {
+              navigate("/blog/write");
+            }}
+          >
+            <SHelpText>게시글을 작성해 보세요!</SHelpText>
+            <SHelpSubText>
+              클릭하시면 블로그 작성페이지로 이동합니다.
+            </SHelpSubText>
+            <SPlus />
+          </STopHelper>
+        </STopBoxWrapper>
       </STopBox>
       <SBody>
-        <SListGroup>
-          {blogMainLists?.map(posts => {
-            return (
-              <SBloglist data={posts} key={posts.id}>
-                <SContentsGroup>
-                  <div
-                    onClick={() => {
-                      navigate(`/blog/detail/${posts.id}`);
-                    }}
-                  >
-                    <SPTitleBox>
-                      <SProfile url={userProfile} />
-                      <div className="title">{posts.title}</div>
-                    </SPTitleBox>
-                    <SContent>
-                      {/* {posts.content} */}
-                      <ToastViewer
-                        className="content1"
-                        content={posts.content}
-                      />
-                    </SContent>
-                  </div>
-                  <STagNMark>
-                    <STagList>
-                      {posts.tag?.map(tags => {
-                        return (
-                          <div key={tags.id}>
-                            <STag>{tags}</STag>
-                          </div>
-                        );
-                      })}
-                    </STagList>
-                    <SBookMark>
-                      <BlogBookMark isbookmark={posts.is_bookmark} />
-                    </SBookMark>
-                  </STagNMark>
-                </SContentsGroup>
-              </SBloglist>
-            );
-          })}
-        </SListGroup>
+        <SContentFilter>
+          <ul>
+            <li>추천순</li>
+            <li>시간순</li>
+          </ul>
+        </SContentFilter>
+        <SContentWrapper>
+          <SLeftContainer>
+            <SUserInfo>
+              <SProfile url={userProfile} />
+              <SPreviewTitle targetData={targetData}>
+                HTML은 뭐하는건가요
+              </SPreviewTitle>
+            </SUserInfo>
+            <SPreviewContent>
+              <ToastViewer />
+            </SPreviewContent>
+          </SLeftContainer>
+          <SRightContainer>
+            {blogMainLists?.map(posts => (
+              <BlogMainList
+                onClick={() => {
+                  getBlogDetail(posts.id);
+                }}
+                posts={posts}
+                key={posts.id}
+              />
+            ))}
+          </SRightContainer>
+        </SContentWrapper>
       </SBody>
       <ModalBookmark />
-    </div>
+    </SBlogCommmunityMain>
   );
 };
+
+export default BlogCommmunityMain;
 //전체
-const SBody = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: left;
-`;
+
+const SBlogCommmunityMain = styled.div``;
+
 //탑박스
 const STopBox = styled.div`
-  width: 100%;
   position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
   background-color: #2676ed;
-  padding: 61px 61px;
+  padding-top: 40px;
+  padding-bottom: 60px;
   //라인
   &::before {
     content: "";
@@ -121,17 +116,24 @@ const STopBox = styled.div`
     background-color: ${props => props.theme.color.white};
   }
 `;
+
+const STopBoxWrapper = styled.div`
+  display: flex;
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 0 20px;
+`;
+
 const SRecommend = styled.div`
-  min-width: 1020px;
+  flex: 1;
+  min-width: 600px;
   height: 300px;
-
   background: #ffffff;
-
   box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
 `;
+
 const STopHelper = styled.div`
-  width: 100%;
   min-width: 420px;
   height: 300px;
   display: flex;
@@ -140,27 +142,83 @@ const STopHelper = styled.div`
   margin-left: 61px;
   color: ${props => props.theme.color.white};
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='30' ry='30' stroke='white' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
-
   border-radius: 30px;
   cursor: pointer;
-  & .helpText {
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 95px;
-  }
-  & .helpSubText {
-    font-size: 20px;
-    font-weight: 100;
-    margin-top: 5px;
+`;
+
+const SHelpText = styled.div`
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 95px;
+`;
+
+const SHelpSubText = styled.div`
+  font-size: 20px;
+  font-weight: 100;
+  margin-top: 5px;
+`;
+
+const SBody = styled.div`
+  width: 1560px;
+  padding: 0 20px;
+  margin: 0 auto;
+`;
+
+const SContentFilter = styled.div`
+  & ul {
+    display: flex;
+    justify-content: flex-end;
+    padding: 40px 30px 20px 0;
+    & li {
+      padding: 10px 20px;
+      position: relative;
+      color: ${props => props.theme.color.grey5};
+      &:first-child {
+        &::before {
+          content: "";
+          position: absolute;
+          top: 15px;
+          right: 0;
+          width: 1px;
+          height: 14px;
+          background-color: ${props => props.theme.color.grey5};
+        }
+      }
+    }
   }
 `;
-const SListGroup = styled.div`
+
+const SContentWrapper = styled.div`
+  display: flex;
+`;
+
+const SLeftContainer = styled.div`
+  width: 50%;
+  height: 700px;
+  position: sticky;
+  top: 100px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-right: 50px;
+`;
+
+const SPreviewTitle = styled.div``;
+const SPreviewContent = styled.div`
+  flex: 1;
+  min-width: 700px;
+  background-color: ${props => props.theme.color.grey3};
+`;
+
+const SRightContainer = styled.div`
+  width: 50%;
   display: flex;
   flex-wrap: wrap;
-  /* align-items: center; */
   justify-content: center;
-  min-width: 1492px;
 `;
+
 const SBloglist = styled.div`
   width: 342px;
   height: 253px;
@@ -194,54 +252,7 @@ const SProfile = styled.div`
   background-size: cover;
   margin-right: 11px;
 `;
-const STagList = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-const STag = styled.div`
-  display: flex;
-  /* flex-wrap: wrap; */
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  color: #ffffff;
-  width: 108px;
-  height: 39px;
-  /* margin-right: 15px; */
-  background: #c0c0c0;
-  border-radius: 30px;
-`;
-const SBookMark = styled.div`
-  display: flex;
-  margin-top: 20px;
-`;
 
-const SContentsGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
-  margin: 36px 28px 30px 28px;
-`;
-
-const SPTitleBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  & .title {
-    font-size: 20px;
-    margin-left: 5px;
-    margin-bottom: 20px;
-  }
-`;
-const Sprofile = styled.div`
-  background-position: center;
-  background-size: cover;
-  background-image: url(${props => props.url});
-  width: 20px;
-  height: 20px;
-`;
 const SPlus = styled.div`
   background-position: center;
   background-size: cover;
@@ -251,13 +262,8 @@ const SPlus = styled.div`
   height: 38px;
 `;
 
-const STagNMark = styled.div`
+const SUserInfo = styled.div`
   display: flex;
-  flex-direction: row;
-  max-width: 300px;
-  height: 100px;
+  padding-bottom: 20px;
+  align-items: center;
 `;
-
-export default BlogCommmunityMain;
-
-//태그 추가(블로그C할때 같이들어가야한다.), 코멘트CRUD,  페이지네이션(백앤드와소통)

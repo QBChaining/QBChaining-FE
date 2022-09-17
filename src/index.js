@@ -8,6 +8,7 @@ import store from "./redux/config/configStore";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import GlobalThemeProvider from "./style/GlobalThemeProvider";
+import ScrollToTop from "./pages/ScrollTop";
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRYDSN,
@@ -20,6 +21,7 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <GlobalThemeProvider>
+        <ScrollToTop />
         <App />
       </GlobalThemeProvider>
     </BrowserRouter>

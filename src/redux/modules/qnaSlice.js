@@ -28,18 +28,23 @@ const qnaSlice = createSlice({
     commentList: [],
     bookmarkList: [],
     isFetching: false,
+    isCommentWrite: false,
     errorMessage: "",
   },
   reducers: {
     removeUserInfo: (state, { payload }) => {
       state.bookmarkList = [];
     },
+    removeQnaList: (state, { payload }) => {
+      state.qnaList = [];
+    },
   },
   extraReducers: {
     //게시글조회
     [getQnaListDB.fulfilled]: (state, { payload }) => {
       //payload에는 전체 리스트가 들어있다
-      state.qnaList = payload;
+      state.qnaList = state.qnaList.concat(payload);
+      // state.qnaList = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -54,7 +59,7 @@ const qnaSlice = createSlice({
     //getQnaCategoryListDB,
     [getQnaCategoryListDB.fulfilled]: (state, { payload }) => {
       //payload에는 전체 리스트가 들어있다
-      state.qnaList = payload;
+      state.qnaList = state.qnaList.concat(payload);
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -160,10 +165,12 @@ const qnaSlice = createSlice({
     [postCommentListDB.fulfilled]: (state, { payload }) => {
       state.commentList.push(payload);
       state.isFetching = false;
+      state.isCommentWrite = true;
       state.errorMessage = null;
     },
     [postCommentListDB.pending]: (state, { payload }) => {
       state.isFetching = true;
+      state.isCommentWrite = false;
     },
     [postCommentListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
@@ -233,7 +240,6 @@ const qnaSlice = createSlice({
     },
     //게시글 즐겨찾기 조회
     [getBookmarkListDB.fulfilled]: (state, { payload }) => {
-      console.log("조회", payload);
       state.bookmarkList = payload;
       state.isFetching = false;
       state.errorMessage = null;
@@ -247,7 +253,7 @@ const qnaSlice = createSlice({
     },
     //게시글 즐겨찾기 추가
     [postBookmarkListDB.fulfilled]: (state, { payload }) => {
-      console.log("추가", payload);
+      console.log(payload);
       state.bookmarkList.push(payload);
       state.isFetching = false;
       state.errorMessage = null;
@@ -294,5 +300,5 @@ const qnaSlice = createSlice({
     },
   },
 });
-export const { removeUserInfo } = qnaSlice.actions;
+export const { removeUserInfo, removeQnaList } = qnaSlice.actions;
 export default qnaSlice.reducer;

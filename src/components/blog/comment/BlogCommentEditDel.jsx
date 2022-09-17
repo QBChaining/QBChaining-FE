@@ -7,25 +7,32 @@ import {
 } from "../../../redux/async/blog";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../../redux/modules/userSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { errorAlert } from "../../../utils/swal";
 const CommentEditDel = ({ comments, userdata }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const userProfile = useSelector(state => state.userSlice.userProfile);
   const userNick = useSelector(state => state.userSlice.userName);
-  // console.log(userNick);
   const [show, setShow] = useState(false);
+  const [textAreaText, setTextAreaText] = useState("");
   const editRef = useRef();
 
   const dispatch = useDispatch();
 
   //댓글 수정 완료 버튼
   const onClickEditHandler = () => {
+    if (editRef.current.value.length < 1) {
+      errorAlert("빈칸입니다!");
+      return;
+    }
     dispatch(
       patchBlogCommentDB({
-        comment: editRef.current.value,
+        comment: textAreaText,
         id: comments.id,
       }),
     );
+    setShow(!show);
   };
 
   //댓글 삭제 버튼
@@ -36,70 +43,157 @@ const CommentEditDel = ({ comments, userdata }) => {
   useEffect(() => {
     dispatch(getBlogCommentListDB(id));
   }, [dispatch]);
+
+  const goMypage = name => {
+    navigate(`/mypage/${name}`);
+  };
+
   return (
-    <div>
-      {!show ? (
-        <SCommentList>
-          <SProfile url={userProfile} />
-          <div>{comments.User?.user_name}</div>
-          <SDate>
-            {" "}
-            {comments.createdAt?.slice(0, 10)} /{" "}
+    <>
+      <SCommentList>
+        <SProfileWrapper>
+          <SProfile
+            onClick={() => {
+              goMypage(comments.User?.user_name);
+            }}
+            url={comments.User?.profile_img}
+          />
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              goMypage(comments.User?.user_name);
+            }}
+          >
+            {comments.User?.user_name}
+          </div>
+          <SDate
+            onClick={() => {
+              goMypage(comments.User?.user_name);
+            }}
+          >
+            {comments.createdAt?.slice(0, 10)} /
             {comments.createdAt?.slice(11, 16)}
           </SDate>
-          <small>{comments.comment}</small>
-
-          {userNick === comments.User?.user_name ? (
-            <div>
-              <button
-                type="button"
-                onClick={() => {
-                  setShow(!show);
-                }}
-              >
-                수정
-              </button>
-              <button onClick={onClickDeleteHandler}>삭제</button>
-            </div>
-          ) : null}
-        </SCommentList>
-      ) : (
-        <>
-          <div>프로필사진</div>
-          <div>홍길동</div>
-          <div>👍</div>
-          <input type="text" placeholder={comments.comment} ref={editRef} />
-          <div>
-            <button
-              onClick={() => {
-                onClickEditHandler(comments.id);
-                setShow(!show);
-              }}
+        </SProfileWrapper>
+        {!show ? (
+          <SComment>{comments.comment}</SComment>
+        ) : (
+          <STextArea
+            type="text"
+            value={textAreaText}
+            onChange={e => {
+              setTextAreaText(e.target.value);
+            }}
+            ref={editRef}
+          />
+        )}
+        {userNick === comments.User?.user_name && (
+          <ButtonGroup>
+            <div
+              className="editbtn"
+              type="button"
+              onClick={
+                show
+                  ? () => {
+                      onClickEditHandler();
+                    }
+                  : () => {
+                      setTextAreaText(comments.comment);
+                      setShow(!show);
+                    }
+              }
             >
-              수정완료
-            </button>
-          </div>
-        </>
-      )}
-    </div>
+              {show ? "수정완료" : "수정하기"}
+            </div>
+            <div
+              className="delbtn"
+              type="button"
+              onClick={onClickDeleteHandler}
+            >
+              삭제
+            </div>
+          </ButtonGroup>
+        )}
+      </SCommentList>
+    </>
   );
 };
 
-const SCommentList = styled.div``;
+export default CommentEditDel;
+
+const SCommentList = styled.div`
+  background: ${props => props.theme.color.grey2};
+  border-radius: 20px;
+  padding: 20px 40px;
+  position: relative;
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+`;
 const SDate = styled.div`
+  margin-left: 10px;
   font-size: 14px;
   color: #939393;
+  cursor: pointer;
+`;
+
+const SProfileWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${props => props.theme.color.grey5};
 `;
 
 const SProfile = styled.div`
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid ${props => props.theme.color.grey3};
   background-image: url(${props => props.url});
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   margin-right: 11px;
+  cursor: pointer;
 `;
-export default CommentEditDel;
+const ButtonGroup = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  color: #7a7a7a;
+
+  & > div {
+    padding: 0 10px;
+    cursor: pointer;
+  }
+
+  & > div:first-child {
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 6px;
+      right: 0;
+      width: 1px;
+      height: 12px;
+      background-color: #7a7a7a;
+    }
+  }
+`;
+
+const SComment = styled.div`
+  padding: 10px 0 10px 55px;
+  font-size: 18px;
+`;
+
+const STextArea = styled.textarea`
+  display: block;
+  float: right;
+  width: calc(100% - 55px);
+  padding: 10px;
+  font-size: 18px;
+  resize: none;
+`;

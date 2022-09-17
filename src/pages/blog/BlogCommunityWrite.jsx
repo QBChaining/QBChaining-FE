@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Editor from "../../components/common/Editor";
+import EditorComponent from "../../components/common/EditorComponent";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import { useDispatch } from "react-redux";
@@ -16,7 +16,7 @@ const BlogCommunityWrite = () => {
     <STWrite>
       <STitleSet>
         <h2 className="title">새 게시글 작성하기</h2>
-        <Editor isBlogWrite={true} />
+        <EditorComponent isBlogWrite={true} />
       </STitleSet>
       <ModalBookmark isWrite={true} />
     </STWrite>

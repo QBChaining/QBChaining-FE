@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Editor from "../../components/common/Editor";
+import EditorComponent from "../../components/common/EditorComponent";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import BookmarkList from "../../components/bookmark/BookmarkList";
 import styled from "styled-components";
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 import ModalBookmark from "../../components/common/ModalBookmark";
@@ -19,7 +18,7 @@ const QnaWrite = () => {
     <SQnaWrite>
       <SEditor>
         <h2 className="title">새 질문 작성하기</h2>
-        <Editor className="editor" isWrite={true} />
+        <EditorComponent className="editor" isWrite={true} />
       </SEditor>
       <ModalBookmark isWrite={true} />
     </SQnaWrite>
@@ -35,8 +34,8 @@ const SQnaWrite = styled.div`
 `;
 
 const SEditor = styled.div`
-  margin-left: 200px;
-  margin-right: 200px;
+  padding-left: 200px;
+  padding-right: 150px;
   flex: 1;
   & .title {
     margin-top: 40px;

@@ -80,9 +80,7 @@ const Register = () => {
   } = useForm();
   const [list, setList] = useState([]);
   const dispatch = useDispatch();
-  const onSubmitHandler = data => {
-    // console.log(data, list);
-  };
+  const onSubmitHandler = data => {};
 
   return (
     <>

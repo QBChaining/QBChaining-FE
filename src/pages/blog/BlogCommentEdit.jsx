@@ -1,5 +1,5 @@
 import React, { useEffect, useDispatch } from "react";
-import Editor from "../../components/common/Editor";
+import EditorComponent from "../../components/common/EditorComponent";
 import { useParams } from "react-router-dom";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import styled from "styled-components";
@@ -17,7 +17,7 @@ const BlogCommunityEdit = () => {
     <SEdit>
       <STitledSet>
         <h2 className="title">게시글 수정하기</h2>
-        <Editor blogEditId={id} isBlogEdit={true}></Editor>
+        <EditorComponent blogEditId={id} isBlogEdit={true}></EditorComponent>
       </STitledSet>
       <ModalBookmark isWrite={true} />
     </SEdit>

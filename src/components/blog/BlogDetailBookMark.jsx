@@ -10,22 +10,33 @@ import { errorAlert, needLoginAlert } from "../../utils/swal";
 import blogbookmark from "../../assets/images/blogbookmark.png";
 import blogbookmarkadd from "../../assets/images/bookmarkadd.png";
 import { useParams } from "react-router-dom";
-const BlogBookMark = ({ isbookmark, posts, isdetailbookmark }) => {
+import { getToday } from "./../../utils/today";
+const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
+  const [bookMark, setBookMark] = useState(isbookmark);
   const dispatch = useDispatch();
   const { isLogin } = useSelector(state => state.userSlice);
-  const [bookMark, setBookMark] = useState(isbookmark);
+  const { id } = useParams();
+
+  const totalData = {
+    id: target.id,
+    title: target.title,
+    user_name: target.user_name,
+    createdAt: getToday(),
+  };
+
   const onAddBookMark = () => {
     if (!isLogin) {
       needLoginAlert();
       return;
     }
-    dispatch(postBlogBookMarkDB(posts.id));
+    dispatch(postBlogBookMarkDB(totalData));
     setBookMark(!bookMark);
   };
   const onDeleteBookMark = () => {
-    dispatch(deleteBlogBookMarkDB(posts.id));
+    dispatch(deleteBlogBookMarkDB(id));
     setBookMark(!bookMark);
   };
+
   return (
     <>
       {isdetailbookmark ? (
@@ -58,6 +69,7 @@ const SBookMarkBtn1 = styled.div`
   background-position: center;
   background-size: cover;
   background-image: url(${blogbookmarkadd});
+  cursor: pointer;
 `;
 
 const SbookMarkBtnAdd = styled.div`

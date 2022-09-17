@@ -10,11 +10,11 @@ import addlike from "../../assets/images/addLike.png";
 import unlike from "../../assets/images/unlike.png";
 import styled from "styled-components";
 import { errorAlert, needLoginAlert } from "../../utils/swal";
-const BlogLike = ({ islike }) => {
+const BlogLike = ({ love }) => {
   const { isLogin } = useSelector(state => state.userSlice);
   const dispatch = useDispatch();
   const { id } = useParams();
-  // const [Like, setLike] = useState(false);
+  const [Like, setLike] = useState(love);
 
   const onLikeBlog = () => {
     if (!isLogin) {
@@ -22,22 +22,18 @@ const BlogLike = ({ islike }) => {
       return;
     }
     dispatch(postBlogLikeDB(id));
+    setLike(!Like);
   };
-
   const onUnLikeBlog = () => {
     dispatch(unBlogLikeDB(id));
+    setLike(!Like);
   };
-
   return (
     <div>
-      {islike === false ? (
-        <>
-          <UnLike onClick={onLikeBlog} />
-        </>
+      {Like === false ? (
+        <UnLike onClick={onLikeBlog} />
       ) : (
-        <>
-          <AddLike onClick={onUnLikeBlog} />
-        </>
+        <AddLike onClick={onUnLikeBlog} />
       )}
     </div>
   );
@@ -47,15 +43,17 @@ const AddLike = styled.div`
   height: 18px;
 
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-image: url(${addlike});
+  background-repeat: no-repeat;
   cursor: pointer;
 `;
 const UnLike = styled.div`
   width: 18px;
   height: 18px;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-image: url(${unlike});
   cursor: pointer;
 `;

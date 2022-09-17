@@ -13,17 +13,19 @@ import {
   getHotBlogDB,
   postBlogLikeDB,
   deleteBlogBookMarkDB,
+  postBlogBookMarkDB,
+  unBlogLikeDB,
 } from "../async/blog";
-import { postBookmarkListDB } from "../async/qna";
 export const blogSlice = createSlice({
   name: "blog",
   initialState: {
     blogList: [],
-    blogDetail: [],
+    blogDetail: {},
     commentList: [],
     myblog: [],
     hotBlog: [],
     blogBookMark: [],
+    likebookmark: {},
     isFetching: false,
     errorMessage: "",
   },
@@ -139,9 +141,9 @@ export const blogSlice = createSlice({
     },
     [patchBlogCommentDB.fulfilled]: (state, action) => {
       const idx = state.commentList.findIndex(data => {
-        return data.id === action.payload.data.id;
+        return data.id === action.payload.id;
       });
-      state.commentList[idx] = action.payload.data;
+      state.commentList[idx].comment = action.payload.comment;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -184,8 +186,8 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogBookMarkDB.fulfilled]: (state, action) => {
-      console.log(action);
       state.blogBookMark = action.payload;
+      state.isFetching = false;
     },
     [getBlogBookMarkDB.rejected]: (state, action) => {
       state.isFetching = false;
@@ -193,14 +195,13 @@ export const blogSlice = createSlice({
     },
 
     // 북마크 추가
-    [postBookmarkListDB.pending]: state => {
+    [postBlogBookMarkDB.pending]: state => {
       state.isFetching = true;
     },
-    [postBookmarkListDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      state.blogBookMark = action.payload;
+    [postBlogBookMarkDB.fulfilled]: (state, action) => {
+      state.blogBookMark.push(action.payload);
     },
-    [postBlogCommentDB.rejected]: (state, action) => {
+    [postBlogBookMarkDB.rejected]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },
@@ -209,8 +210,11 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [deleteBlogBookMarkDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      state.blogBookMark = action.payload;
+      const newBlogBookMark = state.blogBookMark.filter(
+        data => data.id !== parseInt(action.payload),
+      );
+      state.blogBookMark = newBlogBookMark;
+      state.isFetching = false;
     },
     [deleteBlogBookMarkDB.rejected]: (state, action) => {
       state.isFetching = false;
@@ -234,9 +238,20 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogLikeDB.fulfilled]: (state, action) => {
-      state.blogDetail = action.payload;
+      // state.like = action.payload;
     },
     [postBlogLikeDB.rejected]: (state, action) => {
+      state.errorMessage = action.payload.errorMessage;
+    },
+
+    // 좋아요 삭제
+    [unBlogLikeDB]: state => {
+      state.isFetching = true;
+    },
+    [unBlogLikeDB]: (state, action) => {
+      state.likebookmark = action.payload;
+    },
+    [unBlogLikeDB]: (state, action) => {
       state.errorMessage = action.payload.errorMessage;
     },
   },

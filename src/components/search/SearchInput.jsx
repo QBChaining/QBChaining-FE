@@ -2,11 +2,24 @@ import React, { useRef } from "react";
 import SearchIcon from "../../assets/images/SearchIcon.png";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  removeSearchList,
+  setSearchWord,
+} from "../../redux/modules/searchSlice";
+import { errorAlert } from "../../utils/swal";
 
 const SearchInput = () => {
   const search = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const goSearch = () => {
+    if (search.current.value.length === 0) {
+      errorAlert("검색어를 입력해주세요!");
+      return;
+    }
+    dispatch(removeSearchList());
+    dispatch(setSearchWord(search.current.value));
     navigate(`/search?q=${search.current.value}`);
     search.current.value = "";
   };
@@ -14,16 +27,7 @@ const SearchInput = () => {
   return (
     <SSearchInput>
       <SInput ref={search} type="text" placeholder="Javascript" />
-      <SSearchButton
-        onClick={
-          goSearch
-          // axios.get(`http://kpzzy.shop/api/search?q=node`).then(res => {
-          //   console.log(res);
-          // });
-        }
-      >
-        검색
-      </SSearchButton>
+      <SSearchButton onClick={goSearch}>검색</SSearchButton>
     </SSearchInput>
   );
 };
@@ -31,9 +35,7 @@ const SearchInput = () => {
 export default SearchInput;
 
 const SSearchInput = styled.div`
-  max-width: 600px;
-  min-width: 200px;
-  width: 100%;
+  width: 600px;
   position: relative;
   &::before {
     position: absolute;

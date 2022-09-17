@@ -4,18 +4,18 @@ import BookmarkStar from "../../assets/images/BookmarkStar.png";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getBookmarkListDB } from "../../redux/async/qna";
+import { getBlogBookMarkDB } from "../../redux/async/blog";
 import BookmarkListItem from "./../bookmark/BookmarkListItem";
 import { needLoginAlert } from "./../../utils/swal";
 import Nodata from "./../bookmark/Nodata";
-
+import { useNavigate } from "react-router-dom";
 const ModalBookmark = ({ isWrite, type }) => {
   const dispatch = useDispatch();
   const location = window.location.pathname;
 
   const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
-  console.log(qnaBookmarkList);
-  const blogBookmarkList = useSelector(state => state);
-  console.log(blogBookmarkList);
+  const blogBookmarkList = useSelector(state => state.blogSlice.blogBookMark);
+
   const { isLogin, color } = useSelector(state => state.userSlice);
   const [modal, setModal] = useState(false);
   const toggle = () => {
@@ -27,6 +27,7 @@ const ModalBookmark = ({ isWrite, type }) => {
 
   useEffect(() => {
     if (isLogin) {
+      dispatch(getBlogBookMarkDB());
       dispatch(getBookmarkListDB());
     }
   }, []);
@@ -39,14 +40,15 @@ const ModalBookmark = ({ isWrite, type }) => {
             <SList className="blog">
               <SListTitle>블로그</SListTitle>
               <SUnorderedList>
-                {/* {blogBookmarkList.map(data => (
+                {blogBookmarkList.map(data => (
                   <BookmarkListItem
                     isModal={!isWrite}
                     key={data.id}
                     data={data}
+                    type={"blog"}
                   />
-                ))} */}
-                {qnaBookmarkList.length < 4 && <Nodata />}
+                ))}
+                {blogBookmarkList.length < 4 && <Nodata />}
               </SUnorderedList>
             </SList>
             <SList className="qna">
@@ -57,6 +59,7 @@ const ModalBookmark = ({ isWrite, type }) => {
                     isModal={!isWrite}
                     key={data.id}
                     data={data}
+                    type={"qna"}
                   />
                 ))}
                 {qnaBookmarkList.length < 4 && <Nodata />}
@@ -110,6 +113,7 @@ const SListWrapper = styled.div`
   border-radius: 25px;
   padding: 0 30px;
   box-shadow: -8px 14px 50px rgba(0, 0, 0, 0.15);
+  z-index: 100;
 `;
 
 const SList = styled.div`
