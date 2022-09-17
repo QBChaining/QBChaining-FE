@@ -7,6 +7,8 @@ export const blogApi = {
   getBlogCommunityList: () => instance.get("/posts"),
   //블로그 디테일 조회
   getBlogDetail: id => instance.get(`/posts/${id}`),
+  // 블로그 미리보기
+  getPreView: id => instance.get(`/posts/${id}`),
   //블로그 게시글 생성
   postBlogCommunity: data => instance.post("/posts", data),
   //블로그 게시물 수정

@@ -5,6 +5,7 @@ import { errorLikeAlert, networkError, successAlert } from "../../utils/swal";
 
 //error loging
 import * as Sentry from "@sentry/react";
+import { getToday } from "./../../utils/today";
 
 //게시글 전체 조회
 export const getQnaListDB = createAsyncThunk(
@@ -16,7 +17,6 @@ export const getQnaListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      console.log(err);
       networkError();
       Sentry.captureException(`error, 게시글 전체조회 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
@@ -52,7 +52,6 @@ export const getOneQnaListDB = createAsyncThunk(
       }
     } catch (err) {
       networkError();
-      console.log(err);
       Sentry.captureException(`error, QNA게시글 상세 조회 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
     }
@@ -70,7 +69,6 @@ export const postQnaListDB = createAsyncThunk(
         return response.data;
       }
     } catch (err) {
-      console.log(err);
       networkError();
       Sentry.captureException(`error, QNA게시글 작성 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
@@ -182,6 +180,7 @@ export const postCommentListDB = createAsyncThunk(
         response.data.data.is_choose = false;
         response.data.data.user_name = data.user_name;
         response.data.data.profile_img = data.profile_img;
+        response.data.data.createdAt = getToday();
         return response.data.data;
       }
     } catch (err) {

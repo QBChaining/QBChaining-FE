@@ -15,6 +15,7 @@ import {
   deleteBlogBookMarkDB,
   postBlogBookMarkDB,
   unBlogLikeDB,
+  getPreViewDB,
 } from "../async/blog";
 export const blogSlice = createSlice({
   name: "blog",
@@ -51,7 +52,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogDetailDB.fulfilled]: (state, action) => {
-      //블로그 디테일 게시물
       state.blogDetail = action.payload;
       state.isFetching = false;
     },
@@ -252,6 +252,19 @@ export const blogSlice = createSlice({
       state.likebookmark = action.payload;
     },
     [unBlogLikeDB]: (state, action) => {
+      state.errorMessage = action.payload.errorMessage;
+    },
+
+    // 프리뷰
+    [getPreViewDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [getPreViewDB.fulfilled]: (state, action) => {
+      state.preView = action.payload;
+      state.isFetching = false;
+    },
+    [getPreViewDB.rejected]: (state, action) => {
+      state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },
   },

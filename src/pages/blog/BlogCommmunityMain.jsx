@@ -14,6 +14,7 @@ import blogplus from "../../assets/images/blogplus.png";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogMainList from "../../components/blog/BlogMainList";
+import mainpage from "../../assets/images/mainpage.png";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   const userProfile = useSelector(state => state.userSlice.userProfile);
@@ -28,13 +29,12 @@ const BlogCommmunityMain = () => {
     dispatch(getBlogCommunityListDB());
     dispatch(colorSetBlue());
   }, [dispatch]);
-  //머지
+ 
 
   const getBlogDetail = id => {
     dispatch(getBlogDetailDB(id));
   };
 
-  console.log(targetData);
 
   return (
     <SBlogCommmunityMain>
@@ -67,23 +67,20 @@ const BlogCommmunityMain = () => {
           <SLeftContainer>
             <SUserInfo>
               <SProfile url={userProfile} />
+
               <SPreviewTitle targetData={targetData}>
-                HTML은 뭐하는건가요
+                <p>개발자와 개발자들의 커뮤니티 사이트 QB-CHAINING</p>
               </SPreviewTitle>
+
             </SUserInfo>
             <SPreviewContent>
               <ToastViewer />
+              {targetData ? "안녕하세요" : "없어요"}
             </SPreviewContent>
           </SLeftContainer>
           <SRightContainer>
             {blogMainLists?.map(posts => (
-              <BlogMainList
-                onClick={() => {
-                  getBlogDetail(posts.id);
-                }}
-                posts={posts}
-                key={posts.id}
-              />
+              <BlogMainList posts={posts} key={posts.id} />
             ))}
           </SRightContainer>
         </SContentWrapper>
@@ -205,11 +202,17 @@ const SLeftContainer = styled.div`
   margin-right: 50px;
 `;
 
-const SPreviewTitle = styled.div``;
+const SPreviewTitle = styled.div`
+  font-size: 20px;
+`;
 const SPreviewContent = styled.div`
   flex: 1;
   min-width: 700px;
-  background-color: ${props => props.theme.color.grey3};
+  /* background-color: ${props => props.theme.color.grey3}; */
+
+  background-position: center;
+  background-size: cover;
+  background-image: url(${mainpage});
 `;
 
 const SRightContainer = styled.div`
