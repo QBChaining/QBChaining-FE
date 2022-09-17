@@ -65,8 +65,9 @@ const BlogCommmunityMain = () => {
         <SContentWrapper>
           <SLeftContainer>
             <SUserInfo>
-              <SProfile url={userProfile} />
-              <SPreviewTitle targetData={targetData}>
+              <SProfile />
+              <SPreviewTitle>
+                {/* <SPreviewTitle targetData={targetData}> */}
                 <p>개발자와 개발자들의 커뮤니티 사이트 QB-CHAINING</p>
               </SPreviewTitle>
             </SUserInfo>
@@ -250,11 +251,12 @@ const SProfile = styled.div`
   height: 40px;
   border-radius: 50%;
   border: 1px solid ${props => props.theme.color.grey3};
-  background-image: url(${props => props.url});
-  background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
   margin-right: 11px;
+
+  background-position: center;
+  background-size: cover;
+  background-image: url(${mainpage});
 `;
 
 const SPlus = styled.div`
