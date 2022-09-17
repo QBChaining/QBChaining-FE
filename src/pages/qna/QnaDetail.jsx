@@ -37,7 +37,7 @@ const QnaDetail = () => {
         <SAddCommentTitle>댓글 작성</SAddCommentTitle>
         <EditorComponent isCommentWrite={true} id={id} />
       </SRightContainer>
-      <ModalBookmark />
+      {/* <ModalBookmark isWrite={true} /> */}
     </SQnaDetail>
   );
 };

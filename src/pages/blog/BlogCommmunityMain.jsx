@@ -29,11 +29,12 @@ const BlogCommmunityMain = () => {
     dispatch(getBlogCommunityListDB());
     dispatch(colorSetBlue());
   }, [dispatch]);
-  //머지
+ 
 
   const getBlogDetail = id => {
     dispatch(getBlogDetailDB(id));
   };
+
 
   return (
     <SBlogCommmunityMain>
@@ -65,6 +66,7 @@ const BlogCommmunityMain = () => {
         <SContentWrapper>
           <SLeftContainer>
             <SUserInfo>
+
               <SProfile />
               <SPreviewTitle>
                 <p>개발자와 개발자들의 커뮤니티 사이트 QB-CHAINING</p>
@@ -72,17 +74,12 @@ const BlogCommmunityMain = () => {
             </SUserInfo>
             <SPreviewContent>
               <ToastViewer />
+              {targetData ? "안녕하세요" : "없어요"}
             </SPreviewContent>
           </SLeftContainer>
           <SRightContainer>
             {blogMainLists?.map(posts => (
-              <BlogMainList
-                onClick={() => {
-                  getBlogDetail(posts.id);
-                }}
-                posts={posts}
-                key={posts.id}
-              />
+              <BlogMainList posts={posts} key={posts.id} />
             ))}
           </SRightContainer>
         </SContentWrapper>
@@ -211,6 +208,7 @@ const SPreviewContent = styled.div`
   flex: 1;
   min-width: 700px;
   /* background-color: ${props => props.theme.color.grey3}; */
+
   background-position: center;
   background-size: cover;
   background-image: url(${mainpage});
