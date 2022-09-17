@@ -30,10 +30,7 @@ const QnaCommentList = ({ id, qnaId }) => {
   //디테일정보 구독
   const target = useSelector(state => state.qnaSlice.qnaTarget);
 
-  const { isLogin } = useSelector(state => state.userSlice);
-
-  //로그인 유저 이름 구독
-  const userName = useSelector(state => state.userSlice.userName);
+  const { isLogin, userName } = useSelector(state => state.userSlice);
 
   //최초진입시 commentList 받아오기
   useEffect(() => {
@@ -142,7 +139,7 @@ const QnaCommentList = ({ id, qnaId }) => {
                 <SUserInfoText>
                   <SUserNameWrapper>
                     <SUserName>{data.user_name}</SUserName>
-                    {!target.is_resolve && target.user_name !== data.user_name && (
+                    {!target.is_resolve && target.user_name === userName && (
                       <SChoiceButton
                         onClick={e => {
                           onChoiceHandler(e, data.id);

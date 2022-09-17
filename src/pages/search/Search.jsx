@@ -25,13 +25,14 @@ const Search = () => {
       dispatch(getBlogSearchListDB(searchWord));
     }
   }, [searchWord]);
-  console.log(qnaSearchList);
 
   useEffect(() => {
     return () => {
       dispatch(removeSearchList());
     };
-  }, []);
+  }, [searchWord]);
+
+  //무한스크롤
 
   return (
     <SSearch>

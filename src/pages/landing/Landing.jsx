@@ -3,6 +3,7 @@ import styled from "styled-components";
 import bigLogo from "../../assets/images/BigLogo.png";
 import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
+import LeftArrow from "../../assets/images/LeftArrow.png";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Landing = () => {
           navigate("/qna");
         }}
       >
-        <span className="arrow"> &lt;</span>Q&A
+        <span className="arrow"></span>Q&A
       </div>
       <div
         className="goBlog container"
@@ -24,7 +25,7 @@ const Landing = () => {
           navigate("/blog");
         }}
       >
-        블로그<span className="arrow"> &gt;</span>
+        블로그<span className="arrow right"></span>
       </div>
     </SLanding>
   );
@@ -38,16 +39,17 @@ const SLanding = styled.div`
   height: calc(100vh - 100px);
   background: linear-gradient(270.85deg, #2676ed -0.91%, #2ad798 97.98%);
   display: flex;
-
-  & .bigLogo {
+  &::before {
+    content: "";
     position: absolute;
-    top: 45%;
+    top: 0;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background-image: url(${bigLogo});
-    width: 823px;
-    height: 745px;
+    width: calc(100% - 88px);
+    height: 1px;
+    transform: translateX(-50%);
+    background-color: ${props => props.theme.color.white};
   }
+
   & .logo {
     position: absolute;
     top: 50%;
@@ -71,13 +73,20 @@ const SLanding = styled.div`
       justify-content: center;
       align-items: center;
       color: black;
-      width: 42px;
-      height: 42px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       background-color: rgba(255, 255, 255, 0.7);
       font-weight: 900;
       font-size: 20px;
       margin: 0 20px;
+      background-image: url(${LeftArrow});
+      background-repeat: no-repeat;
+      background-position: center;
+
+      &.right {
+        transform: rotate(180deg);
+      }
     }
   }
 `;

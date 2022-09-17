@@ -200,15 +200,15 @@ const SQnaWrapper = styled.div`
   max-width: 1560px;
   padding: 0 20px;
   margin: 0 auto;
+  gap: 40px;
 `;
 const SleftConatiner = styled.div`
-  max-width: 850px;
+  max-width: 735px;
   width: 100%;
-  margin-right: 40px;
 `;
 
 const SRightContainer = styled.div`
-  max-width: 650px;
+  max-width: 735px;
   width: 100%;
 `;
 

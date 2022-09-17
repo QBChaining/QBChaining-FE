@@ -16,6 +16,7 @@ import GreyQnaCommentIcon from "../../assets/images/GreyQnaComment.png";
 import ProfileDefault from "../../assets/images/ProfileDefault.png";
 import unlike from "../../assets/images/unlike.png";
 import BlogComment from "../../assets/images/BlogComment.png";
+import { setSearchWord } from "../../redux/modules/searchSlice";
 const ContentList = ({ data, type, isSearch }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -52,7 +53,9 @@ const ContentList = ({ data, type, isSearch }) => {
     navigate(`/mypage/${name}`);
   };
 
-  const goSearch = content => {
+  const goSearch = (content, e) => {
+    e.stopPropagation();
+    dispatch(setSearchWord(content));
     navigate(`/search?q=${content}`);
   };
 
@@ -64,6 +67,9 @@ const ContentList = ({ data, type, isSearch }) => {
         </SSolveText>
       )}
       <SWrapper
+        onClick={() => {
+          navigate(`/${type}/detail/${data.id}`);
+        }}
         type={type}
         resolve={data.is_resolve}
         ResolveWrapper={ResolveWrapper}
@@ -71,9 +77,9 @@ const ContentList = ({ data, type, isSearch }) => {
       >
         <SUserInfo>
           <SProfileContainer
-            onClick={() => {
-              goMypage(data.user_name);
-            }}
+          // onClick={() => {
+          //   goMypage(data.user_name);
+          // }}
           >
             <SProfile profile={data.profile_img}></SProfile>
             <SUserName>{data.user_name}</SUserName>
@@ -105,8 +111,8 @@ const ContentList = ({ data, type, isSearch }) => {
                 <Tag
                   type={type}
                   key={i}
-                  onClick={() => {
-                    goSearch(data);
+                  onClick={e => {
+                    goSearch(data, e);
                   }}
                 >
                   {data}
@@ -170,6 +176,7 @@ const SWrapper = styled.div`
   margin: 30px 0
     ${props => (props.isSearch && props.type === "qna" ? "55px" : "30px")} 0;
   min-height: 190px;
+  cursor: pointer;
 `;
 
 const SUserInfo = styled.div`
