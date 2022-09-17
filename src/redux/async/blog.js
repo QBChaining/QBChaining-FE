@@ -30,6 +30,7 @@ export const getBlogDetailDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.getBlogDetail(id);
+      console.log(response);
       if (response.data.success === true) {
         return response.data.data[0];
       }
@@ -252,5 +253,16 @@ export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
   } catch (err) {
     Sentry.captureException(`error, 좋아요 에러. ${err}`);
     return thunkAPI.rejectWithValue(err.response.message);
+  }
+});
+
+//블로그 미리보기
+export const getPreViewDB = createAsyncThunk("PREVIEW", async thunkAPI => {
+  try {
+    const response = await blogApi.getPreView();
+    console.log(response);
+    return response;
+  } catch (err) {
+    console.log(err);
   }
 });

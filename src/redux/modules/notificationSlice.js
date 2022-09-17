@@ -22,7 +22,7 @@ export const notificationSlice = createSlice({
       state.isFetching = true;
     },
     [postNotificationDB.fulfilled]: (state, action) => {
-      state.notification = action;
+      // state.notification = action;
     },
   },
 });
