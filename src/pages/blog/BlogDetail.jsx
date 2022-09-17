@@ -107,7 +107,7 @@ const BlogCommunityDetail = () => {
         <CommentAdd />
         <CommentList />
       </SCommentWrapper>
-      <ModalBookmark />
+      {/* <ModalBookmark /> */}
     </SContainer>
   );
 };
