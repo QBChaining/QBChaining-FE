@@ -67,7 +67,6 @@ const BlogCommmunityMain = () => {
             <SUserInfo>
               <SProfile />
               <SPreviewTitle>
-                {/* <SPreviewTitle targetData={targetData}> */}
                 <p>개발자와 개발자들의 커뮤니티 사이트 QB-CHAINING</p>
               </SPreviewTitle>
             </SUserInfo>
