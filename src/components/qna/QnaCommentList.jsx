@@ -139,15 +139,17 @@ const QnaCommentList = ({ id, qnaId }) => {
                 <SUserInfoText>
                   <SUserNameWrapper>
                     <SUserName>{data.user_name}</SUserName>
-                    {!target.is_resolve && target.user_name === userName && (
-                      <SChoiceButton
-                        onClick={e => {
-                          onChoiceHandler(e, data.id);
-                        }}
-                      >
-                        채택
-                      </SChoiceButton>
-                    )}
+                    {!target.is_resolve &&
+                      target.user_name === userName &&
+                      target.user_name !== data.user_name && (
+                        <SChoiceButton
+                          onClick={e => {
+                            onChoiceHandler(e, data.id);
+                          }}
+                        >
+                          채택
+                        </SChoiceButton>
+                      )}
                   </SUserNameWrapper>
                   <SCreateAt>{data.createdAt}</SCreateAt>
                 </SUserInfoText>

@@ -30,12 +30,6 @@ const BlogCommmunityMain = () => {
   }, [dispatch]);
   //머지
 
-  const getBlogDetail = id => {
-    dispatch(getBlogDetailDB(id));
-  };
-
-  console.log(targetData);
-
   return (
     <SBlogCommmunityMain>
       <STopBox>
@@ -67,23 +61,16 @@ const BlogCommmunityMain = () => {
           <SLeftContainer>
             <SUserInfo>
               <SProfile url={userProfile} />
-              <SPreviewTitle targetData={targetData}>
-                HTML은 뭐하는건가요
-              </SPreviewTitle>
+              <SPreviewTitle targetData={targetData}></SPreviewTitle>
             </SUserInfo>
             <SPreviewContent>
               <ToastViewer />
+              {targetData ? "안녕하세요" : "없어요"}
             </SPreviewContent>
           </SLeftContainer>
           <SRightContainer>
             {blogMainLists?.map(posts => (
-              <BlogMainList
-                onClick={() => {
-                  getBlogDetail(posts.id);
-                }}
-                posts={posts}
-                key={posts.id}
-              />
+              <BlogMainList posts={posts} key={posts.id} />
             ))}
           </SRightContainer>
         </SContentWrapper>
@@ -209,7 +196,7 @@ const SPreviewTitle = styled.div``;
 const SPreviewContent = styled.div`
   flex: 1;
   min-width: 700px;
-  background-color: ${props => props.theme.color.grey3};
+  /* background-color: ${props => props.theme.color.grey3}; */
 `;
 
 const SRightContainer = styled.div`

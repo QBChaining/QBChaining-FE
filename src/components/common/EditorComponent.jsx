@@ -199,8 +199,6 @@ const EditorComponent = ({
     setTag(e.target.value);
   };
 
-  console.log(category);
-
   //태그추가
   const onAddTagHandler = () => {
     if (tagText.current.value.length < 1) {

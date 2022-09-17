@@ -9,7 +9,6 @@ import * as Sentry from "@sentry/react";
 export const getQnaSearchListDB = createAsyncThunk(
   "qna/getqnasearch",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await searchApi.getQnaSearchList(data);
       if (

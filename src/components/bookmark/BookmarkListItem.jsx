@@ -22,7 +22,6 @@ const BookmarkListItem = ({ type, isModal, data }) => {
         onClick={
           isModal
             ? () => {
-                console.log(type, data.id);
                 goDetail(type, data.id);
               }
             : onToggleHandler
