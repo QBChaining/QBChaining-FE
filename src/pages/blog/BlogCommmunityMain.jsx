@@ -65,14 +65,11 @@ const BlogCommmunityMain = () => {
         <SContentWrapper>
           <SLeftContainer>
             <SUserInfo>
-              <SProfile />
               <SPreviewTitle>
                 <p>개발자와 개발자들의 커뮤니티 사이트 QB-CHAINING</p>
               </SPreviewTitle>
             </SUserInfo>
-            <SPreviewContent>
-              <ToastViewer />
-            </SPreviewContent>
+            <SPreviewContent>{/* <ToastViewer /> */}</SPreviewContent>
           </SLeftContainer>
           <SRightContainer>
             {blogMainLists?.map(posts => (
