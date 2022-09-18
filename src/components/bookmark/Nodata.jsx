@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 
-const Nodata = () => {
+const Nodata = ({ type }) => {
   return (
     <SNodata>
       <SIcon src={BookmarkFillIcon} />
