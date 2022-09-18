@@ -5,15 +5,14 @@ import { getHotBlogDB } from "../../redux/async/blog";
 import unlike from "../../assets/images/unlike.png";
 import { useNavigate } from "react-router-dom";
 const BlogHotList = () => {
-  const navigate = useNavigate();
   const hotcommunits = useSelector(state => state.blogSlice.hotBlog);
   const hotcommunity = hotcommunits.slice(0, 4);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getHotBlogDB());
   }, []);
-
   return (
     <SBlogHotList>
       <SHotTitle>최근에 추천 많이 받은 게시글 🔥</SHotTitle>

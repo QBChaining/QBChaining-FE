@@ -254,3 +254,11 @@ export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
     return thunkAPI.rejectWithValue(err.response.message);
   }
 });
+
+//블로그 미리보기
+export const getPreViewDB = createAsyncThunk("PREVIEW", async thunkAPI => {
+  try {
+    const response = await blogApi.getPreView();
+    return response;
+  } catch (err) {}
+});
