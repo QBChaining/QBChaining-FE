@@ -5,6 +5,7 @@ import ModalBookmark from "../../components/common/ModalBookmark";
 import styled from "styled-components";
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 import { colorSetBlue } from "../../redux/modules/userSlice";
+import { Helmet } from "react-helmet-async";
 
 const BlogCommunityEdit = () => {
   const { id } = useParams();
@@ -15,6 +16,9 @@ const BlogCommunityEdit = () => {
   // }, []);
   return (
     <SEdit>
+      <Helmet>
+        <title>Blog Edit</title>
+      </Helmet>
       <STitledSet>
         <h2 className="title">게시글 수정하기</h2>
         <EditorComponent blogEditId={id} isBlogEdit={true}></EditorComponent>

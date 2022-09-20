@@ -7,12 +7,29 @@ import { errorLikeAlert, networkError, successAlert } from "../../utils/swal";
 import * as Sentry from "@sentry/react";
 import { getToday } from "./../../utils/today";
 
-//게시글 전체 조회
-export const getQnaListDB = createAsyncThunk(
-  "qna/getlist",
+//게시글 채택 조회
+export const getCompletionListDB = createAsyncThunk(
+  "qna/getcompletelist",
   async (data, thunkAPI) => {
     try {
-      const response = await qnaApi.getList(data);
+      const response = await qnaApi.getCompletionList(data);
+      if (response.data.success === true) {
+        return response.data.data;
+      }
+    } catch (err) {
+      networkError();
+      Sentry.captureException(`error, 게시글 전체조회 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+
+//게시글 비채택 조회
+export const getInCompletionListDB = createAsyncThunk(
+  "qna/getincompletelist",
+  async (data, thunkAPI) => {
+    try {
+      const response = await qnaApi.getInCompletionList(data);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -176,10 +193,10 @@ export const postCommentListDB = createAsyncThunk(
       const response = await qnaApi.postCommentList(data);
       if (response.data.success === true) {
         successAlert("정상적으로 추가 되었습니다.");
-        response.data.data.honey_tip = 0;
-        response.data.data.is_choose = false;
-        response.data.data.user_name = data.user_name;
-        response.data.data.profile_img = data.profile_img;
+        response.data.data.like = 0;
+        response.data.data.isChoose = false;
+        response.data.data.userName = data.userName;
+        response.data.data.profileImg = data.profileImg;
         response.data.data.createdAt = getToday();
         return response.data.data;
       }

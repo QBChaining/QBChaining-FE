@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { deleteCookie, getCookie } from "./../../utils/cookie";
 import jwt_decode from "jwt-decode";
 
+import { postUserInfoDB } from "../async/user";
+
 export const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -22,8 +24,8 @@ export const userSlice = createSlice({
     logIn: (state, action) => {
       state.isLogin = true;
       state.userToken = getCookie("token");
-      state.userName = jwt_decode(getCookie("token")).name;
-      state.userProfile = jwt_decode(getCookie("token")).profile_img;
+      state.userName = jwt_decode(getCookie("token")).userName;
+      state.userProfile = jwt_decode(getCookie("token")).profileImg;
     },
     colorSetGreen: (state, action) => {
       state.color = "mainGreen";
@@ -33,6 +35,19 @@ export const userSlice = createSlice({
     },
     colorSetGrad: (state, action) => {
       state.color = "backgroundGradient";
+    },
+  },
+  extraReducers: {
+    [postUserInfoDB.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [postUserInfoDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [postUserInfoDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
     },
   },
 });
