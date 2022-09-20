@@ -13,6 +13,7 @@ import NoResolvedListIcon from "../../assets/images/NoResolvedListIcon.png";
 import { colorSetGreen } from "../../redux/modules/userSlice";
 import { useInView } from "react-intersection-observer";
 import { removeQnaList } from "../../redux/modules/qnaSlice";
+import { Helmet } from "react-helmet-async";
 
 const QnaMain = () => {
   const navigate = useNavigate();
@@ -58,6 +59,9 @@ const QnaMain = () => {
 
   return (
     <SQnaMain>
+      <Helmet>
+        <title>Qna Main</title>
+      </Helmet>
       <SHeader>
         <SWritingButtonWrapper
           onClick={() => {

@@ -9,6 +9,7 @@ import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import GlobalThemeProvider from "./style/GlobalThemeProvider";
 import ScrollToTop from "./pages/ScrollTop";
+import { HelmetProvider } from "react-helmet-async";
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRYDSN,
@@ -21,8 +22,10 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <GlobalThemeProvider>
-        <ScrollToTop />
-        <App />
+        <HelmetProvider>
+          <ScrollToTop />
+          <App />
+        </HelmetProvider>
       </GlobalThemeProvider>
     </BrowserRouter>
   </Provider>,
