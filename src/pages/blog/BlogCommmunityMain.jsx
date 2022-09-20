@@ -15,6 +15,7 @@ import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogMainList from "../../components/blog/BlogMainList";
 import mainpage from "../../assets/images/mainpage.png";
+import { Helmet } from "react-helmet-async";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   const userProfile = useSelector(state => state.userSlice.userProfile);
@@ -29,15 +30,16 @@ const BlogCommmunityMain = () => {
     dispatch(getBlogCommunityListDB());
     dispatch(colorSetBlue());
   }, [dispatch]);
- 
 
   const getBlogDetail = id => {
     dispatch(getBlogDetailDB(id));
   };
 
-
   return (
     <SBlogCommmunityMain>
+      <Helmet>
+        <title>Blog Main</title>
+      </Helmet>
       <STopBox>
         <STopBoxWrapper>
           <SRecommend>
@@ -66,18 +68,14 @@ const BlogCommmunityMain = () => {
         <SContentWrapper>
           <SLeftContainer>
             <SUserInfo>
-
-
-            
               <SPreviewTitle>
-             <SProfile />
+                <SProfile />
                 <p>개발자와 개발자들의 커뮤니티 사이트 QB-CHAINING</p>
               </SPreviewTitle>
             </SUserInfo>
             <SPreviewContent>
               <ToastViewer />
             </SPreviewContent>
-
           </SLeftContainer>
           <SRightContainer>
             {blogMainLists?.map(posts => (

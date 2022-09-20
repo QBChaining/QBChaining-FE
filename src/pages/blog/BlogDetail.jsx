@@ -13,6 +13,7 @@ import BlogLike from "../../components/blog/BlogLike";
 // import BlogBookMark from "../../components/blog/BlogBookMark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
+import { Helmet } from "react-helmet-async";
 
 const BlogCommunityDetail = () => {
   const detail = useSelector(state => state.blogSlice.blogDetail);
@@ -39,6 +40,9 @@ const BlogCommunityDetail = () => {
 
   return (
     <SContainer>
+      <Helmet>
+        <title>Blog Detail</title>
+      </Helmet>
       <div key={detail.id}>
         <STitleSection>
           <div className="bookMark">
