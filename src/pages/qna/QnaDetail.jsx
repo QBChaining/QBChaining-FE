@@ -31,8 +31,8 @@ const QnaDetail = () => {
       <SLeftContainer>
         <QnaTarget isDatail={true} />
         <QnaCommentList
-          author={target.user?.user_name}
-          resolve={target.is_resolve}
+          author={target.user?.userName}
+          resolve={target.isResolve}
           id={id}
           qnaId={id}
         />
@@ -58,6 +58,8 @@ const SLeftContainer = styled.div`
   width: 50%;
   padding-left: 200px;
   padding-right: 30px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SRightContainer = styled.div`

@@ -11,17 +11,17 @@ const InterestItem = ({ data, setList, list }) => {
       list.splice(list.indexOf(name), 1);
       return;
     }
-    setList([...list, data.interestName]);
+    setList([...list, data.name]);
   };
 
   return (
     <SList
       toggle={toggle}
       onClick={() => {
-        onToggleHandler(data.interestName);
+        onToggleHandler(data.name);
       }}
     >
-      {data.interestName}
+      {data.name}
     </SList>
   );
 };
@@ -29,9 +29,14 @@ const InterestItem = ({ data, setList, list }) => {
 export default InterestItem;
 
 const SList = styled.li`
-  padding: 20px;
+  padding: 10px 30px;
   cursor: pointer;
-  border: 1px solid black;
-  background-color: ${props => (props.toggle ? "black" : "white")};
+  border: 1px solid
+    ${props => (props.toggle ? "white" : props.theme.color.grey5)};
+  margin-bottom: 10px;
+  margin-right: 10px;
+  border-radius: 30px;
+  background: ${props =>
+    props.toggle ? props.theme.color.backgroundGradient : "white"};
   color: ${props => (props.toggle ? "white" : "black")};
 `;

@@ -31,7 +31,7 @@ const QnaTarget = ({ isDatail }) => {
   const totalId = {
     id: target.id,
     title: target.title,
-    user_name: target.user_name,
+    user_name: target.userName,
     createdAt: getToday(),
   };
 
@@ -79,12 +79,12 @@ const QnaTarget = ({ isDatail }) => {
       <SUserInfo>
         <SUserInfoWrapper
           onClick={() => {
-            navigate(`/mypage/${target.user_name}`);
+            navigate(`/mypage/${target.userName}`);
           }}
         >
-          <SUserProfile profile={target.profile_img} />
+          <SUserProfile profile={target.profileImg} />
           <SUserInfoText>
-            <SUserName>{target.user_name}</SUserName>
+            <SUserName>{target.userName}</SUserName>
             <SCreateAt>
               {target.createdAt?.slice(0, 10)} /{" "}
               {target.createdAt?.slice(11, 16)}
@@ -97,10 +97,10 @@ const QnaTarget = ({ isDatail }) => {
             onClick={isBookmarked ? onDeleteBookmark : onAddBookmark}
           ></SBookmarkButton>
           <SHoneyTipButton
-            isHoneyTip={target.is_honey_tip}
-            onClick={target.is_honey_tip ? onDislikeQna : onLikeQna}
+            isLike={target.isLike}
+            onClick={target.isLike ? onDislikeQna : onLikeQna}
           >
-            {target.honey_tip}
+            {target.like}
           </SHoneyTipButton>
         </SButtonWrapper>
       </SUserInfo>
@@ -148,7 +148,7 @@ const SHoneyTipButton = styled(ButtonBackground)`
   padding-right: 24px;
   background-position: right center;
   background-size: 16px 16px;
-  background-image: url(${props => (props.isHoneyTip ? QnaLikeFill : QnaLike)});
+  background-image: url(${props => (props.isLike ? QnaLikeFill : QnaLike)});
   color: ${props => props.theme.color.grey7};
   font-size: 16px;
 `;

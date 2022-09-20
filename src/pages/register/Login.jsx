@@ -8,10 +8,13 @@ import { logIn } from "../../redux/modules/userSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { isLogin } = useSelector(state => state.userSlice);
+  const { isLogin, userName } = useSelector(state => state.userSlice);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (isLogin) {
+      navigate("/");
+    }
     if (window.location.search) {
       //주소창에서 토큰값 자르기
       const token = window.location.search.split("=");
@@ -20,17 +23,17 @@ const Login = () => {
 
       //쿠키를 디코드해서 값 추출
       let decoded = jwt_decode(getCookie("token"));
-
       //추출한 값중에 is_new값에 따라 분기처리
-      // if (decoded.is_new === "true") {
-      //   navigate("/register", { replace: true });
-      //   dispatch(logIn());
-      // } else if (decoded.is_new === "false") {
-      //   navigate("/", { replace: true });
-      //   dispatch(logIn());
-      // }
-      navigate("/", { replace: true });
-      dispatch(logIn());
+      if (decoded.isNew === "true") {
+        dispatch(logIn());
+        console.log(userName);
+        navigate(`/`, { replace: true });
+      } else if (decoded.isNew === "false") {
+        dispatch(logIn());
+        navigate("/register", { replace: true });
+      }
+      // navigate("/", { replace: true });
+      // dispatch(logIn());
     }
   }, []);
 

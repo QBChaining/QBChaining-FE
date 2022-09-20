@@ -78,107 +78,111 @@ const QnaCommentList = ({ id, qnaId }) => {
   };
 
   useEffect(() => {
-    setWinner(list.find(data => data.is_choose));
+    setWinner(list.find(data => data.isChoose));
   }, [list]);
 
   const goMypage = username => {
     navigate(`/mypage/${username}`);
   };
 
-  return (
-    <SQnaCommentList>
-      <SCommentWrapper>
-        {winner && (
-          <SItemWrapper id={winner.id}>
-            <SUserInfo>
-              <SWinnerUserInfo
-                onClick={() => {
-                  goMypage(winner.user_name);
-                }}
-              >
-                <SUserProfile profile={winner.profile_img} />
-                <SUserInfoText>
-                  <SUserNameWrapper>
-                    <SUserName winner={true}>{winner.user_name}</SUserName>
-                    {target.is_resolve && <SWinnerButton>채택</SWinnerButton>}
-                  </SUserNameWrapper>
-                  <SCreateAt winner={true}>{winner.createdAt}</SCreateAt>
-                </SUserInfoText>
-              </SWinnerUserInfo>
-              <SButtonWrapper>
-                <SHoneyTipButton
-                  isHoneyTip={winner.is_honey_tip}
-                  onClick={
-                    winner.is_honey_tip
-                      ? () => {
-                          onDisLikeHandler(winner.id);
-                        }
-                      : () => {
-                          onLikeHandler(winner.id);
-                        }
-                  }
+  if (list.length === 0) {
+    return <SNoComment>채택받을만한 댓글을 써보세요!</SNoComment>;
+  } else {
+    return (
+      <SQnaCommentList>
+        <SCommentWrapper>
+          {winner && (
+            <SItemWrapper id={winner.id}>
+              <SUserInfo>
+                <SWinnerUserInfo
+                  onClick={() => {
+                    goMypage(winner.userName);
+                  }}
                 >
-                  {winner?.honey_tip}
-                </SHoneyTipButton>
-              </SButtonWrapper>
-            </SUserInfo>
-            <SContentText>
-              <ToastViewer content={winner?.comment} />
-            </SContentText>
-          </SItemWrapper>
-        )}
-        {list.map(data => (
-          <SItemWrapper key={data.id}>
-            <SUserInfo>
-              <SUserInfoWrapper
-                onClick={() => {
-                  goMypage(data.user_name);
-                }}
-              >
-                <SUserProfile profile={data.profile_img} />
-                <SUserInfoText>
-                  <SUserNameWrapper>
-                    <SUserName>{data.user_name}</SUserName>
-                    {!target.is_resolve &&
-                      target.user_name === userName &&
-                      target.user_name !== data.user_name && (
-                        <SChoiceButton
-                          onClick={e => {
-                            onChoiceHandler(e, data.id);
-                          }}
-                        >
-                          채택
-                        </SChoiceButton>
-                      )}
-                  </SUserNameWrapper>
-                  <SCreateAt>{data.createdAt}</SCreateAt>
-                </SUserInfoText>
-              </SUserInfoWrapper>
-              <SButtonWrapper>
-                <SHoneyTipButton
-                  isHoneyTip={data.is_honey_tip}
-                  onClick={
-                    data.is_honey_tip
-                      ? () => {
-                          onDisLikeHandler(data.id);
-                        }
-                      : () => {
-                          onLikeHandler(data.id);
-                        }
-                  }
+                  <SUserProfile profile={winner.profileImg} />
+                  <SUserInfoText>
+                    <SUserNameWrapper>
+                      <SUserName winner={true}>{winner.userName}</SUserName>
+                      {target.isResolve && <SWinnerButton>채택</SWinnerButton>}
+                    </SUserNameWrapper>
+                    <SCreateAt winner={true}>{winner.createdAt}</SCreateAt>
+                  </SUserInfoText>
+                </SWinnerUserInfo>
+                <SButtonWrapper>
+                  <SHoneyTipButton
+                    isLike={winner.isLike}
+                    onClick={
+                      winner.isLike
+                        ? () => {
+                            onDisLikeHandler(winner.id);
+                          }
+                        : () => {
+                            onLikeHandler(winner.id);
+                          }
+                    }
+                  >
+                    {winner?.like}
+                  </SHoneyTipButton>
+                </SButtonWrapper>
+              </SUserInfo>
+              <SContentText>
+                <ToastViewer content={winner?.comment} />
+              </SContentText>
+            </SItemWrapper>
+          )}
+          {list.map(data => (
+            <SItemWrapper key={data.id}>
+              <SUserInfo>
+                <SUserInfoWrapper
+                  onClick={() => {
+                    goMypage(data.user_name);
+                  }}
                 >
-                  {data.honey_tip}
-                </SHoneyTipButton>
-              </SButtonWrapper>
-            </SUserInfo>
-            <SContentText>
-              <ToastViewer content={data.comment} />
-            </SContentText>
-          </SItemWrapper>
-        ))}
-      </SCommentWrapper>
-    </SQnaCommentList>
-  );
+                  <SUserProfile profile={data.profileImg} />
+                  <SUserInfoText>
+                    <SUserNameWrapper>
+                      <SUserName>{data.userName}</SUserName>
+                      {!target.isResolve &&
+                        target.userName === userName &&
+                        target.userName !== data.userName && (
+                          <SChoiceButton
+                            onClick={e => {
+                              onChoiceHandler(e, data.id);
+                            }}
+                          >
+                            채택
+                          </SChoiceButton>
+                        )}
+                    </SUserNameWrapper>
+                    <SCreateAt>{data.createdAt}</SCreateAt>
+                  </SUserInfoText>
+                </SUserInfoWrapper>
+                <SButtonWrapper>
+                  <SHoneyTipButton
+                    isLike={data.isLike}
+                    onClick={
+                      data.isLike
+                        ? () => {
+                            onDisLikeHandler(data.id);
+                          }
+                        : () => {
+                            onLikeHandler(data.id);
+                          }
+                    }
+                  >
+                    {data.like}
+                  </SHoneyTipButton>
+                </SButtonWrapper>
+              </SUserInfo>
+              <SContentText>
+                <ToastViewer content={data.comment} />
+              </SContentText>
+            </SItemWrapper>
+          ))}
+        </SCommentWrapper>
+      </SQnaCommentList>
+    );
+  }
 };
 
 export default QnaCommentList;
@@ -257,7 +261,7 @@ const SHoneyTipButton = styled(ButtonBackground)`
   padding-right: 24px;
   background-position: right center;
   background-size: 16px 16px;
-  background-image: url(${props => (props.isHoneyTip ? QnaLikeFill : QnaLike)});
+  background-image: url(${props => (props.isLike ? QnaLikeFill : QnaLike)});
   color: ${props => props.theme.color.grey7};
   font-size: 16px;
 `;
@@ -296,4 +300,14 @@ const SWinnerButton = styled(SChoiceButton)`
     color: ${props => props.theme.color.mainGreen};
     background-color: ${props => props.theme.color.white};
   }
+`;
+
+const SNoComment = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  font-weight: 500;
+  min-height: 100px;
 `;

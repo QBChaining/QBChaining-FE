@@ -17,6 +17,7 @@ import ProfileDefault from "../../assets/images/ProfileDefault.png";
 import unlike from "../../assets/images/unlike.png";
 import BlogComment from "../../assets/images/BlogComment.png";
 import { setSearchWord } from "../../redux/modules/searchSlice";
+import { getOneQnaListDB } from "../../redux/async/qna";
 const ContentList = ({ data, type, isSearch }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -59,6 +60,8 @@ const ContentList = ({ data, type, isSearch }) => {
     navigate(`/search?q=${content}`);
   };
 
+  const getTarget = () => {};
+
   return (
     <StextMain ResolveWrapper={ResolveWrapper}>
       {isSearch && type === "qna" && (
@@ -68,7 +71,9 @@ const ContentList = ({ data, type, isSearch }) => {
       )}
       <SWrapper
         onClick={() => {
-          navigate(`/${type}/detail/${data.id}`);
+          isSearch
+            ? navigate(`/${type}/detail/${data.id}`)
+            : dispatch(getOneQnaListDB(data.id));
         }}
         type={type}
         resolve={data.is_resolve}
@@ -76,13 +81,9 @@ const ContentList = ({ data, type, isSearch }) => {
         isSearch={isSearch}
       >
         <SUserInfo>
-          <SProfileContainer
-          // onClick={() => {
-          //   goMypage(data.user_name);
-          // }}
-          >
-            <SProfile profile={data.profile_img}></SProfile>
-            <SUserName>{data.user_name}</SUserName>
+          <SProfileContainer>
+            <SProfile profile={data.profileImg}></SProfile>
+            <SUserName>{data.userName}</SUserName>
             <SCreatedAt>{time}</SCreatedAt>
           </SProfileContainer>
           <SCategoryContainer>
@@ -96,13 +97,7 @@ const ContentList = ({ data, type, isSearch }) => {
           </SCategoryContainer>
         </SUserInfo>
         <STitleWrapper>
-          <STitle
-            onClick={() => {
-              navigate(`/${type}/detail/${data.id}`);
-            }}
-          >
-            {data.title}
-          </STitle>
+          <STitle>{data.title}</STitle>
         </STitleWrapper>
         <STagWrapper>
           <STags>
