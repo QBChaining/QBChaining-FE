@@ -20,6 +20,7 @@ import { removeQnaList } from "../../redux/modules/qnaSlice";
 import { Helmet } from "react-helmet-async";
 import ToastViewer from "./../../components/editor/ToastViewer";
 import QnaPreview from "./../../components/qna/QnaPreview";
+import { ClipLoader } from "react-spinners";
 
 const QnaMain = () => {
   const navigate = useNavigate();
@@ -122,7 +123,11 @@ const QnaMain = () => {
           {qnaList.map(data => (
             <ContentList type={"qna"} data={data} key={data.id} />
           ))}
-          {!isFetching && <div ref={target} style={{ height: "1px" }}></div>}
+          {!isFetching && hasNextPage && (
+            <SLoading ref={target}>
+              <ClipLoader />
+            </SLoading>
+          )}
         </SContentContainer>
       </SQnaWrapper>
       <ModalBookmark />
@@ -249,4 +254,11 @@ const STapItem = styled.li`
     font-weight: 600;
     font-size: 18px;
   }
+`;
+
+const SLoading = styled.div`
+  min-height: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

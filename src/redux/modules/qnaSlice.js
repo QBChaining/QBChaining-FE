@@ -39,15 +39,14 @@ const qnaSlice = createSlice({
     },
     removeQnaList: (state, { payload }) => {
       state.qnaList = [];
+      state.qnaTarget = {};
     },
   },
   extraReducers: {
     //게시글 채택 조회
     [getCompletionListDB.fulfilled]: (state, { payload }) => {
       //payload에는 전체 리스트가 들어있다
-      console.log(payload);
       state.qnaList = state.qnaList.concat(payload);
-      // state.qnaList = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -63,7 +62,6 @@ const qnaSlice = createSlice({
     [getInCompletionListDB.fulfilled]: (state, { payload }) => {
       //payload에는 전체 리스트가 들어있다
       state.qnaList = state.qnaList.concat(payload);
-      // state.qnaList = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },

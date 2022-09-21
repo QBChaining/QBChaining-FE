@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ToastViewer from "./../editor/ToastViewer";
 import { useDispatch } from "react-redux";
@@ -18,9 +18,22 @@ const QnaPreview = () => {
     navigate(`/qna/detail/${id}`);
   };
 
+  console.log();
+
   return (
     <SPreviewContainer>
-      {!isDetailFetcing ? (
+      {Object.keys(target).length === 0 ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          오른쪽 리스트를 눌러 미리보기를 확인하세요!
+        </div>
+      ) : !isDetailFetcing ? (
         <>
           <SUserInfo>
             <SUserInfoWrapper>
@@ -45,6 +58,7 @@ const QnaPreview = () => {
             <ToastViewer content={target.content} />
           </SPreviewContent>
           <QnaCommentList
+            isPreview={true}
             author={target.user?.userName}
             resolve={target.isResolve}
             id={target.id}
@@ -52,7 +66,9 @@ const QnaPreview = () => {
           />
         </>
       ) : (
-        <ClipLoader />
+        <SLoading>
+          <ClipLoader />
+        </SLoading>
       )}
     </SPreviewContainer>
   );
@@ -124,4 +140,13 @@ const SUserName = styled.div`
 
 const SCreateAt = styled.div`
   color: ${props => props.theme.color.grey6};
+`;
+
+const SLoading = styled.div`
+  min-height: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 `;

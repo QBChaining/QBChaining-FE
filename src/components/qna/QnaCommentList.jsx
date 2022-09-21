@@ -19,7 +19,7 @@ import {
   dislikeCommentListDB,
 } from "./../../redux/async/qna";
 
-const QnaCommentList = ({ id, qnaId }) => {
+const QnaCommentList = ({ id, qnaId, isPreview }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -103,7 +103,9 @@ const QnaCommentList = ({ id, qnaId }) => {
                   <SUserInfoText>
                     <SUserNameWrapper>
                       <SUserName winner={true}>{winner.userName}</SUserName>
-                      {target.isResolve && <SWinnerButton>채택</SWinnerButton>}
+                      {target.isResolve && !isPreview && (
+                        <SWinnerButton>채택</SWinnerButton>
+                      )}
                     </SUserNameWrapper>
                     <SCreateAt winner={true}>{winner.createdAt}</SCreateAt>
                   </SUserInfoText>
@@ -143,6 +145,7 @@ const QnaCommentList = ({ id, qnaId }) => {
                     <SUserNameWrapper>
                       <SUserName>{data.userName}</SUserName>
                       {!target.isResolve &&
+                        !isPreview &&
                         target.userName === userName &&
                         target.userName !== data.userName && (
                           <SChoiceButton
@@ -154,7 +157,10 @@ const QnaCommentList = ({ id, qnaId }) => {
                           </SChoiceButton>
                         )}
                     </SUserNameWrapper>
-                    <SCreateAt>{data.createdAt}</SCreateAt>
+                    <SCreateAt>
+                      {data.createdAt?.slice(0, 10)} /{" "}
+                      {data.createdAt?.slice(11, 16)}
+                    </SCreateAt>
                   </SUserInfoText>
                 </SUserInfoWrapper>
                 <SButtonWrapper>

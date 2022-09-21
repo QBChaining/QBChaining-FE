@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Select from "../../components/common/Select";
 import WhiteArrow from "../../assets/images/WhiteArrow.png";
 import { errorAlert } from "../../utils/swal";
-import { postUserInfoDB } from "./../../redux/async/user";
+import { postUserInfoDB, putUserInNewDB } from "./../../redux/async/user";
 import { successAlert } from "./../../utils/swal";
 import { useNavigate } from "react-router-dom";
 import { userSlice } from "./../../redux/modules/userSlice";
@@ -69,7 +69,7 @@ import { userSlice } from "./../../redux/modules/userSlice";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { userName } = useSelector(state => state.userSlice);
+  const { userName, userIsNew } = useSelector(state => state.userSlice);
   const [list, setList] = useState([]);
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
@@ -106,6 +106,9 @@ const Register = () => {
       job,
     };
     dispatch(postUserInfoDB(data));
+    if (userIsNew) {
+      dispatch(putUserInNewDB());
+    }
     navigate(`/mypage/${userName}`);
   };
 

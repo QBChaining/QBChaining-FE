@@ -15,6 +15,7 @@ const Login = () => {
     if (isLogin) {
       navigate("/");
     }
+
     if (window.location.search) {
       //주소창에서 토큰값 자르기
       const token = window.location.search.split("=");
@@ -26,11 +27,10 @@ const Login = () => {
       //추출한 값중에 is_new값에 따라 분기처리
       if (decoded.isNew === "true") {
         dispatch(logIn());
-        console.log(userName);
-        navigate(`/`, { replace: true });
+        navigate(`/register`, { replace: true });
       } else if (decoded.isNew === "false") {
         dispatch(logIn());
-        navigate("/register", { replace: true });
+        navigate("/", { replace: true });
       }
       // navigate("/", { replace: true });
       // dispatch(logIn());

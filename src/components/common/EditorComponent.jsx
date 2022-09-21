@@ -181,6 +181,7 @@ const EditorComponent = ({
   const onTitleChangeHandler = e => {
     setTitle(e.target.value);
   };
+
   //edit상황이라면 타이틀, content 가져오기
   useEffect(() => {
     if (isEdit) {
