@@ -13,6 +13,7 @@ export const getBlogCommunityListDB = createAsyncThunk(
   async thunkAPI => {
     try {
       const response = await blogApi.getBlogCommunityList();
+      console.log("블로그메인조회", response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -30,6 +31,8 @@ export const getBlogDetailDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.getBlogDetail(id);
+      console.log("블로그디테일", response);
+
       if (response.data.success === true) {
         return response.data.data[0];
       }
@@ -47,6 +50,8 @@ export const postBlogCommunityDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.postBlogCommunity(data);
+      console.log("블로그커뮤니티생성", response);
+
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -64,6 +69,8 @@ export const patchBlogCommunityDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.editBlogCommunity(data);
+      console.log("블로그커뮤니티 수정", response);
+
       if (response.data.success === true) {
         successAlert("수정 되었습니다!");
         return response.data.data;
@@ -82,6 +89,8 @@ export const deleteBlogCommunityDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.deleteBlogCommunity(id);
+      console.log("블로그커뮤니티삭제", response);
+
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -98,6 +107,8 @@ export const getBlogCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.getBlogCommentList(data);
+      console.log("댓글 조회", response);
+
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -113,6 +124,7 @@ export const postBlogCommentDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.postBlogComment(data);
+      console.log("댓글 댓글추가", response);
       if (response.data.success === true) {
         successAlert("정상적으로 추가 되었습니다.");
         return response.data;
@@ -130,6 +142,7 @@ export const patchBlogCommentDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.patchBlogComment(data);
+      console.log("댓글 수정", response);
       if (response.data.success === true) {
         successAlert("정상적으로 수정 되었습니다.");
         return response.data.data;
@@ -146,6 +159,7 @@ export const deleteBlogCommentDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.DeleteBlogComment(id);
+      console.log("댓글 삭제", response);
       if (response.data.success === true) {
         successAlert("정상적으로 삭제 되었습니다.");
         return id;
@@ -160,6 +174,7 @@ export const deleteBlogCommentDB = createAsyncThunk(
 export const getMyBlogDB = createAsyncThunk("GET_MY_BLOG", async thunkAPI => {
   try {
     const response = await blogApi.getMyBlog();
+    console.log("마이블로그조회", response);
     if (response.data.success === true) {
       return response.data.data;
     }

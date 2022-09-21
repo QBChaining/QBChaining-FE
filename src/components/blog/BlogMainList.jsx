@@ -16,7 +16,7 @@ const BlogMainList = ({ posts }) => {
       <SContentsGroup>
         <SPTitleBox>
           <SUserInfo>
-            <SProfile url={posts.profile_img} />
+            <SProfile url={posts.profileImg} />
             <SContentTitle
               className="title"
               onClick={() => {
@@ -29,7 +29,7 @@ const BlogMainList = ({ posts }) => {
           <SBookMark>
             <BlogBookMark
               ismainlist={true}
-              isbookmark={posts.is_bookmark}
+              isbookmark={posts.isBookmark}
               posts={posts}
             />
           </SBookMark>
