@@ -60,8 +60,6 @@ const ContentList = ({ data, type, isSearch }) => {
     navigate(`/search?q=${content}`);
   };
 
-  const getTarget = () => {};
-
   return (
     <StextMain ResolveWrapper={ResolveWrapper}>
       {isSearch && type === "qna" && (
@@ -169,7 +167,7 @@ const SWrapper = styled.div`
       : "-4px 6px 15px rgba(0, 0, 0, 0.1)"};
   border-radius: 30px;
   margin: 30px 0
-    ${props => (props.isSearch && props.type === "qna" ? "55px" : "30px")} 0;
+    ${props => (props.isSearch && props.type === "qna" ? "65px" : "30px")} 0;
   min-height: 190px;
   cursor: pointer;
 `;

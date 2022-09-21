@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import queryString from "query-string";
 import styled from "styled-components";
@@ -7,24 +7,29 @@ import {
   getBlogSearchListDB,
   getQnaSearchListDB,
 } from "./../../redux/async/search";
+import { useInView } from "react-intersection-observer";
 import {
   removeSearchList,
   setSearchWord,
 } from "../../redux/modules/searchSlice";
+import { ClipLoader } from "react-spinners";
+import SearchList from "./../../components/search/SearchList";
+import { useSearchParams } from "react-router-dom";
 
 const Search = () => {
   const dispatch = useDispatch();
-  const { qnaSearchList, blogSearchList, searchWord } = useSelector(
-    state => state.searchSlice,
-  );
+  const { blogSearchList } = useSelector(state => state.searchSlice);
 
-  useEffect(() => {
-    dispatch(setSearchWord(queryString.parse(window.location.search).q));
-    if (searchWord) {
-      dispatch(getQnaSearchListDB(searchWord));
-      dispatch(getBlogSearchListDB(searchWord));
-    }
-  }, [searchWord]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchWord = searchParams.get("q");
+
+  // const searchWord = queryString.parse(window.location.search).q;
+  // useEffect(() => {
+  //   if (searchWord) {
+  //     dispatch(getQnaSearchListDB(searchWord));
+  //     dispatch(getBlogSearchListDB(searchWord));
+  //   }
+  // }, [searchWord]);
 
   useEffect(() => {
     return () => {
@@ -32,39 +37,15 @@ const Search = () => {
     };
   }, [searchWord]);
 
-  //무한스크롤
-
   return (
     <SSearch>
       <STitle>{searchWord}에 대한 검색결과</STitle>
       <SWrapper>
         <SLeftContainer>
-          {qnaSearchList.length !== 0 ? (
-            qnaSearchList.map(data => (
-              <ContentList
-                isSearch={true}
-                type={"qna"}
-                data={data}
-                key={data.id}
-              />
-            ))
-          ) : (
-            <SNodata>검색결과가 없습니다.</SNodata>
-          )}
+          <SearchList searchWord={searchWord} type={"qna"} />
         </SLeftContainer>
         <SRightContainer>
-          {blogSearchList.length !== 0 ? (
-            blogSearchList.map(data => (
-              <ContentList
-                isSearch={true}
-                type={"blog"}
-                data={data}
-                key={data.id}
-              />
-            ))
-          ) : (
-            <SNodata>검색결과가 없습니다.</SNodata>
-          )}
+          <SearchList searchWord={searchWord} type={"blog"} />
         </SRightContainer>
       </SWrapper>
     </SSearch>
@@ -151,4 +132,11 @@ const SNodata = styled.div`
   color: ${props => props.theme.color.grey5};
   display: flex;
   align-items: center;
+`;
+
+const SLoading = styled.div`
+  min-height: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
