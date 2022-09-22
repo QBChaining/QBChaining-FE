@@ -5,8 +5,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import {
   getQnaCategoryListDB,
-  getCompletionListDB,
-  getInCompletionListDB,
+  getQnaMainListDB,
 } from "./../../redux/async/qna";
 import ContentList from "../../components/common/ContentList";
 import QnaMainCatergory from "./../../components/qna/QnaMainCatergory";
@@ -27,32 +26,32 @@ const QnaMain = () => {
   const dispatch = useDispatch();
   const { qnaList, isFetching } = useSelector(state => state.qnaSlice);
   const [category, setCategory] = useState("");
-  const [resolveTap, setResolveTap] = useState(false);
+  const [resolveTap, setResolveTap] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [target, inView] = useInView();
 
   const onGetResolve = () => {
-    setResolveTap(true);
+    setResolveTap(1);
   };
 
   const onGetNoResolve = () => {
-    setResolveTap(false);
+    setResolveTap(0);
   };
+
+  console.log(qnaList);
 
   useEffect(() => {
     //다음페이지가 있다면
+    const data = {
+      pageNumber,
+      isResolve: resolveTap,
+    };
     if (hasNextPage) {
       if (category.length === 0) {
-        if (!resolveTap) {
-          dispatch(getInCompletionListDB(pageNumber)).then(res => {
-            setHasNextPage(res.payload.length === 10);
-          });
-        } else {
-          dispatch(getCompletionListDB(pageNumber)).then(res => {
-            setHasNextPage(res.payload.length === 10);
-          });
-        }
+        dispatch(getQnaMainListDB(data)).then(res => {
+          setHasNextPage(res.payload.length === 10);
+        });
       } else if (category.length > 0) {
         dispatch(getQnaCategoryListDB({ category, pageNumber })).then(res => {
           setHasNextPage(res.payload.length === 10);

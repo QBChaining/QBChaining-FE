@@ -18,8 +18,6 @@ const QnaPreview = () => {
     navigate(`/qna/detail/${id}`);
   };
 
-  console.log();
-
   return (
     <SPreviewContainer>
       {Object.keys(target).length === 0 ? (

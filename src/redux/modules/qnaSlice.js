@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  getCompletionListDB,
-  getInCompletionListDB,
+  getQnaMainListDB,
   getQnaCategoryListDB,
   getOneQnaListDB,
   postQnaListDB,
@@ -44,31 +43,16 @@ const qnaSlice = createSlice({
   },
   extraReducers: {
     //게시글 채택 조회
-    [getCompletionListDB.fulfilled]: (state, { payload }) => {
+    [getQnaMainListDB.fulfilled]: (state, { payload }) => {
       //payload에는 전체 리스트가 들어있다
       state.qnaList = state.qnaList.concat(payload);
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getCompletionListDB.pending]: (state, { payload }) => {
+    [getQnaMainListDB.pending]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getCompletionListDB.rejected]: (state, { payload: errorMessage }) => {
-      state.isFetching = false;
-      state.errorMessage = errorMessage;
-    },
-
-    //게시글 채택 조회
-    [getInCompletionListDB.fulfilled]: (state, { payload }) => {
-      //payload에는 전체 리스트가 들어있다
-      state.qnaList = state.qnaList.concat(payload);
-      state.isFetching = false;
-      state.errorMessage = null;
-    },
-    [getInCompletionListDB.pending]: (state, { payload }) => {
-      state.isFetching = true;
-    },
-    [getInCompletionListDB.rejected]: (state, { payload: errorMessage }) => {
+    [getQnaMainListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
@@ -87,6 +71,7 @@ const qnaSlice = createSlice({
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
+
     //상세qna 조회
     [getOneQnaListDB.fulfilled]: (state, { payload }) => {
       //payload에는 타겟qna가 있다

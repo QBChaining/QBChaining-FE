@@ -260,7 +260,7 @@ const SCubeWrapper = styled.div`
     margin: 3px;
     background-color: ${props => props.theme.color.mainGreen};
   }
-  /* 
+
   &:first-child {
     transform: rotate(120deg) skew(0deg, -30deg);
   }
@@ -275,8 +275,7 @@ const SCubeWrapper = styled.div`
     left: 55px;
     transform: rotate(60deg) skew(0deg, -30deg);
   }
-   */
-  /* 
+
   &:first-child > div > div {
     background-color: red;
   }
@@ -287,5 +286,5 @@ const SCubeWrapper = styled.div`
 
   &:nth-child(3) > div > div {
     background-color: black;
-  } */
+  }
 `;

@@ -99,7 +99,7 @@ const ContentList = ({ data, type, isSearch }) => {
         </STitleWrapper>
         <STagWrapper>
           <STags>
-            {data.tag?.map((data, i) => {
+            {data.tags?.map((data, i) => {
               return (
                 <Tag
                   type={type}
