@@ -45,7 +45,7 @@ const WriteBookmark = ({ type, id, onToggleHandler }) => {
           </SContentText>
           <SSubinfo>
             <STags>
-              {target.tag?.map((data, i) => {
+              {target.tags?.map((data, i) => {
                 return (
                   <STag color={color} key={i}>
                     {data}

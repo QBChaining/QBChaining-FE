@@ -104,7 +104,7 @@ const QnaTarget = ({ isDatail }) => {
           <ToastViewer content={target.content} />
         </SContentText>
         <STags>
-          {target.tag?.map((data, i) => {
+          {target.tags?.map((data, i) => {
             return <STag key={i}>{data}</STag>;
           })}
           <SHoneyTipButton
