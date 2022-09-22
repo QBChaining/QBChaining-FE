@@ -39,35 +39,27 @@ const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
 
   return (
     <>
-      {isdetailbookmark ? (
-        <div>
-          {bookMark === true ? (
-            <SBookMarkBtn onClick={onDeleteBookMark} />
-          ) : (
-            <SbookMarkBtnAdd onClick={onAddBookMark} />
-          )}
-        </div>
-      ) : (
+      {/* {isdetailbookmark ? ( */}
+      <div>
+        {bookMark === true ? (
+          <SBookMarkBtn onClick={onDeleteBookMark} />
+        ) : (
+          <SbookMarkBtnAdd onClick={onAddBookMark} />
+        )}
+      </div>
+      {/* ) : (
         <div>
           {bookMark === true ? <SBookMarkBtn1 /> : <SbookMarkBtnAdd1 />}
         </div>
-      )}
+      )} */}
     </>
   );
 };
 const SBookMarkBtn = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   background-position: center;
-  background-size: cover;
-  background-image: url(${blogbookmarkadd});
-  cursor: pointer;
-`;
-const SBookMarkBtn1 = styled.div`
-  width: 30px;
-  height: 30px;
-  background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-image: url(${blogbookmarkadd});
   cursor: pointer;
 `;
@@ -76,15 +68,23 @@ const SbookMarkBtnAdd = styled.div`
   width: 30px;
   height: 30px;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-image: url(${blogbookmark});
   cursor: pointer;
 `;
-const SbookMarkBtnAdd1 = styled.div`
-  width: 30px;
-  height: 30px;
-  background-position: center;
-  background-size: cover;
-  background-image: url(${blogbookmark});
-`;
+// const SBookMarkBtn1 = styled.div`
+//   width: 30px;
+//   height: 30px;
+//   background-position: center;
+//   background-size: contain;
+//   background-image: url(${blogbookmarkadd});
+//   cursor: pointer;
+// `;
+// const SbookMarkBtnAdd1 = styled.div`
+//   width: 30px;
+//   height: 30px;
+//   background-position: center;
+//   background-size: contain;
+//   background-image: url(${blogbookmark});
+// `;
 export default BlogBookMark;

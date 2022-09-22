@@ -10,7 +10,6 @@ const CommentAdd = () => {
   const commentRefInput = useRef();
   const { id } = useParams();
 
-  //댓글 추가 이벤트
   const addComment = e => {
     e.preventDefault();
     dispatch(

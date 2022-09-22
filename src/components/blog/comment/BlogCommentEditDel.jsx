@@ -9,10 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../../redux/modules/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { errorAlert } from "../../../utils/swal";
-const CommentEditDel = ({ comments, userdata }) => {
+const CommentEditDel = ({ comments }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const userProfile = useSelector(state => state.userSlice.userProfile);
   const userNick = useSelector(state => state.userSlice.userName);
   const [show, setShow] = useState(false);
   const [textAreaText, setTextAreaText] = useState("");
@@ -21,7 +20,7 @@ const CommentEditDel = ({ comments, userdata }) => {
   const dispatch = useDispatch();
 
   //댓글 수정 완료 버튼
-  const onClickEditHandler = () => {
+  const onClickEditHandler = ({ comments }) => {
     if (editRef.current.value.length < 1) {
       errorAlert("빈칸입니다!");
       return;
@@ -54,21 +53,21 @@ const CommentEditDel = ({ comments, userdata }) => {
         <SProfileWrapper>
           <SProfile
             onClick={() => {
-              goMypage(comments.User?.user_name);
+              goMypage(comments.userName);
             }}
-            url={comments.User?.profile_img}
+            url={comments.profileImg}
           />
           <div
             style={{ cursor: "pointer" }}
             onClick={() => {
-              goMypage(comments.User?.user_name);
+              goMypage(comments.userName);
             }}
           >
-            {comments.User?.user_name}
+            {comments.userName}
           </div>
           <SDate
             onClick={() => {
-              goMypage(comments.User?.user_name);
+              goMypage(comments.userName);
             }}
           >
             {comments.createdAt?.slice(0, 10)} /
@@ -87,7 +86,7 @@ const CommentEditDel = ({ comments, userdata }) => {
             ref={editRef}
           />
         )}
-        {userNick === comments.User?.user_name && (
+        {userNick === comments.userName && (
           <ButtonGroup>
             <div
               className="editbtn"
