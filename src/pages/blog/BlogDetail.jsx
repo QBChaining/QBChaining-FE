@@ -17,7 +17,6 @@ import { Helmet } from "react-helmet-async";
 
 const BlogCommunityDetail = () => {
   const detail = useSelector(state => state.blogSlice.blogDetail);
-  console.log(detail);
   const userNick = useSelector(state => state.userSlice.userName);
   // const { blogBookMark } = useSelector(state => state.blogSlice);
 

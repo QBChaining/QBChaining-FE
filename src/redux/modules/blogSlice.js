@@ -28,7 +28,7 @@ export const blogSlice = createSlice({
     blogBookMark: [],
     likebookmark: {},
     isFetching: false,
-    isPreViwe: false,
+    isPreView: false,
     errorMessage: "",
   },
   reducers: {},
@@ -55,7 +55,7 @@ export const blogSlice = createSlice({
     [getBlogDetailDB.fulfilled]: (state, action) => {
       state.blogDetail = action.payload;
       state.isFetching = false;
-      state.isPreViwe = true;
+      state.isPreView = true;
     },
     [getBlogDetailDB.rejected]: (state, action) => {
       state.isFetching = false;
@@ -67,7 +67,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogCommunityDB.fulfilled]: (state, action) => {
-      console.log("게시글액션", action);
       state.blogList.push(action.payload);
       // state.blogList = action.payload;
       state.isFetching = false;
@@ -127,7 +126,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogCommentDB.fulfilled]: (state, action) => {
-      console.log(action);
       // state.commentList.push(action.payload.data);
       state.commentList.push(action.payload.data);
       state.isFetching = false;

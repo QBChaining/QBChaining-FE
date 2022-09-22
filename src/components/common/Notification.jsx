@@ -9,8 +9,6 @@ import styled from "styled-components";
 import { notInitialized } from "react-redux/es/utils/useSyncExternalStore";
 import Polygon from "../../assets/images/Polygon 4.png";
 const Notification = () => {
-  const notificationResponse = useSelector(state => state);
-  console.log(notificationResponse);
   const notificationUser = useSelector(state => state.userSlice.userName);
 
   const dispatch = useDispatch();

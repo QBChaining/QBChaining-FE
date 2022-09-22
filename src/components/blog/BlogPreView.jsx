@@ -2,26 +2,21 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { getBlogDetailDB } from "../../redux/async/blog";
+import { useNavigate } from "react-router-dom";
+import ToastViewer from "../editor/ToastViewer";
 const MainPreView = ({}) => {
-  const preView = useSelector(state => state.blogSlice.blogDetail);
-  const ispreView = useSelector(state => state.blogSlice.isPreViwe);
-  console.log(ispreView);
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(getBlogDetailDB());
-  // }, []);
+  const { blogDetail, isPreView } = useSelector(state => state.blogSlice);
 
   return (
     <div>
-      {ispreView ? (
+      {isPreView ? (
         <SContainer>
           <div>
             <STitleNproFile>
-              <STitle>{preView?.title}</STitle>
+              <STitle>{blogDetail?.title}</STitle>
               {/* <SproFile url={preView?.profileImg} /> */}
             </STitleNproFile>
-            <SConten>{preView?.content}</SConten>
+            <ToastViewer content={blogDetail?.content} />
           </div>
         </SContainer>
       ) : (
@@ -54,6 +49,10 @@ const SproFile = styled.div`
   background-size: cover;
   margin-right: 11px;
 `;
-const STitle = styled.div``;
-const SConten = styled.div``;
+const STitle = styled.div`
+  font-size: 30px;
+`;
+const SConten = styled.div`
+  font-size: 20px;
+`;
 export default MainPreView;

@@ -26,7 +26,6 @@ const Login = () => {
       //추출한 값중에 is_new값에 따라 분기처리
       if (decoded.isNew === "true") {
         dispatch(logIn());
-        console.log(userName);
         navigate(`/`, { replace: true });
       } else if (decoded.isNew === "false") {
         dispatch(logIn());

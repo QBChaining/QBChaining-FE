@@ -9,12 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../../redux/modules/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { errorAlert } from "../../../utils/swal";
-const CommentEditDel = ({ comments, userdata }) => {
+const CommentEditDel = ({ comments }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const userProfile = useSelector(state => state.userSlice.userProfile);
   const userNick = useSelector(state => state.userSlice.userName);
-  console.log(comments);
   const [show, setShow] = useState(false);
   const [textAreaText, setTextAreaText] = useState("");
   const editRef = useRef();
