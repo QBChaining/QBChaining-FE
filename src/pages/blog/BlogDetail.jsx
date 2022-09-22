@@ -13,11 +13,12 @@ import BlogLike from "../../components/blog/BlogLike";
 // import BlogBookMark from "../../components/blog/BlogBookMark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
+import { Helmet } from "react-helmet-async";
 
 const BlogCommunityDetail = () => {
   const detail = useSelector(state => state.blogSlice.blogDetail);
   const userNick = useSelector(state => state.userSlice.userName);
-  const { blogBookMark } = useSelector(state => state.blogSlice);
+  // const { blogBookMark } = useSelector(state => state.blogSlice);
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -39,33 +40,36 @@ const BlogCommunityDetail = () => {
 
   return (
     <SContainer>
+      <Helmet>
+        <title>Blog Detail</title>
+      </Helmet>
       <div key={detail.id}>
         <STitleSection>
           <div className="bookMark">
             <BlogDetailBookMark
               isdetailbookmark={true}
               target={detail}
-              isbookmark={detail?.is_bookmark}
+              isbookmark={detail?.isBookmark}
             />
             <STitle>{detail?.title}</STitle>
           </div>
           <SProfileNickNameDate
             onClick={() => {
-              goMypage(detail.user_name);
+              goMypage(detail?.userName);
             }}
           >
             <SDate>
-              <div className="name">{detail.user_name}</div>
+              <div className="name">{detail.userName}</div>
               <div className="date">
                 {detail.created_at?.slice(0, 10)} /{" "}
                 {detail.created_at?.slice(11, 16)}
               </div>
             </SDate>
-            <SProfile url={detail.profile_img} />
+            <SProfile url={detail.profileImg} />
           </SProfileNickNameDate>
         </STitleSection>
         <SContentWrapper>
-          {userNick === detail.user_name && (
+          {userNick === detail.userName && (
             <ButtonGroup>
               <div
                 className="editbtn"
@@ -93,13 +97,13 @@ const BlogCommunityDetail = () => {
           </SContents>
           <SLikeNtags>
             <div className="tagList">
-              {detail.tag?.map((tags, i) => (
+              {detail.postTag?.map((tags, i) => (
                 <STag key={i}>
                   <div>{tags}</div>
                 </STag>
               ))}
             </div>
-            <BlogLike love={detail.is_like} isbookmark={detail.is_bookmark} />
+            <BlogLike love={detail.isLike} isbookmark={detail.isBookmark} />
           </SLikeNtags>
         </SContentWrapper>
       </div>
@@ -140,6 +144,7 @@ const STitleSection = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #939393;
+  align-items: center;
   padding: 30px;
   align-items: center;
   & .bookMark {
@@ -188,7 +193,6 @@ const SProfile = styled.div`
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid ${props => props.theme.color.grey3};
   background-image: url(${props => props.url});
   background-position: center;
   background-repeat: no-repeat;

@@ -17,6 +17,7 @@ import ProfileDefault from "../../assets/images/ProfileDefault.png";
 import unlike from "../../assets/images/unlike.png";
 import BlogComment from "../../assets/images/BlogComment.png";
 import { setSearchWord } from "../../redux/modules/searchSlice";
+import { getOneQnaListDB } from "../../redux/async/qna";
 const ContentList = ({ data, type, isSearch }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,6 +48,8 @@ const ContentList = ({ data, type, isSearch }) => {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
 
+  console.log(data);
+
   const time = timeForToday(data.createdAt);
 
   const goMypage = name => {
@@ -62,27 +65,25 @@ const ContentList = ({ data, type, isSearch }) => {
   return (
     <StextMain ResolveWrapper={ResolveWrapper}>
       {isSearch && type === "qna" && (
-        <SSolveText resolve={data.is_resolve}>
-          {data.is_resolve ? "채택 완료" : "채택미완료"}
+        <SSolveText resolve={data.isResolve}>
+          {data.isResolve ? "채택 완료" : "채택미완료"}
         </SSolveText>
       )}
       <SWrapper
         onClick={() => {
-          navigate(`/${type}/detail/${data.id}`);
+          isSearch
+            ? navigate(`/${type}/detail/${data.id}`)
+            : dispatch(getOneQnaListDB(data.id));
         }}
         type={type}
-        resolve={data.is_resolve}
+        resolve={data.isResolve}
         ResolveWrapper={ResolveWrapper}
         isSearch={isSearch}
       >
         <SUserInfo>
-          <SProfileContainer
-          // onClick={() => {
-          //   goMypage(data.user_name);
-          // }}
-          >
-            <SProfile profile={data.profile_img}></SProfile>
-            <SUserName>{data.user_name}</SUserName>
+          <SProfileContainer>
+            <SProfile profile={data.profileImg}></SProfile>
+            <SUserName>{data.userName}</SUserName>
             <SCreatedAt>{time}</SCreatedAt>
           </SProfileContainer>
           <SCategoryContainer>
@@ -90,23 +91,17 @@ const ContentList = ({ data, type, isSearch }) => {
             <QnaBookmarkButton
               type={type}
               id={data.id}
-              resolve={data.is_resolve}
-              is_bookmark={data.is_bookmark}
+              resolve={data.isResolve}
+              is_bookmark={data.isBookmark}
             />
           </SCategoryContainer>
         </SUserInfo>
         <STitleWrapper>
-          <STitle
-            onClick={() => {
-              navigate(`/${type}/detail/${data.id}`);
-            }}
-          >
-            {data.title}
-          </STitle>
+          <STitle>{data.title}</STitle>
         </STitleWrapper>
         <STagWrapper>
           <STags>
-            {data.tag?.map((data, i) => {
+            {data.tags?.map((data, i) => {
               return (
                 <Tag
                   type={type}
@@ -123,11 +118,11 @@ const ContentList = ({ data, type, isSearch }) => {
           <SCount>
             <SHoneytip>
               {data.honey_tip}
-              <SLikeIcon type={type} resolve={data.is_resolve} />
+              <SLikeIcon type={type} resolve={data.isResolve} />
             </SHoneytip>
             <SCntcomment>
               {data.cntcomment}
-              <SCommentIcon type={type} resolve={data.is_resolve} />
+              <SCommentIcon type={type} resolve={data.isResolve} />
             </SCntcomment>
           </SCount>
         </STagWrapper>
@@ -174,7 +169,7 @@ const SWrapper = styled.div`
       : "-4px 6px 15px rgba(0, 0, 0, 0.1)"};
   border-radius: 30px;
   margin: 30px 0
-    ${props => (props.isSearch && props.type === "qna" ? "55px" : "30px")} 0;
+    ${props => (props.isSearch && props.type === "qna" ? "65px" : "30px")} 0;
   min-height: 190px;
   cursor: pointer;
 `;

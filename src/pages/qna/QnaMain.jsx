@@ -3,7 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { getQnaCategoryListDB, getQnaListDB } from "./../../redux/async/qna";
+import {
+  getQnaCategoryListDB,
+  getQnaMainListDB,
+} from "./../../redux/async/qna";
 import ContentList from "../../components/common/ContentList";
 import QnaMainCatergory from "./../../components/qna/QnaMainCatergory";
 import ModalBookmark from "../../components/common/ModalBookmark";
@@ -13,34 +16,56 @@ import NoResolvedListIcon from "../../assets/images/NoResolvedListIcon.png";
 import { colorSetGreen } from "../../redux/modules/userSlice";
 import { useInView } from "react-intersection-observer";
 import { removeQnaList } from "../../redux/modules/qnaSlice";
+import { Helmet } from "react-helmet-async";
+import ToastViewer from "./../../components/editor/ToastViewer";
+import QnaPreview from "./../../components/qna/QnaPreview";
+import { ClipLoader } from "react-spinners";
 
 const QnaMain = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { qnaList, isFetching } = useSelector(state => state.qnaSlice);
-  const resolveList = qnaList.filter(data => data.is_resolve);
-  const disresolveList = qnaList.filter(data => data.is_resolve === false);
   const [category, setCategory] = useState("");
+  const [resolveTap, setResolveTap] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [target, inView] = useInView();
 
+  const onGetResolve = () => {
+    setPageNumber(0);
+    setHasNextPage(true);
+    setResolveTap(1);
+  };
+
+  const onGetNoResolve = () => {
+    setPageNumber(0);
+    setHasNextPage(true);
+    setResolveTap(0);
+  };
+
   useEffect(() => {
     //다음페이지가 있다면
+    const data = {
+      pageNumber,
+      isResolve: resolveTap,
+    };
+
     if (hasNextPage) {
       if (category.length === 0) {
-        dispatch(getQnaListDB(pageNumber)).then(res => {
+        dispatch(getQnaMainListDB(data)).then(res => {
           setHasNextPage(res.payload.length === 10);
         });
       } else if (category.length > 0) {
-        dispatch(getQnaCategoryListDB({ category, pageNumber })).then(res => {
+        dispatch(
+          getQnaCategoryListDB({ category, pageNumber, isResolve: resolveTap }),
+        ).then(res => {
           setHasNextPage(res.payload.length === 10);
         });
       }
       //qnalist 조회 후 res.payload.length가 10이라면 다음페이지 존재
     }
     dispatch(colorSetGreen());
-  }, [pageNumber, category]);
+  }, [pageNumber, category, resolveTap]);
 
   //페이지가 바닥에 닿을때마다 pageNumber+1 처리
   useEffect(() => {
@@ -54,10 +79,13 @@ const QnaMain = () => {
     return () => {
       dispatch(removeQnaList());
     };
-  }, [category]);
+  }, [category, resolveTap]);
 
   return (
     <SQnaMain>
+      <Helmet>
+        <title>Qna Main</title>
+      </Helmet>
       <SHeader>
         <SWritingButtonWrapper
           onClick={() => {
@@ -78,40 +106,34 @@ const QnaMain = () => {
         />
       </SMainCategory>
       <SQnaWrapper>
-        <SleftConatiner>
+        <QnaPreview />
+        <SContentContainer>
           <SListHeader>
-            <p style={{ backgroundImage: `url(${ResolvedListIcon})` }}>
-              채택이 완료되었어요
-            </p>
-            <SListFilter>
-              <ul>
-                <li>추천순</li>
-                <li className="active">시간순</li>
-              </ul>
-            </SListFilter>
+            <STap>
+              <STapItem
+                onClick={onGetResolve}
+                className={resolveTap && "isActive"}
+              >
+                <p>채택이 완료되었어요</p>
+              </STapItem>
+              <STapItem
+                onClick={onGetNoResolve}
+                className={!resolveTap && "isActive"}
+              >
+                <p>채택을 기다리고 있어요</p>
+              </STapItem>
+            </STap>
           </SListHeader>
-          {resolveList.map(data => (
+          {qnaList.map(data => (
             <ContentList type={"qna"} data={data} key={data.id} />
           ))}
-        </SleftConatiner>
-        <SRightContainer>
-          <SListHeader>
-            <p style={{ backgroundImage: `url(${NoResolvedListIcon})` }}>
-              채택을 기다리고 있어요
-            </p>
-            <SListFilter>
-              <ul>
-                <li>추천순</li>
-                <li className="active">시간순</li>
-              </ul>
-            </SListFilter>
-          </SListHeader>
-          {disresolveList.map(data => (
-            <ContentList type={"qna"} data={data} key={data.id} />
-          ))}
-        </SRightContainer>
+          {!isFetching && hasNextPage && (
+            <SLoading ref={target}>
+              <ClipLoader />
+            </SLoading>
+          )}
+        </SContentContainer>
       </SQnaWrapper>
-      {!isFetching && <div ref={target} style={{ height: "1px" }}></div>}
       <ModalBookmark />
     </SQnaMain>
   );
@@ -202,12 +224,8 @@ const SQnaWrapper = styled.div`
   margin: 0 auto;
   gap: 40px;
 `;
-const SleftConatiner = styled.div`
-  max-width: 735px;
-  width: 100%;
-`;
 
-const SRightContainer = styled.div`
+const SContentContainer = styled.div`
   max-width: 735px;
   width: 100%;
 `;
@@ -216,40 +234,35 @@ const SListHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 18px 20px 10px 20px;
+`;
+
+const STap = styled.ul`
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+const STapItem = styled.li`
+  width: 50%;
+  padding: 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  &.isActive {
+    background-color: ${props => props.theme.color.mainGreen};
+    color: ${props => props.theme.color.white};
+  }
   & p {
+    display: flex;
+    justify-content: center;
     font-weight: 600;
-    padding-left: 26px;
-    background-repeat: no-repeat;
-    background-position: left 0 top 5px;
     font-size: 18px;
   }
 `;
-const SListFilter = styled.div`
-  & ul {
-    display: flex;
 
-    & li {
-      padding: 20px;
-      cursor: pointer;
-      position: relative;
-      color: ${props => props.theme.color.grey5};
-
-      &.active {
-        color: ${props => props.theme.color.black};
-      }
-      &:first-child {
-        &::before {
-          content: "";
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          right: 0;
-          width: 1px;
-          height: 14px;
-          background-color: ${props => props.theme.color.grey2};
-        }
-      }
-    }
-  }
+const SLoading = styled.div`
+  min-height: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

@@ -1,38 +1,53 @@
 const qnaCategory = [
-  { langId: 1, langName: "JavaScript" },
-  { langId: 2, langName: "Nodejs" },
-  { langId: 3, langName: "React" },
-  { langId: 4, langName: "Vue" },
-  { langId: 5, langName: "Kotline" },
-  { langId: 6, langName: "Java" },
-  { langId: 7, langName: "Python" },
-  { langId: 8, langName: "C" },
-  { langId: 9, langName: "C++" },
-  { langId: 10, langName: "CSS" },
-  { langId: 11, langName: "PHP" },
+  { id: 1, name: "JavaScript" },
+  { id: 2, name: "Nodejs" },
+  { id: 3, name: "React" },
+  { id: 4, name: "Vue" },
+  { id: 5, name: "Kotline" },
+  { id: 6, name: "Java" },
+  { id: 7, name: "Python" },
+  { id: 8, name: "C" },
+  { id: 9, name: "C++" },
+  { id: 10, name: "CSS" },
+  { id: 11, name: "PHP" },
 ];
 
 const interestCategory = [
-  { interestId: 1, interestName: "Javascript" },
-  { interestId: 2, interestName: "Java" },
-  { interestId: 3, interestName: "Python" },
-  { interestId: 4, interestName: "HTML" },
-  { interestId: 5, interestName: "CSS" },
-  { interestId: 6, interestName: "C++" },
-  { interestId: 7, interestName: "C#" },
-  { interestId: 8, interestName: "PHP" },
-  { interestId: 9, interestName: "Kotlin" },
-  { interestId: 10, interestName: "Swift" },
-  { interestId: 11, interestName: "Vue" },
-  { interestId: 12, interestName: "React" },
-  { interestId: 13, interestName: "Angular" },
-  { interestId: 14, interestName: "Node" },
-  { interestId: 15, interestName: "Spring" },
-  { interestId: 16, interestName: "SQL" },
-  { interestId: 17, interestName: "Assembly language" },
-  { interestId: 18, interestName: "TypeScript" },
-  { interestId: 19, interestName: "Objective-C" },
-  { interestId: 20, interestName: "Go" },
+  { id: 1, name: "Javascript" },
+  { id: 2, name: "Java" },
+  { id: 3, name: "Python" },
+  { id: 4, name: "HTML" },
+  { id: 5, name: "CSS" },
+  { id: 6, name: "C++" },
+  { id: 7, name: "C#" },
+  { id: 8, name: "PHP" },
+  { id: 9, name: "Kotlin" },
+  { id: 10, name: "Swift" },
+  { id: 11, name: "Vue" },
+  { id: 12, name: "React" },
+  { id: 13, name: "Angular" },
+  { id: 14, name: "Node" },
+  { id: 15, name: "Spring" },
+  { id: 16, name: "SQL" },
+  { id: 17, name: "Assembly language" },
+  { id: 18, name: "TypeScript" },
+  { id: 20, name: "Go" },
+  { id: 21, name: "etc.." },
+];
+
+const ageCategory = [
+  { id: 1, name: "10대 초반" },
+  { id: 2, name: "10대 후반" },
+  { id: 3, name: "20대 초반" },
+  { id: 4, name: "20대 후반" },
+  { id: 5, name: "30대 초반" },
+  { id: 6, name: "30대 후반" },
+  { id: 7, name: "40대 이상" },
+];
+
+const genderCategory = [
+  { id: 1, name: "남" },
+  { id: 2, name: "여" },
 ];
 
 const jobs = [
@@ -60,26 +75,26 @@ const jobs = [
   "블록체인 플랫폼 엔지니어",
   "임베디드 개발자",
   "웹 퍼블리셔",
-  " 하드웨어 엔지니어",
+  "하드웨어 엔지니어",
 ];
 
-const career = [
-  "1년 이하",
-  "1년 이상",
-  "2년 이상",
-  "3년 이상",
-  "4년 이상",
-  "5년 이상",
-  "10년 이상",
-  "15년 이상",
-  "20년 이상",
+const careerCategory = [
+  { id: 1, name: "1년 이하" },
+  { id: 2, name: "1년 이상" },
+  { id: 3, name: "2년 이상" },
+  { id: 4, name: "3년 이상" },
+  { id: 5, name: "4년 이상" },
+  { id: 6, name: "5년 이상" },
+  { id: 7, name: "10년 이상" },
 ];
 
 const categories = {
   qnaCategory,
   interestCategory,
   jobs,
-  career,
+  careerCategory,
+  ageCategory,
+  genderCategory,
 };
 
 export default categories;

@@ -5,6 +5,7 @@ import { colorSetBlue } from "../../redux/modules/userSlice";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
+import { Helmet } from "react-helmet-async";
 // import Tag from "../../components//blog/Tag";
 
 const BlogCommunityWrite = () => {
@@ -14,6 +15,9 @@ const BlogCommunityWrite = () => {
   }, []);
   return (
     <STWrite>
+      <Helmet>
+        <title>Blog Write</title>
+      </Helmet>
       <STitleSet>
         <h2 className="title">새 게시글 작성하기</h2>
         <EditorComponent isBlogWrite={true} />

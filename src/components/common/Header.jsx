@@ -10,6 +10,7 @@ import { logIn, logOut } from "../../redux/modules/userSlice";
 import { removeUserInfo } from "../../redux/modules/qnaSlice";
 import SearchInput from "./../search/SearchInput";
 import MainLogo from "../../assets/images/MainLogo.png";
+import Notification from "./Notification";
 // import Notification from "./Notification";
 
 const Header = () => {
@@ -72,7 +73,7 @@ const Header = () => {
       <SearchInput />
       <SAlarmLoginWrapper>
         <SAlarmConatainer className="alarmConatainer active">
-          <HiOutlineBell />
+          {/* <HiOutlineBell /> */}
           {/* <Notification /> */}
         </SAlarmConatainer>
         <SLoginConatainer className="loginConatainer">

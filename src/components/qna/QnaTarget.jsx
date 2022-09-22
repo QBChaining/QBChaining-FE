@@ -31,7 +31,7 @@ const QnaTarget = ({ isDatail }) => {
   const totalId = {
     id: target.id,
     title: target.title,
-    user_name: target.user_name,
+    user_name: target.userName,
     createdAt: getToday(),
   };
 
@@ -77,42 +77,42 @@ const QnaTarget = ({ isDatail }) => {
   return (
     <SQnaTarget>
       <SUserInfo>
-        <SUserInfoWrapper
-          onClick={() => {
-            navigate(`/mypage/${target.user_name}`);
-          }}
-        >
-          <SUserProfile profile={target.profile_img} />
-          <SUserInfoText>
-            <SUserName>{target.user_name}</SUserName>
-            <SCreateAt>
-              {target.createdAt?.slice(0, 10)} /{" "}
-              {target.createdAt?.slice(11, 16)}
-            </SCreateAt>
-          </SUserInfoText>
-        </SUserInfoWrapper>
-        <SButtonWrapper>
+        <SUserInfoWrapper>
           <SBookmarkButton
             isBookmarked={isBookmarked}
             onClick={isBookmarked ? onDeleteBookmark : onAddBookmark}
           ></SBookmarkButton>
-          <SHoneyTipButton
-            isHoneyTip={target.is_honey_tip}
-            onClick={target.is_honey_tip ? onDislikeQna : onLikeQna}
+          <SContentTitle>{target.title}</SContentTitle>
+          <SUserInfoInner
+            onClick={() => {
+              navigate(`/mypage/${target.userName}`);
+            }}
           >
-            {target.honey_tip}
-          </SHoneyTipButton>
-        </SButtonWrapper>
+            <SUserInfoText>
+              <SUserName>{target.userName}</SUserName>
+              <SCreateAt>
+                {target.createdAt?.slice(0, 10)} /{" "}
+                {target.createdAt?.slice(11, 16)}
+              </SCreateAt>
+            </SUserInfoText>
+            <SUserProfile profile={target.profileImg} />
+          </SUserInfoInner>
+        </SUserInfoWrapper>
       </SUserInfo>
       <SContent>
-        <SContentTitle>{target.title}</SContentTitle>
         <SContentText>
           <ToastViewer content={target.content} />
         </SContentText>
         <STags>
-          {target.tag?.map((data, i) => {
+          {target.tags?.map((data, i) => {
             return <STag key={i}>{data}</STag>;
           })}
+          <SHoneyTipButton
+            isLike={target.isLike}
+            onClick={target.isLike ? onDislikeQna : onLikeQna}
+          >
+            {target.like}
+          </SHoneyTipButton>
         </STags>
       </SContent>
     </SQnaTarget>
@@ -123,11 +123,6 @@ export default QnaTarget;
 
 const SQnaTarget = styled.div``;
 
-const SButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const ButtonBackground = styled.button`
   background-repeat: no-repeat;
   border: none;
@@ -135,35 +130,39 @@ const ButtonBackground = styled.button`
 `;
 
 const SBookmarkButton = styled(ButtonBackground)`
+  position: absolute;
   background-position: center center;
   width: 24px;
   height: 24px;
   background-size: 100%;
-  margin-right: 20px;
   background-image: url(${props =>
     props.isBookmarked ? BookmarkFillIcon : BookmarkNoFillIcon});
 `;
 
 const SHoneyTipButton = styled(ButtonBackground)`
+  position: absolute;
+  right: 0;
+  top: 0;
   padding-right: 24px;
   background-position: right center;
   background-size: 16px 16px;
-  background-image: url(${props => (props.isHoneyTip ? QnaLikeFill : QnaLike)});
+  background-image: url(${props => (props.isLike ? QnaLikeFill : QnaLike)});
   color: ${props => props.theme.color.grey7};
   font-size: 16px;
 `;
 
 const SUserInfoWrapper = styled.div`
+  width: 100%;
+  justify-content: space-between;
   display: flex;
   align-items: center;
-  cursor: pointer;
 `;
 
 const SUserInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 60px 20px 30px 40px;
+  padding: 60px 20px 0 0;
   border-bottom: 1px solid ${props => props.theme.color.grey5};
 `;
 
@@ -176,14 +175,17 @@ const SUserProfile = styled.div`
 `;
 
 const SUserInfoText = styled.div`
-  margin-left: 10px;
+  margin-right: 10px;
+  text-align: right;
 `;
 
 const SUserName = styled.div`
   margin-bottom: 2px;
+  font-size: 14px;
 `;
 
 const SCreateAt = styled.div`
+  font-size: 12px;
   color: ${props => props.theme.color.grey6};
 `;
 
@@ -193,18 +195,24 @@ const SContent = styled.div`
 `;
 
 const SContentTitle = styled.div`
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 400;
   padding: 30px 0;
+  margin-left: 40px;
+  min-width: 200px;
 `;
 
 const SContentText = styled.div`
+  min-height: 100px;
+  padding-top: 30px;
   padding-bottom: 30px;
 `;
 
 const STags = styled.ul`
+  position: relative;
   display: flex;
-  margin-bottom: 14px;
+  margin-bottom: 4px;
+  padding-right: 40px;
 `;
 
 const STag = styled.li`
@@ -215,4 +223,10 @@ const STag = styled.li`
   margin-bottom: 16px;
   color: ${props => props.theme.color.mainGreen};
   font-weight: 600;
+`;
+
+const SUserInfoInner = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 `;

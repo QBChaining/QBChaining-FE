@@ -15,22 +15,22 @@ const QnaMainCatergory = ({
   return (
     <SQnaMainCatergory ref={lists}>
       {category.map(list => (
-        <div key={list.langId}>
+        <div key={list.id}>
           <input
             type="radio"
             name="category"
-            value={list.langName}
-            id={list.langName}
+            value={list.name}
+            id={list.name}
           />
           <SQnaCategoryList
-            htmlFor={list.langName}
+            htmlFor={list.name}
             onClick={() => {
               setPageNumber(0);
-              setCategory(list.langName);
+              setCategory(list.name);
               setHasNextPage(true);
             }}
           >
-            {list.langName}
+            {list.name}
           </SQnaCategoryList>
         </div>
       ))}

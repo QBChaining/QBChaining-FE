@@ -7,6 +7,7 @@ import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import { useDispatch } from "react-redux";
 import { colorSetGreen } from "../../redux/modules/userSlice";
+import { Helmet } from "react-helmet-async";
 
 const QnaWrite = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,9 @@ const QnaWrite = () => {
 
   return (
     <SQnaWrite>
+      <Helmet>
+        <title>QNA Write</title>
+      </Helmet>
       <SEditor>
         <h2 className="title">새 질문 작성하기</h2>
         <Editor className="editor" isWrite={true} />

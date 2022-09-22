@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Select from "./Select";
 import styled from "styled-components";
 //유틸 카테고리
 import categories from "../../utils/category";
@@ -34,8 +35,6 @@ import {
   postCommentListDB,
   postQnaListDB,
 } from "../../redux/async/qna";
-import { async } from "@firebase/util";
-import Select from "./Select";
 
 const EditorComponent = ({
   isEdit,
@@ -125,7 +124,7 @@ const EditorComponent = ({
           content,
           id: editData.id,
           category: category,
-          tag: tags,
+          tags: tags,
         }),
       ).then(res => {
         navigate("/qna");
@@ -137,7 +136,7 @@ const EditorComponent = ({
           title,
           content,
           category: category,
-          tag: tags,
+          tags: tags,
         }),
       ).then(res => {
         navigate(`/qna/detail/${res.payload.data.id}`);
@@ -149,8 +148,8 @@ const EditorComponent = ({
           content,
           id: parseInt(id),
           honey_tip: 0,
-          user_name: userName,
-          profile_img: userProfile,
+          userName: userName,
+          profileImg: userProfile,
         }),
       );
       //작성 후 입력 값 초기화
@@ -163,7 +162,7 @@ const EditorComponent = ({
         postBlogCommunityDB({
           title,
           content,
-          tag: tags,
+          tags: tags,
         }),
       );
     } else if (isBlogEdit) {
@@ -182,6 +181,7 @@ const EditorComponent = ({
   const onTitleChangeHandler = e => {
     setTitle(e.target.value);
   };
+
   //edit상황이라면 타이틀, content 가져오기
   useEffect(() => {
     if (isEdit) {
@@ -240,6 +240,7 @@ const EditorComponent = ({
                 setOption={setCategory}
                 options={categories.qnaCategory}
                 initialText={"카테고리"}
+                zIndex={10}
               />
             )}
           </STitleWrapper>

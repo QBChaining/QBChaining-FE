@@ -10,6 +10,7 @@ import styled from "styled-components";
 import ModalBookmark from "./../../components/common/ModalBookmark";
 import QnaWriteArrow from "../../assets/images/QnaWriteArrow.png";
 import EditorComponent from "../../components/common/EditorComponent";
+import { Helmet } from "react-helmet-async";
 
 const QnaDetail = () => {
   const { id } = useParams();
@@ -24,11 +25,14 @@ const QnaDetail = () => {
 
   return (
     <SQnaDetail>
+      <Helmet>
+        <title>Qna Detail</title>
+      </Helmet>
       <SLeftContainer>
         <QnaTarget isDatail={true} />
         <QnaCommentList
-          author={target.user?.user_name}
-          resolve={target.is_resolve}
+          author={target.user?.userName}
+          resolve={target.isResolve}
           id={id}
           qnaId={id}
         />
@@ -54,6 +58,8 @@ const SLeftContainer = styled.div`
   width: 50%;
   padding-left: 200px;
   padding-right: 30px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SRightContainer = styled.div`

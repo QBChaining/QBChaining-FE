@@ -30,8 +30,9 @@ export const getBlogDetailDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.getBlogDetail(id);
+
       if (response.data.success === true) {
-        return response.data.data[0];
+        return response.data.data;
       }
     } catch (err) {
       networkError();
@@ -48,7 +49,7 @@ export const postBlogCommunityDB = createAsyncThunk(
     try {
       const response = await blogApi.postBlogCommunity(data);
       if (response.data.success === true) {
-        return response.data.data;
+        return response;
       }
     } catch (err) {
       networkError();
@@ -64,6 +65,7 @@ export const patchBlogCommunityDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.editBlogCommunity(data);
+
       if (response.data.success === true) {
         successAlert("수정 되었습니다!");
         return response.data.data;
@@ -82,6 +84,7 @@ export const deleteBlogCommunityDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.deleteBlogCommunity(id);
+
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -98,6 +101,7 @@ export const getBlogCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await blogApi.getBlogCommentList(data);
+
       if (response.data.success === true) {
         return response.data.data;
       }
