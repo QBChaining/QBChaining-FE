@@ -2,17 +2,15 @@ import instance from "../axios";
 
 export const qnaApi = {
   //게시글 채택 조회
-  getCompletionList: pageNumber =>
-    instance.get(`/qna/completion?page_count=10&page=${pageNumber}`),
-
-  //게시글 비채택 조회
-  getInCompletionList: pageNumber =>
-    instance.get(`/qna/incompletion?page_count=10&page=${pageNumber}`),
+  getQnaMainList: data =>
+    instance.get(
+      `/qna?page_count=10&page=${data.pageNumber}&resolve=${data.isResolve}`,
+    ),
 
   //게시글 카테고리 조회
   getCategoryList: data =>
     instance.get(
-      `/qna/categories/${data.category}?page_count=10&page=${data.pageNumber}`,
+      `/qna/categories/${data.category}?page_count=10&page=${data.pageNumber}&resolve=${data.isResolve}`,
     ),
 
   //게시글 상세조회

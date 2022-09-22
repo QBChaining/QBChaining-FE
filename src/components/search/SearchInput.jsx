@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import SearchIcon from "../../assets/images/SearchIcon.png";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   removeSearchList,
   setSearchWord,
@@ -11,11 +11,17 @@ import { errorAlert } from "../../utils/swal";
 
 const SearchInput = () => {
   const search = useRef();
+  const { searchWord } = useSelector(state => state.searchSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const goSearch = () => {
     if (search.current.value.length === 0) {
       errorAlert("검색어를 입력해주세요!");
+      return;
+    }
+
+    if (search.current.value === searchWord) {
+      errorAlert("이전과 다른 검색어를 입력해주세요!");
       return;
     }
     dispatch(removeSearchList());

@@ -124,7 +124,7 @@ const EditorComponent = ({
           content,
           id: editData.id,
           category: category,
-          tag: tags,
+          tags: tags,
         }),
       ).then(res => {
         navigate("/qna");
@@ -136,7 +136,7 @@ const EditorComponent = ({
           title,
           content,
           category: category,
-          tag: tags,
+          tags: tags,
         }),
       ).then(res => {
         navigate(`/qna/detail/${res.payload.data.id}`);
@@ -162,7 +162,7 @@ const EditorComponent = ({
         postBlogCommunityDB({
           title,
           content,
-          tag: tags,
+          tags: tags,
         }),
       );
     } else if (isBlogEdit) {
@@ -181,6 +181,7 @@ const EditorComponent = ({
   const onTitleChangeHandler = e => {
     setTitle(e.target.value);
   };
+
   //edit상황이라면 타이틀, content 가져오기
   useEffect(() => {
     if (isEdit) {
