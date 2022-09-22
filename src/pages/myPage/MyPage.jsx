@@ -3,14 +3,16 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getUserInfoActivityDB } from "../../redux/async/user";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUserInfoDB } from "./../../redux/async/user";
 
 const MyPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const { userName } = useParams();
   useEffect(() => {
     // dispatch(getUserInfoActivityDB());
+    dispatch(getUserInfoDB(userName));
   }, []);
 
   const week1 = [

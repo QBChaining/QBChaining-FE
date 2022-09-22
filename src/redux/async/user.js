@@ -45,8 +45,9 @@ export const putUserInNewDB = createAsyncThunk(
 export const getUserInfoDB = createAsyncThunk(
   "auth/getuserinfo",
   async (data, thunkAPI) => {
+    console.log(data);
     try {
-      const response = await userApi.getUserInfo();
+      const response = await userApi.getUserInfo(data);
       console.log(response);
       if (response.data.success === true) {
         return response.data.data;
@@ -65,7 +66,6 @@ export const getUserInfoActivityDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.getUserInfoActivity();
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }

@@ -8,7 +8,7 @@ export const userApi = {
   putUserInNew: () => instance.put("/auth/user/isnew"),
 
   //유저정보 가져오기
-  getUserInfo: () => instance.get("/auth/user/page"),
+  getUserInfo: userName => instance.get(`/auth/user/page/${userName}`),
 
   //유저활동기록 가져오기
   getUserInfoActivity: () => instance.get("/auth/user/activity"),

@@ -48,6 +48,8 @@ const ContentList = ({ data, type, isSearch }) => {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
 
+  console.log(data);
+
   const time = timeForToday(data.createdAt);
 
   const goMypage = name => {
@@ -63,8 +65,8 @@ const ContentList = ({ data, type, isSearch }) => {
   return (
     <StextMain ResolveWrapper={ResolveWrapper}>
       {isSearch && type === "qna" && (
-        <SSolveText resolve={data.is_resolve}>
-          {data.is_resolve ? "채택 완료" : "채택미완료"}
+        <SSolveText resolve={data.isResolve}>
+          {data.isResolve ? "채택 완료" : "채택미완료"}
         </SSolveText>
       )}
       <SWrapper
@@ -74,7 +76,7 @@ const ContentList = ({ data, type, isSearch }) => {
             : dispatch(getOneQnaListDB(data.id));
         }}
         type={type}
-        resolve={data.is_resolve}
+        resolve={data.isResolve}
         ResolveWrapper={ResolveWrapper}
         isSearch={isSearch}
       >
@@ -89,8 +91,8 @@ const ContentList = ({ data, type, isSearch }) => {
             <QnaBookmarkButton
               type={type}
               id={data.id}
-              resolve={data.is_resolve}
-              is_bookmark={data.is_bookmark}
+              resolve={data.isResolve}
+              is_bookmark={data.isBookmark}
             />
           </SCategoryContainer>
         </SUserInfo>
@@ -116,11 +118,11 @@ const ContentList = ({ data, type, isSearch }) => {
           <SCount>
             <SHoneytip>
               {data.honey_tip}
-              <SLikeIcon type={type} resolve={data.is_resolve} />
+              <SLikeIcon type={type} resolve={data.isResolve} />
             </SHoneytip>
             <SCntcomment>
               {data.cntcomment}
-              <SCommentIcon type={type} resolve={data.is_resolve} />
+              <SCommentIcon type={type} resolve={data.isResolve} />
             </SCntcomment>
           </SCount>
         </STagWrapper>
