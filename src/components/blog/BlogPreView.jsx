@@ -26,7 +26,7 @@ const MainPreView = ({}) => {
         </SContainer>
       ) : (
         <SContainer>
-          <h1>오른쪽 리스트를 눌러보세요 미리보기가 가능합니다.</h1>
+          <h1>오른쪽 리스트를 눌러보세요 미리보기가 가능합니다. 테스트</h1>
         </SContainer>
       )}
     </div>
