@@ -11,6 +11,10 @@ const BlogMainList = ({ posts }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const onClickView = () => {
+    dispatch(getBlogDetailDB(posts.id));
+  };
+
   return (
     <SBloglist>
       <SContentsGroup>
@@ -20,10 +24,12 @@ const BlogMainList = ({ posts }) => {
             <SContentTitle
               className="title"
               onClick={() => {
-                navigate(`/blog/detail/${posts.id}`);
+                // navigate(`/blog/detail/${posts.id}`);
+                onClickView(posts.id);
               }}
             >
               {posts.title}
+              미리보기
             </SContentTitle>
           </SUserInfo>
           <SBookMark>

@@ -4,11 +4,15 @@ import bigLogo from "../../assets/images/BigLogo.png";
 import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import LeftArrow from "../../assets/images/LeftArrow.png";
+import { Helmet } from "react-helmet-async";
 
 const Landing = () => {
   const navigate = useNavigate();
   return (
     <SLanding>
+      <Helmet>
+        <title>QB-Chaning</title>
+      </Helmet>
       <div className="bigLogo"></div>
       <div className="logo"></div>
       <div

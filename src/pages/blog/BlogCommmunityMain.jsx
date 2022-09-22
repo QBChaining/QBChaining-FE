@@ -16,11 +16,11 @@ import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogMainList from "../../components/blog/BlogMainList";
 import mainpage from "../../assets/images/mainpage.png";
 import { Helmet } from "react-helmet-async";
+import BlogPreView from "../../components/blog/BlogPreView";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
-  const userProfile = useSelector(state => state.userSlice.userProfile);
-  // const resolveList = blogMainLists.filter(data => data.is_resolve);
-  const targetData = useSelector(state => state.blogSlice.blogDetail);
+  // const userProfile = useSelector(state => state.userSlice.userProfile);
+  // const targetData = useSelector(state => state.blogSlice.blogDetail);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -68,13 +68,14 @@ const BlogCommmunityMain = () => {
         <SContentWrapper>
           <SLeftContainer>
             <SUserInfo>
-              <SPreviewTitle>
+              {/* <SPreviewTitle>
                 <SProfile />
                 <p>개발자와 개발자들의 커뮤니티 사이트 QB-CHAINING</p>
-              </SPreviewTitle>
+              </SPreviewTitle> */}
             </SUserInfo>
             <SPreviewContent>
-              <ToastViewer />
+              <BlogPreView />
+              {/* <ToastViewer /> */}
             </SPreviewContent>
           </SLeftContainer>
           <SRightContainer>
@@ -209,9 +210,9 @@ const SPreviewContent = styled.div`
   min-width: 700px;
   /* background-color: ${props => props.theme.color.grey3}; */
 
-  background-position: center;
+  /* background-position: center;
   background-size: cover;
-  background-image: url(${mainpage});
+  background-image: url(${mainpage}); */
 `;
 
 const SRightContainer = styled.div`
