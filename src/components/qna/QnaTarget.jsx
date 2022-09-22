@@ -84,7 +84,7 @@ const QnaTarget = ({ isDatail }) => {
         >
           <SUserProfile profile={target.profileImg} />
           <SUserInfoText>
-            <SUserName>{target.userName}</SUserName>
+            <SUserName>s{target.userName}</SUserName>
             <SCreateAt>
               {target.createdAt?.slice(0, 10)} /{" "}
               {target.createdAt?.slice(11, 16)}

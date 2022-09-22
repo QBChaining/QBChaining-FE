@@ -11,7 +11,7 @@ export const getNotificationDB = createAsyncThunk(
   async thunkAPI => {
     try {
       const response = await notification.getNotification();
-      return response.data.data;
+      return response;
     } catch (err) {
       console.log(err);
     }

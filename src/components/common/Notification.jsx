@@ -7,10 +7,8 @@ import {
 } from "../../redux/async/notification";
 import styled from "styled-components";
 import { notInitialized } from "react-redux/es/utils/useSyncExternalStore";
+import Polygon from "../../assets/images/Polygon 4.png";
 const Notification = () => {
-  const notificationResponse = useSelector(
-    state => state.notificationSlice.notification,
-  );
   const notificationUser = useSelector(state => state.userSlice.userName);
 
   const dispatch = useDispatch();
@@ -31,34 +29,56 @@ const Notification = () => {
         }}
       />
       {modal === true ? (
-        <SBox>
-          <SNotifyList>
-            {notificationResponse?.map(noti => (
-              <div key={noti.id}>
-                <SItem>
-                  <div>{noti.post_title}</div>
-                  <button onClick={onCheck}>확인</button>
-                </SItem>
-              </div>
-            ))}
-          </SNotifyList>
-        </SBox>
+        <>
+          <Semo />
+          <SBox>
+            <SNotifyList>
+              {/* {notificationResponse?.map(noti => (
+                <div key={noti.id}>
+                  <SItem>
+                    <div>{noti.post_title}</div>
+                    <button onClick={onCheck}>확인</button>
+                  </SItem>
+                </div>
+              ))} */}
+            </SNotifyList>
+          </SBox>
+        </>
       ) : null}
     </div>
   );
 };
 const SBox = styled.div`
-  width: 200px;
-  height: 200px;
-  border: 1px solid black;
+  position: absolute;
+
+  top: 4em;
+  /* right: 0em; */
+  left: -10em;
+  /* margin-left: 50px; */
+  position: absolute;
+  width: 264px;
+  height: 198px;
+
+  background: #ffffff;
+  border-radius: 20px;
 
   .buttun {
+    /* position: relative; */
+
     width: 100px;
     height: 100px;
     margin-top: 50px;
   }
 `;
-
+const Semo = styled.div`
+  position: absolute;
+  bottom: -2em;
+  right: 0.2em;
+  width: 45px;
+  height: 44px;
+  background-image: url(${Polygon});
+  background-size: cover;
+`;
 const SNotifyList = styled.div``;
 
 const SItem = styled.div``;

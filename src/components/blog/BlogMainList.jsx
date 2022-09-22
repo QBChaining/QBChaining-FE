@@ -6,59 +6,59 @@ import ToastViewer from "../editor/ToastViewer";
 import BlogBookMark from "./BlogBookMark";
 import unlike from "../../assets/images/unlike.png";
 import { getBlogDetailDB } from "../../redux/async/blog";
+import BlogHover from "./BlogHover";
 const BlogMainList = ({ posts }) => {
-  const userProfile = useSelector(state => state.userSlice.userProfile);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   return (
-    <SBloglist>
-      <SContentsGroup>
-        <SPTitleBox>
-          <SUserInfo>
-            <SProfile url={posts.profile_img} />
-            <SContentTitle
-              className="title"
-              onClick={() => {
-                navigate(`/blog/detail/${posts.id}`);
-              }}
-            >
-              {posts.title}
-            </SContentTitle>
-          </SUserInfo>
-          <SBookMark>
-            <BlogBookMark
-              ismainlist={true}
-              isbookmark={posts.is_bookmark}
-              posts={posts}
-            />
-          </SBookMark>
-        </SPTitleBox>
-        <STagNMark>
-          <STagList>
-            {posts.tag?.map((tags, i) => (
-              <STag key={i}>{tags}</STag>
-            ))}
-          </STagList>
-          <SLike>{posts.like}</SLike>
-        </STagNMark>
-      </SContentsGroup>
-    </SBloglist>
+    <>
+      <SBloglist>
+        <BlogHover posts={posts} />
+        <SHober>
+          <SContentsGroup>
+            {/* <BlogHover> */}
+            <SPTitleBox>
+              <SUserInfo>
+                <SProfile url={posts.profileImg} />
+                <SContentTitle className="title">{posts.title}</SContentTitle>
+              </SUserInfo>
+              <SBookMark>
+                <BlogBookMark
+                  ismainlist={true}
+                  isbookmark={posts.isBookmark}
+                  posts={posts}
+                />
+              </SBookMark>
+            </SPTitleBox>
+            <STagNMark>
+              <STagList>
+                {posts.postTag?.map((tags, i) => (
+                  <STag key={i}>{tags}</STag>
+                ))}
+              </STagList>
+              <SLike>{posts.like}</SLike>
+            </STagNMark>
+          </SContentsGroup>
+        </SHober>
+      </SBloglist>
+      {/* </BlogHover> */}
+    </>
   );
 };
 
 export default BlogMainList;
 
 const SBloglist = styled.div`
+  position: relative;
   width: 100%;
   min-width: 700px;
+  /* height: 100%; */
+  min-height: 127px;
   background: #ffffff;
   box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
   padding: 20px 30px 10px 30px;
   margin-bottom: 20px;
 `;
-
+const SHober = styled.div``;
 const SPTitleBox = styled.div`
   display: flex;
   justify-content: space-between;
