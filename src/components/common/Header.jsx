@@ -73,8 +73,8 @@ const Header = () => {
       <SearchInput />
       <SAlarmLoginWrapper>
         <SAlarmConatainer className="alarmConatainer active">
-          {/* <HiOutlineBell /> */}
-          <Notification />
+          {/* <HiOutlineBell />
+          <Notification /> */}
         </SAlarmConatainer>
         <SLoginConatainer className="loginConatainer">
           {isLogin ? (
