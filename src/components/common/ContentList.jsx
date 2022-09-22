@@ -48,8 +48,6 @@ const ContentList = ({ data, type, isSearch }) => {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
 
-  console.log(data);
-
   const time = timeForToday(data.createdAt);
 
   const goMypage = name => {
@@ -117,7 +115,7 @@ const ContentList = ({ data, type, isSearch }) => {
           </STags>
           <SCount>
             <SHoneytip>
-              {data.honey_tip}
+              {data.like}
               <SLikeIcon type={type} resolve={data.isResolve} />
             </SHoneytip>
             <SCntcomment>
