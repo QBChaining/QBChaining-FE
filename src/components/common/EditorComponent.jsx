@@ -202,17 +202,8 @@ const EditorComponent = ({
   useEffect(() => {
     if (isBlogEdit) {
       editorRef.current.getInstance().setMarkdown(blogEditData.content, true);
-
-      setBlogTitle(blogEditData.title);
     }
   }, [isBlogEdit]);
-  // useEffect(() => {
-  //   if (isBlogEdit) {
-  //     titleText.current.getInstance().setHTML(blogEditData.title);
-
-  //     setBlogTitle(blogEditData.title);
-  //   }
-  // }, [isBlogEdit]);
 
   useEffect(isBlogEdit => {}, []);
   const onCategoryChangeHandler = e => {
@@ -253,9 +244,7 @@ const EditorComponent = ({
           <STitleWrapper>
             <input
               id="title"
-              // initialValue={blogEditData.title}
               initialValue="sdfsdf"
-              // value={isBlogEdit ? BlogTitle : title || ""}
               value={blogTitle}
               onChange={onTitleChangeHandler}
               type="text"
@@ -276,7 +265,6 @@ const EditorComponent = ({
         )}
         <SEditor>
           <Editor
-            // initialValue="마크다운으로 내용을 입력하세요!"
             placeholder="마크다운으로 내용을 입력하세요!"
             previewStyle={isCommentWrite ? "tab" : "vertical"}
             height={isCommentWrite ? "600px" : "500px"}
