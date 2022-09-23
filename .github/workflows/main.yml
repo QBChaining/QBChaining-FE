@@ -14,7 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@main
+        uses:
+          actions/checkout@main
+          # 캐싱모듈
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
         # BakcEnd API
       - name: Generate Environment Varibles Fils for Production
         run: |
@@ -64,15 +73,6 @@ jobs:
           echo "REACT_APP_SENTRYDSN=$REACT_APP_SENTRYDSN" >> .env.production
         env:
           REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_SENTRYDSN }}
-
-      # 캐싱모듈
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
 
       - name: Install Dependencies
         run: yarn

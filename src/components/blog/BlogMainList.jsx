@@ -30,9 +30,9 @@ const BlogMainList = ({ posts }) => {
             </SPTitleBox>
             <STagNMark>
               <STagList>
-                {posts.postTag?.map((tags, i) => (
-                  <STag key={i}>{tags}</STag>
-                ))}
+                {posts.tags?.map((tags, i) => {
+                  return <STag key={i}>{tags}</STag>;
+                })}
               </STagList>
               <SLike>{posts.like}</SLike>
             </STagNMark>
@@ -48,8 +48,8 @@ export default BlogMainList;
 
 const SBloglist = styled.div`
   position: relative;
-  width: 100%;
-  min-width: 700px;
+  /* width: 100%; */
+  min-width: 640px;
   /* height: 100%; */
   min-height: 127px;
   background: #ffffff;
