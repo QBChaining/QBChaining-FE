@@ -11,6 +11,18 @@ const QnaMainCatergory = ({
   const category = categories.qnaCategory;
 
   const lists = useRef();
+  const [check, setCheck] = useState("");
+
+  const onSelectCategoryHandler = name => {
+    //중복클릭 방지
+    if (name === check) {
+      return;
+    }
+    setCheck(name);
+    setPageNumber(0);
+    setCategory(name);
+    setHasNextPage(true);
+  };
 
   return (
     <SQnaMainCatergory ref={lists}>
@@ -25,9 +37,7 @@ const QnaMainCatergory = ({
           <SQnaCategoryList
             htmlFor={list.name}
             onClick={() => {
-              setPageNumber(0);
-              setCategory(list.name);
-              setHasNextPage(true);
+              onSelectCategoryHandler(list.name);
             }}
           >
             {list.name}

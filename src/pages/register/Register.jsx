@@ -70,7 +70,7 @@ import { userSlice } from "./../../redux/modules/userSlice";
 const Register = () => {
   const navigate = useNavigate();
   const { userName, userIsNew } = useSelector(state => state.userSlice);
-  const [list, setList] = useState([]);
+  const [language, setLanguage] = useState([]);
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [career, setCareer] = useState("");
@@ -78,7 +78,7 @@ const Register = () => {
   const dispatch = useDispatch();
 
   const onSubmitHandler = () => {
-    if (list.length < 2) {
+    if (language.length < 2) {
       errorAlert("관심언어는 최소 두개이상 선택해주세요!");
       return;
     }
@@ -99,7 +99,7 @@ const Register = () => {
       return;
     }
     const data = {
-      list,
+      language,
       age,
       gender,
       career,
@@ -129,8 +129,8 @@ const Register = () => {
           {categories.interestCategory.map(data => (
             <InterestItem
               data={data}
-              setList={setList}
-              list={list}
+              setLanguage={setLanguage}
+              language={language}
               key={data.id}
             />
           ))}

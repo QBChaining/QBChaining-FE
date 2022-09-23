@@ -4,16 +4,14 @@ import { useParams } from "react-router-dom";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import styled from "styled-components";
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
-import { colorSetBlue } from "../../redux/modules/userSlice";
+import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
 
 const BlogCommunityEdit = () => {
+  const blogEditData = useSelector(state => state.blogSlice.blogDetail);
+  console.log(blogEditData);
   const { id } = useParams();
-  // const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(colorSetBlue());
-  // }, []);
   return (
     <SEdit>
       <Helmet>
@@ -21,7 +19,12 @@ const BlogCommunityEdit = () => {
       </Helmet>
       <STitledSet>
         <h2 className="title">게시글 수정하기</h2>
-        <EditorComponent blogEditId={id} isBlogEdit={true}></EditorComponent>
+        <EditorComponent
+          blogEditData={blogEditData}
+          blogEditId={id}
+          isBlogEdit={true}
+          initialValue="dfsdfsdf"
+        ></EditorComponent>
       </STitledSet>
       <ModalBookmark isWrite={true} />
     </SEdit>

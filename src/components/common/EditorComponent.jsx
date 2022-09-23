@@ -44,8 +44,10 @@ const EditorComponent = ({
   isBlogWrite,
   id,
   blogEditId,
+  blogEditData,
   editData,
 }) => {
+  console.log(blogEditData);
   const isComment = useSelector(state => state.qnaSlice.isCommentWrite);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -57,12 +59,14 @@ const EditorComponent = ({
   const nextId = useRef(1);
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
+  const [blogTitle, setBlogTitle] = useState("");
   const location = window.location.pathname;
   const { isLogin, userName, userProfile } = useSelector(
     state => state.userSlice,
   );
-
+  console.log(blogEditData.title);
   const editorRef = useRef();
+
   const QnatoolbarItems = [
     ["codeblock"],
     ["heading", "bold", "italic", "strike"],
@@ -104,7 +108,7 @@ const EditorComponent = ({
       errorAlert("본문을 입력해주세요!");
       return;
     }
-    if (!isCommentWrite) {
+    if (!isCommentWrite && !isBlogEdit) {
       if (tags.length < 1) {
         errorAlert("최소 1개의 태그가 필요합니다!");
         return;
@@ -124,7 +128,7 @@ const EditorComponent = ({
           content,
           id: editData.id,
           category: category,
-          tags: tags,
+          tag: tags,
         }),
       ).then(res => {
         navigate("/qna");
@@ -136,7 +140,7 @@ const EditorComponent = ({
           title,
           content,
           category: category,
-          tags: tags,
+          tag: tags,
         }),
       ).then(res => {
         navigate(`/qna/detail/${res.payload.data.id}`);
@@ -162,26 +166,30 @@ const EditorComponent = ({
         postBlogCommunityDB({
           title,
           content,
-          tags: tags,
+          tags,
         }),
       );
     } else if (isBlogEdit) {
       navigate(`/blog/detail/${blogEditId}`);
       dispatch(
         patchBlogCommunityDB({
-          title,
+          title: blogTitle,
           content,
           id: blogEditId,
         }),
+        setBlogTitle(blogEditData.title),
       );
     }
   };
 
   //titlechangehandler
   const onTitleChangeHandler = e => {
-    setTitle(e.target.value);
+    if (isBlogEdit) {
+      setBlogTitle(e.target.value);
+    } else {
+      setTitle(e.target.value);
+    }
   };
-
   //edit상황이라면 타이틀, content 가져오기
   useEffect(() => {
     if (isEdit) {
@@ -190,6 +198,23 @@ const EditorComponent = ({
       // quillRef.current.firstChild.innerHTML = editData.content;
     }
   }, [isEdit, editData, isComment]);
+
+  useEffect(() => {
+    if (isBlogEdit) {
+      editorRef.current.getInstance().setMarkdown(blogEditData.content, true);
+
+      setBlogTitle(blogEditData.title);
+    }
+  }, [isBlogEdit]);
+  // useEffect(() => {
+  //   if (isBlogEdit) {
+  //     titleText.current.getInstance().setHTML(blogEditData.title);
+
+  //     setBlogTitle(blogEditData.title);
+  //   }
+  // }, [isBlogEdit]);
+
+  useEffect(isBlogEdit => {}, []);
   const onCategoryChangeHandler = e => {
     setCategory(e.target.value);
   };
@@ -228,12 +253,16 @@ const EditorComponent = ({
           <STitleWrapper>
             <input
               id="title"
-              value={title || ""}
+              // initialValue={blogEditData.title}
+              initialValue="sdfsdf"
+              // value={isBlogEdit ? BlogTitle : title || ""}
+              value={blogTitle}
               onChange={onTitleChangeHandler}
               type="text"
               ref={titleText}
               maxLength="40"
               placeholder="제목을 입력해주세요."
+              // initialText={BlogTitle}
             />
             {(isEdit || isWrite) && (
               <Select
@@ -281,7 +310,7 @@ const EditorComponent = ({
         </SEditor>
       </div>
       <SSubmitWrapper>
-        {(isEdit || isWrite || isBlogWrite || isBlogEdit) && (
+        {(isEdit || isWrite || isBlogWrite) && (
           <STagContainer>
             <SInputContainer>
               <input
