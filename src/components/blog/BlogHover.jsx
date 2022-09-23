@@ -12,7 +12,7 @@ const BlogHover = ({ posts }) => {
   const navigate = useNavigate();
 
   const onClickBlogDetailLink = () => {
-    navigate(`/blog/detail/${blogDetail.id}`);
+    navigate(`/blog/detail/${posts.id}`);
   };
   const onClickView = () => {
     dispatch(getBlogDetailDB(posts.id));

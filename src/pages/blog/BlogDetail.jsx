@@ -61,8 +61,8 @@ const BlogCommunityDetail = () => {
             <SDate>
               <div className="name">{detail.userName}</div>
               <div className="date">
-                {detail.created_at?.slice(0, 10)} /{" "}
-                {detail.created_at?.slice(11, 16)}
+                {detail.createdAt?.slice(0, 10)} /{" "}
+                {detail.createdAt?.slice(11, 16)}
               </div>
             </SDate>
             <SProfile url={detail.profileImg} />
@@ -96,13 +96,13 @@ const BlogCommunityDetail = () => {
             <ToastViewer className="content1" content={detail.content} />
           </SContents>
           <SLikeNtags>
-            <div className="tagList">
-              {detail.postTag?.map((tags, i) => (
+            <TagList>
+              {detail.tags?.map((tags, i) => (
                 <STag key={i}>
                   <div>{tags}</div>
                 </STag>
               ))}
-            </div>
+            </TagList>
             <BlogLike love={detail.isLike} isbookmark={detail.isBookmark} />
           </SLikeNtags>
         </SContentWrapper>
@@ -115,7 +115,7 @@ const BlogCommunityDetail = () => {
     </SContainer>
   );
 };
-
+// navigate(`/${type}/detail/${data.id}`)
 export default BlogCommunityDetail;
 
 const SContainer = styled.div`
@@ -183,12 +183,8 @@ const SLikeNtags = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  & .tagList {
-    display: flex;
-    padding-top: 40px;
-  }
 `;
-
+const TagList = styled.div``;
 const SProfile = styled.div`
   width: 44px;
   height: 44px;

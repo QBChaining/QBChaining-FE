@@ -11,34 +11,11 @@ import blogbookmark from "../../assets/images/blogbookmark.png";
 import blogbookmarkadd from "../../assets/images/bookmarkadd.png";
 import { useParams } from "react-router-dom";
 const BlogBookMark = ({ isbookmark, posts, isdetailbookmark }) => {
-  const dispatch = useDispatch();
-  const { isLogin } = useSelector(state => state.userSlice);
   const [bookMark, setBookMark] = useState(isbookmark);
-  // const onAddBookMark = () => {
-  //   if (!isLogin) {
-  //     needLoginAlert();
-  //     return;
-  //   }
-  //   dispatch(postBlogBookMarkDB(posts.id));
-  //   setBookMark(!bookMark);
-  // };
-  // const onDeleteBookMark = () => {
-  //   dispatch(deleteBlogBookMarkDB(posts.id));
-  //   setBookMark(!bookMark);
-  // };
+
   return (
     <>
-      {/* {isdetailbookmark ? (
-        <div>
-          {bookMark === true ? (
-            <SBookMarkBtn onClick={onDeleteBookMark} />
-          ) : (
-            <SbookMarkBtnAdd onClick={onAddBookMark} />
-          )}
-        </div>
-      ) : ( */}
       <div>{bookMark === true ? <SBookMarkBtn /> : <SbookMarkBtnAdd />}</div>
-      {/* )} */}
     </>
   );
 };
@@ -58,19 +35,4 @@ const SbookMarkBtnAdd = styled.div`
   background-image: url(${blogbookmark});
 `;
 
-// const SBookMarkBtn1 = styled.div`
-//   width: 30px;
-//   height: 30px;
-//   background-position: center;
-//   background-size: contain;
-//   background-image: url(${blogbookmarkadd});
-// `;
-
-// const SbookMarkBtnAdd1 = styled.div`
-//   width: 30px;
-//   height: 30px;
-//   background-position: center;
-//   background-size: contain;
-//   background-image: url(${blogbookmark});
-// `;
 export default BlogBookMark;
