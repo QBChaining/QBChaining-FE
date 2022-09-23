@@ -21,6 +21,7 @@ import BlogPreView from "../../components/blog/BlogPreView";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   console.log(blogMainLists);
+  console.log(typeof null);
   // const userProfile = useSelector(state => state.userSlice.userProfile);
   // const targetData = useSelector(state => state.blogSlice.blogDetail);
   const dispatch = useDispatch();

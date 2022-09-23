@@ -30,7 +30,7 @@ const BlogMainList = ({ posts }) => {
             </SPTitleBox>
             <STagNMark>
               <STagList>
-                {posts.tags?.map((tags, i) => {
+                {posts.tags.map((tags, i) => {
                   return <STag key={i}>{tags}</STag>;
                 })}
               </STagList>
