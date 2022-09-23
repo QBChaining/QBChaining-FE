@@ -20,6 +20,7 @@ import BlogPreView from "../../components/blog/BlogPreView";
 // import BlogHover from "../../components/blog/BlogHover";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
+  console.log(blogMainLists);
   // const userProfile = useSelector(state => state.userSlice.userProfile);
   // const targetData = useSelector(state => state.blogSlice.blogDetail);
   const dispatch = useDispatch();
