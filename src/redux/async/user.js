@@ -13,10 +13,12 @@ export const postUserInfoDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.postUserInfo(data);
+      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
     } catch (err) {
+      console.log(err);
       networkError();
       Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
@@ -46,10 +48,10 @@ export const getUserInfoDB = createAsyncThunk(
   "auth/getuserinfo",
   async (data, thunkAPI) => {
     try {
-      const response = await userApi.getUserInfo();
-      console.log(response);
-      if (response.data.success === true) {
-        return response.data.data;
+      const response = await userApi.getUserInfo(data);
+      console.log(response.data);
+      if (response.data.success === "ok") {
+        return response.data.userPageInfo;
       }
     } catch (err) {
       networkError();
@@ -65,7 +67,6 @@ export const getUserInfoActivityDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.getUserInfoActivity();
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }

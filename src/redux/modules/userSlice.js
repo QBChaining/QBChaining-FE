@@ -18,6 +18,8 @@ export const userSlice = createSlice({
     userProfile: null,
     userIsNew: null,
     color: "backgroundGradient",
+    userInfo: null,
+    isFetching: false,
   },
   reducers: {
     logOut: (state, action) => {
@@ -74,6 +76,7 @@ export const userSlice = createSlice({
 
     //회원정보 받아오기
     [getUserInfoDB.fulfilled]: (state, { payload }) => {
+      state.userInfo = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },

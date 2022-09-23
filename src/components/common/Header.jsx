@@ -11,6 +11,7 @@ import { removeUserInfo } from "../../redux/modules/qnaSlice";
 import SearchInput from "./../search/SearchInput";
 import MainLogo from "../../assets/images/MainLogo.png";
 import Notification from "./Notification";
+import { errorAlert } from "../../utils/swal";
 // import Notification from "./Notification";
 
 const Header = () => {
@@ -42,7 +43,9 @@ const Header = () => {
         <SNavInner>
           <SNavItem
             onClick={() => {
-              navigate(`/mypage/${userName}`);
+              isLogin
+                ? navigate(`/mypage/${userName}`)
+                : errorAlert("로그인이 필요한 기능입니다!");
             }}
           >
             마이페이지
@@ -73,8 +76,8 @@ const Header = () => {
       <SearchInput />
       <SAlarmLoginWrapper>
         <SAlarmConatainer className="alarmConatainer active">
-          {/* <HiOutlineBell />
-          <Notification /> */}
+          {/* <HiOutlineBell /> */}
+          {/* <Notification /> */}
         </SAlarmConatainer>
         <SLoginConatainer className="loginConatainer">
           {isLogin ? (

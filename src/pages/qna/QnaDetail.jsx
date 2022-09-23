@@ -11,6 +11,7 @@ import ModalBookmark from "./../../components/common/ModalBookmark";
 import QnaWriteArrow from "../../assets/images/QnaWriteArrow.png";
 import EditorComponent from "../../components/common/EditorComponent";
 import { Helmet } from "react-helmet-async";
+import { removeQnaList } from "../../redux/modules/qnaSlice";
 
 const QnaDetail = () => {
   const { id } = useParams();
@@ -22,6 +23,12 @@ const QnaDetail = () => {
     dispatch(getOneQnaListDB(id));
     dispatch(colorSetGreen());
   }, [dispatch, id]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeQnaList());
+    };
+  }, []);
 
   return (
     <SQnaDetail>
