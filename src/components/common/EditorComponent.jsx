@@ -126,7 +126,7 @@ const EditorComponent = ({
           content,
           id: editData.id,
           category: category,
-          tag: tags,
+          tags,
         }),
       ).then(res => {
         navigate("/qna");
@@ -138,7 +138,7 @@ const EditorComponent = ({
           title,
           content,
           category: category,
-          tag: tags,
+          tags,
         }),
       ).then(res => {
         navigate(`/qna/detail/${res.payload.data.id}`);

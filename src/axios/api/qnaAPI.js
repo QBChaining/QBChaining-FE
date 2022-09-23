@@ -6,7 +6,6 @@ export const qnaApi = {
     instance.get(
       `/qna?page_count=10&page=${data.pageNumber}&resolve=${data.isResolve}`,
     ),
-
   //게시글 카테고리 조회
   getCategoryList: data =>
     instance.get(
