@@ -47,7 +47,6 @@ const EditorComponent = ({
   blogEditData,
   editData,
 }) => {
-  console.log(blogEditData);
   const isComment = useSelector(state => state.qnaSlice.isCommentWrite);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,7 +63,6 @@ const EditorComponent = ({
   const { isLogin, userName, userProfile } = useSelector(
     state => state.userSlice,
   );
-  console.log(blogEditData.title);
   const editorRef = useRef();
 
   const QnatoolbarItems = [
@@ -185,6 +183,7 @@ const EditorComponent = ({
   //titlechangehandler
   const onTitleChangeHandler = e => {
     if (isBlogEdit) {
+      e.preventDefault();
       setBlogTitle(e.target.value);
     } else {
       setTitle(e.target.value);
@@ -198,14 +197,13 @@ const EditorComponent = ({
       // quillRef.current.firstChild.innerHTML = editData.content;
     }
   }, [isEdit, editData, isComment]);
-
   useEffect(() => {
     if (isBlogEdit) {
+      setBlogTitle(blogEditData.title);
       editorRef.current.getInstance().setMarkdown(blogEditData.content, true);
     }
   }, [isBlogEdit]);
 
-  useEffect(isBlogEdit => {}, []);
   const onCategoryChangeHandler = e => {
     setCategory(e.target.value);
   };
@@ -244,14 +242,13 @@ const EditorComponent = ({
           <STitleWrapper>
             <input
               id="title"
-              initialValue="sdfsdf"
-              value={blogTitle}
+              value={isBlogEdit ? blogTitle || "" : title || ""}
               onChange={onTitleChangeHandler}
               type="text"
               ref={titleText}
               maxLength="40"
               placeholder="제목을 입력해주세요."
-              // initialText={BlogTitle}
+              // initialText={blogTitle}
             />
             {(isEdit || isWrite) && (
               <Select

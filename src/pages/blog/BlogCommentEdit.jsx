@@ -23,7 +23,6 @@ const BlogCommunityEdit = () => {
           blogEditData={blogEditData}
           blogEditId={id}
           isBlogEdit={true}
-          initialValue="dfsdfsdf"
         ></EditorComponent>
       </STitledSet>
       <ModalBookmark isWrite={true} />
