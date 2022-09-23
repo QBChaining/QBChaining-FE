@@ -27,7 +27,7 @@ const CommentList = () => {
     </SCommentWrapper>
   );
 };
-
+//ghgh
 const SCommentList = styled.div`
   padding: 20px 0;
 `;
