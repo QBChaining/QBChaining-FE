@@ -39,7 +39,6 @@ const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
 
   return (
     <>
-      {/* {isdetailbookmark ? ( */}
       <div>
         {bookMark === true ? (
           <SBookMarkBtn onClick={onDeleteBookMark} />
@@ -47,11 +46,6 @@ const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
           <SbookMarkBtnAdd onClick={onAddBookMark} />
         )}
       </div>
-      {/* ) : (
-        <div>
-          {bookMark === true ? <SBookMarkBtn1 /> : <SbookMarkBtnAdd1 />}
-        </div>
-      )} */}
     </>
   );
 };
@@ -72,19 +66,5 @@ const SbookMarkBtnAdd = styled.div`
   background-image: url(${blogbookmark});
   cursor: pointer;
 `;
-// const SBookMarkBtn1 = styled.div`
-//   width: 30px;
-//   height: 30px;
-//   background-position: center;
-//   background-size: contain;
-//   background-image: url(${blogbookmarkadd});
-//   cursor: pointer;
-// `;
-// const SbookMarkBtnAdd1 = styled.div`
-//   width: 30px;
-//   height: 30px;
-//   background-position: center;
-//   background-size: contain;
-//   background-image: url(${blogbookmark});
-// `;
+
 export default BlogBookMark;

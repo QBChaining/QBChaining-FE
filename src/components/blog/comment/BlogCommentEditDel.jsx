@@ -10,7 +10,8 @@ import { logIn } from "../../../redux/modules/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { errorAlert } from "../../../utils/swal";
 const CommentEditDel = ({ comments }) => {
-  const { id } = useParams();
+  console.log(comments);
+
   const navigate = useNavigate();
   const userNick = useSelector(state => state.userSlice.userName);
   const [show, setShow] = useState(false);
@@ -20,7 +21,7 @@ const CommentEditDel = ({ comments }) => {
   const dispatch = useDispatch();
 
   //댓글 수정 완료 버튼
-  const onClickEditHandler = ({ comments }) => {
+  const onClickEditHandler = () => {
     if (editRef.current.value.length < 1) {
       errorAlert("빈칸입니다!");
       return;
@@ -39,9 +40,9 @@ const CommentEditDel = ({ comments }) => {
     e.preventDefault();
     dispatch(deleteBlogCommentDB(comments.id));
   };
-  useEffect(() => {
-    dispatch(getBlogCommentListDB(id));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getBlogCommentListDB());
+  // }, [dispatch]);
 
   const goMypage = name => {
     navigate(`/mypage/${name}`);
@@ -53,7 +54,7 @@ const CommentEditDel = ({ comments }) => {
         <SProfileWrapper>
           <SProfile
             onClick={() => {
-              goMypage(comments.userName);
+              goMypage(comments.User?.userName);
             }}
             url={comments.profileImg}
           />

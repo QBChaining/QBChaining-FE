@@ -13,6 +13,7 @@ export const getBlogCommunityListDB = createAsyncThunk(
   async thunkAPI => {
     try {
       const response = await blogApi.getBlogCommunityList();
+      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -46,10 +47,12 @@ export const getBlogDetailDB = createAsyncThunk(
 export const postBlogCommunityDB = createAsyncThunk(
   "BLOG_COMMUNITY",
   async (data, thunkAPI) => {
+    console.log(data);
     try {
       const response = await blogApi.postBlogCommunity(data);
+      console.log(response);
       if (response.data.success === true) {
-        return response;
+        return response.data.data;
       }
     } catch (err) {
       networkError();
@@ -252,6 +255,7 @@ export const deleteBlogBookMarkDB = createAsyncThunk(
 export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
   try {
     const response = await blogApi.getHotBlog();
+    console.log(response);
     return response.data.data;
   } catch (err) {
     Sentry.captureException(`error, 좋아요 에러. ${err}`);
