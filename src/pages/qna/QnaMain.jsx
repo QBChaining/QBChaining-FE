@@ -32,14 +32,16 @@ const QnaMain = () => {
   const [target, inView] = useInView();
 
   const onGetResolve = () => {
+    setPageNumber(0);
+    setHasNextPage(true);
     setResolveTap(1);
   };
 
   const onGetNoResolve = () => {
+    setPageNumber(0);
+    setHasNextPage(true);
     setResolveTap(0);
   };
-
-  console.log(qnaList);
 
   useEffect(() => {
     //다음페이지가 있다면
@@ -47,13 +49,16 @@ const QnaMain = () => {
       pageNumber,
       isResolve: resolveTap,
     };
+
     if (hasNextPage) {
       if (category.length === 0) {
         dispatch(getQnaMainListDB(data)).then(res => {
           setHasNextPage(res.payload.length === 10);
         });
       } else if (category.length > 0) {
-        dispatch(getQnaCategoryListDB({ category, pageNumber })).then(res => {
+        dispatch(
+          getQnaCategoryListDB({ category, pageNumber, isResolve: resolveTap }),
+        ).then(res => {
           setHasNextPage(res.payload.length === 10);
         });
       }
