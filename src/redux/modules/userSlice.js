@@ -17,9 +17,9 @@ export const userSlice = createSlice({
     userName: null,
     userProfile: null,
     userIsNew: null,
-    color: "backgroundGradient",
     userInfo: null,
     isFetching: false,
+    color: "backgroundGradient",
   },
   reducers: {
     logOut: (state, action) => {
