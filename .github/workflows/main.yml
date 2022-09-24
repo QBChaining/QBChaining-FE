@@ -15,6 +15,27 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@main
+      # 노드설치
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.17.0"
+          registry-url: "https://registry.npmjs.org"
+          # Cache
+      - name: Cache node modules
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         # BakcEnd API
       - name: Generate Environment Varibles Fils for Production
         run: |
@@ -64,18 +85,6 @@ jobs:
           echo "REACT_APP_SENTRYDSN=$REACT_APP_SENTRYDSN" >> .env.production
         env:
           REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_SENTRYDSN }}
-
-      # 캐싱모듈
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install Dependencies
-        run: yarn
 
       - name: Build
         run: yarn build

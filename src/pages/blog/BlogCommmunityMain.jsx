@@ -21,6 +21,7 @@ import BlogPreView from "../../components/blog/BlogPreView";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   console.log(blogMainLists);
+  console.log(typeof null);
   // const userProfile = useSelector(state => state.userSlice.userProfile);
   // const targetData = useSelector(state => state.blogSlice.blogDetail);
   const dispatch = useDispatch();
@@ -118,7 +119,7 @@ const STopBox = styled.div`
 
 const STopBoxWrapper = styled.div`
   display: flex;
-  max-width: 1540px;
+  max-width: 1540rem;
   margin: 0 auto;
   padding: 0 20px;
 `;
@@ -158,7 +159,7 @@ const SHelpSubText = styled.div`
 `;
 
 const SBody = styled.div`
-  width: 1560px;
+  max-width: 1540rem;
   padding: 0 20px;
   margin: 0 auto;
 `;
@@ -188,6 +189,8 @@ const SContentFilter = styled.div`
 `;
 
 const SContentWrapper = styled.div`
+  min-width: 700px;
+  width: 100%;
   display: flex;
 `;
 
@@ -218,6 +221,7 @@ const SPreviewContent = styled.div`
 `;
 
 const SRightContainer = styled.div`
+  max-width: 700px;
   width: 50%;
   display: flex;
   flex-wrap: wrap;

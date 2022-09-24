@@ -22,6 +22,7 @@ const QnaTarget = ({ isDatail }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const target = useSelector(state => state.qnaSlice.qnaTarget);
+  console.log(target);
   const bookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
   const { isLogin, userName } = useSelector(state => state.userSlice);
   //내 즐겨찾기 목록에 있는지 확인

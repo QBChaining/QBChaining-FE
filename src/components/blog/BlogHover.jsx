@@ -30,10 +30,7 @@ const BlogHover = ({ posts }) => {
 };
 const SHover = styled.div`
   width: 100%;
-  /* min-width: 650px; */
-  /* height: 300px; */
 
-  /* background-color: orange; */
   position: absolute;
   /* top: 100px; */
   /* height: 100px; */
@@ -46,7 +43,8 @@ const SHover = styled.div`
 `;
 const SLeftHover = styled.div`
   width: 100%;
-  min-width: 350px;
+  min-width: 320px;
+  /* min-width: 350px; */
   height: 100%;
   position: relative;
   /* border-radius: 30px; */
@@ -59,12 +57,12 @@ const SLeftHover = styled.div`
     content: "";
     display: block;
     position: absolute;
-    width: 70px;
+    width: 90px;
     height: 70px;
     background-image: url(${arrowleft});
     background-size: cover;
     color: black;
-    top: 30%;
+    top: 10%;
     left: 40%;
   }
 `;
@@ -72,7 +70,8 @@ const SLeftHover = styled.div`
 const SRightHover = styled.div`
   width: 100%;
   height: 100%;
-  min-width: 350px;
+  min-width: 320px;
+  /* min-width: 350px; */
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
 

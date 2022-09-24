@@ -31,6 +31,9 @@ const SContainer = styled.div`
   flex: 1;
   min-width: 700px;
   margin-top: 15px;
+  .div {
+    height: 300px;
+  }
 `;
 const STitleNproFile = styled.div`
   display: flex;
