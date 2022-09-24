@@ -7,7 +7,11 @@ import styled from "styled-components";
 import Select from "../../components/common/Select";
 import WhiteArrow from "../../assets/images/WhiteArrow.png";
 import { errorAlert } from "../../utils/swal";
-import { postUserInfoDB, putUserInNewDB } from "./../../redux/async/user";
+import {
+  postUserInfoDB,
+  putUserInfoDB,
+  putUserInNewDB,
+} from "./../../redux/async/user";
 import { successAlert } from "./../../utils/swal";
 import { useNavigate } from "react-router-dom";
 import { userSlice } from "./../../redux/modules/userSlice";
@@ -105,11 +109,13 @@ const Register = () => {
       career,
       job,
     };
-    dispatch(postUserInfoDB(data));
     if (userIsNew) {
       dispatch(putUserInNewDB());
+      dispatch(postUserInfoDB(data));
+    } else if (!userIsNew) {
+      dispatch(putUserInfoDB(data));
     }
-    navigate(`/mypage/${userName}`);
+    navigate(`/`);
   };
 
   return (

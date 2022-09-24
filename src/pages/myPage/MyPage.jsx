@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { getUserInfoActivityDB } from "../../redux/async/user";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserInfoDB } from "./../../redux/async/user";
+import MyPageActivity from "../../components/myPage/MyPageActivity";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -15,30 +16,9 @@ const MyPage = () => {
     state => state.userSlice,
   );
   useEffect(() => {
-    // dispatch(getUserInfoActivityDB());
-
+    dispatch(getUserInfoActivityDB(userName));
     dispatch(getUserInfoDB(userName));
   }, [userName]);
-
-  console.log(userInfo);
-
-  const week1 = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ];
-
-  const week2 = [
-    [11, 12, 13],
-    [14, 15, 16],
-    [17, 18, 19],
-  ];
-
-  const week3 = [
-    [21, 22, 23],
-    [24, 25, 26],
-    [27, 28, 29],
-  ];
 
   return (
     <SMyPage>
@@ -118,35 +98,7 @@ const MyPage = () => {
         </SList>
       </SListWrapper>
       <SCube>
-        <SCubeWrapper>
-          {week1.map((data, i) => (
-            <div key={i}>
-              {data.map((data2, i) => (
-                <div key={i}></div>
-              ))}
-            </div>
-          ))}
-        </SCubeWrapper>
-        <SCubeWrapper>
-          {week2.map((data, i) => (
-            <div key={i}>
-              {" "}
-              {data.map((data2, i) => (
-                <div key={i}></div>
-              ))}
-            </div>
-          ))}
-        </SCubeWrapper>
-        <SCubeWrapper>
-          {week3.map((data, i) => (
-            <div key={i}>
-              {" "}
-              {data.map((data2, i) => (
-                <div key={i}></div>
-              ))}
-            </div>
-          ))}
-        </SCubeWrapper>
+        <MyPageActivity />
       </SCube>
     </SMyPage>
   );
@@ -256,48 +208,7 @@ const SListDate = styled.div`
 
 const SCube = styled.div`
   position: absolute;
-  top: 0;
+  top: 70px;
   right: 200px;
   display: flex;
-`;
-const SCubeWrapper = styled.div`
-  display: flex;
-  position: relative;
-  transition: 2s;
-
-  & > div > div {
-    width: 30px;
-    height: 30px;
-    background-color: ${props => props.theme.color.grey5};
-    border: 2px solid white;
-  }
-
-  &:first-child {
-    transform: rotate(0deg) skew(0deg, 30deg);
-  }
-
-  &:nth-child(2) {
-    transform: rotateX(180deg) skew(0deg, 30deg);
-  }
-
-  &:nth-child(3) {
-    position: absolute;
-    top: -77px;
-    left: 45px;
-    transform: rotate(120deg) skew(0deg, 30deg);
-  }
-
-  &:first-child > div > div {
-    /* background-color: red; */
-  }
-
-  &:nth-child(2) > div > div {
-    /* background-color: blue; */
-  }
-
-  &:nth-child(3) > div > div {
-    /* background-color: black; */
-    width: 30.1px;
-    height: 34.5px;
-  }
 `;
