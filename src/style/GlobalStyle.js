@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
     font-family: 'Noto Sans KR', sans-serif;
   }
 
@@ -35,6 +36,11 @@ const GlobalStyle = createGlobalStyle`
     &:focus {
       outline: none;
     }
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: ${props => props.theme.color.mainIvory};
   }
 `;
 
