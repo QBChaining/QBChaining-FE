@@ -16,11 +16,11 @@ export const userSlice = createSlice({
     userToken: null,
     userName: null,
     userProfile: null,
-    userIsNew: null,
-    color: "backgroundGradient",
     userInfo: null,
+    userIsNew: null,
     isFetching: false,
     userActivity: [],
+    color: "backgroundGradient",
   },
   reducers: {
     logOut: (state, action) => {
