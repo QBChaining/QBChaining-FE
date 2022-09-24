@@ -26,6 +26,23 @@ export const postUserInfoDB = createAsyncThunk(
   },
 );
 
+//유저정보 수정
+export const putUserInfoDB = createAsyncThunk(
+  "auth/putuserinfo",
+  async (data, thunkAPI) => {
+    try {
+      const response = await userApi.putUserInfo(data);
+      if (response.data.success === true) {
+        return response.data.data;
+      }
+    } catch (err) {
+      networkError();
+      Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+
 //isnew 바꾸기
 export const putUserInNewDB = createAsyncThunk(
   "auth/putuserisnew",
@@ -49,7 +66,6 @@ export const getUserInfoDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.getUserInfo(data);
-      console.log(response.data);
       if (response.data.success === "ok") {
         return response.data.userPageInfo;
       }
@@ -66,9 +82,9 @@ export const getUserInfoActivityDB = createAsyncThunk(
   "auth/getuserinfoactivity",
   async (data, thunkAPI) => {
     try {
-      const response = await userApi.getUserInfoActivity();
-      if (response.data.success === true) {
-        return response.data.data;
+      const response = await userApi.getUserInfoActivity(data);
+      if (response.statusText === "OK") {
+        return response.data.userActivity;
       }
     } catch (err) {
       networkError();

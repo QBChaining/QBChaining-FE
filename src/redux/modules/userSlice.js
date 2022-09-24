@@ -20,6 +20,7 @@ export const userSlice = createSlice({
     color: "backgroundGradient",
     userInfo: null,
     isFetching: false,
+    userActivity: [],
   },
   reducers: {
     logOut: (state, action) => {
@@ -90,6 +91,7 @@ export const userSlice = createSlice({
 
     //회원활동내역 받아오기
     [getUserInfoActivityDB.fulfilled]: (state, { payload }) => {
+      state.userActivity = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },

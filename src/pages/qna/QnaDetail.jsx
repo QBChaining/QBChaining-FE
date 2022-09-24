@@ -74,8 +74,9 @@ const SRightContainer = styled.div`
   top: 0;
   right: 0;
   height: 100vh;
-  padding: 100px 200px 0 50px;
+  padding: 100px 200px 50px 50px;
   width: 50%;
+  overflow: auto;
   background-color: ${props => props.theme.color.mainGreen};
   color: white;
   &::before {

@@ -264,7 +264,7 @@ const EditorComponent = ({
           <Editor
             placeholder="마크다운으로 내용을 입력하세요!"
             previewStyle={isCommentWrite ? "tab" : "vertical"}
-            height={isCommentWrite ? "600px" : "500px"}
+            height={isCommentWrite ? "60vh" : "50vh"}
             initialEditType="markdown"
             toolbarItems={
               isBlogEdit || isBlogWrite ? BlogtoolbarItems : QnatoolbarItems
