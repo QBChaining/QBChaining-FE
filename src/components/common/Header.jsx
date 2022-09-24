@@ -31,6 +31,7 @@ const Header = () => {
 
   return (
     <SHeader location={location}>
+      태식샵으로 연결했습니다
       <SLogoContainer
         onClick={() => {
           navigate("/");
