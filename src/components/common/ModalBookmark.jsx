@@ -83,7 +83,7 @@ const SModalBookmarkIcon = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: ${props => props.theme.color[props.color]};
+  background: ${props => props.theme.color.mainNavy};
   cursor: pointer;
   &::before {
     content: "";
@@ -109,7 +109,7 @@ const SListWrapper = styled.div`
   height: calc(100vh - 190px);
   bottom: 50px;
   right: 50px;
-  background: ${props => props.theme.color[props.color]};
+  background: ${props => props.theme.color.mainNavy};
   border-radius: 25px;
   padding: 0 30px;
   box-shadow: -8px 14px 50px rgba(0, 0, 0, 0.15);

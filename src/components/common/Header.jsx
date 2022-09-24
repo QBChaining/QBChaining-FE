@@ -53,6 +53,9 @@ const Header = () => {
             <a href={process.env.REACT_APP_ENDPOINT + "/auth/github"}>로그인</a>
           )}
           <SUserProfile
+            onClick={() => {
+              navigate(`/mypage/${userName}`);
+            }}
             className="loginProfile"
             userProfile={userProfile}
           ></SUserProfile>
@@ -156,4 +159,5 @@ const SUserProfile = styled.div`
   border-radius: 50%;
   background-image: url(${props => props.userProfile});
   background-size: cover;
+  cursor: pointer;
 `;

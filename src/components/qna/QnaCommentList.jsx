@@ -144,18 +144,17 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
                   <SUserInfoText>
                     <SUserNameWrapper>
                       <SUserName>{data.userName}</SUserName>
-                      {!target.isResolve &&
-                        !isPreview &&
-                        target.userName === userName &&
-                        target.userName !== data.userName && (
-                          <SChoiceButton
-                            onClick={e => {
-                              onChoiceHandler(e, data.id);
-                            }}
-                          >
-                            채택
-                          </SChoiceButton>
-                        )}
+                      {!target.isResolve && !isPreview && (
+                        // target.userName === userName &&
+                        // target.userName !== data.userName &&
+                        <SChoiceButton
+                          onClick={e => {
+                            onChoiceHandler(e, data.id);
+                          }}
+                        >
+                          채택
+                        </SChoiceButton>
+                      )}
                     </SUserNameWrapper>
                     <SCreateAt>
                       {data.createdAt?.slice(0, 10)} /{" "}
@@ -211,7 +210,7 @@ const SUserInfo = styled.div`
 `;
 
 const SWinnerUserInfo = styled(SUserInfoWrapper)`
-  background-color: ${props => props.theme.color.mainGreen};
+  background-color: ${props => props.theme.color.mainOrange};
   border-radius: 30px;
   padding: 1px 30px 1px 2px;
   position: relative;
@@ -286,24 +285,25 @@ const SChoiceButton = styled.button`
   padding: 2px 16px;
   font-size: 12px;
   font-weight: 600;
-  color: ${props => props.theme.color.mainGreen};
-  background-color: ${props => props.theme.color.white};
-  border: 1px solid ${props => props.theme.color.mainGreen};
+  color: ${props => props.theme.color.mainOrange};
+  background-color: transparent;
+  border: 1px solid ${props => props.theme.color.mainOrange};
   border-radius: 30px;
+  transition: 0.3s;
 
   &:hover {
     color: ${props => props.theme.color.white};
-    background-color: ${props => props.theme.color.mainGreen};
+    background-color: ${props => props.theme.color.mainOrange};
   }
 `;
 
 const SWinnerButton = styled(SChoiceButton)`
-  color: ${props => props.theme.color.mainGreen};
+  color: ${props => props.theme.color.mainOrange};
   background-color: ${props => props.theme.color.white};
   border: none;
   line-height: 15px;
   &:hover {
-    color: ${props => props.theme.color.mainGreen};
+    color: ${props => props.theme.color.mainOrange};
     background-color: ${props => props.theme.color.white};
   }
 `;
