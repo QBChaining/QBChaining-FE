@@ -48,6 +48,7 @@ const MyPageActivity = () => {
   }, []);
 
   useEffect(() => {
+    console.log(userActivity);
     // userActivity.map(data => {
     //   data.map(data2 => {
     //     setWeek1(prev =>

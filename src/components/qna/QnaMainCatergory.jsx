@@ -40,7 +40,7 @@ const QnaMainCatergory = ({
               onSelectCategoryHandler(list.name);
             }}
           >
-            {list.name}
+            <div>{list.name}</div>
           </SQnaCategoryList>
         </div>
       ))}
@@ -51,10 +51,10 @@ const QnaMainCatergory = ({
 export default QnaMainCatergory;
 
 const SQnaMainCatergory = styled.div`
+  margin-top: 278px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  max-width: 1560px;
-  width: 100%;
 
   & div {
     display: flex;
@@ -66,19 +66,48 @@ const SQnaMainCatergory = styled.div`
 
   & input:checked + label {
     color: ${props => props.theme.color.mainGreen};
-    background-color: ${props => props.theme.color.white};
+    border-bottom: 1px solid ${props => props.theme.color.mainOrange};
+    & div {
+      color: ${props => props.theme.color.mainOrange};
+
+      &::before {
+        background-color: ${props => props.theme.color.mainOrange};
+      }
+    }
   }
 `;
 
 const SQnaCategoryList = styled.label`
-  padding: 10px 30px;
-  font-size: 20px;
-  border-radius: 30px;
-  margin: 0 5px;
+  padding: 12px 20px 12px 60px;
+  border-bottom: 1px solid ${props => props.theme.color.mainNavy};
+  font-size: 18px;
+  font-weight: 500;
+  transition: 0.3s;
+
+  & div {
+    transition: 0.3s;
+    position: relative;
+    &::before {
+      transition: 0.3s;
+      content: "";
+      position: absolute;
+      bottom: -17px;
+      left: -20px;
+      width: calc(100% + 40px);
+      height: 5px;
+      background-color: ${props => props.theme.color.mainNavy};
+    }
+  }
   cursor: pointer;
-  color: ${props => props.theme.color.white};
+  /* color: ${props => props.theme.color.white}; */
   &:hover {
-    color: ${props => props.theme.color.mainGreen};
-    background-color: ${props => props.theme.color.white};
+    border-bottom: 1px solid ${props => props.theme.color.mainOrange};
+    & div {
+      color: ${props => props.theme.color.mainOrange};
+
+      &::before {
+        background-color: ${props => props.theme.color.mainOrange};
+      }
+    }
   }
 `;

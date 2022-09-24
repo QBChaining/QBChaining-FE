@@ -39,40 +39,7 @@ const Header = () => {
         <SLogoImage />
         <STitle>CHAINING</STitle>
       </SLogoContainer>
-      <SNav>
-        <SNavInner>
-          <SNavItem
-            onClick={() => {
-              isLogin
-                ? navigate(`/mypage/${userName}`)
-                : errorAlert("로그인이 필요한 기능입니다!");
-            }}
-          >
-            마이페이지
-          </SNavItem>
-          <SNavItem
-            onClick={() => {
-              navigate("/ranking");
-            }}
-          >
-            랭킹
-          </SNavItem>
-          <SNavItem
-            onClick={() => {
-              navigate("/qna");
-            }}
-          >
-            QNA
-          </SNavItem>
-          <SNavItem
-            onClick={() => {
-              navigate("/blog");
-            }}
-          >
-            블로그
-          </SNavItem>
-        </SNavInner>
-      </SNav>
+
       <SearchInput />
       <SAlarmLoginWrapper>
         <SAlarmConatainer className="alarmConatainer active">
@@ -104,12 +71,7 @@ const SHeader = styled.header`
   justify-content: space-between;
   padding: 0 40px;
   height: 100px;
-  background: ${props =>
-    props.location.includes("/qna")
-      ? props.theme.color.mainGreen
-      : props.location.includes("/blog")
-      ? props.theme.color.mainBlue
-      : props.theme.color.backgroundGradient};
+  background: ${props => props.theme.color.mainNavy};
   color: white;
   position: relative;
   z-index: 1;
@@ -134,37 +96,6 @@ const SLogoImage = styled.div`
 const STitle = styled.h1`
   font-size: 16px;
   font-weight: 500;
-`;
-
-const SNav = styled.nav``;
-
-const SNavInner = styled.ul`
-  display: flex;
-  justify-content: center;
-  flex-wrap: no-wrap;
-  align-items: center;
-`;
-
-const SNavItem = styled.li`
-  cursor: pointer;
-  padding: 20px 40px;
-  position: relative;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  &::before {
-    content: "";
-    width: 1px;
-    height: 24px;
-    position: absolute;
-    top: 20px;
-    right: 0;
-    display: block;
-    background-color: white;
-  }
-
-  &:last-child::before {
-    display: none;
-  }
 `;
 
 const SAlarmLoginWrapper = styled.div`

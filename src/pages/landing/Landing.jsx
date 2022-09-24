@@ -43,16 +43,6 @@ const SLanding = styled.div`
   height: calc(100vh - 100px);
   background: linear-gradient(270.85deg, #2676ed -0.91%, #2ad798 97.98%);
   display: flex;
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: calc(100% - 88px);
-    height: 1px;
-    transform: translateX(-50%);
-    background-color: ${props => props.theme.color.white};
-  }
 
   & .logo {
     position: absolute;

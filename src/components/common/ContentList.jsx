@@ -71,7 +71,7 @@ const ContentList = ({ data, type, isSearch }) => {
         onClick={() => {
           isSearch
             ? navigate(`/${type}/detail/${data.id}`)
-            : dispatch(getOneQnaListDB(data.id));
+            : navigate(`/${type}/detail/${data.id}`);
         }}
         type={type}
         resolve={data.isResolve}
@@ -166,9 +166,13 @@ const SWrapper = styled.div`
       ? "4px 6px 15px rgba(0, 0, 0, 0.1);"
       : "-4px 6px 15px rgba(0, 0, 0, 0.1)"};
   border-radius: 30px;
+
   margin: 30px 0
     ${props => (props.isSearch && props.type === "qna" ? "65px" : "30px")} 0;
-  min-height: 190px;
+  &:first-child {
+    margin-top: 20px;
+  }
+  min-height: 200px;
   cursor: pointer;
 `;
 
@@ -176,6 +180,8 @@ const SUserInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 15px;
+  border-bottom: 2px solid ${props => props.theme.color.mainNavy};
 `;
 
 const SProfileContainer = styled.div`
@@ -214,7 +220,7 @@ const SCategoryContainer = styled.div`
 `;
 
 const STitleWrapper = styled.div`
-  margin: 25px 0;
+  margin: 10px 0 25px 0;
   cursor: pointer;
 `;
 
