@@ -10,8 +10,8 @@ import { logIn, logOut } from "../../redux/modules/userSlice";
 import { removeUserInfo } from "../../redux/modules/qnaSlice";
 import SearchInput from "./../search/SearchInput";
 import MainLogo from "../../assets/images/MainLogo.png";
-import Notification from "./Notification";
 // import Notification from "./Notification";
+import NotifiTest from "./NotifiTest";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -73,8 +73,9 @@ const Header = () => {
       <SearchInput />
       <SAlarmLoginWrapper>
         <SAlarmConatainer className="alarmConatainer active">
-          {/* <HiOutlineBell />
-          <Notification /> */}
+          {/* <HiOutlineBell /> */}
+          <NotifiTest />
+          {/* <Notification /> */}
         </SAlarmConatainer>
         <SLoginConatainer className="loginConatainer">
           {isLogin ? (

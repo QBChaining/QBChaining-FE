@@ -44,14 +44,14 @@ const SHover = styled.div`
 const SLeftHover = styled.div`
   width: 100%;
   min-width: 320px;
-  /* min-width: 350px; */
   height: 100%;
-  position: relative;
-  /* border-radius: 30px; */
+  /* position: relative; */
+  position: absolute;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
   &:hover {
-    background-color: rgba(20, 20, 20, 0.5);
+    background-color: rgb(38, 118, 237);
+    /* background-color: #03045e; */
   }
   &:hover::after {
     content: "";

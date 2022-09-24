@@ -184,7 +184,10 @@ const SLikeNtags = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-const TagList = styled.div``;
+const TagList = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 const SProfile = styled.div`
   width: 44px;
   height: 44px;
