@@ -31,9 +31,9 @@ const BlogMainList = ({ posts }) => {
             </SPTitleBox>
             <STagNMark>
               <STagList>
-                {posts.tags.map((tags, i) => {
-                  return <STag key={i}>{tags}</STag>;
-                })}
+                {posts.tags?.map((tags, i) => (
+                  <STag key={i}>{tags}</STag>
+                ))}
               </STagList>
               <SLike>
                 {posts.like}

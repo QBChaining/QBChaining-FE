@@ -26,12 +26,9 @@ const Router = () => {
       <Route path="/" element={<Landing />} />
       <Route path="/*" element={<Undefind />} />
       <Route path="/search" element={<Search />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/register" element={isLogin ? <Register /> : <NoLogin />} />
       <Route path="/ranking" element={<Preparing />} />
-      <Route
-        path="/mypage/:userName"
-        element={isLogin ? <MyPage /> : <NoLogin />}
-      />
+      <Route path="/mypage/:userName" element={<MyPage />} />
       <Route path="/qna" element={<QnaMain />} />
       <Route path="/qna/write" element={isLogin ? <QnaWrite /> : <NoLogin />} />
       <Route path="/qna/detail/:id" element={<QnaDetail />} />

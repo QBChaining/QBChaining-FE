@@ -20,6 +20,11 @@ import { Helmet } from "react-helmet-async";
 import ToastViewer from "./../../components/editor/ToastViewer";
 import QnaPreview from "./../../components/qna/QnaPreview";
 import { ClipLoader } from "react-spinners";
+import QnaMainillust from "../../assets/images/QnaMainillust.png";
+import QnaWatingAnswer from "../../assets/images/QnaWatingAnswer.png";
+import QnaAnswer from "../../assets/images/QnaAnswer.png";
+import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
+import Hotqna from "../../assets/images/Hotqna.png";
 
 const QnaMain = () => {
   const navigate = useNavigate();
@@ -32,14 +37,18 @@ const QnaMain = () => {
   const [target, inView] = useInView();
 
   const onGetResolve = () => {
+    setPageNumber(0);
+    setHasNextPage(true);
     setResolveTap(1);
+    console.log("resolve");
   };
 
   const onGetNoResolve = () => {
+    console.log("noResolve");
+    setPageNumber(0);
+    setHasNextPage(true);
     setResolveTap(0);
   };
-
-  console.log(qnaList);
 
   useEffect(() => {
     //다음페이지가 있다면
@@ -47,13 +56,16 @@ const QnaMain = () => {
       pageNumber,
       isResolve: resolveTap,
     };
+
     if (hasNextPage) {
       if (category.length === 0) {
         dispatch(getQnaMainListDB(data)).then(res => {
           setHasNextPage(res.payload.length === 10);
         });
       } else if (category.length > 0) {
-        dispatch(getQnaCategoryListDB({ category, pageNumber })).then(res => {
+        dispatch(
+          getQnaCategoryListDB({ category, pageNumber, isResolve: resolveTap }),
+        ).then(res => {
           setHasNextPage(res.payload.length === 10);
         });
       }
@@ -76,58 +88,57 @@ const QnaMain = () => {
     };
   }, [category, resolveTap]);
 
+  console.log(resolveTap);
+
   return (
     <SQnaMain>
       <Helmet>
         <title>Qna Main</title>
       </Helmet>
-      <SHeader>
-        <SWritingButtonWrapper
-          onClick={() => {
-            navigate("/qna/write");
-          }}
-        >
-          <SWritingTitle>궁금한걸 물어보세요!</SWritingTitle>
-          <SWritingInfo>클릭하시면 질문 작성페이지로 이동합니다</SWritingInfo>
-          <SWritingButton icon={WritingButton} />
-        </SWritingButtonWrapper>
-      </SHeader>
-      <SMainCategory>
-        <QnaMainCatergory
-          pageNumber={pageNumber}
-          setPageNumber={setPageNumber}
-          setCategory={setCategory}
-          setHasNextPage={setHasNextPage}
-        />
-      </SMainCategory>
       <SQnaWrapper>
-        <QnaPreview />
+        <SMainCategory>
+          <QnaMainCatergory
+            pageNumber={pageNumber}
+            setPageNumber={setPageNumber}
+            setCategory={setCategory}
+            setHasNextPage={setHasNextPage}
+          />
+        </SMainCategory>
         <SContentContainer>
+          <STitle>Q&A</STitle>
           <SListHeader>
+            <SWritingButtonWrapper
+              onClick={() => {
+                navigate("/qna/write");
+              }}
+            >
+              <SWritingButton>
+                <div></div>질문하기
+              </SWritingButton>
+            </SWritingButtonWrapper>
             <STap>
               <STapItem
-                onClick={onGetResolve}
-                className={resolveTap && "isActive"}
-              >
-                <p>채택이 완료되었어요</p>
-              </STapItem>
-              <STapItem
-                onClick={onGetNoResolve}
-                className={!resolveTap && "isActive"}
-              >
-                <p>채택을 기다리고 있어요</p>
-              </STapItem>
+                isResolve={resolveTap}
+                onClick={resolveTap !== 0 ? onGetNoResolve : onGetResolve}
+              ></STapItem>
             </STap>
           </SListHeader>
+          {qnaList.length == 0 && <SNodata>검색결과가 없습니다.</SNodata>}
           {qnaList.map(data => (
             <ContentList type={"qna"} data={data} key={data.id} />
           ))}
-          {!isFetching && hasNextPage && (
+          {/* {!isFetching && hasNextPage && (
             <SLoading ref={target}>
               <ClipLoader />
             </SLoading>
-          )}
+          )} */}
         </SContentContainer>
+        <SBannerWrapper>
+          <SHotContent>
+            <div>최근에 추천 많이 받은 질문</div>
+          </SHotContent>
+          <SBanner />
+        </SBannerWrapper>
       </SQnaWrapper>
       <ModalBookmark />
     </SQnaMain>
@@ -146,16 +157,6 @@ const SHeader = styled.div`
   flex-direction: column;
   background-color: ${props => props.theme.color.mainGreen};
   padding: 35px 20px;
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: calc(100% - 88px);
-    transform: translateX(-50%);
-    height: 1px;
-    background-color: ${props => props.theme.color.white};
-  }
 
   &::after {
     content: "";
@@ -169,19 +170,6 @@ const SHeader = styled.div`
   }
 `;
 
-const SWritingButtonWrapper = styled.div`
-  cursor: pointer;
-  width: 100%;
-  max-width: 1230px;
-  height: 250px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: ${props => props.theme.color.white};
-  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='30' ry='30' stroke='white' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
-  border-radius: 30px;
-`;
-
 const SWritingTitle = styled.h2`
   font-weight: 600;
   font-size: 30px;
@@ -193,23 +181,42 @@ const SWritingInfo = styled.p`
   font-size: 20px;
 `;
 
+const SWritingButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  cursor: pointer;
+  width: 130px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const SWritingButton = styled.button`
-  background-color: ${props => props.theme.color.white};
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   border: none;
-  background-image: url(${props => props.icon});
-  background-repeat: no-repeat;
-  background-position: center center;
-  margin: 30px 0 43px 0;
+  color: ${props => props.theme.color.white};
+  background-color: ${props => props.theme.color.mainOrange};
+  & div {
+    width: 20px;
+    height: 20px;
+    background-image: url(${QnaWriteIcon});
+    background-size: contain;
+    margin-right: 10px;
+  }
 `;
 
 const SMainCategory = styled.div`
-  background-color: ${props => props.theme.color.mainGreen};
-  padding: 20px 20px 26px 20px;
-  display: flex;
-  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 200px;
+  height: 100%;
+  border-left: 1px solid ${props => props.theme.color.mainNavy};
 `;
 
 const SQnaWrapper = styled.div`
@@ -217,46 +224,114 @@ const SQnaWrapper = styled.div`
   max-width: 1560px;
   padding: 0 20px;
   margin: 0 auto;
-  gap: 40px;
 `;
 
 const SContentContainer = styled.div`
-  max-width: 735px;
-  width: 100%;
+  min-height: calc(100vh - 100px);
+  flex: 1;
+  margin-left: 280px;
+  margin-right: 90px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SListHeader = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
 const STap = styled.ul`
-  margin-top: 20px;
   display: flex;
   justify-content: space-between;
   width: 100%;
 `;
 
 const STapItem = styled.li`
-  width: 50%;
+  width: 328px;
+  height: 63px;
   padding: 20px;
   border-radius: 30px;
+  background-image: url(${props =>
+    props.isResolve === 0 ? QnaWatingAnswer : QnaAnswer});
+  background-repeat: no-repeat;
   cursor: pointer;
-  &.isActive {
-    background-color: ${props => props.theme.color.mainGreen};
-    color: ${props => props.theme.color.white};
-  }
-  & p {
-    display: flex;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 18px;
-  }
 `;
 
 const SLoading = styled.div`
   min-height: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SBannerWrapper = styled.div`
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -156px;
+    left: 203px;
+    width: 197px;
+    height: 156px;
+    background-image: url(${QnaMainillust});
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: -52px;
+    left: 20px;
+    width: 213px;
+    height: 42px;
+    background-image: url(${Hotqna});
+  }
+  width: 400px;
+  height: 490px;
+  position: sticky;
+  top: 416px;
+`;
+
+const SHotContent = styled.div`
+  width: 100%;
+  height: 260px;
+  margin-bottom: 30px;
+  background-color: white;
+  border-radius: 20px;
+`;
+
+const SBanner = styled.div`
+  width: 100%;
+  height: 200px;
+  background-color: white;
+  border-radius: 20px;
+`;
+
+const STitle = styled.h2`
+  font-weight: 900;
+  font-family: "Inter", sans-serif;
+  font-size: 70px;
+  margin-top: 30px;
+  margin-bottom: 60px;
+`;
+
+const SNodata = styled.div`
+  flex: 1;
+  padding-left: 30px;
+  border: ${props =>
+    props.resolve
+      ? `1px solid ${props.theme.color.mainGreen}`
+      : `1px solid ${props.theme.color.grey3}`};
+  box-shadow: ${props =>
+    props.resolve
+      ? "4px 6px 15px rgba(0, 0, 0, 0.1);"
+      : "-4px 6px 15px rgba(0, 0, 0, 0.1)"};
+  border-radius: 30px;
+  margin: 20px 0;
+  min-height: 209px;
+  background-color: ${props => props.theme.color.white};
+  font-size: 22px;
+  color: ${props => props.theme.color.grey5};
   display: flex;
   align-items: center;
   justify-content: center;

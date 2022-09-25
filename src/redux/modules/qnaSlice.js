@@ -287,8 +287,8 @@ const qnaSlice = createSlice({
       const idx = state.commentList.findIndex(data => {
         return data.id === payload.id;
       });
-      state.commentList[idx].is_choose = true;
-      state.qnaTarget.is_resolve = true;
+      state.commentList[idx].isChoose = true;
+      state.qnaTarget.isResolve = true;
       state.isFetching = false;
       state.errorMessage = null;
     },

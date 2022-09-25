@@ -126,7 +126,7 @@ const EditorComponent = ({
           content,
           id: editData.id,
           category: category,
-          tag: tags,
+          tags,
         }),
       ).then(res => {
         navigate("/qna");
@@ -138,7 +138,7 @@ const EditorComponent = ({
           title,
           content,
           category: category,
-          tag: tags,
+          tags,
         }),
       ).then(res => {
         navigate(`/qna/detail/${res.payload.data.id}`);
@@ -216,6 +216,10 @@ const EditorComponent = ({
 
   //태그추가
   const onAddTagHandler = () => {
+    if (tags.length > 4) {
+      errorAlert("태그는 5개가 최대입니다!");
+      return;
+    }
     if (tagText.current.value.length < 1) {
       errorAlert("빈칸입니다.");
       return;
@@ -265,7 +269,7 @@ const EditorComponent = ({
           <Editor
             placeholder="마크다운으로 내용을 입력하세요!"
             previewStyle={isCommentWrite ? "tab" : "vertical"}
-            height={isCommentWrite ? "600px" : "500px"}
+            height={isCommentWrite ? "60vh" : "50vh"}
             initialEditType="markdown"
             toolbarItems={
               isBlogEdit || isBlogWrite ? BlogtoolbarItems : QnatoolbarItems
@@ -430,30 +434,25 @@ const STags = styled.div`
 `;
 
 const SSubmitButton = styled.button`
-  height: 38px;
+  height: 40px;
   min-width: 140px;
-  background-color: ${props =>
-    props.location.includes("qna")
-      ? props.theme.color.mainGreen
-      : props.theme.color.mainBlue};
-  border: 1px solid
-    ${props =>
-      props.location.includes("qna")
-        ? props.theme.color.mainGreen
-        : props.theme.color.mainBlue};
+  background-color: ${props => props.theme.color.mainOrange};
+  border: none;
   color: ${props => props.theme.color.white};
+  border-radius: 20px;
 `;
 
 const SCommentWriteButton = styled.button`
   position: absolute;
   right: 0;
   bottom: -37px;
-  height: 38px;
+  height: 40px;
   min-width: 140px;
-  color: ${props => props.theme.color.mainGreen};
+  border-radius: 20px;
+  color: ${props => props.theme.color.white};
   border: none;
-  background-color: ${props => props.theme.color.white};
-  font-weight: 600;
+  background-color: ${props => props.theme.color.mainOrange};
+  font-weight: 500;
 `;
 
 const STagRemove = styled.button`

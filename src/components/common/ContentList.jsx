@@ -63,18 +63,16 @@ const ContentList = ({ data, type, isSearch }) => {
   return (
     <StextMain ResolveWrapper={ResolveWrapper}>
       {isSearch && type === "qna" && (
-        <SSolveText resolve={data.is_resolve}>
-          {data.is_resolve ? "채택 완료" : "채택미완료"}
+        <SSolveText resolve={data.isResolve}>
+          {data.isResolve ? "채택 완료" : "채택미완료"}
         </SSolveText>
       )}
       <SWrapper
         onClick={() => {
-          isSearch
-            ? navigate(`/${type}/detail/${data.id}`)
-            : dispatch(getOneQnaListDB(data.id));
+          navigate(`/${type}/detail/${data.id}`);
         }}
         type={type}
-        resolve={data.is_resolve}
+        resolve={data.isResolve}
         ResolveWrapper={ResolveWrapper}
         isSearch={isSearch}
       >
@@ -89,8 +87,8 @@ const ContentList = ({ data, type, isSearch }) => {
             <QnaBookmarkButton
               type={type}
               id={data.id}
-              resolve={data.is_resolve}
-              is_bookmark={data.is_bookmark}
+              resolve={data.isResolve}
+              is_bookmark={data.isBookmark}
             />
           </SCategoryContainer>
         </SUserInfo>
@@ -115,12 +113,12 @@ const ContentList = ({ data, type, isSearch }) => {
           </STags>
           <SCount>
             <SHoneytip>
-              {data.honey_tip}
-              <SLikeIcon type={type} resolve={data.is_resolve} />
+              {data.like}
+              <SLikeIcon type={type} resolve={data.isResolve} />
             </SHoneytip>
             <SCntcomment>
               {data.cntcomment}
-              <SCommentIcon type={type} resolve={data.is_resolve} />
+              <SCommentIcon type={type} resolve={data.isResolve} />
             </SCntcomment>
           </SCount>
         </STagWrapper>
@@ -154,28 +152,34 @@ const SSolveText = styled.div`
 const SWrapper = styled.div`
   width: 100%;
   padding: 30px 50px 18px 50px;
+  min-height: 200px;
+  transition: 0.5s;
   background-color: ${props => props.theme.color.white};
   border: ${props =>
     props.type === "qna"
       ? props.resolve
-        ? `1px solid ${props.theme.color.mainGreen}`
+        ? `1px solid ${props.theme.color.mainOrange}`
         : `1px solid ${props.theme.color.grey3}`
-      : `1px solid ${props.theme.color.mainBlue}`};
-  box-shadow: ${props =>
-    props.resolve
-      ? "4px 6px 15px rgba(0, 0, 0, 0.1);"
-      : "-4px 6px 15px rgba(0, 0, 0, 0.1)"};
+      : `1px solid ${props.theme.color.mainOrange}`};
   border-radius: 30px;
+
   margin: 30px 0
     ${props => (props.isSearch && props.type === "qna" ? "65px" : "30px")} 0;
-  min-height: 190px;
+  &:first-child {
+    margin-top: 20px;
+  }
   cursor: pointer;
+  &:hover {
+    box-shadow: #fce3cd -10px 10px 0px 0px;
+  }
 `;
 
 const SUserInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 15px;
+  border-bottom: 2px solid ${props => props.theme.color.mainNavy};
 `;
 
 const SProfileContainer = styled.div`
@@ -214,7 +218,7 @@ const SCategoryContainer = styled.div`
 `;
 
 const STitleWrapper = styled.div`
-  margin: 25px 0;
+  margin: 10px 0 25px 0;
   cursor: pointer;
 `;
 
@@ -246,10 +250,7 @@ const Tag = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: ${props =>
-      props.type === "qna"
-        ? props.theme.color.mainGreen
-        : props.theme.color.mainBlue};
+    background-color: ${props => props.theme.color.mainOrange};
   }
 `;
 
@@ -279,7 +280,7 @@ const SLikeIcon = styled(SIcon)`
   background-image: url(${props =>
     props.type === "qna"
       ? props.resolve
-        ? QnaLikeIcon
+        ? unlike
         : GreyQnaLikeIcon
       : unlike});
 `;
@@ -287,7 +288,7 @@ const SCommentIcon = styled(SIcon)`
   background-image: url(${props =>
     props.type === "qna"
       ? props.resolve
-        ? QnaCommentIcon
+        ? BlogComment
         : GreyQnaCommentIcon
       : BlogComment});
 `;

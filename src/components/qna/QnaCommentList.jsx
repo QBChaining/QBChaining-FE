@@ -5,8 +5,8 @@ import Swal from "sweetalert2";
 import Editor from "../common/EditorComponent";
 import { successAlert, errorAlert } from "./../../utils/swal";
 import styled from "styled-components";
-import QnaLike from "../../assets/images/QnaLike.png";
-import QnaLikeFill from "../../assets/images/QnaLikeFill.png";
+import QnaLike from "../../assets/images/unlike.png";
+import QnaLikeFill from "../../assets/images/addLike.png";
 import WinnerCrown from "../../assets/images/WinnerCrown.png";
 import ToastViewer from "./../editor/ToastViewer";
 import { useNavigate } from "react-router-dom";
@@ -211,7 +211,7 @@ const SUserInfo = styled.div`
 `;
 
 const SWinnerUserInfo = styled(SUserInfoWrapper)`
-  background-color: ${props => props.theme.color.mainGreen};
+  background-color: ${props => props.theme.color.mainOrange};
   border-radius: 30px;
   padding: 1px 30px 1px 2px;
   position: relative;
@@ -286,24 +286,25 @@ const SChoiceButton = styled.button`
   padding: 2px 16px;
   font-size: 12px;
   font-weight: 600;
-  color: ${props => props.theme.color.mainGreen};
-  background-color: ${props => props.theme.color.white};
-  border: 1px solid ${props => props.theme.color.mainGreen};
+  color: ${props => props.theme.color.mainOrange};
+  background-color: transparent;
+  border: 1px solid ${props => props.theme.color.mainOrange};
   border-radius: 30px;
+  transition: 0.3s;
 
   &:hover {
     color: ${props => props.theme.color.white};
-    background-color: ${props => props.theme.color.mainGreen};
+    background-color: ${props => props.theme.color.mainOrange};
   }
 `;
 
 const SWinnerButton = styled(SChoiceButton)`
-  color: ${props => props.theme.color.mainGreen};
+  color: ${props => props.theme.color.mainOrange};
   background-color: ${props => props.theme.color.white};
   border: none;
   line-height: 15px;
   &:hover {
-    color: ${props => props.theme.color.mainGreen};
+    color: ${props => props.theme.color.mainOrange};
     background-color: ${props => props.theme.color.white};
   }
 `;
