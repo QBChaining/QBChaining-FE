@@ -7,7 +7,6 @@ import cmtComment from "../../assets/images/GreyQnaComment.png";
 import { getToday } from "./../../utils/today";
 const BlogMainList = ({ posts }) => {
   const [Like, setLike] = useState(posts.isLove);
-  console.log("하트블린", posts.isLove);
   useEffect(() => {
     if (posts.isLove) {
       setLike(true);
@@ -17,7 +16,6 @@ const BlogMainList = ({ posts }) => {
     }
   }, [posts.isLove]);
   const navigate = useNavigate();
-  console.log(posts);
 
   //몇일전 구하는 함수
   const timeForToday = value => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import QnaMainillust from "../../assets/images/QnaMainillust.png";
 import HotQna from "../../assets/images/Hotqna.png";
@@ -9,8 +9,18 @@ import Like from "../../assets/images/unlike.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import { useSelector, useDispatch } from "react-redux";
+import { getHotBlogDB } from "../../redux/async/blog";
+import { getQnaCategoryListDB } from "../../redux/async/qna.js";
 const SideBanner = ({ type }) => {
+  const blogHotList = useSelector(state => state.blogSlice.hotBlog);
+  const blogHotListSlice = blogHotList.slice(0, 4);
+  const qnaHotList = useSelector(state => state.qnaSlice.qnaList);
+  const qnaHotListSlice = qnaHotList.slice(0, 4);
+  console.log(qnaHotList);
+  const dispatch = useDispatch();
+
+  console.log(blogHotList);
   const settings = {
     dots: false,
     infinite: true,
@@ -19,6 +29,12 @@ const SideBanner = ({ type }) => {
     slidesToScroll: 1,
   };
 
+  useEffect(() => {
+    dispatch(getHotBlogDB());
+  }, []);
+  // useEffect(() => {
+  //   dispatch(getQnaCategoryListDB());
+  // }, []);
   return (
     <SBannerWrapper type={type}>
       <SHotContent>
@@ -28,27 +44,25 @@ const SideBanner = ({ type }) => {
             ? "최근에 추천 많이 받은 질문 "
             : "최근에 추천 많이 받은 게시글"}
         </SHotHeader>
-        <SHotList>
-          <li>
-            <SListTitle>
-              개발자 언어란 무엇일까 ?개발자 언어란 무엇일까 ?개발자 언어란
-              무엇일까 ?개발자 언어란 무엇일까 ?개발자 언어란 무엇일까 ?
-            </SListTitle>
-            <SLike>167</SLike>
-          </li>
-          <li>
-            <SListTitle>개발자 언어란 무엇일까 ?</SListTitle>
-            <SLike>167</SLike>
-          </li>
-          <li>
-            <SListTitle>개발자 언어란 무엇일까 ?</SListTitle>
-            <SLike>167</SLike>
-          </li>
-          <li>
-            <SListTitle>개발자 언어란 무엇일까 ?</SListTitle>
-            <SLike>167</SLike>
-          </li>
-        </SHotList>
+        {type === "qna" ? (
+          <SHotList>
+            {qnaHotListSlice.map(hot => (
+              <li key={hot.id}>
+                <SListTitle>{hot.title}</SListTitle>
+                <SLike>{hot.like}</SLike>
+              </li>
+            ))}
+          </SHotList>
+        ) : (
+          <SHotList>
+            {blogHotListSlice.map(hot => (
+              <li key={hot.id}>
+                <SListTitle>{hot.title}</SListTitle>
+                <SLike>{hot.like}</SLike>
+              </li>
+            ))}
+          </SHotList>
+        )}
       </SHotContent>
       <SBanner>
         <Slider {...settings}>
