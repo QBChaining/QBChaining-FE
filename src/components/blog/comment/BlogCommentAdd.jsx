@@ -27,8 +27,8 @@ const CommentAdd = () => {
       <input
         type="text"
         ref={commentRefInput}
-        placeholder={"20자이하"}
-        maxLength="20"
+        placeholder={"500자이하"}
+        maxLength="500"
       />
       <button onClick={addComment}>추가하기</button>
     </SComment>

@@ -13,6 +13,7 @@ import MainLogo from "../../assets/images/MainLogo.png";
 import Notification from "./Notification";
 import { errorAlert } from "../../utils/swal";
 // import Notification from "./Notification";
+import NotifiTest from "./NotifiTest";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const Header = () => {
       <SAlarmLoginWrapper>
         <SAlarmConatainer className="alarmConatainer active">
           {/* <HiOutlineBell /> */}
+          <NotifiTest />
           {/* <Notification /> */}
         </SAlarmConatainer>
         <SLoginConatainer className="loginConatainer">

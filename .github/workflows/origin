@@ -1,0 +1,97 @@
+name: main
+
+on:
+  # Branch에 push하면 실행
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@main
+        # BakcEnd API
+      - name: Generate Environment Varibles Fils for Production
+        run: |
+          echo "REACT_APP_ENDPOINT=$REACT_APP_ENDPOINT" >> .env.production
+        env:
+          REACT_APP_ENDPOINT: ${{ secrets.REACT_APP_ENDPOINT }}
+        # firebase config
+      - name: firebase config_1
+        run: |
+          echo "REACT_APP_FIREBASE_APIKEY=$REACT_APP_FIREBASE_APIKEY" >> .env.production
+        env:
+          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_APIKEY }}
+
+      - name: firebase config_2
+        run: |
+          echo "REACT_APP_FIREBASE_AUTHDOMAIN=$REACT_APP_FIREBASE_AUTHDOMAIN" >> .env.production
+        env:
+          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_AUTHDOMAIN }}
+      - name: firebase config_3
+        run: |
+          echo "REACT_APP_FIREBASE_PROJECTID=$REACT_APP_FIREBASE_PROJECTID" >> .env.production
+        env:
+          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_PROJECTID }}
+      - name: firebase config_4
+        run: |
+          echo "REACT_APP_FIREBASE_STORAGEBUCKET=$REACT_APP_FIREBASE_STORAGEBUCKET" >> .env.production
+        env:
+          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_STORAGEBUCKET}}
+      - name: firebase config_5
+        run: |
+          echo "REACT_APP_FIREBASE_MESSAGINSERNDERID=$REACT_APP_FIREBASE_MESSAGINSERNDERID" >> .env.production
+        env:
+          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_MESSAGINSERNDERID }}
+      - name: firebase config_6
+        run: |
+          echo "REACT_APP_FIREBASE_APPID=$REACT_APP_FIREBASE_APPID" >> .env.production
+        env:
+          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_APPID }}
+      - name: firebase config_7
+        run: |
+          echo "REACT_APP_FIREBASE_MEASUREMENTID=$REACT_APP_FIREBASE_MEASUREMENTID" >> .env.production
+        env:
+          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_MEASUREMENTID }}
+          # sentry dsn
+      - name: sentry dsn
+        run: |
+          echo "REACT_APP_SENTRYDSN=$REACT_APP_SENTRYDSN" >> .env.production
+        env:
+          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_SENTRYDSN }}
+
+      # 캐싱모듈
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+        env:
+          CI: ""
+
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 cp \
+          --recursive \
+          --region ap-northeast-2 \
+          build s3://qb-chaning
+
+#CI 보류 코드
+# Gitgub repository Secrtets를 통해 변수 파일을 생성
+

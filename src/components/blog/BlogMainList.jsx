@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ToastViewer from "../editor/ToastViewer";
 import BlogBookMark from "./BlogBookMark";
 import unlike from "../../assets/images/unlike.png";
+import BlogMainLike from "./BlogMainLike";
 import { getBlogDetailDB } from "../../redux/async/blog";
 import BlogHover from "./BlogHover";
 const BlogMainList = ({ posts }) => {
@@ -34,7 +35,10 @@ const BlogMainList = ({ posts }) => {
                   <STag key={i}>{tags}</STag>
                 ))}
               </STagList>
-              <SLike>{posts.like}</SLike>
+              <SLike>
+                {posts.like}
+                <BlogMainLike isLove={posts.isLike} />
+              </SLike>
             </STagNMark>
           </SContentsGroup>
         </SHober>
@@ -48,10 +52,11 @@ export default BlogMainList;
 
 const SBloglist = styled.div`
   position: relative;
-  /* width: 100%; */
-  min-width: 640px;
-  /* height: 100%; */
-  min-height: 127px;
+  width: 100%;
+  /* min-width: 700px; */
+  /* height: 20em; */
+  max-height: 127px;
+
   background: #ffffff;
   box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
@@ -87,10 +92,13 @@ const SContentTitle = styled.div`
   cursor: pointer;
 `;
 const STagList = styled.div`
+  /* background-color: orange; */
+  align-items: center;
   display: flex;
   padding-left: 47px;
 `;
 const STag = styled.div`
+  background-color: orange;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,12 +128,12 @@ const STagNMark = styled.div`
 `;
 
 const SLike = styled.div`
+  /* background-color: orange; */
+
   display: flex;
-  align-items: flex-end;
-  padding-bottom: 10px;
-  color: ${props => props.theme.color.grey5};
-  padding-right: 23px;
-  background-image: url(${unlike});
-  background-position: bottom 13px right 0;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 3px;
+  align-items: center;
   background-repeat: no-repeat;
 `;

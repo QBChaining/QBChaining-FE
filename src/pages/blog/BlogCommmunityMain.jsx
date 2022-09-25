@@ -168,7 +168,8 @@ const SContentFilter = styled.div`
   & ul {
     display: flex;
     justify-content: flex-end;
-    padding: 40px 30px 20px 0;
+    margin-right: 150px;
+    padding: 40px 30px 20px 30px;
     & li {
       padding: 10px 20px;
       position: relative;
@@ -192,10 +193,12 @@ const SContentWrapper = styled.div`
   min-width: 700px;
   width: 100%;
   display: flex;
+  justify-content: center;
 `;
 
 const SLeftContainer = styled.div`
   width: 50%;
+  width: 750px;
   height: 700px;
   position: sticky;
   top: 100px;
@@ -221,46 +224,12 @@ const SPreviewContent = styled.div`
 `;
 
 const SRightContainer = styled.div`
-  max-width: 700px;
+  max-width: 750px;
   width: 50%;
+  height: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-`;
-
-const SBloglist = styled.div`
-  width: 342px;
-  height: 253px;
-  background: #ffffff;
-  margin: 36px 0 36px 40px;
-  box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 30px;
-  left: 200px;
-`;
-
-const SContent = styled.div`
-  width: 283px;
-  height: 101px;
-  overflow: hidden;
-  /* border-radius: 30px; */
-  & .content1 {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 25px;
-  }
-`;
-
-const SProfile = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid ${props => props.theme.color.grey3};
-  background-repeat: no-repeat;
-  margin-right: 11px;
-
-  background-position: center;
-  background-size: cover;
-  background-image: url(${mainpage});
 `;
 
 const SPlus = styled.div`
