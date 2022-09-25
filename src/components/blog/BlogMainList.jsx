@@ -6,6 +6,7 @@ import ToastViewer from "../editor/ToastViewer";
 import BlogBookMark from "./BlogBookMark";
 import unlike from "../../assets/images/GreyQnaLike.png";
 import cmtComment from "../../assets/images/GreyQnaComment.png";
+
 import { getBlogDetailDB } from "../../redux/async/blog";
 import BlogHover from "./BlogHover";
 import { getToday } from "./../../utils/today";
@@ -134,10 +135,13 @@ const SProfile = styled.div`
 `;
 
 const STagList = styled.div`
+  /* background-color: orange; */
+  align-items: center;
   display: flex;
   padding-right: 130px;
 `;
 const STag = styled.div`
+  background-color: orange;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -179,6 +183,8 @@ const SComment = styled.div`
 `;
 
 const SLike = styled.div`
+  /* background-color: orange; */
+
   display: flex;
   align-items: flex-end;
   color: ${props => props.theme.color.grey5};

@@ -10,12 +10,12 @@ import addlike from "../../assets/images/addLike.png";
 import unlike from "../../assets/images/unlike.png";
 import styled from "styled-components";
 import { errorAlert, needLoginAlert } from "../../utils/swal";
-const BlogLike = ({ love }) => {
+const BlogLike = ({ isLove }) => {
   const { isLogin } = useSelector(state => state.userSlice);
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [Like, setLike] = useState(love);
-
+  const [Like, setLike] = useState(isLove);
+  console.log(isLove);
   const onLikeBlog = () => {
     if (!isLogin) {
       needLoginAlert();
@@ -28,15 +28,7 @@ const BlogLike = ({ love }) => {
     dispatch(unBlogLikeDB(id));
     setLike(!Like);
   };
-  return (
-    <div>
-      {Like === false ? (
-        <UnLike onClick={onLikeBlog} />
-      ) : (
-        <AddLike onClick={onUnLikeBlog} />
-      )}
-    </div>
-  );
+  return <div>{Like === false ? <UnLike /> : <AddLike />}</div>;
 };
 
 const AddLike = styled.div`

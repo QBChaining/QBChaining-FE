@@ -20,7 +20,7 @@ const CommentEditDel = ({ comments }) => {
 
   const dispatch = useDispatch();
 
-  //댓글 수정 완료 버튼
+  //댓글 수정 완료 버튼f
   const onClickEditHandler = () => {
     if (editRef.current.value.length < 1) {
       errorAlert("빈칸입니다!");

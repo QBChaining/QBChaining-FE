@@ -180,10 +180,9 @@ const EditorComponent = ({
     }
   };
 
-  //titlechangehandler
+  /**titlechangehandler  */
   const onTitleChangeHandler = e => {
     if (isBlogEdit) {
-      e.preventDefault();
       setBlogTitle(e.target.value);
     } else {
       setTitle(e.target.value);
@@ -197,6 +196,8 @@ const EditorComponent = ({
       // quillRef.current.firstChild.innerHTML = editData.content;
     }
   }, [isEdit, editData, isComment]);
+
+  /** 블로그 게시글 수정할 때  원래 있던 벨류 값  불러오기  */
   useEffect(() => {
     if (isBlogEdit) {
       setBlogTitle(blogEditData.title);
