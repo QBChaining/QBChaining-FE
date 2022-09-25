@@ -16,7 +16,10 @@ export const userSlice = createSlice({
     userToken: null,
     userName: null,
     userProfile: null,
+    userInfo: null,
     userIsNew: null,
+    isFetching: false,
+    userActivity: [],
     color: "backgroundGradient",
   },
   reducers: {
@@ -74,6 +77,7 @@ export const userSlice = createSlice({
 
     //회원정보 받아오기
     [getUserInfoDB.fulfilled]: (state, { payload }) => {
+      state.userInfo = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -87,6 +91,7 @@ export const userSlice = createSlice({
 
     //회원활동내역 받아오기
     [getUserInfoActivityDB.fulfilled]: (state, { payload }) => {
+      state.userActivity = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },

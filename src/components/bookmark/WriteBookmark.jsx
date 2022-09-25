@@ -4,7 +4,7 @@ import { getCommentListDB, getOneQnaListDB } from "../../redux/async/qna";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import ToastViewer from "../editor/ToastViewer";
-import QnaLike from "../../assets/images/QnaLike.png";
+import QnaLike from "../../assets/images/unlike.png";
 import GobackArrow from "../../assets/images/GobackArrow.png";
 import { getBlogCommentListDB, getBlogDetailDB } from "../../redux/async/blog";
 
@@ -32,9 +32,9 @@ const WriteBookmark = ({ type, id, onToggleHandler }) => {
           돌아가기
         </SBackButton>
         <SUserInfo>
-          <SUserProfile profile={target.profile_img} />
+          <SUserProfile profile={target.profileImg} />
           <SUserInfoText>
-            <SUserName>{target.user_name}</SUserName>
+            <SUserName>{target.userName}</SUserName>
             <SCreateAt>{target.createdAt}</SCreateAt>
           </SUserInfoText>
         </SUserInfo>
@@ -53,7 +53,7 @@ const WriteBookmark = ({ type, id, onToggleHandler }) => {
                 );
               })}
             </STags>
-            <SHoneyTip>{target.honey_tip}</SHoneyTip>
+            <SHoneyTip>{target.like}</SHoneyTip>
           </SSubinfo>
         </SContent>
         <SCommentWrapper>
@@ -61,12 +61,12 @@ const WriteBookmark = ({ type, id, onToggleHandler }) => {
             <SComment key={data.id}>
               <SUserInfo>
                 {type === "qna" ? (
-                  <SUserProfile profile={data.profile_img} />
+                  <SUserProfile profile={data.profileImg} />
                 ) : (
-                  <SUserProfile profile={data.User?.profile_img} />
+                  <SUserProfile profile={data.profileImg} />
                 )}
                 <SUserInfoText>
-                  <SUserName>{target.user_name}</SUserName>
+                  <SUserName>{target.userName}</SUserName>
                 </SUserInfoText>
               </SUserInfo>
               <ToastViewer content={data.comment} />
@@ -86,7 +86,7 @@ const SWriteBookmark = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: ${props => props.theme.color[props.color]};
+  background-color: ${props => props.theme.color.mainNavy};
   overflow: auto;
   padding: 30px;
   border-radius: 30px;
@@ -118,7 +118,7 @@ const SBackButton = styled.button`
   border: none;
   border-radius: 30px;
   padding: 10px 40px 10px 20px;
-  background-color: ${props => props.theme.color[props.color]};
+  background-color: ${props => props.theme.color.mainNavy};
   color: ${props => props.theme.color.white};
   background-image: url(${GobackArrow});
   background-repeat: no-repeat;
@@ -138,9 +138,9 @@ const SUserProfile = styled.div`
 const SUserInfoText = styled.div`
   margin-left: 10px;
 `;
-const SUserName = styled.div`
-  margin-bottom: 2px;
-`;
+
+const SUserName = styled.div``;
+
 const SCreateAt = styled.div`
   color: ${props => props.theme.color.grey6};
 `;
@@ -150,8 +150,10 @@ const SContent = styled.div`
   border-bottom: 1px solid ${props => props.theme.color.grey5};
   word-wrap: break-word;
 `;
+
 const SContentTitle = styled.p`
   font-size: 18px;
+  font-weight: 500;
   padding-bottom: 20px;
   border-bottom: 1px solid ${props => props.theme.color.grey5};
   width: 100%;
@@ -180,8 +182,8 @@ const STag = styled.div`
   align-items: center;
   padding: 6px 12px;
   margin: 0 11px 11px 0;
-  border: 1px solid ${props => props.theme.color[props.color]};
-  color: ${props => props.theme.color[props.color]};
+  border: 1px solid ${props => props.theme.color.mainOrange};
+  color: ${props => props.theme.color.mainOrange};
   border-radius: 30px;
 `;
 

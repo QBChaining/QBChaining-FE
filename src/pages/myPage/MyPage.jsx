@@ -1,35 +1,24 @@
 import React from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getUserInfoActivityDB } from "../../redux/async/user";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUserInfoDB } from "./../../redux/async/user";
+import MyPageActivity from "../../components/myPage/MyPageActivity";
 
 const MyPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { userName } = useParams();
 
+  const { isLogin, isFetching, userInfo } = useSelector(
+    state => state.userSlice,
+  );
   useEffect(() => {
-    // dispatch(getUserInfoActivityDB());
-  }, []);
-
-  const week1 = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ];
-
-  const week2 = [
-    [11, 12, 13],
-    [14, 15, 16],
-    [17, 18, 19],
-  ];
-
-  const week3 = [
-    [21, 22, 23],
-    [24, 25, 26],
-    [27, 28, 29],
-  ];
+    dispatch(getUserInfoActivityDB(userName));
+    dispatch(getUserInfoDB(userName));
+  }, [userName]);
 
   return (
     <SMyPage>
@@ -41,14 +30,14 @@ const MyPage = () => {
         레지스터로 가기
       </button>
       <SUserInfoWrapper>
-        <SUserProfile>유저프로필</SUserProfile>
+        <SUserProfile profileImg={userInfo?.profileImg}></SUserProfile>
         <SUserInfo>
-          <SUserName>유저이름</SUserName>
+          <SUserName>{userInfo?.name}</SUserName>
           <SUserDetail>
-            <li>여자</li>
-            <li>10대초반</li>
-            <li>포지션</li>
-            <li>경력</li>
+            <li>{userInfo?.gender}</li>
+            <li>{userInfo?.age}</li>
+            <li>{userInfo?.career}</li>
+            <li>{userInfo?.job}</li>
           </SUserDetail>
         </SUserInfo>
       </SUserInfoWrapper>
@@ -109,35 +98,7 @@ const MyPage = () => {
         </SList>
       </SListWrapper>
       <SCube>
-        <SCubeWrapper>
-          {week1.map((data, i) => (
-            <div key={i}>
-              {data.map((data2, i) => (
-                <div key={i}></div>
-              ))}
-            </div>
-          ))}
-        </SCubeWrapper>
-        <SCubeWrapper>
-          {week2.map((data, i) => (
-            <div key={i}>
-              {" "}
-              {data.map((data2, i) => (
-                <div key={i}></div>
-              ))}
-            </div>
-          ))}
-        </SCubeWrapper>
-        <SCubeWrapper>
-          {week3.map((data, i) => (
-            <div key={i}>
-              {" "}
-              {data.map((data2, i) => (
-                <div key={i}></div>
-              ))}
-            </div>
-          ))}
-        </SCubeWrapper>
+        <MyPageActivity />
       </SCube>
     </SMyPage>
   );
@@ -162,8 +123,10 @@ const SUserProfile = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  border: 1px solid black;
   margin-right: 35px;
+  background-image: url(${props => props.profileImg});
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 const SUserInfo = styled.div``;
 const SUserName = styled.div`
@@ -245,46 +208,7 @@ const SListDate = styled.div`
 
 const SCube = styled.div`
   position: absolute;
-  top: 0;
+  top: 70px;
   right: 200px;
   display: flex;
-`;
-const SCubeWrapper = styled.div`
-  display: flex;
-  position: relative;
-  transition: 2s;
-
-  & > div > div {
-    width: 30px;
-    height: 30px;
-    margin: 3px;
-    background-color: ${props => props.theme.color.mainGreen};
-  }
-
-  &:first-child {
-    transform: rotate(120deg) skew(0deg, -30deg);
-  }
-
-  &:nth-child(2) {
-    transform: rotate(-120deg) skew(0deg, 30deg);
-  }
-
-  &:nth-child(3) {
-    position: absolute;
-    top: -90px;
-    left: 55px;
-    transform: rotate(60deg) skew(0deg, -30deg);
-  }
-
-  &:first-child > div > div {
-    background-color: red;
-  }
-
-  &:nth-child(2) > div > div {
-    background-color: blue;
-  }
-
-  &:nth-child(3) > div > div {
-    background-color: black;
-  }
 `;

@@ -1,6 +1,9 @@
 const color = {
   mainGreen: "#00D98B",
   mainBlue: "#2676ED",
+  mainNavy: "#424F72",
+  mainIvory: "#FDF6EC",
+  mainOrange: "#F88F4C",
   white: "#fff",
   black: "#000",
   red: "#FF5959",

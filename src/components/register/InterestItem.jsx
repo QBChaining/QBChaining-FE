@@ -2,16 +2,16 @@ import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 
-const InterestItem = ({ data, setList, list }) => {
+const InterestItem = ({ data, setLanguage, language }) => {
   const [toggle, setToggle] = useState(false);
 
   const onToggleHandler = name => {
     setToggle(!toggle);
-    if (list.indexOf(name) !== -1) {
-      list.splice(list.indexOf(name), 1);
+    if (language.indexOf(name) !== -1) {
+      language.splice(language.indexOf(name), 1);
       return;
     }
-    setList([...list, data.name]);
+    setLanguage([...language, data.name]);
   };
 
   return (

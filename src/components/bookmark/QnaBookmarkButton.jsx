@@ -24,15 +24,5 @@ const SBookmarkIcon = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${props =>
-    props.type === "qna"
-      ? props.isResolve
-        ? props.isBookmark
-          ? BookmarkFillIcon
-          : BookmarkNoFillIcon
-        : props.isBookmark
-        ? GreyBookmarkFillIcon
-        : GreyBookmarkNoFillIcon
-      : props.isBookmark
-      ? bookmarkadd
-      : blogbookmark});
+    props.isBookmark ? BookmarkFillIcon : BookmarkNoFillIcon});
 `;
