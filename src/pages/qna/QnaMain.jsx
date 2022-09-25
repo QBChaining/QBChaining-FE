@@ -25,6 +25,7 @@ import QnaWatingAnswer from "../../assets/images/QnaWatingAnswer.png";
 import QnaAnswer from "../../assets/images/QnaAnswer.png";
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 import Hotqna from "../../assets/images/Hotqna.png";
+import SideBanner from "../../components/common/SideBanner";
 
 const QnaMain = () => {
   const navigate = useNavigate();
@@ -123,22 +124,17 @@ const QnaMain = () => {
               ></STapItem>
             </STap>
           </SListHeader>
-          {qnaList.length == 0 && <SNodata>검색결과가 없습니다.</SNodata>}
+          {qnaList.length === 0 && <SNodata>검색결과가 없습니다.</SNodata>}
           {qnaList.map(data => (
             <ContentList type={"qna"} data={data} key={data.id} />
           ))}
-          {/* {!isFetching && hasNextPage && (
+          {!isFetching && hasNextPage && (
             <SLoading ref={target}>
               <ClipLoader />
             </SLoading>
-          )} */}
+          )}
         </SContentContainer>
-        <SBannerWrapper>
-          <SHotContent>
-            <div>최근에 추천 많이 받은 질문</div>
-          </SHotContent>
-          <SBanner />
-        </SBannerWrapper>
+        <SideBanner type={"qna"} />
       </SQnaWrapper>
       <ModalBookmark />
     </SQnaMain>
@@ -317,7 +313,6 @@ const STitle = styled.h2`
 
 const SNodata = styled.div`
   flex: 1;
-  padding-left: 30px;
   border: ${props =>
     props.resolve
       ? `1px solid ${props.theme.color.mainGreen}`

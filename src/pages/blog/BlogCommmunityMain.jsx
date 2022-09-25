@@ -16,8 +16,13 @@ import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogMainList from "../../components/blog/BlogMainList";
 import mainpage from "../../assets/images/mainpage.png";
 import { Helmet } from "react-helmet-async";
+import SideBanner from "./../../components/common/SideBanner";
+import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
+// import BlogHover from "../../components/blog/BlogHover";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
+  // const userProfile = useSelector(state => state.userSlice.userProfile);
+  // const targetData = useSelector(state => state.blogSlice.blogDetail);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -33,7 +38,7 @@ const BlogCommmunityMain = () => {
       <Helmet>
         <title>Blog Main</title>
       </Helmet>
-      <STopBox>
+      {/* <STopBox>
         <STopBoxWrapper>
           <SRecommend>
             <BlogHotList />
@@ -50,20 +55,25 @@ const BlogCommmunityMain = () => {
             <SPlus />
           </STopHelper>
         </STopBoxWrapper>
-      </STopBox>
+      </STopBox> */}
       <SBody>
-        <SContentFilter>
-          <ul>
-            <li>추천순</li>
-            <li>시간순</li>
-          </ul>
-        </SContentFilter>
+        <STitle>BLOG</STitle>
         <SContentWrapper>
-          <SRightContainer>
+          <SLeftContainer>
+            <SWritingButtonWrapper
+              onClick={() => {
+                navigate("/blog/write");
+              }}
+            >
+              <SWritingButton>
+                <div></div>작성하기
+              </SWritingButton>
+            </SWritingButtonWrapper>
             {blogMainLists?.map(posts => (
               <BlogMainList posts={posts} key={posts.id} />
             ))}
-          </SRightContainer>
+          </SLeftContainer>
+          <SideBanner />
         </SContentWrapper>
       </SBody>
       <ModalBookmark />
@@ -95,97 +105,23 @@ const STopBox = styled.div`
   }
 `;
 
-const STopBoxWrapper = styled.div`
-  display: flex;
-  max-width: 1540rem;
-  margin: 0 auto;
-  padding: 0 20px;
-`;
-
-const SRecommend = styled.div`
-  flex: 1;
-  min-width: 600px;
-  height: 300px;
-  background: #ffffff;
-  box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 30px;
-`;
-
-const STopHelper = styled.div`
-  min-width: 420px;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 61px;
-  color: ${props => props.theme.color.white};
-  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='30' ry='30' stroke='white' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
-  border-radius: 30px;
-  cursor: pointer;
-`;
-
-const SHelpText = styled.div`
-  font-size: 30px;
-  font-weight: bold;
-  margin-top: 95px;
-`;
-
-const SHelpSubText = styled.div`
-  font-size: 20px;
-  font-weight: 100;
-  margin-top: 5px;
-`;
-
 const SBody = styled.div`
-  max-width: 1540rem;
+  width: 1560px;
   padding: 0 20px;
-  margin: 0 auto;
-`;
-
-const SContentFilter = styled.div`
-  & ul {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 150px;
-    padding: 40px 30px 20px 30px;
-    & li {
-      padding: 10px 20px;
-      position: relative;
-      color: ${props => props.theme.color.grey5};
-      &:first-child {
-        &::before {
-          content: "";
-          position: absolute;
-          top: 15px;
-          right: 0;
-          width: 1px;
-          height: 14px;
-          background-color: ${props => props.theme.color.grey5};
-        }
-      }
-    }
-  }
+  margin: 0 auto 0 200px;
 `;
 
 const SContentWrapper = styled.div`
-  min-width: 700px;
-  width: 100%;
   display: flex;
-  justify-content: center;
+  position: relative;
 `;
 
 const SLeftContainer = styled.div`
-  width: 50%;
-  width: 750px;
-  height: 700px;
-  position: sticky;
-  top: 100px;
-  padding: 30px;
   display: flex;
-  flex-direction: column;
-  box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  margin-right: 50px;
+  flex-wrap: wrap;
+  flex: 1;
+  position: relative;
+  margin-right: 90px;
 `;
 
 const SPreviewTitle = styled.div`
@@ -201,13 +137,39 @@ const SPreviewContent = styled.div`
   background-image: url(${mainpage}); */
 `;
 
-const SRightContainer = styled.div`
-  max-width: 750px;
-  width: 50%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+const SBloglist = styled.div`
+  width: 342px;
+  height: 253px;
+  background: #ffffff;
+  margin: 36px 0 36px 40px;
+  box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+  left: 200px;
+`;
+
+const SContent = styled.div`
+  width: 283px;
+  height: 101px;
+  overflow: hidden;
+  /* border-radius: 30px; */
+  & .content1 {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+  }
+`;
+
+const SProfile = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid ${props => props.theme.color.grey3};
+  background-repeat: no-repeat;
+  margin-right: 11px;
+
+  background-position: center;
+  background-size: cover;
+  background-image: url(${mainpage});
 `;
 
 const SPlus = styled.div`
@@ -223,4 +185,42 @@ const SUserInfo = styled.div`
   display: flex;
   padding-bottom: 20px;
   align-items: center;
+`;
+
+const STitle = styled.h2`
+  font-weight: 900;
+  font-family: "Inter", sans-serif;
+  font-size: 70px;
+  margin-top: 30px;
+  margin-bottom: 60px;
+`;
+
+const SWritingButtonWrapper = styled.div`
+  position: absolute;
+  top: -70px;
+  right: 0;
+  cursor: pointer;
+  width: 130px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const SWritingButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: none;
+  color: ${props => props.theme.color.white};
+  background-color: ${props => props.theme.color.mainOrange};
+  & div {
+    width: 20px;
+    height: 20px;
+    background-image: url(${QnaWriteIcon});
+    background-size: contain;
+    margin-right: 10px;
+  }
 `;
