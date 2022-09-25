@@ -1,4 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -14,6 +20,7 @@ import Notification from "./Notification";
 import { errorAlert } from "../../utils/swal";
 // import Notification from "./Notification";
 import NotifiTest from "./NotifiTest";
+import { throttle } from "lodash";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -30,8 +37,33 @@ const Header = () => {
     });
   };
 
+  const [position, setPosition] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const beforeScrollY = useRef(0);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = useMemo(
+    () =>
+      throttle(() => {
+        const currentScrollY = window.scrollY;
+        if (beforeScrollY.current < currentScrollY) {
+          setVisible(false);
+        } else {
+          setVisible(true);
+        }
+        beforeScrollY.current = currentScrollY;
+      }, 10),
+    [beforeScrollY],
+  );
+
   return (
-    <SHeader location={location}>
+    <SHeader location={location} visible={visible}>
       <SLogoContainer
         onClick={() => {
           navigate("/");
@@ -77,8 +109,12 @@ const SHeader = styled.header`
   height: 100px;
   background: ${props => props.theme.color.mainNavy};
   color: white;
-  position: relative;
-  z-index: 1;
+  position: sticky;
+  top: ${props => (props.visible ? "0%" : "-20%")};
+  left: 0;
+  width: 100%;
+  z-index: 900;
+  transition: 0.3s;
 `;
 
 const SLogoContainer = styled.div`

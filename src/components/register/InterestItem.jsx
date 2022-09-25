@@ -37,6 +37,6 @@ const SList = styled.li`
   margin-right: 10px;
   border-radius: 30px;
   background: ${props =>
-    props.toggle ? props.theme.color.backgroundGradient : "white"};
+    props.toggle ? props.theme.color.mainOrange : "white"};
   color: ${props => (props.toggle ? "white" : "black")};
 `;

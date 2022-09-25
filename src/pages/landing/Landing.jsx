@@ -41,6 +41,7 @@ const SLanding = styled.div`
   height: calc(100vh - 100px);
   background: ${props => props.theme.color.mainIvory};
   display: flex;
+  gap: 200px;
 
   & .logo {
     position: absolute;

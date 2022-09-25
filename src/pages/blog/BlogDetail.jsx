@@ -186,6 +186,7 @@ const SLikeNtags = styled.div`
 `;
 const TagList = styled.div`
   display: flex;
+  margin-top: 20px;
 `;
 const SProfile = styled.div`
   width: 44px;
