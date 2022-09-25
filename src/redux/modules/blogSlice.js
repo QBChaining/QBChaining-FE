@@ -39,6 +39,7 @@ export const blogSlice = createSlice({
     },
     [getBlogCommunityListDB.fulfilled]: (state, action) => {
       //블로그 메인 게시물 리스트 GET
+  
       state.blogList = action.payload;
       state.isFetching = false;
       state.errorMessage = null;

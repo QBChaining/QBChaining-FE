@@ -27,8 +27,8 @@ const CommentAdd = () => {
       <input
         type="text"
         ref={commentRefInput}
-        placeholder={"20자이하"}
-        maxLength="20"
+        placeholder={"500자이하"}
+        maxLength="500"
       />
       <button onClick={addComment}>추가하기</button>
     </SComment>
@@ -53,7 +53,7 @@ const SComment = styled.div`
     top: 40px;
     right: 0;
     padding: 9px 40px;
-    background: ${props => props.theme.color.mainBlue};
+    background: ${props => props.theme.color.mainNavy};
     border: none;
     color: ${props => props.theme.color.white};
     border-radius: 30px;

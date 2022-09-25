@@ -180,10 +180,9 @@ const EditorComponent = ({
     }
   };
 
-  //titlechangehandler
+  /**titlechangehandler  */
   const onTitleChangeHandler = e => {
     if (isBlogEdit) {
-      e.preventDefault();
       setBlogTitle(e.target.value);
     } else {
       setTitle(e.target.value);
@@ -197,6 +196,8 @@ const EditorComponent = ({
       // quillRef.current.firstChild.innerHTML = editData.content;
     }
   }, [isEdit, editData, isComment]);
+
+  /** 블로그 게시글 수정할 때  원래 있던 벨류 값  불러오기  */
   useEffect(() => {
     if (isBlogEdit) {
       setBlogTitle(blogEditData.title);
@@ -215,6 +216,10 @@ const EditorComponent = ({
 
   //태그추가
   const onAddTagHandler = () => {
+    if (tags.length > 4) {
+      errorAlert("태그는 5개가 최대입니다!");
+      return;
+    }
     if (tagText.current.value.length < 1) {
       errorAlert("빈칸입니다.");
       return;
@@ -429,30 +434,25 @@ const STags = styled.div`
 `;
 
 const SSubmitButton = styled.button`
-  height: 38px;
+  height: 40px;
   min-width: 140px;
-  background-color: ${props =>
-    props.location.includes("qna")
-      ? props.theme.color.mainGreen
-      : props.theme.color.mainBlue};
-  border: 1px solid
-    ${props =>
-      props.location.includes("qna")
-        ? props.theme.color.mainGreen
-        : props.theme.color.mainBlue};
+  background-color: ${props => props.theme.color.mainOrange};
+  border: none;
   color: ${props => props.theme.color.white};
+  border-radius: 20px;
 `;
 
 const SCommentWriteButton = styled.button`
   position: absolute;
   right: 0;
   bottom: -37px;
-  height: 38px;
+  height: 40px;
   min-width: 140px;
-  color: ${props => props.theme.color.mainGreen};
+  border-radius: 20px;
+  color: ${props => props.theme.color.white};
   border: none;
-  background-color: ${props => props.theme.color.white};
-  font-weight: 600;
+  background-color: ${props => props.theme.color.mainOrange};
+  font-weight: 500;
 `;
 
 const STagRemove = styled.button`
