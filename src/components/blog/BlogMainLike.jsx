@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   postBlogLikeDB,
@@ -15,7 +15,15 @@ const BlogLike = ({ isLove }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [Like, setLike] = useState(isLove);
-  console.log(isLove);
+  console.log("하트블린", isLove);
+  useEffect(() => {
+    if (isLove) {
+      setLike(true);
+    }
+    if (!isLove) {
+      setLike(false);
+    }
+  }, [isLove]);
   const onLikeBlog = () => {
     if (!isLogin) {
       needLoginAlert();

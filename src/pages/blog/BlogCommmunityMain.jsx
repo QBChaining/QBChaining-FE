@@ -16,14 +16,8 @@ import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogMainList from "../../components/blog/BlogMainList";
 import mainpage from "../../assets/images/mainpage.png";
 import { Helmet } from "react-helmet-async";
-import BlogPreView from "../../components/blog/BlogPreView";
-// import BlogHover from "../../components/blog/BlogHover";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
-  console.log(blogMainLists);
-  console.log(typeof null);
-  // const userProfile = useSelector(state => state.userSlice.userProfile);
-  // const targetData = useSelector(state => state.blogSlice.blogDetail);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -32,11 +26,7 @@ const BlogCommmunityMain = () => {
   useEffect(() => {
     dispatch(getBlogCommunityListDB());
     dispatch(colorSetBlue());
-  }, [dispatch]);
-
-  const getBlogDetail = id => {
-    dispatch(getBlogDetailDB(id));
-  };
+  }, []);
 
   return (
     <SBlogCommmunityMain>
@@ -69,18 +59,6 @@ const BlogCommmunityMain = () => {
           </ul>
         </SContentFilter>
         <SContentWrapper>
-          <SLeftContainer>
-            <SUserInfo>
-              {/* <SPreviewTitle>
-                <SProfile />
-                <p>개발자와 개발자들의 커뮤니티 사이트 QB-CHAINING</p>
-              </SPreviewTitle> */}
-            </SUserInfo>
-            <SPreviewContent>
-              <BlogPreView />
-              {/* <ToastViewer /> */}
-            </SPreviewContent>
-          </SLeftContainer>
           <SRightContainer>
             {blogMainLists?.map(posts => (
               <BlogMainList posts={posts} key={posts.id} />
