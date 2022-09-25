@@ -12,7 +12,6 @@ import blogbookmarkadd from "../../assets/images/BookmarkFillIcon.png";
 import { useParams } from "react-router-dom";
 import { getToday } from "./../../utils/today";
 const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
-  const [bookMark, setBookMark] = useState(isbookmark);
   const dispatch = useDispatch();
   const { isLogin } = useSelector(state => state.userSlice);
   const { id } = useParams();
@@ -20,7 +19,7 @@ const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
   const totalData = {
     id: target.id,
     title: target.title,
-    user_name: target.user_name,
+    user_name: target.userName,
     createdAt: getToday(),
   };
 
@@ -30,17 +29,15 @@ const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
       return;
     }
     dispatch(postBlogBookMarkDB(totalData));
-    setBookMark(!bookMark);
   };
   const onDeleteBookMark = () => {
     dispatch(deleteBlogBookMarkDB(id));
-    setBookMark(!bookMark);
   };
 
   return (
     <>
       <div>
-        {bookMark === true ? (
+        {isbookmark === true ? (
           <SBookMarkBtn onClick={onDeleteBookMark} />
         ) : (
           <SbookMarkBtnAdd onClick={onAddBookMark} />

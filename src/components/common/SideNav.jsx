@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const SideNav = () => {
   const navigate = useNavigate();
+  const location = window.location.pathname;
   const goPage = page => {
     navigate(`/${page}`);
   };
@@ -11,6 +12,8 @@ const SideNav = () => {
     <SNav>
       <SUl>
         <SList
+          location={location}
+          type={"qna"}
           onClick={() => {
             goPage("qna");
           }}
@@ -18,6 +21,8 @@ const SideNav = () => {
           Q&A
         </SList>
         <SList
+          location={location}
+          type={"blog"}
           onClick={() => {
             goPage("blog");
           }}
@@ -41,8 +46,13 @@ const SNav = styled.nav`
 const SUl = styled.ul``;
 
 const SList = styled.li`
-  background-color: ${props => props.theme.color.mainNavy};
+  background-color: ${props =>
+    props.location.includes(props.type)
+      ? props.theme.color.mainOrange
+      : props.theme.color.mainNavy};
+  /* background-color: ${props => props.theme.color.mainNavy}; */
   width: 93px;
+  width: ${props => (props.location.includes(props.type) ? "120px" : "93px")};
   height: 40px;
   font-size: 18px;
   font-weight: 600;
@@ -53,4 +63,10 @@ const SList = styled.li`
   margin-bottom: 10px;
   border-radius: 0 20px 20px 0;
   cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    width: 120px;
+    background-color: ${props => props.theme.color.mainOrange};
+  }
 `;

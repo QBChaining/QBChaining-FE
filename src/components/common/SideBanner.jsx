@@ -12,15 +12,15 @@ import "slick-carousel/slick/slick-theme.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getHotBlogDB } from "../../redux/async/blog";
 import { getQnaCategoryListDB } from "../../redux/async/qna.js";
+import { useNavigate } from "react-router-dom";
 const SideBanner = ({ type }) => {
-  const blogHotList = useSelector(state => state.blogSlice.hotBlog);
-  const blogHotListSlice = blogHotList.slice(0, 4);
-  const qnaHotList = useSelector(state => state.qnaSlice.qnaList);
-  const qnaHotListSlice = qnaHotList.slice(0, 4);
-  console.log(qnaHotList);
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const hotList = useSelector(state =>
+    type === "qna" ? state.qnaSlice.qnaList : state.blogSlice.hotBlog,
+  );
 
-  console.log(blogHotList);
+  const hotListSlice = hotList.slice(0, 4);
+  const dispatch = useDispatch();
   const settings = {
     dots: false,
     infinite: true,
@@ -35,6 +35,10 @@ const SideBanner = ({ type }) => {
   // useEffect(() => {
   //   dispatch(getQnaCategoryListDB());
   // }, []);
+
+  const goDetail = (type, id) => {
+    navigate(`/${type}/detail/${id}`);
+  };
   return (
     <SBannerWrapper type={type}>
       <SHotContent>
@@ -44,25 +48,19 @@ const SideBanner = ({ type }) => {
             ? "최근에 추천 많이 받은 질문 "
             : "최근에 추천 많이 받은 게시글"}
         </SHotHeader>
-        {type === "qna" ? (
-          <SHotList>
-            {qnaHotListSlice.map(hot => (
-              <li key={hot.id}>
-                <SListTitle>{hot.title}</SListTitle>
-                <SLike>{hot.like}</SLike>
-              </li>
-            ))}
-          </SHotList>
-        ) : (
-          <SHotList>
-            {blogHotListSlice.map(hot => (
-              <li key={hot.id}>
-                <SListTitle>{hot.title}</SListTitle>
-                <SLike>{hot.like}</SLike>
-              </li>
-            ))}
-          </SHotList>
-        )}
+        <SHotList>
+          {hotListSlice.map(hot => (
+            <li
+              key={hot.id}
+              onClick={() => {
+                goDetail(type, hot.id);
+              }}
+            >
+              <SListTitle>{hot.title}</SListTitle>
+              <SLike>{hot.like}</SLike>
+            </li>
+          ))}
+        </SHotList>
       </SHotContent>
       <SBanner>
         <Slider {...settings}>
@@ -169,6 +167,12 @@ const SHotList = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    cursor: pointer;
+    color: #c0c0c0;
+
+    &:hover {
+      color: black;
+    }
     &:last-child {
       border-bottom: none;
     }

@@ -1,4 +1,4 @@
-import { legacy_createStore } from "@reduxjs/toolkit";
+import { legacy_createStore, nanoid } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -10,6 +10,9 @@ import QnaLikeFill from "../../assets/images/addLike.png";
 import WinnerCrown from "../../assets/images/WinnerCrown.png";
 import ToastViewer from "./../editor/ToastViewer";
 import { useNavigate } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
+import { ClipLoader } from "react-spinners";
+import { removeCommentList } from "../../redux/modules/qnaSlice";
 import {
   choiceCommentListDB,
   deleteCommentListDB,
@@ -25,17 +28,25 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
 
   const [winner, setWinner] = useState([]);
   //commentList 구독
-  const list = useSelector(state => state.qnaSlice.commentList);
+  const { commentList: list, isCommentFetching } = useSelector(
+    state => state.qnaSlice,
+  );
 
   //디테일정보 구독
   const target = useSelector(state => state.qnaSlice.qnaTarget);
 
   const { isLogin, userName } = useSelector(state => state.userSlice);
 
-  //최초진입시 commentList 받아오기
-  useEffect(() => {
-    dispatch(getCommentListDB(id));
-  }, [id]);
+  // useEffect(() => {
+  //   let data = {
+  //     id,
+  //     pageNumber,
+  //   };
+  //   dispatch(getCommentListDB(data)).then(res =>
+  //     setHasNextPage(res.payload.length === 10),
+  //   );
+  //   console.log(data);
+  // }, [id, pageNumber]);
 
   //코멘트 삭제 dispatch
   const onDeleteHandler = id => {
@@ -317,4 +328,11 @@ const SNoComment = styled.div`
   font-size: 26px;
   font-weight: 500;
   min-height: 100px;
+`;
+
+const SLoading = styled.div`
+  min-height: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

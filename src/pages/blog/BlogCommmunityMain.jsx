@@ -21,8 +21,6 @@ import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 // import BlogHover from "../../components/blog/BlogHover";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
-  // const userProfile = useSelector(state => state.userSlice.userProfile);
-  // const targetData = useSelector(state => state.blogSlice.blogDetail);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -32,6 +30,8 @@ const BlogCommmunityMain = () => {
     dispatch(getBlogCommunityListDB());
     dispatch(colorSetBlue());
   }, []);
+
+  console.log(blogMainLists);
 
   return (
     <SBlogCommmunityMain>
@@ -73,7 +73,7 @@ const BlogCommmunityMain = () => {
               <BlogMainList posts={posts} key={posts.id} />
             ))}
           </SLeftContainer>
-          <SideBanner />
+          <SideBanner type={"blog"} />
         </SContentWrapper>
       </SBody>
       <ModalBookmark />
@@ -83,7 +83,6 @@ const BlogCommmunityMain = () => {
 
 export default BlogCommmunityMain;
 //전체
-
 const SBlogCommmunityMain = styled.div``;
 
 //탑박스
@@ -106,9 +105,9 @@ const STopBox = styled.div`
 `;
 
 const SBody = styled.div`
-  width: 1560px;
-  padding: 0 20px;
-  margin: 0 auto 0 200px;
+  width: 1920px;
+  padding: 0 200px;
+  margin: 0 auto;
 `;
 
 const SContentWrapper = styled.div`

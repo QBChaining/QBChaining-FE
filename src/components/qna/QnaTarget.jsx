@@ -68,11 +68,11 @@ const QnaTarget = ({ isDatail }) => {
   };
 
   //최초진입시 get요청
-  useEffect(() => {
-    if (isLogin) {
-      dispatch(getBookmarkListDB());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isLogin) {
+  //     dispatch(getBookmarkListDB());
+  //   }
+  // }, []);
 
   return (
     <SQnaTarget>

@@ -3,21 +3,30 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOneQnaListDB } from "../../redux/async/qna";
 import { colorSetGreen } from "../../redux/modules/userSlice";
-import ContentList from "./../../components/common/ContentList";
 import QnaCommentList from "./../../components/qna/QnaCommentList";
 import QnaTarget from "../../components/qna/QnaTarget";
 import styled from "styled-components";
-import ModalBookmark from "./../../components/common/ModalBookmark";
 import QnaWriteArrow from "../../assets/images/QnaWriteArrow.png";
 import EditorComponent from "../../components/common/EditorComponent";
 import { Helmet } from "react-helmet-async";
-import { removeQnaList } from "../../redux/modules/qnaSlice";
+import { removeCommentList, removeQnaList } from "../../redux/modules/qnaSlice";
+import { ClipLoader } from "react-spinners";
+import { useInView } from "react-intersection-observer";
+import { getCommentListDB } from "./../../redux/async/qna";
 
 const QnaDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const target = useSelector(state => state.qnaSlice.qnaTarget);
+  const isDetailFetcing = useSelector(state => state.qnaSlice.isDetailFetcing);
+  const { commentList: list, isCommentFetching } = useSelector(
+    state => state.qnaSlice,
+  );
+
+  const [pageNumber, setPageNumber] = useState(0);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const [infiniteTarget, inView] = useInView();
 
   useEffect(() => {
     dispatch(getOneQnaListDB(id));
@@ -30,19 +39,56 @@ const QnaDetail = () => {
     };
   }, []);
 
+  //코멘트 무한스크롤
+  useEffect(() => {
+    let data = {
+      id,
+      pageNumber,
+    };
+    dispatch(getCommentListDB(data)).then(res =>
+      setHasNextPage(res.payload.length === 10),
+    );
+  }, [id, pageNumber]);
+
+  //페이지가 바닥에 닿을때마다 pageNumber+1
+  useEffect(() => {
+    if (list.length !== 0 && inView && hasNextPage) {
+      setPageNumber(pageNumber => pageNumber + 1);
+    }
+  }, [inView]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeCommentList());
+    };
+  }, []);
+
   return (
     <SQnaDetail>
       <Helmet>
         <title>Qna Detail</title>
       </Helmet>
       <SLeftContainer>
-        <QnaTarget isDatail={true} />
-        <QnaCommentList
-          author={target.user?.userName}
-          resolve={target.isResolve}
-          id={id}
-          qnaId={id}
-        />
+        {!isDetailFetcing ? (
+          <>
+            <QnaTarget isDatail={true} />
+            <QnaCommentList
+              author={target.user?.userName}
+              resolve={target.isResolve}
+              id={id}
+              qnaId={id}
+            />
+            {!isCommentFetching && hasNextPage && (
+              <SLoading ref={infiniteTarget}>
+                <ClipLoader />
+              </SLoading>
+            )}
+          </>
+        ) : (
+          <SLoading>
+            <ClipLoader />
+          </SLoading>
+        )}
       </SLeftContainer>
       <SRightContainer>
         <SAddCommentTitle>댓글 작성</SAddCommentTitle>
@@ -96,4 +142,12 @@ const SAddCommentTitle = styled.h2`
   font-size: 20px;
   font-weight: 400;
   padding: 60px 0 30px 0;
+`;
+
+const SLoading = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

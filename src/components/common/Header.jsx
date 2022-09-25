@@ -77,7 +77,7 @@ const Header = () => {
       <SAlarmLoginWrapper>
         <SAlarmConatainer className="alarmConatainer active">
           {/* <HiOutlineBell /> */}
-          <NotifiTest />
+          {/* <NotifiTest /> */}
           {/* <Notification /> */}
         </SAlarmConatainer>
         <SLoginConatainer className="loginConatainer">
@@ -112,7 +112,6 @@ const SHeader = styled.header`
   position: sticky;
   top: ${props => (props.visible ? "0%" : "-20%")};
   left: 0;
-  width: 100%;
   z-index: 900;
   transition: 0.3s;
 `;

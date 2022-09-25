@@ -6,6 +6,7 @@ import styled from "styled-components";
 import ToastViewer from "../editor/ToastViewer";
 import QnaLike from "../../assets/images/unlike.png";
 import GobackArrow from "../../assets/images/GobackArrow.png";
+import { ClipLoader } from "react-spinners";
 import { getBlogCommentListDB, getBlogDetailDB } from "../../redux/async/blog";
 
 const WriteBookmark = ({ type, id, onToggleHandler }) => {
@@ -20,6 +21,10 @@ const WriteBookmark = ({ type, id, onToggleHandler }) => {
     type === "qna" ? state.qnaSlice.commentList : state.blogSlice.commentList,
   );
 
+  const { isFetching } = useSelector(state =>
+    type === "qna" ? state.qnaSlice : state.blogSlice,
+  );
+
   useEffect(() => {
     dispatch(type === "qna" ? getOneQnaListDB(id) : getBlogDetailDB(id));
     dispatch(type === "qna" ? getCommentListDB(id) : getBlogCommentListDB(id));
@@ -28,51 +33,59 @@ const WriteBookmark = ({ type, id, onToggleHandler }) => {
   return (
     <SWriteBookmark color={color}>
       <SWriteBookmarkWrapper>
-        <SBackButton color={color} onClick={onToggleHandler}>
-          돌아가기
-        </SBackButton>
-        <SUserInfo>
-          <SUserProfile profile={target.profileImg} />
-          <SUserInfoText>
-            <SUserName>{target.userName}</SUserName>
-            <SCreateAt>{target.createdAt}</SCreateAt>
-          </SUserInfoText>
-        </SUserInfo>
-        <SContent>
-          <SContentTitle>{target.title}</SContentTitle>
-          <SContentText>
-            <ToastViewer content={target.content} />
-          </SContentText>
-          <SSubinfo>
-            <STags>
-              {target.tags?.map((data, i) => {
-                return (
-                  <STag color={color} key={i}>
-                    {data}
-                  </STag>
-                );
-              })}
-            </STags>
-            <SHoneyTip>{target.like}</SHoneyTip>
-          </SSubinfo>
-        </SContent>
-        <SCommentWrapper>
-          {commentList.map(data => (
-            <SComment key={data.id}>
-              <SUserInfo>
-                {type === "qna" ? (
-                  <SUserProfile profile={data.profileImg} />
-                ) : (
-                  <SUserProfile profile={data.profileImg} />
-                )}
-                <SUserInfoText>
-                  <SUserName>{target.userName}</SUserName>
-                </SUserInfoText>
-              </SUserInfo>
-              <ToastViewer content={data.comment} />
-            </SComment>
-          ))}
-        </SCommentWrapper>
+        {!isFetching ? (
+          <>
+            <SBackButton color={color} onClick={onToggleHandler}>
+              돌아가기
+            </SBackButton>
+            <SUserInfo>
+              <SUserProfile profile={target.profileImg} />
+              <SUserInfoText>
+                <SUserName>{target.userName}</SUserName>
+                <SCreateAt>{target.createdAt}</SCreateAt>
+              </SUserInfoText>
+            </SUserInfo>
+            <SContent>
+              <SContentTitle>{target.title}</SContentTitle>
+              <SContentText>
+                <ToastViewer content={target.content} />
+              </SContentText>
+              <SSubinfo>
+                <STags>
+                  {target.tags?.map((data, i) => {
+                    return (
+                      <STag color={color} key={i}>
+                        {data}
+                      </STag>
+                    );
+                  })}
+                </STags>
+                <SHoneyTip>{target.like}</SHoneyTip>
+              </SSubinfo>
+            </SContent>
+            <SCommentWrapper>
+              {commentList.map(data => (
+                <SComment key={data.id}>
+                  <SUserInfo>
+                    {type === "qna" ? (
+                      <SUserProfile profile={data.profileImg} />
+                    ) : (
+                      <SUserProfile profile={data.profileImg} />
+                    )}
+                    <SUserInfoText>
+                      <SUserName>{target.userName}</SUserName>
+                    </SUserInfoText>
+                  </SUserInfo>
+                  <ToastViewer content={data.comment} />
+                </SComment>
+              ))}
+            </SCommentWrapper>
+          </>
+        ) : (
+          <SLoading>
+            <ClipLoader />
+          </SLoading>
+        )}
       </SWriteBookmarkWrapper>
     </SWriteBookmark>
   );
@@ -206,4 +219,12 @@ const SComment = styled.div`
   &:last-child {
     border-bottom: none;
   }
+`;
+
+const SLoading = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

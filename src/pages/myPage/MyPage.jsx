@@ -26,17 +26,19 @@ const MyPage = () => {
 
   return (
     <SMyPage>
-      <button
-        onClick={() => {
-          navigate("/register");
-        }}
-      >
-        레지스터로 가기
-      </button>
       <SUserInfoWrapper>
         <SUserProfile profileImg={userInfo?.profileImg}></SUserProfile>
         <SUserInfo>
-          <SUserName>{userInfo?.name}</SUserName>
+          <SUserName>
+            {userInfo?.name}{" "}
+            <button
+              onClick={() => {
+                navigate("/register");
+              }}
+            >
+              수정하기
+            </button>
+          </SUserName>
           {loginUserName === userName && (
             <SUserDetail>
               <li>{userInfo?.gender}</li>
@@ -50,6 +52,7 @@ const MyPage = () => {
       <SListWrapper>
         <SList>
           <SQna>
+            <STitle>Q&A</STitle>
             <SListContainer>
               <SHeader type={"qna"}>MY 질문</SHeader>
               <SMain>
@@ -76,6 +79,7 @@ const MyPage = () => {
             </SListContainer>
           </SQna>
           <SBlog>
+            <STitle>BLOG</STitle>
             <SListContainer>
               <SHeader type={"blog"}>MY 게시글</SHeader>
               <SMain>
@@ -114,15 +118,15 @@ export default MyPage;
 
 const SMyPage = styled.div`
   position: relative;
-  max-width: 1560px;
-  margin: 150px auto 0;
-  padding: 0 20px 100px;
+  width: 1920px;
+  margin: 45px auto 0;
+  padding: 0 200px;
 `;
 
 const SUserInfoWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 100px;
+  margin-bottom: 140px;
 `;
 
 const SUserProfile = styled.div`
@@ -167,16 +171,15 @@ const SListContainer = styled.div`
 `;
 const SQna = styled.div`
   display: flex;
+  position: relative;
 `;
 const SBlog = styled.div`
   display: flex;
+  position: relative;
 `;
 
 const SHeader = styled.div`
-  background-color: ${props =>
-    props.type === "qna"
-      ? props.theme.color.mainGreen
-      : props.theme.color.mainBlue};
+  background-color: ${props => props.theme.color.mainOrange};
   height: 50px;
   display: flex;
   align-items: center;
@@ -190,6 +193,7 @@ const SMain = styled.ul`
   padding: 20px;
   overflow: auto;
   height: 100%;
+  background-color: ${props => props.theme.color.white};
 `;
 
 const SListInner = styled.li`
@@ -217,4 +221,14 @@ const SCube = styled.div`
   top: 70px;
   right: 200px;
   display: flex;
+`;
+
+const STitle = styled.div`
+  font-family: "Inter", sans-serif;
+  font-size: 50px;
+  font-weight: 900;
+  position: absolute;
+  top: -70px;
+  left: 0;
+  color: ${props => props.theme.color.mainNavy};
 `;
