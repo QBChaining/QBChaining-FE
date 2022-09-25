@@ -243,7 +243,6 @@ const SListHeader = styled.div`
 `;
 
 const STap = styled.ul`
-  margin-top: 20px;
   display: flex;
   justify-content: space-between;
   width: 100%;

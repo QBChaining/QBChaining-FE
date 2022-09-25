@@ -11,8 +11,8 @@ import {
 import { deleteBookmarkListDB } from "./../../redux/async/qna";
 import { errorAlert, needLoginAlert } from "../../utils/swal";
 
-import QnaLike from "../../assets/images/QnaLike.png";
-import QnaLikeFill from "../../assets/images/QnaLikeFill.png";
+import QnaLike from "../../assets/images/unlike.png";
+import QnaLikeFill from "../../assets/images/addLike.png";
 import BookmarkNoFillIcon from "../../assets/images/BookmarkNoFillIcon.png";
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 import ToastViewer from "../editor/ToastViewer";
@@ -22,7 +22,6 @@ const QnaTarget = ({ isDatail }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const target = useSelector(state => state.qnaSlice.qnaTarget);
-  console.log(target);
   const bookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
   const { isLogin, userName } = useSelector(state => state.userSlice);
   //내 즐겨찾기 목록에 있는지 확인
@@ -218,11 +217,11 @@ const STags = styled.ul`
 
 const STag = styled.li`
   padding: 10px 18px;
-  border: 1px solid ${props => props.theme.color.mainGreen};
+  border: 1px solid ${props => props.theme.color.mainOrange};
   border-radius: 30px;
   margin-right: 16px;
   margin-bottom: 16px;
-  color: ${props => props.theme.color.mainGreen};
+  color: ${props => props.theme.color.mainOrange};
   font-weight: 600;
 `;
 
