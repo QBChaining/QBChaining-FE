@@ -5,28 +5,7 @@ import isLeapYear from "dayjs/plugin/isLeapYear"; // 윤년 판단 플러그인
 import "dayjs/locale/ko"; // 한국어 가져오기
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-
-const Cube = ({ data, index }) => {
-  const Today = dayjs(new Date());
-  const day = Today.add(-index, "day").format("YYYY-MM-DD");
-  // for (let i = 0; i < 27; i++) {
-  //   const day = Today.add(-index, "day").format("YYYY-MM-DD");
-  // }
-  return (
-    <div
-      style={{ position: "relative" }}
-      onMouseOver={() => {
-        // setHoverDay(data);
-      }}
-      // onMouseOut={() => {
-      //   setToggle(false);
-      //   setHoverDay("");
-      // }}
-    >
-      {day}
-    </div>
-  );
-};
+import MyPageCube from "./MyPageCube";
 
 const MyPageActivity = () => {
   dayjs.locale("ko");
@@ -35,6 +14,7 @@ const MyPageActivity = () => {
 
   const [cube, setCube] = useState([]);
   const [hoverDay, setHoverDay] = useState("");
+  const [hoverData, setHoverData] = useState([]);
 
   //큐브만들기 반복문
   useEffect(() => {}, []);
@@ -65,13 +45,24 @@ const MyPageActivity = () => {
       <SCubeWrapper>
         {cube.map((data, i) => {
           return (
-            <Cube data={data} key={i} index={i}>
+            <MyPageCube
+              setHoverData={setHoverData}
+              setHoverDay={setHoverDay}
+              data={data}
+              key={i}
+              index={i}
+            >
               asd
-            </Cube>
+            </MyPageCube>
           );
         })}
       </SCubeWrapper>
-      <SCubeItem />
+      <SCubeItem>
+        {hoverDay}
+        {hoverData.map(data => (
+          <div>{data.date}</div>
+        ))}
+      </SCubeItem>
     </>
   );
 };
