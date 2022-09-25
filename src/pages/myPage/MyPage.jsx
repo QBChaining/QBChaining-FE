@@ -12,9 +12,12 @@ const MyPage = () => {
   const dispatch = useDispatch();
   const { userName } = useParams();
 
-  const { isLogin, isFetching, userInfo } = useSelector(
-    state => state.userSlice,
-  );
+  const {
+    isLogin,
+    isFetching,
+    userInfo,
+    userName: loginUserName,
+  } = useSelector(state => state.userSlice);
   useEffect(() => {
     dispatch(getUserInfoActivityDB(userName));
     dispatch(getUserInfoDB(userName));
@@ -33,12 +36,14 @@ const MyPage = () => {
         <SUserProfile profileImg={userInfo?.profileImg}></SUserProfile>
         <SUserInfo>
           <SUserName>{userInfo?.name}</SUserName>
-          <SUserDetail>
-            <li>{userInfo?.gender}</li>
-            <li>{userInfo?.age}</li>
-            <li>{userInfo?.career}</li>
-            <li>{userInfo?.job}</li>
-          </SUserDetail>
+          {loginUserName === userName && (
+            <SUserDetail>
+              <li>{userInfo?.gender}</li>
+              <li>{userInfo?.age}</li>
+              <li>{userInfo?.career}</li>
+              <li>{userInfo?.job}</li>
+            </SUserDetail>
+          )}
         </SUserInfo>
       </SUserInfoWrapper>
       <SListWrapper>
