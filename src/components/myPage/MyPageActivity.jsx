@@ -23,7 +23,7 @@ const MyPageActivity = () => {
     setCube(userActivity);
   }, [userActivity]);
 
-  console.log(cube);
+  console.log(userActivity);
 
   return (
     <>
