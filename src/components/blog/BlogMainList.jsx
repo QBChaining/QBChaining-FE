@@ -92,7 +92,7 @@ const SBloglist = styled.div`
   position: relative;
   /* width: 100%; */
   width: 480px;
-  min-height: 350px;
+  height: 350px;
   /* height: 100%; */
   background: #ffffff;
   border-radius: 30px;
@@ -214,7 +214,7 @@ const SContentTitle = styled.div`
 `;
 
 const SContent = styled.div`
-  min-height: 120px;
+  height: 120px;
   overflow: hidden;
   margin-top: 20px;
 `;

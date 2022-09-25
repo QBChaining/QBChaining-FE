@@ -80,6 +80,7 @@ const SSearchButton = styled.button`
   width: 87px;
   border-radius: 30px;
   background-color: #1e1e1e;
+  border: none;
   color: white;
   font-size: 15px;
 `;

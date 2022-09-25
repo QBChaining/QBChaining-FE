@@ -90,7 +90,7 @@ const SBannerWrapper = styled.div`
   width: 400px;
   height: 490px;
   position: sticky;
-  top: 416px;
+  top: 320px;
 `;
 
 const SHotContent = styled.div`

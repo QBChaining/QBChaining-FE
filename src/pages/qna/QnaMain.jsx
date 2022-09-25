@@ -89,8 +89,6 @@ const QnaMain = () => {
     };
   }, [category, resolveTap]);
 
-  console.log(resolveTap);
-
   return (
     <SQnaMain>
       <Helmet>
