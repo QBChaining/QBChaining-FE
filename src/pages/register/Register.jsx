@@ -82,8 +82,8 @@ const Register = () => {
   const dispatch = useDispatch();
 
   const onSubmitHandler = () => {
-    if (language.length < 2) {
-      errorAlert("관심언어는 최소 두개이상 선택해주세요!");
+    if (language.length < 1) {
+      errorAlert("관심언어는 최소 한개 이상 선택해주세요!");
       return;
     }
     if (career.length < 1) {
@@ -129,7 +129,7 @@ const Register = () => {
       <SSelectLangWrapper>
         <SLangTitle>
           관심언어를 선택해 주세요.
-          <SLangSubtitle>최소 2개 이상 선택</SLangSubtitle>
+          <SLangSubtitle>최소 1개 이상 선택</SLangSubtitle>
         </SLangTitle>
         <SLangUl>
           {categories.interestCategory.map(data => (
@@ -265,7 +265,7 @@ const SButtonIcon = styled.div`
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: ${props => props.theme.color.backgroundGradient};
+  background: ${props => props.theme.color.mainOrange};
 
   &::before {
     content: "";

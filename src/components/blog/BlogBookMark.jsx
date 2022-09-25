@@ -11,11 +11,9 @@ import blogbookmark from "../../assets/images/BookmarkNoFillIcon.png";
 import blogbookmarkadd from "../../assets/images/BookmarkFillIcon.png";
 import { useParams } from "react-router-dom";
 const BlogBookMark = ({ isbookmark, posts, isdetailbookmark }) => {
-  const [bookMark, setBookMark] = useState(isbookmark);
-
   return (
     <>
-      <div>{bookMark === true ? <SBookMarkBtn /> : <SbookMarkBtnAdd />}</div>
+      <div>{isbookmark === true ? <SBookMarkBtn /> : <SbookMarkBtnAdd />}</div>
     </>
   );
 };

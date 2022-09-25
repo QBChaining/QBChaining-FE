@@ -1,15 +1,18 @@
 import React from "react";
 import Header from "./Header";
 import SideNav from "./SideNav";
+import styled from "styled-components";
 
 const Layout = props => {
   return (
-    <div>
+    <SLayout>
       <Header />
       <SideNav />
       {props.children}
-    </div>
+    </SLayout>
   );
 };
 
 export default Layout;
+
+const SLayout = styled.div``;

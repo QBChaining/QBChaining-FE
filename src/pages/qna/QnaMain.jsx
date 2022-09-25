@@ -89,8 +89,6 @@ const QnaMain = () => {
     };
   }, [category, resolveTap]);
 
-  console.log(resolveTap);
-
   return (
     <SQnaMain>
       <Helmet>
@@ -217,7 +215,7 @@ const SMainCategory = styled.div`
 
 const SQnaWrapper = styled.div`
   display: flex;
-  max-width: 1560px;
+  width: 1560px;
   padding: 0 20px;
   margin: 0 auto;
 `;

@@ -116,7 +116,7 @@ const SNodata = styled.div`
   padding-left: 30px;
   border: ${props =>
     props.resolve
-      ? `1px solid ${props.theme.color.mainGreen}`
+      ? `1px solid ${props.theme.color.mainOrange}`
       : `1px solid ${props.theme.color.grey3}`};
   box-shadow: ${props =>
     props.resolve

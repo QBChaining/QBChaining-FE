@@ -1,29 +1,20 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import dayjs from "dayjs";
-import isLeapYear from "dayjs/plugin/isLeapYear"; // 윤년 판단 플러그인
-import "dayjs/locale/ko"; // 한국어 가져오기
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import MyPageCube from "./MyPageCube";
 
 const MyPageActivity = () => {
-  dayjs.locale("ko");
-
   const { userActivity } = useSelector(state => state.userSlice);
-
   const [cube, setCube] = useState([]);
   const [hoverDay, setHoverDay] = useState("");
   const [hoverData, setHoverData] = useState([]);
-
-  //큐브만들기 반복문
-  useEffect(() => {}, []);
 
   useEffect(() => {
     setCube(userActivity);
   }, [userActivity]);
 
-  console.log(cube);
+  console.log(userActivity);
 
   return (
     <>
@@ -43,26 +34,29 @@ const MyPageActivity = () => {
         ))}
       </SCubeWrapper> */}
       <SCubeWrapper>
-        {cube.map((data, i) => {
-          return (
-            <MyPageCube
-              setHoverData={setHoverData}
-              setHoverDay={setHoverDay}
-              data={data}
-              key={i}
-              index={i}
-            >
-              asd
-            </MyPageCube>
-          );
-        })}
-      </SCubeWrapper>
-      <SCubeItem>
-        {hoverDay}
-        {hoverData.map(data => (
-          <div>{data.date}</div>
+        {cube.map((data, i) => (
+          <MyPageCube
+            hoverData={hoverData}
+            setHoverData={setHoverData}
+            hoverDay={hoverDay}
+            setHoverDay={setHoverDay}
+            data={data}
+            length={data.length}
+            key={i}
+            index={i}
+          />
         ))}
-      </SCubeItem>
+      </SCubeWrapper>
+      {/* <SCubeItem>
+        {hoverData.map((data, i) => (
+          <div key={i}>
+            {data.post && <div>블로그{data.post}</div>}
+            {data.postComment && <div>블로그 댓글{data.postComment}</div>}
+            {data.qna && <div>Q&A{data.qna}</div>}
+            {data.qnaComment && <div>Q&A 댓글{data.qnaComment}</div>}
+          </div>
+        ))}
+      </SCubeItem> */}
     </>
   );
 };
@@ -78,7 +72,6 @@ const SCubeWrapper = styled.div`
   & > div {
     width: 40px;
     height: 40px;
-    background-color: ${props => props.theme.color.grey5};
     border: 2px solid ${props => props.theme.color.mainIvory};
   }
 
@@ -107,6 +100,24 @@ const SCubeWrapper = styled.div`
 const SCubeItem = styled.div`
   position: absolute;
   top: 0;
-  left: -200px;
+  left: -230px;
   z-index: 10;
+  height: 200px;
+  padding: 20px;
+  overflow: auto;
+  & > div {
+    padding: 5px;
+  }
+`;
+
+const SChartContainer = styled.div`
+  position: absolute;
+  top: -200px;
+  right: -230px;
+`;
+const ChartWrapper = styled.div``;
+
+const SActiveData = styled.div`
+  position: absolute;
+  top: 100px;
 `;

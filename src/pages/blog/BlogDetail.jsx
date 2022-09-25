@@ -16,7 +16,7 @@ import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
 import { Helmet } from "react-helmet-async";
 
 const BlogCommunityDetail = () => {
-  const detail = useSelector(state => state.blogSlice.blogDetail);
+  const { blogDetail: detail } = useSelector(state => state.blogSlice);
   const userNick = useSelector(state => state.userSlice.userName);
   // const { blogBookMark } = useSelector(state => state.blogSlice);
 
@@ -37,6 +37,8 @@ const BlogCommunityDetail = () => {
   const goMypage = name => {
     navigate(`/mypage/${name}`);
   };
+
+  console.log(detail);
 
   return (
     <SContainer>
@@ -103,7 +105,11 @@ const BlogCommunityDetail = () => {
                 </STag>
               ))}
             </TagList>
-            <BlogLike love={detail.isLike} isbookmark={detail.isBookmark} />
+            <BlogLike
+              isLike={detail.isLike}
+              like={detail.like}
+              isbookmark={detail.isBookmark}
+            />
           </SLikeNtags>
         </SContentWrapper>
       </div>
@@ -119,9 +125,10 @@ const BlogCommunityDetail = () => {
 export default BlogCommunityDetail;
 
 const SContainer = styled.div`
-  width: 1260px;
-  margin: 0 auto;
+  width: 1660px;
+  margin: auto;
   margin-top: 40px;
+  padding: 0 200px;
   padding-bottom: 20px;
 `;
 const SNickName = styled.div``;
@@ -186,6 +193,7 @@ const SLikeNtags = styled.div`
 `;
 const TagList = styled.div`
   display: flex;
+  margin-top: 20px;
 `;
 const SProfile = styled.div`
   width: 44px;

@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import ToastViewer from "../editor/ToastViewer";
 import BlogBookMark from "./BlogBookMark";
 import unlike from "../../assets/images/GreyQnaLike.png";
 import cmtComment from "../../assets/images/GreyQnaComment.png";
-
-import { getBlogDetailDB } from "../../redux/async/blog";
-import BlogHover from "./BlogHover";
 import { getToday } from "./../../utils/today";
 const BlogMainList = ({ posts }) => {
+  const [Like, setLike] = useState(posts.isLove);
+  useEffect(() => {
+    if (posts.isLove) {
+      setLike(true);
+    }
+    if (!posts.isLove) {
+      setLike(false);
+    }
+  }, [posts.isLove]);
   const navigate = useNavigate();
-  console.log(posts);
 
   //몇일전 구하는 함수
   const timeForToday = value => {
@@ -92,7 +95,7 @@ const SBloglist = styled.div`
   position: relative;
   /* width: 100%; */
   width: 480px;
-  min-height: 350px;
+  height: 350px;
   /* height: 100%; */
   background: #ffffff;
   border-radius: 30px;
@@ -214,7 +217,7 @@ const SContentTitle = styled.div`
 `;
 
 const SContent = styled.div`
-  min-height: 120px;
+  height: 120px;
   overflow: hidden;
   margin-top: 20px;
 `;

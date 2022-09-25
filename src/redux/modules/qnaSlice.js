@@ -31,6 +31,7 @@ const qnaSlice = createSlice({
     errorMessage: "",
     isFetching: false,
     isDetailFetcing: false,
+    isCommentFetching: false,
   },
   reducers: {
     removeUserInfo: (state, { payload }) => {
@@ -39,6 +40,9 @@ const qnaSlice = createSlice({
     removeQnaList: (state, { payload }) => {
       state.qnaList = [];
       state.qnaTarget = {};
+    },
+    removeCommentList: (state, { payload }) => {
+      state.commentList = [];
     },
   },
   extraReducers: {
@@ -152,15 +156,15 @@ const qnaSlice = createSlice({
     },
     //댓글 조회
     [getCommentListDB.fulfilled]: (state, { payload }) => {
-      state.commentList = payload;
-      state.isFetching = false;
+      state.commentList = state.commentList.concat(payload);
+      state.isCommentFetching = false;
       state.errorMessage = null;
     },
     [getCommentListDB.pending]: (state, { payload }) => {
-      state.isFetching = true;
+      state.isCommentFetching = true;
     },
     [getCommentListDB.rejected]: (state, { payload: errorMessage }) => {
-      state.isFetching = false;
+      state.isCommentFetching = false;
       state.errorMessage = errorMessage;
     },
     //댓글 생성
@@ -301,5 +305,6 @@ const qnaSlice = createSlice({
     },
   },
 });
-export const { removeUserInfo, removeQnaList } = qnaSlice.actions;
+export const { removeUserInfo, removeQnaList, removeCommentList } =
+  qnaSlice.actions;
 export default qnaSlice.reducer;

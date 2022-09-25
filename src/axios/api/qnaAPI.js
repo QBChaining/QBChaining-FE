@@ -40,8 +40,10 @@ export const qnaApi = {
   dislikeQnaList: data => instance.delete(`qna/${data.id}/like`),
 
   //댓글 조회
-  getCommentList: id =>
-    instance.get(`/qna/${id}/comments?page_count=10&page=0`),
+  getCommentList: data =>
+    instance.get(
+      `/qna/${data.id}/comments?page_count=10&page=${data.pageNumber}`,
+    ),
 
   //댓글 작성
   postCommentList: data =>

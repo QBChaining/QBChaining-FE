@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import QnaMainillust from "../../assets/images/QnaMainillust.png";
 import HotQna from "../../assets/images/Hotqna.png";
@@ -9,8 +9,18 @@ import Like from "../../assets/images/unlike.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import { useSelector, useDispatch } from "react-redux";
+import { getHotBlogDB } from "../../redux/async/blog";
+import { getQnaCategoryListDB } from "../../redux/async/qna.js";
+import { useNavigate } from "react-router-dom";
 const SideBanner = ({ type }) => {
+  const navigate = useNavigate();
+  const hotList = useSelector(state =>
+    type === "qna" ? state.qnaSlice.qnaList : state.blogSlice.hotBlog,
+  );
+
+  const hotListSlice = hotList.slice(0, 4);
+  const dispatch = useDispatch();
   const settings = {
     dots: false,
     infinite: true,
@@ -19,6 +29,16 @@ const SideBanner = ({ type }) => {
     slidesToScroll: 1,
   };
 
+  useEffect(() => {
+    dispatch(getHotBlogDB());
+  }, []);
+  // useEffect(() => {
+  //   dispatch(getQnaCategoryListDB());
+  // }, []);
+
+  const goDetail = (type, id) => {
+    navigate(`/${type}/detail/${id}`);
+  };
   return (
     <SBannerWrapper type={type}>
       <SHotContent>
@@ -29,25 +49,17 @@ const SideBanner = ({ type }) => {
             : "최근에 추천 많이 받은 게시글"}
         </SHotHeader>
         <SHotList>
-          <li>
-            <SListTitle>
-              개발자 언어란 무엇일까 ?개발자 언어란 무엇일까 ?개발자 언어란
-              무엇일까 ?개발자 언어란 무엇일까 ?개발자 언어란 무엇일까 ?
-            </SListTitle>
-            <SLike>167</SLike>
-          </li>
-          <li>
-            <SListTitle>개발자 언어란 무엇일까 ?</SListTitle>
-            <SLike>167</SLike>
-          </li>
-          <li>
-            <SListTitle>개발자 언어란 무엇일까 ?</SListTitle>
-            <SLike>167</SLike>
-          </li>
-          <li>
-            <SListTitle>개발자 언어란 무엇일까 ?</SListTitle>
-            <SLike>167</SLike>
-          </li>
+          {hotListSlice.map(hot => (
+            <li
+              key={hot.id}
+              onClick={() => {
+                goDetail(type, hot.id);
+              }}
+            >
+              <SListTitle>{hot.title}</SListTitle>
+              <SLike>{hot.like}</SLike>
+            </li>
+          ))}
         </SHotList>
       </SHotContent>
       <SBanner>
@@ -90,7 +102,7 @@ const SBannerWrapper = styled.div`
   width: 400px;
   height: 490px;
   position: sticky;
-  top: 416px;
+  top: 320px;
 `;
 
 const SHotContent = styled.div`
@@ -155,6 +167,12 @@ const SHotList = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    cursor: pointer;
+    color: #c0c0c0;
+
+    &:hover {
+      color: black;
+    }
     &:last-child {
       border-bottom: none;
     }

@@ -192,15 +192,20 @@ export const postBlogLikeDB = createAsyncThunk(
     }
   },
 );
+
 //좋아요 삭제
 export const unBlogLikeDB = createAsyncThunk(
   "UN_LIKE",
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.unBlogLike(id);
+      console.log(response.data);
       successAlert("좋아요가 취소 되었습니다.");
       return response.data;
-    } catch (err) {}
+    } catch (err) {
+      Sentry.captureException(`error, 좋아요 에러. ${err}`);
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
   },
 );
 //블로그 북마크 조회
