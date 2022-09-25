@@ -18,6 +18,7 @@ const MyPage = () => {
     userInfo,
     userName: loginUserName,
   } = useSelector(state => state.userSlice);
+
   useEffect(() => {
     dispatch(getUserInfoActivityDB(userName));
     dispatch(getUserInfoDB(userName));

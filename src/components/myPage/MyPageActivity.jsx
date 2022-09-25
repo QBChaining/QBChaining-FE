@@ -14,6 +14,8 @@ const MyPageActivity = () => {
     setCube(userActivity);
   }, [userActivity]);
 
+  console.log(userActivity);
+
   return (
     <>
       {/* <SCubeWrapper>
