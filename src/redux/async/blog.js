@@ -198,6 +198,7 @@ export const unBlogLikeDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.unBlogLike(id);
+      console.log(response.data);
       successAlert("좋아요가 취소 되었습니다.");
       return response.data;
     } catch (err) {}

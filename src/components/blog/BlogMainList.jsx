@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import ToastViewer from "../editor/ToastViewer";
 import BlogBookMark from "./BlogBookMark";
 import unlike from "../../assets/images/GreyQnaLike.png";
 import cmtComment from "../../assets/images/GreyQnaComment.png";
-
-import { getBlogDetailDB } from "../../redux/async/blog";
-import BlogHover from "./BlogHover";
 import { getToday } from "./../../utils/today";
 const BlogMainList = ({ posts }) => {
+  const [Like, setLike] = useState(posts.isLove);
+  console.log("하트블린", posts.isLove);
+  useEffect(() => {
+    if (posts.isLove) {
+      setLike(true);
+    }
+    if (!posts.isLove) {
+      setLike(false);
+    }
+  }, [posts.isLove]);
   const navigate = useNavigate();
   console.log(posts);
 

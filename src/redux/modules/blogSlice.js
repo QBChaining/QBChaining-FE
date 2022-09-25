@@ -30,6 +30,7 @@ export const blogSlice = createSlice({
     isFetching: false,
     isPreView: false,
     errorMessage: "",
+    
   },
   reducers: {},
   extraReducers: {
@@ -39,7 +40,7 @@ export const blogSlice = createSlice({
     },
     [getBlogCommunityListDB.fulfilled]: (state, action) => {
       //블로그 메인 게시물 리스트 GET
-  
+
       state.blogList = action.payload;
       state.isFetching = false;
       state.errorMessage = null;
@@ -243,7 +244,8 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogLikeDB.fulfilled]: (state, action) => {
-      // state.like = action.payload;
+      console.log(action);
+      state.like = action.payload;
     },
     [postBlogLikeDB.rejected]: (state, action) => {
       state.errorMessage = action.payload.errorMessage;
@@ -254,6 +256,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [unBlogLikeDB]: (state, action) => {
+      console.log("좋아요삭제", action);
       state.likebookmark = action.payload;
     },
     [unBlogLikeDB]: (state, action) => {

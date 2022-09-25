@@ -16,7 +16,6 @@ import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogMainList from "../../components/blog/BlogMainList";
 import mainpage from "../../assets/images/mainpage.png";
 import { Helmet } from "react-helmet-async";
-import BlogPreView from "../../components/blog/BlogPreView";
 import SideBanner from "./../../components/common/SideBanner";
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 // import BlogHover from "../../components/blog/BlogHover";
@@ -32,11 +31,7 @@ const BlogCommmunityMain = () => {
   useEffect(() => {
     dispatch(getBlogCommunityListDB());
     dispatch(colorSetBlue());
-  }, [dispatch]);
-
-  const getBlogDetail = id => {
-    dispatch(getBlogDetailDB(id));
-  };
+  }, []);
 
   return (
     <SBlogCommmunityMain>
