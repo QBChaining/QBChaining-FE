@@ -41,6 +41,10 @@ const SToastViewer = styled.div`
   pre[class*="language-"] {
     text-shadow: none;
   }
+
+  & p {
+    word-break: break-all;
+  }
 `;
 
 export default ToastViewer;

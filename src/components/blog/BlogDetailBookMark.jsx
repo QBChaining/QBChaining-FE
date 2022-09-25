@@ -7,8 +7,8 @@ import {
 } from "../../redux/async/blog.js";
 import { useDispatch, useSelector } from "react-redux";
 import { errorAlert, needLoginAlert } from "../../utils/swal";
-import blogbookmark from "../../assets/images/blogbookmark.png";
-import blogbookmarkadd from "../../assets/images/bookmarkadd.png";
+import blogbookmark from "../../assets/images/BookmarkNoFillIcon.png";
+import blogbookmarkadd from "../../assets/images/BookmarkFillIcon.png";
 import { useParams } from "react-router-dom";
 import { getToday } from "./../../utils/today";
 const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {

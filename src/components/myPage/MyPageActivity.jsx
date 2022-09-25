@@ -6,7 +6,12 @@ import "dayjs/locale/ko"; // 한국어 가져오기
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const Cube = ({ data, setHoverDay }) => {
+const Cube = ({ data, index }) => {
+  const Today = dayjs(new Date());
+  const day = Today.add(-index, "day").format("YYYY-MM-DD");
+  // for (let i = 0; i < 27; i++) {
+  //   const day = Today.add(-index, "day").format("YYYY-MM-DD");
+  // }
   return (
     <div
       style={{ position: "relative" }}
@@ -17,7 +22,9 @@ const Cube = ({ data, setHoverDay }) => {
       //   setToggle(false);
       //   setHoverDay("");
       // }}
-    ></div>
+    >
+      {day}
+    </div>
   );
 };
 
@@ -26,48 +33,22 @@ const MyPageActivity = () => {
 
   const { userActivity } = useSelector(state => state.userSlice);
 
-  const [week1, setWeek1] = useState([]);
-  const [week2, setWeek2] = useState([]);
-  const [week3, setWeek3] = useState([]);
+  const [cube, setCube] = useState([]);
   const [hoverDay, setHoverDay] = useState("");
 
-  const Today = dayjs(new Date());
-
   //큐브만들기 반복문
-  useEffect(() => {
-    for (let i = 0; i < 27; i++) {
-      const day = [Today.add(-i, "day").format("YYYY-MM-DD")];
-      if (i < 9) {
-        setWeek1(prev => prev.concat([day]));
-      } else if ((9 <= i, i < 18)) {
-        setWeek2(prev => prev.concat([day]));
-      } else if ((18 <= i, i < 27)) {
-        setWeek3(prev => prev.concat([day]));
-      }
-    }
-  }, []);
+  useEffect(() => {}, []);
 
   useEffect(() => {
-    console.log(userActivity);
-    // userActivity.map(data => {
-    //   data.map(data2 => {
-    //     setWeek1(prev =>
-    //       prev.map((data3, i) => {
-    //         if (data3[0] == data2.date) {
-    //         }
-    //         return [...data3, data2];
-    //       }),
-    //     );
-    //   });
-    // });
+    setCube(userActivity);
   }, [userActivity]);
 
-  console.log();
+  console.log(cube);
 
   return (
     <>
-      <SCubeWrapper>
-        {week1.map((data, i) => (
+      {/* <SCubeWrapper>
+        {userActivity.map((data, i) => (
           <Cube setHoverDay={setHoverDay} key={i} data={data} />
         ))}
       </SCubeWrapper>
@@ -80,8 +61,17 @@ const MyPageActivity = () => {
         {week3.map((data, i) => (
           <Cube setHoverDay={setHoverDay} key={i} data={data} />
         ))}
+      </SCubeWrapper> */}
+      <SCubeWrapper>
+        {cube.map((data, i) => {
+          return (
+            <Cube data={data} key={i} index={i}>
+              asd
+            </Cube>
+          );
+        })}
       </SCubeWrapper>
-      <SCubeItem>{hoverDay}</SCubeItem>
+      <SCubeItem />
     </>
   );
 };
@@ -92,16 +82,16 @@ const SCubeWrapper = styled.div`
   display: flex;
   position: relative;
   flex-wrap: wrap;
-  width: 90px;
+  width: 360px;
 
   & > div {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     background-color: ${props => props.theme.color.grey5};
-    border: 2px solid white;
+    border: 2px solid ${props => props.theme.color.mainIvory};
   }
 
-  &:first-child {
+  /* &:first-child {
     transform: rotate(0deg) skew(0deg, 30deg);
   }
 
@@ -119,8 +109,8 @@ const SCubeWrapper = styled.div`
     & > div {
       width: 30.1px;
       height: 34.5px;
-    }
-  }
+    } */
+  /* } */
 `;
 
 const SCubeItem = styled.div`

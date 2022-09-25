@@ -4,40 +4,81 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ToastViewer from "../editor/ToastViewer";
 import BlogBookMark from "./BlogBookMark";
-import unlike from "../../assets/images/unlike.png";
+import unlike from "../../assets/images/GreyQnaLike.png";
+import cmtComment from "../../assets/images/GreyQnaComment.png";
 import { getBlogDetailDB } from "../../redux/async/blog";
 import BlogHover from "./BlogHover";
+import { getToday } from "./../../utils/today";
 const BlogMainList = ({ posts }) => {
+  const navigate = useNavigate();
+  console.log(posts);
+
+  //몇일전 구하는 함수
+  const timeForToday = value => {
+    const today = new Date();
+    const timeValue = new Date(value);
+
+    const betweenTime = Math.floor(
+      (today.getTime() - timeValue.getTime()) / 1000 / 60,
+    );
+    if (betweenTime < 1) return "방금전";
+    if (betweenTime < 60) {
+      return `${betweenTime}분전`;
+    }
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) {
+      return `${betweenTimeDay}일전`;
+    }
+
+    return `${Math.floor(betweenTimeDay / 365)}년전`;
+  };
+
+  const time = timeForToday(posts.createdAt);
+
   return (
     <>
-      <SBloglist>
-        <BlogHover posts={posts} />
-        <SHober>
-          <SContentsGroup>
-            {/* <BlogHover> */}
-            <SPTitleBox>
-              <SUserInfo>
-                <SProfile url={posts.profileImg} />
-                <SContentTitle className="title">{posts.title}</SContentTitle>
-              </SUserInfo>
-              <SBookMark>
-                <BlogBookMark
-                  ismainlist={true}
-                  isbookmark={posts.isBookmark}
-                  posts={posts}
-                />
-              </SBookMark>
-            </SPTitleBox>
-            <STagNMark>
-              <STagList>
-                {posts.tags?.map((tags, i) => (
-                  <STag key={i}>{tags}</STag>
-                ))}
-              </STagList>
+      <SBloglist
+        onClick={() => {
+          navigate(`/blog/detail/${posts.id}`);
+        }}
+      >
+        <SContentsGroup>
+          <SPTitleBox>
+            <SUserInfo>
+              <SProfile url={posts.profileImg} />
+              <SUserName>{posts.userName}</SUserName>
+              <SCreatedAt>{time}</SCreatedAt>
+            </SUserInfo>
+            <SBookMark>
+              <BlogBookMark
+                ismainlist={true}
+                isbookmark={posts.isBookmark}
+                posts={posts}
+              />
+            </SBookMark>
+          </SPTitleBox>
+          <SContentWrapper>
+            <SContentTitle className="title">{posts.title}</SContentTitle>
+            <SContent>{posts.content}</SContent>
+          </SContentWrapper>
+          <STagNMark>
+            <STagList>
+              {posts.tags?.map((tags, i) => (
+                <STag key={i}>{tags}</STag>
+              ))}
+            </STagList>
+            <SIconContainer>
               <SLike>{posts.like}</SLike>
-            </STagNMark>
-          </SContentsGroup>
-        </SHober>
+              <SComment>{posts.cntComment}</SComment>
+            </SIconContainer>
+          </STagNMark>
+        </SContentsGroup>
       </SBloglist>
       {/* </BlogHover> */}
     </>
@@ -49,20 +90,30 @@ export default BlogMainList;
 const SBloglist = styled.div`
   position: relative;
   /* width: 100%; */
-  min-width: 640px;
+  width: 480px;
+  min-height: 350px;
   /* height: 100%; */
-  min-height: 127px;
   background: #ffffff;
-  box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
-  padding: 20px 30px 10px 30px;
-  margin-bottom: 20px;
+  padding: 30px 40px;
+  margin-right: 60px;
+  margin-bottom: 40px;
+  transition: 0.5s;
+  cursor: pointer;
+  &:nth-child(2n + 1) {
+    margin-right: 0;
+  }
+  &:hover {
+    box-shadow: #fce3cd -10px 10px 0px 0px;
+  }
 `;
-const SHober = styled.div``;
+
 const SPTitleBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 2px solid ${props => props.theme.color.mainNavy};
 `;
 
 const SUserInfo = styled.div`
@@ -82,13 +133,9 @@ const SProfile = styled.div`
   margin-right: 10px;
 `;
 
-const SContentTitle = styled.div`
-  font-size: 20px;
-  cursor: pointer;
-`;
 const STagList = styled.div`
   display: flex;
-  padding-left: 47px;
+  padding-right: 130px;
 `;
 const STag = styled.div`
   display: flex;
@@ -97,8 +144,8 @@ const STag = styled.div`
   font-size: 14px;
   color: #ffffff;
   /* margin-right: 15px; */
-  padding: 10px 13px;
-  background: #c0c0c0;
+  padding: 5px 20px;
+  background: ${props => props.theme.color.mainNavy};
   border-radius: 30px;
   margin: 0 10px 10px 0;
 `;
@@ -117,15 +164,59 @@ const STagNMark = styled.div`
   display: flex;
   justify-content: space-between;
   padding-top: 15px;
+  position: relative;
+`;
+
+const SComment = styled.div`
+  display: flex;
+  align-items: flex-end;
+  color: ${props => props.theme.color.grey5};
+  padding-right: 25px;
+  background-image: url(${cmtComment});
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: 18px 16px;
 `;
 
 const SLike = styled.div`
   display: flex;
   align-items: flex-end;
-  padding-bottom: 10px;
   color: ${props => props.theme.color.grey5};
-  padding-right: 23px;
+  padding-right: 20px;
   background-image: url(${unlike});
-  background-position: bottom 13px right 0;
+  background-position: right center;
   background-repeat: no-repeat;
+  background-size: 16px 14px;
+`;
+
+const SContentWrapper = styled.div``;
+
+const SUserName = styled.div`
+  font-size: 20px;
+  margin-right: 10px;
+`;
+
+const SCreatedAt = styled.div`
+  font-size: 15px;
+  color: #1e1e1e;
+`;
+
+const SContentTitle = styled.div`
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+`;
+
+const SContent = styled.div`
+  min-height: 120px;
+  overflow: hidden;
+  margin-top: 20px;
+`;
+
+const SIconContainer = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 0;
+  display: flex;
+  gap: 25px;
 `;

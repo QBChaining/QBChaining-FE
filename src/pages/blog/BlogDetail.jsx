@@ -184,7 +184,9 @@ const SLikeNtags = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-const TagList = styled.div``;
+const TagList = styled.div`
+  display: flex;
+`;
 const SProfile = styled.div`
   width: 44px;
   height: 44px;
@@ -203,10 +205,10 @@ const STag = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  color: ${props => props.theme.color.mainBlue};
+  color: ${props => props.theme.color.mainOrange};
   padding: 10px 15px;
   margin-right: 15px;
-  border: 1px solid ${props => props.theme.color.mainBlue};
+  border: 1px solid ${props => props.theme.color.mainOrange};
   border-radius: 30px;
   margin: 0 16px 20px 0;
 `;

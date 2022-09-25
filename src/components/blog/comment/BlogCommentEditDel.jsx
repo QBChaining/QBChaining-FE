@@ -122,15 +122,10 @@ const CommentEditDel = ({ comments }) => {
 export default CommentEditDel;
 
 const SCommentList = styled.div`
-  background: ${props => props.theme.color.grey2};
+  background: ${props => props.theme.color.white};
   border-radius: 20px;
   padding: 20px 40px;
   position: relative;
-  &::after {
-    content: "";
-    display: block;
-    clear: both;
-  }
 `;
 const SDate = styled.div`
   margin-left: 10px;
@@ -187,6 +182,8 @@ const ButtonGroup = styled.div`
 const SComment = styled.div`
   padding: 10px 0 10px 55px;
   font-size: 18px;
+  width: 100%;
+  word-break: break-all;
 `;
 
 const STextArea = styled.textarea`
