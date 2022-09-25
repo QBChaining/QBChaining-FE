@@ -72,7 +72,7 @@ export default function NotifiTest() {
 
   return (
     <div>
-      <button style={{ width: "100px" }}> 테스트</button>
+      {/* <button style={{ width: "100px" }}> 테스트</button> */}
       {/* <p>{listening ? statusMessage.subscribed : statusMessage.unsubscribed}</p>
       <p>{JSON.stringify(process)}</p>
       <button onClick={subscribe}>
