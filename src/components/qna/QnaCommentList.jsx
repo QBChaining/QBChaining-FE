@@ -5,8 +5,8 @@ import Swal from "sweetalert2";
 import Editor from "../common/EditorComponent";
 import { successAlert, errorAlert } from "./../../utils/swal";
 import styled from "styled-components";
-import QnaLike from "../../assets/images/QnaLike.png";
-import QnaLikeFill from "../../assets/images/QnaLikeFill.png";
+import QnaLike from "../../assets/images/unlike.png";
+import QnaLikeFill from "../../assets/images/addLike.png";
 import WinnerCrown from "../../assets/images/WinnerCrown.png";
 import ToastViewer from "./../editor/ToastViewer";
 import { useNavigate } from "react-router-dom";
@@ -144,17 +144,18 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
                   <SUserInfoText>
                     <SUserNameWrapper>
                       <SUserName>{data.userName}</SUserName>
-                      {!target.isResolve && !isPreview && (
-                        // target.userName === userName &&
-                        // target.userName !== data.userName &&
-                        <SChoiceButton
-                          onClick={e => {
-                            onChoiceHandler(e, data.id);
-                          }}
-                        >
-                          채택
-                        </SChoiceButton>
-                      )}
+                      {!target.isResolve &&
+                        !isPreview &&
+                        target.userName === userName &&
+                        target.userName !== data.userName && (
+                          <SChoiceButton
+                            onClick={e => {
+                              onChoiceHandler(e, data.id);
+                            }}
+                          >
+                            채택
+                          </SChoiceButton>
+                        )}
                     </SUserNameWrapper>
                     <SCreateAt>
                       {data.createdAt?.slice(0, 10)} /{" "}

@@ -215,6 +215,10 @@ const EditorComponent = ({
 
   //태그추가
   const onAddTagHandler = () => {
+    if (tags.length > 4) {
+      errorAlert("태그는 5개가 최대입니다!");
+      return;
+    }
     if (tagText.current.value.length < 1) {
       errorAlert("빈칸입니다.");
       return;

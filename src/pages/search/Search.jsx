@@ -100,7 +100,7 @@ const SLeftContainer = styled(STip)`
   & > div:first-child {
     &::before {
       content: "Q&A";
-      background-color: ${props => props.theme.color.mainGreen};
+      background-color: ${props => props.theme.color.mainOrange};
     }
   }
 `;
@@ -109,7 +109,7 @@ const SRightContainer = styled(STip)`
   & > div:first-child {
     &::before {
       content: "BLOG";
-      background-color: ${props => props.theme.color.mainBlue};
+      background-color: ${props => props.theme.color.mainOrange};
     }
   }
 `;

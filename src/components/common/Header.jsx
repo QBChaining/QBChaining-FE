@@ -68,7 +68,6 @@ const Header = () => {
 export default Header;
 
 const SHeader = styled.header`
-  display: block;
   display: flex;
   align-items: center;
   justify-content: space-between;

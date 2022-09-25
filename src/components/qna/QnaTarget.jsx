@@ -11,8 +11,8 @@ import {
 import { deleteBookmarkListDB } from "./../../redux/async/qna";
 import { errorAlert, needLoginAlert } from "../../utils/swal";
 
-import QnaLike from "../../assets/images/QnaLike.png";
-import QnaLikeFill from "../../assets/images/QnaLikeFill.png";
+import QnaLike from "../../assets/images/unlike.png";
+import QnaLikeFill from "../../assets/images/addLike.png";
 import BookmarkNoFillIcon from "../../assets/images/BookmarkNoFillIcon.png";
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 import ToastViewer from "../editor/ToastViewer";
