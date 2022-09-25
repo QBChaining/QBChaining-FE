@@ -197,7 +197,7 @@ const EditorComponent = ({
     }
   }, [isEdit, editData, isComment]);
 
-/** 블로그 게시글 수정할 때  원래 있던 벨류 값  불러오기  */
+  /** 블로그 게시글 수정할 때  원래 있던 벨류 값  불러오기  */
   useEffect(() => {
     if (isBlogEdit) {
       setBlogTitle(blogEditData.title);

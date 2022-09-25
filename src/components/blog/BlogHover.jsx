@@ -45,8 +45,8 @@ const SLeftHover = styled.div`
   width: 100%;
   min-width: 320px;
   height: 100%;
-  /* position: relative; */
-  position: absolute;
+  position: relative;
+  /* position: absolute; */
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
   &:hover {
