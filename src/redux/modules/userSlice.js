@@ -124,20 +124,19 @@ export const userSlice = createSlice({
     },
 
     //회원BlogList 받아오기
-    // [getUserBlogListDB.fulfilled]: (state, { payload }) => {
-    //   console.log(payload);
-    //   state.userQnaList = payload.myQna;
-    //   state.userQnaAnswerList = payload.myAnswer;
-    //   state.isFetching = false;
-    //   state.errorMessage = null;
-    // },
-    // [getUserQnaListDB.pending]: (state, { payload }) => {
-    //   state.isFetching = true;
-    // },
-    // [getUserQnaListDB.rejected]: (state, { payload: errorMessage }) => {
-    //   state.isFetching = false;
-    //   state.errorMessage = errorMessage;
-    // },
+    [getUserBlogListDB.fulfilled]: (state, { payload }) => {
+      state.userBlogList = payload.post;
+      state.userBlogCommentList = payload.comment;
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [getUserQnaListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [getUserQnaListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
   },
 });
 

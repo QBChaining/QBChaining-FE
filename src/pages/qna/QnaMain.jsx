@@ -41,11 +41,9 @@ const QnaMain = () => {
     setPageNumber(0);
     setHasNextPage(true);
     setResolveTap(1);
-    console.log("resolve");
   };
 
   const onGetNoResolve = () => {
-    console.log("noResolve");
     setPageNumber(0);
     setHasNextPage(true);
     setResolveTap(0);
