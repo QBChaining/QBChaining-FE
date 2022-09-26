@@ -15,7 +15,6 @@ const BlogLike = ({ isLove }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [Like, setLike] = useState(isLove);
-  console.log("하트블린", isLove);
   useEffect(() => {
     if (isLove) {
       setLike(true);

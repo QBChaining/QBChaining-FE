@@ -52,8 +52,6 @@ const BlogCommmunityMain = () => {
    * 페이지 계산 get요청 page 카운트 올리기
    */
   useEffect(() => {
-    console.log("3", page);
-    // if (page === 0 && blogMainLists.lenght === 0) {
     if (page === 0) {
       dispatch(getBlogCommunityListDB(page));
       setPage(page => page + 1);

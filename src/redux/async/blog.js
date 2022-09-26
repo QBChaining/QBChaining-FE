@@ -11,10 +11,8 @@ import { successAlert } from "../../utils/swal";
 export const getBlogCommunityListDB = createAsyncThunk(
   "BLOG_COMMUNITYLIST",
   async (data, thunkAPI) => {
-    console.log("14 blog.js data", data);
     try {
       const response = await blogApi.getBlogCommunityList(data);
-      console.log("17 blog.js", response);
       if (response.data.success === true) {
         return response.data.data;
       }
