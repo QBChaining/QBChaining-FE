@@ -10,10 +10,11 @@ import { successAlert } from "../../utils/swal";
 //블로그 커뮤니티 조회
 export const getBlogCommunityListDB = createAsyncThunk(
   "BLOG_COMMUNITYLIST",
-  async thunkAPI => {
+  async (data, thunkAPI) => {
+    console.log("14 blog.js data", data);
     try {
-      const response = await blogApi.getBlogCommunityList();
-      console.log(response);
+      const response = await blogApi.getBlogCommunityList(data);
+      console.log("17 blog.js", response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -260,7 +261,6 @@ export const deleteBlogBookMarkDB = createAsyncThunk(
 export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
   try {
     const response = await blogApi.getHotBlog();
-    console.log(response);
     return response.data.data;
   } catch (err) {
     Sentry.captureException(`error, 좋아요 에러. ${err}`);

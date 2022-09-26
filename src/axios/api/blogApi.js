@@ -4,7 +4,11 @@ export const blogApi = {
   //블로그 커뮤니티
 
   //블로그 메인 게시글 조회
-  getBlogCommunityList: () => instance.get("/posts"),
+  // getBlogCommunityList: () => instance.get("/posts"),
+  // console.log(data)
+  getBlogCommunityList: data =>
+    instance.get(`posts?page=${data}&page_count=10`),
+  // getBlogCommunityList: () => instance.get(`posts?page=0&page_count=10`),
   //블로그 디테일 조회
   getBlogDetail: id => instance.get(`/posts/${id}`),
   // 블로그 미리보기
