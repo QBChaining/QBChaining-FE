@@ -142,6 +142,7 @@ const STagList = styled.div`
   align-items: center;
   display: flex;
   padding-right: 130px;
+  flex-wrap: wrap;
 `;
 const STag = styled.div`
   background-color: orange;

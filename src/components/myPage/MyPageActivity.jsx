@@ -14,25 +14,9 @@ const MyPageActivity = () => {
     setCube(userActivity);
   }, [userActivity]);
 
-  console.log(userActivity);
-
   return (
     <>
-      {/* <SCubeWrapper>
-        {userActivity.map((data, i) => (
-          <Cube setHoverDay={setHoverDay} key={i} data={data} />
-        ))}
-      </SCubeWrapper>
-      <SCubeWrapper>
-        {week2.map((data, i) => (
-          <Cube setHoverDay={setHoverDay} key={i} data={data} />
-        ))}
-      </SCubeWrapper>
-      <SCubeWrapper>
-        {week3.map((data, i) => (
-          <Cube setHoverDay={setHoverDay} key={i} data={data} />
-        ))}
-      </SCubeWrapper> */}
+      <STitle>나만의 큐브를 채워보세요!</STitle>
       <SCubeWrapper>
         {cube.map((data, i) => (
           <MyPageCube
@@ -47,16 +31,6 @@ const MyPageActivity = () => {
           />
         ))}
       </SCubeWrapper>
-      {/* <SCubeItem>
-        {hoverData.map((data, i) => (
-          <div key={i}>
-            {data.post && <div>블로그{data.post}</div>}
-            {data.postComment && <div>블로그 댓글{data.postComment}</div>}
-            {data.qna && <div>Q&A{data.qna}</div>}
-            {data.qnaComment && <div>Q&A 댓글{data.qnaComment}</div>}
-          </div>
-        ))}
-      </SCubeItem> */}
     </>
   );
 };
@@ -67,12 +41,12 @@ const SCubeWrapper = styled.div`
   display: flex;
   position: relative;
   flex-wrap: wrap;
-  width: 360px;
+  width: 675px;
 
   & > div {
-    width: 40px;
-    height: 40px;
-    border: 2px solid ${props => props.theme.color.mainIvory};
+    width: 45px;
+    height: 45px;
+    border: 5px solid ${props => props.theme.color.mainIvory};
   }
 
   /* &:first-child {
@@ -97,27 +71,4 @@ const SCubeWrapper = styled.div`
   /* } */
 `;
 
-const SCubeItem = styled.div`
-  position: absolute;
-  top: 0;
-  left: -230px;
-  z-index: 10;
-  height: 200px;
-  padding: 20px;
-  overflow: auto;
-  & > div {
-    padding: 5px;
-  }
-`;
-
-const SChartContainer = styled.div`
-  position: absolute;
-  top: -200px;
-  right: -230px;
-`;
-const ChartWrapper = styled.div``;
-
-const SActiveData = styled.div`
-  position: absolute;
-  top: 100px;
-`;
+const STitle = styled.div``;

@@ -146,75 +146,13 @@ const SLeftContainer = styled.div`
   margin-right: 90px;
 `;
 
-const SPreviewTitle = styled.div`
-  font-size: 20px;
-`;
-const SPreviewContent = styled.div`
-  flex: 1;
-  min-width: 700px;
-  /* background-color: ${props => props.theme.color.grey3}; */
-
-  /* background-position: center;
-  background-size: cover;
-  background-image: url(${mainpage}); */
-`;
-
-const SBloglist = styled.div`
-  width: 342px;
-  height: 253px;
-  background: #ffffff;
-  margin: 36px 0 36px 40px;
-  box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 30px;
-  left: 200px;
-`;
-
-const SContent = styled.div`
-  width: 283px;
-  height: 101px;
-  overflow: hidden;
-  /* border-radius: 30px; */
-  & .content1 {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 25px;
-  }
-`;
-
-const SProfile = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid ${props => props.theme.color.grey3};
-  background-repeat: no-repeat;
-  margin-right: 11px;
-
-  background-position: center;
-  background-size: cover;
-  background-image: url(${mainpage});
-`;
-
-const SPlus = styled.div`
-  background-position: center;
-  background-size: cover;
-  background-image: url(${blogplus});
-  margin-top: 30px;
-  width: 38px;
-  height: 38px;
-`;
-
-const SUserInfo = styled.div`
-  display: flex;
-  padding-bottom: 20px;
-  align-items: center;
-`;
-
 const STitle = styled.h2`
   font-weight: 900;
   font-family: "Inter", sans-serif;
   font-size: 70px;
   margin-top: 30px;
   margin-bottom: 60px;
+  color: ${props => props.theme.color.mainNavy};
 `;
 
 const SWritingButtonWrapper = styled.div`
