@@ -307,6 +307,7 @@ const STitle = styled.h2`
   font-size: 70px;
   margin-top: 30px;
   margin-bottom: 60px;
+  color: ${props => props.theme.color.mainNavy};
 `;
 
 const SNodata = styled.div`

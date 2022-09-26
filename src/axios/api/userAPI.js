@@ -16,4 +16,7 @@ export const userApi = {
   //유저활동기록 가져오기
   getUserInfoActivity: userName =>
     instance.get(`/auth/user/activity/${userName}`),
+
+  getUserQnaList: userName => instance.get(`/qna/users/${userName}`),
+  getUserBlogList: userName => instance.get(`/posts/users/${userName}`),
 };

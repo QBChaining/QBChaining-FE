@@ -66,7 +66,7 @@ const SCube = styled.div`
       ? "rgb(250, 202, 189)"
       : props.length > 0
       ? "rgb(226, 226, 226)"
-      : props.theme.color.white};
+      : props.theme.color.black};
 `;
 
 const SActiveData = styled.div`

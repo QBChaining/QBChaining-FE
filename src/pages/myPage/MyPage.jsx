@@ -2,7 +2,11 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { getUserInfoActivityDB } from "../../redux/async/user";
+import {
+  getUserBlogListDB,
+  getUserInfoActivityDB,
+  getUserQnaListDB,
+} from "../../redux/async/user";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserInfoDB } from "./../../redux/async/user";
 import MyPageActivity from "../../components/myPage/MyPageActivity";
@@ -17,11 +21,17 @@ const MyPage = () => {
     isFetching,
     userInfo,
     userName: loginUserName,
+    userQnaList,
+    userQnaAnswerList,
+    userBlogList,
+    userBlogCommentList,
   } = useSelector(state => state.userSlice);
 
   useEffect(() => {
     dispatch(getUserInfoActivityDB(userName));
     dispatch(getUserInfoDB(userName));
+    dispatch(getUserQnaListDB(userName));
+    dispatch(getUserBlogListDB(userName));
   }, [userName]);
 
   return (
