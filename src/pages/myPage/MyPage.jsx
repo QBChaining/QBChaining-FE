@@ -36,7 +36,9 @@ const MyPage = () => {
     dispatch(getUserBlogListDB(userName));
   }, [userName]);
 
-  console.log(userBlogCommentList);
+  const goDetail = (type, id) => {
+    navigate(`/${type}/detail/${id}`);
+  };
 
   return (
     <SMyPage>
@@ -45,14 +47,16 @@ const MyPage = () => {
           <SUserProfile profileImg={userInfo?.profileImg}></SUserProfile>
           <SUserInfo>
             <SUserName>
-              {userInfo?.name}{" "}
-              <button
-                onClick={() => {
-                  navigate("/register");
-                }}
-              >
-                정보 수정
-              </button>
+              {userInfo?.name}
+              {loginUserName === userName && (
+                <button
+                  onClick={() => {
+                    navigate("/register");
+                  }}
+                >
+                  정보 수정
+                </button>
+              )}
             </SUserName>
             {loginUserName === userName && (
               <SUserDetail>
@@ -76,7 +80,12 @@ const MyPage = () => {
               <SHeader type={"qna"}>MY 질문</SHeader>
               <SMain>
                 {userQnaList.map(data => (
-                  <SListInner key={data.id}>
+                  <SListInner
+                    key={data.id}
+                    onClick={() => {
+                      goDetail("qna", data.id);
+                    }}
+                  >
                     <SListTitleWrapper>
                       <SListTitle>{data.title}</SListTitle>
                       <SListDate>{data.createdAt.slice(0, 10)}</SListDate>
@@ -93,7 +102,12 @@ const MyPage = () => {
               <SHeader type={"qna"}>MY 답변</SHeader>
               <SMain>
                 {userQnaAnswerList.map(comment => (
-                  <SListInner key={comment.id}>
+                  <SListInner
+                    key={comment.id}
+                    onClick={() => {
+                      goDetail("qna", comment.Qna.id);
+                    }}
+                  >
                     <SListTitleWrapper>
                       <SListTitle>{comment.Qna.title}</SListTitle>
                       <SListDate>
@@ -115,7 +129,12 @@ const MyPage = () => {
               <SHeader type={"blog"}>MY 게시글</SHeader>
               <SMain>
                 {userBlogList.map(data => (
-                  <SListInner key={data.id}>
+                  <SListInner
+                    key={data.id}
+                    onClick={() => {
+                      goDetail("blog", data.id);
+                    }}
+                  >
                     <SListTitleWrapper>
                       <SListTitle>{data.title}</SListTitle>
                       <SListDate>{data.createdAt.slice(0, 10)}</SListDate>
@@ -132,7 +151,12 @@ const MyPage = () => {
               <SHeader type={"blog"}>MY 댓글</SHeader>
               <SMain>
                 {userBlogCommentList.map(data => (
-                  <SListInner key={data.comment}>
+                  <SListInner
+                    key={data.comment}
+                    onClick={() => {
+                      goDetail("blog", data.Post.id);
+                    }}
+                  >
                     <SListTitleWrapper>
                       <SListTitle>{data.Post.title}</SListTitle>
                       <SListDate>{data.Post.createdAt.slice(0, 10)}</SListDate>
@@ -246,17 +270,27 @@ const SMain = styled.ul`
   background-color: ${props => props.theme.color.white};
 `;
 
+const SListDate = styled.div`
+  font-size: 12px;
+  color: ${props => props.theme.color.grey5};
+  transition: 0.3s;
+`;
+
 const SListInner = styled.li`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 10px;
+  padding: 5px 0;
   border-bottom: 1px solid ${props => props.theme.color.grey3};
-
+  cursor: pointer;
   &:last-child {
     border-bottom: none;
     padding-bottom: 50px;
+  }
+
+  &:hover ${SListDate} {
+    color: ${props => props.theme.color.black};
   }
 `;
 
@@ -266,10 +300,6 @@ const SListTitle = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
-const SListDate = styled.div`
-  font-size: 12px;
-  color: ${props => props.theme.color.grey5};
 `;
 
 const SCube = styled.div`

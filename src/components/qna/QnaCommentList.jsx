@@ -28,25 +28,16 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
 
   const [winner, setWinner] = useState([]);
   //commentList 구독
-  const { commentList: list, isCommentFetching } = useSelector(
-    state => state.qnaSlice,
-  );
+  const {
+    commentList: list,
+    chooseComment,
+    isCommentFetching,
+  } = useSelector(state => state.qnaSlice);
 
   //디테일정보 구독
   const target = useSelector(state => state.qnaSlice.qnaTarget);
 
   const { isLogin, userName } = useSelector(state => state.userSlice);
-
-  // useEffect(() => {
-  //   let data = {
-  //     id,
-  //     pageNumber,
-  //   };
-  //   dispatch(getCommentListDB(data)).then(res =>
-  //     setHasNextPage(res.payload.length === 10),
-  //   );
-  //   console.log(data);
-  // }, [id, pageNumber]);
 
   //코멘트 삭제 dispatch
   const onDeleteHandler = id => {
@@ -102,44 +93,48 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
     return (
       <SQnaCommentList>
         <SCommentWrapper>
-          {winner && (
-            <SItemWrapper id={winner.id}>
+          {chooseComment && (
+            <SItemWrapper id={chooseComment.id}>
               <SUserInfo>
                 <SWinnerUserInfo
                   onClick={() => {
-                    goMypage(winner.userName);
+                    goMypage(chooseComment.userName);
                   }}
                 >
-                  <SUserProfile profile={winner.profileImg} />
+                  <SUserProfile profile={chooseComment?.profileImg} />
                   <SUserInfoText>
                     <SUserNameWrapper>
-                      <SUserName winner={true}>{winner.userName}</SUserName>
+                      <SUserName winner={true}>
+                        {chooseComment.userName}
+                      </SUserName>
                       {target.isResolve && !isPreview && (
                         <SWinnerButton>채택</SWinnerButton>
                       )}
                     </SUserNameWrapper>
-                    <SCreateAt winner={true}>{winner.createdAt}</SCreateAt>
+                    <SCreateAt winner={true}>
+                      {chooseComment.createdAt}
+                    </SCreateAt>
                   </SUserInfoText>
                 </SWinnerUserInfo>
                 <SButtonWrapper>
                   <SHoneyTipButton
-                    isLike={winner.isLike}
+                    isLike={chooseComment.isLike}
                     onClick={
-                      winner.isLike
+                      chooseComment.isLike
                         ? () => {
-                            onDisLikeHandler(winner.id);
+                            onDisLikeHandler(chooseComment.id);
                           }
                         : () => {
-                            onLikeHandler(winner.id);
+                            onLikeHandler(chooseComment.id);
                           }
                     }
                   >
-                    {winner?.like}
+                    {chooseComment?.like}
                   </SHoneyTipButton>
                 </SButtonWrapper>
               </SUserInfo>
               <SContentText>
-                <ToastViewer content={winner?.comment} />
+                <ToastViewer content={chooseComment?.comment} />
               </SContentText>
             </SItemWrapper>
           )}

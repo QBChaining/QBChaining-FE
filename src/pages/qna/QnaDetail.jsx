@@ -39,6 +39,8 @@ const QnaDetail = () => {
     };
   }, []);
 
+  console.log(list);
+
   //코멘트 무한스크롤
   useEffect(() => {
     let data = {
@@ -46,7 +48,7 @@ const QnaDetail = () => {
       pageNumber,
     };
     dispatch(getCommentListDB(data)).then(res =>
-      setHasNextPage(res.payload.length === 10),
+      setHasNextPage(res.payload.commentLists.length === 10),
     );
   }, [id, pageNumber]);
 
