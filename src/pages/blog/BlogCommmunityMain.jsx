@@ -1,15 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getBlogCommunityListDB,
-  getBlogDetailDB,
-} from "../../redux/async/blog";
+import { getBlogCommunityListDB } from "../../redux/async/blog";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import ToastViewer from "../../components/editor/ToastViewer";
-import BlogBookMark from "../../components/blog/BlogBookMark";
-import react from "../../assets/images/icon/react.png";
-import BlogHotList from "../../components/blog/BlogHotList";
 import blogplus from "../../assets/images/blogplus.png";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
@@ -18,44 +12,73 @@ import mainpage from "../../assets/images/mainpage.png";
 import { Helmet } from "react-helmet-async";
 import SideBanner from "./../../components/common/SideBanner";
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
-// import BlogHover from "../../components/blog/BlogHover";
+import { removeBlogList } from "../../redux/modules/blogSlice";
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
+  /**
+   * 처음 보여줄 페이지 카운트
+   */
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  /**
+   * 처음 게시물 불러오기 비동기요청
+   */
 
+  const getBlogMainCoumunity = useCallback(() => {
+    const getFinish = async () => {
+      await dispatch(getBlogCommunityListDB(page));
+      setLoading(false);
+    };
+    return getFinish();
+  }, [page, blogMainLists]);
+  /**
+   * 스크롤 위치 계산
+   */
+  const _scrollPosition = _.throttle(() => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+
+    if (scrollTop + clientHeight >= scrollHeight - 100 && loading === false) {
+      setPage(page => page + 1);
+      getBlogMainCoumunity();
+      setLoading(true);
+    }
+  }, 500);
+
+  /**
+   * 페이지 계산 get요청 page 카운트 올리기
+   */
+  useEffect(() => {
+    if (page === 0) {
+      dispatch(getBlogCommunityListDB(page));
+      setPage(page => page + 1);
+    }
+    if (blogMainLists.length !== 0) {
+    }
+  }, [dispatch, page]);
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+    window.addEventListener("scroll", _scrollPosition);
+
+    return () => {
+      window.removeEventListener("scroll", _scrollPosition);
+    };
+  }, [page, loading]);
   //메인 블로그 게시글 조회
   useEffect(() => {
-    dispatch(getBlogCommunityListDB());
+    removeBlogList();
     dispatch(colorSetBlue());
   }, []);
-
-  console.log(blogMainLists);
-
   return (
     <SBlogCommmunityMain>
       <Helmet>
         <title>Blog Main</title>
       </Helmet>
-      {/* <STopBox>
-        <STopBoxWrapper>
-          <SRecommend>
-            <BlogHotList />
-          </SRecommend>
-          <STopHelper
-            onClick={() => {
-              navigate("/blog/write");
-            }}
-          >
-            <SHelpText>게시글을 작성해 보세요!</SHelpText>
-            <SHelpSubText>
-              클릭하시면 블로그 작성페이지로 이동합니다.
-            </SHelpSubText>
-            <SPlus />
-          </STopHelper>
-        </STopBoxWrapper>
-      </STopBox> */}
       <SBody>
         <STitle>BLOG</STitle>
         <SContentWrapper>
@@ -69,8 +92,8 @@ const BlogCommmunityMain = () => {
                 <div></div>작성하기
               </SWritingButton>
             </SWritingButtonWrapper>
-            {blogMainLists?.map(posts => (
-              <BlogMainList posts={posts} key={posts.id} />
+            {blogMainLists?.map((posts, idx) => (
+              <BlogMainList posts={posts} key={idx} />
             ))}
           </SLeftContainer>
           <SideBanner type={"blog"} />

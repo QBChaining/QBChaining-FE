@@ -2,13 +2,15 @@ import React, { useEffect } from "react";
 import EditorComponent from "../../components/common/EditorComponent";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 import { Helmet } from "react-helmet-async";
 // import Tag from "../../components//blog/Tag";
 
 const BlogCommunityWrite = () => {
+  const res = useSelector(state => state);
+  console.log(res);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(colorSetBlue());
