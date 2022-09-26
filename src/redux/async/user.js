@@ -93,3 +93,37 @@ export const getUserInfoActivityDB = createAsyncThunk(
     }
   },
 );
+
+export const getUserQnaListDB = createAsyncThunk(
+  "auth/getuserqnalist",
+  async (data, thunkAPI) => {
+    try {
+      const response = await userApi.getUserQnaList(data);
+      console.log("UserQnaList", response.data);
+      if (response.data.success === true) {
+        return response.data.data;
+      }
+    } catch (err) {
+      networkError();
+      Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);
+
+export const getUserBlogListDB = createAsyncThunk(
+  "auth/getuserbloglist",
+  async (data, thunkAPI) => {
+    try {
+      const response = await userApi.getUserBlogList(data);
+      console.log("UserBlogList", response.data);
+      if (response.data.success === true) {
+        return response.data.data;
+      }
+    } catch (err) {
+      networkError();
+      Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);

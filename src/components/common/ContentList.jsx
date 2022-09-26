@@ -242,7 +242,6 @@ const Tag = styled.div`
   align-items: center;
   padding: 4px 20px;
   border-radius: 30px;
-
   background-color: ${props => props.theme.color.grey3};
   margin-right: 12px;
   margin-bottom: 12px;

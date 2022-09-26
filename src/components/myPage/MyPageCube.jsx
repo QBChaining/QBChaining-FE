@@ -16,9 +16,10 @@ const MyPageCube = ({
   hoverDay,
 }) => {
   dayjs.locale("ko");
-  const Today = dayjs(new Date());
-  const day = Today.add(-index, "day").format("YYYY-MM-DD");
-  const [a, setA] = useState(false);
+  const Today = dayjs(new Date()).add(-29, "day");
+  // const day = Today.add(-index, "day").format("YYYY-MM-DD");
+  const day = Today.add(index, "day").format("YYYY-MM-DD");
+  const [hover, setHover] = useState(false);
 
   // for (let i = 0; i < 27; i++) {
   //   const day = Today.add(-index, "day").format("YYYY-MM-DD");
@@ -30,13 +31,13 @@ const MyPageCube = ({
       onMouseEnter={() => {
         setHoverDay(day);
         setHoverData(data);
-        setA(true);
+        setHover(true);
       }}
       onMouseOut={() => {
-        setA(false);
+        setHover(false);
       }}
     >
-      {a && (
+      {hover && (
         <SActiveData>
           {hoverDay}에 &nbsp;
           {hoverData.length
@@ -54,18 +55,14 @@ const SCube = styled.div`
   position: relative;
   background-color: rgba(0, 0, 0, 1);
   background-color: ${props =>
-    props.length > 5
-      ? "rgb(248, 143, 117)"
-      : props.length > 4
-      ? "rgb(253, 163, 140)"
+    props.length > 6
+      ? "#FF6E5A"
       : props.length > 3
-      ? "rgb(255, 178, 159)"
-      : props.length > 2
-      ? "rgb(251, 191, 177)"
+      ? "#FF9A8C"
       : props.length > 1
-      ? "rgb(250, 202, 189)"
+      ? "#FFBBB1"
       : props.length > 0
-      ? "rgb(226, 226, 226)"
+      ? "#FFE3DF"
       : props.theme.color.white};
 `;
 
@@ -82,6 +79,6 @@ const SActiveData = styled.div`
   color: ${props => props.theme.color.white};
   border-radius: 10px;
   z-index: 99;
-  transform: translateX(-80px);
+  transform: translateX(-100px);
   font-size: 12px;
 `;

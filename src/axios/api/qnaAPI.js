@@ -15,6 +15,8 @@ export const qnaApi = {
   //게시글 상세조회
   getOneList: id => instance.get(`/qna/${id}`),
 
+  getQnaHotList: () => instance.get("/qna/hot"),
+
   //게시글 작성
   postList: data => instance.post("/qna", data),
 

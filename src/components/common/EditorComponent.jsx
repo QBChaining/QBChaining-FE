@@ -253,7 +253,7 @@ const EditorComponent = ({
               onChange={onTitleChangeHandler}
               type="text"
               ref={titleText}
-              maxLength="40"
+              maxLength="100"
               placeholder="제목을 입력해주세요."
               // initialText={blogTitle}
             />

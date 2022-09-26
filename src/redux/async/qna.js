@@ -345,3 +345,20 @@ export const choiceCommentListDB = createAsyncThunk(
     }
   },
 );
+
+//추천 게시글
+export const getQnaHotListDB = createAsyncThunk(
+  "qna/qnahotlist",
+  async (data, thunkAPI) => {
+    try {
+      const response = await qnaApi.getQnaHotList();
+      if (response.data.success === true) {
+        return response.data.data;
+      }
+    } catch (err) {
+      networkError();
+      Sentry.captureException(`error, QNA 핫 게시글 조회 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.message);
+    }
+  },
+);

@@ -41,11 +41,9 @@ const QnaMain = () => {
     setPageNumber(0);
     setHasNextPage(true);
     setResolveTap(1);
-    console.log("resolve");
   };
 
   const onGetNoResolve = () => {
-    console.log("noResolve");
     setPageNumber(0);
     setHasNextPage(true);
     setResolveTap(0);
@@ -307,6 +305,7 @@ const STitle = styled.h2`
   font-size: 70px;
   margin-top: 30px;
   margin-bottom: 60px;
+  color: ${props => props.theme.color.mainNavy};
 `;
 
 const SNodata = styled.div`

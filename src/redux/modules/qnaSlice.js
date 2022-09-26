@@ -18,6 +18,7 @@ import {
   getQnaLikeListDB,
   likeQnaListDB,
   dislikeQnaListDB,
+  getQnaHotListDB,
 } from "../async/qna";
 
 const qnaSlice = createSlice({
@@ -27,6 +28,7 @@ const qnaSlice = createSlice({
     qnaTarget: {},
     commentList: [],
     bookmarkList: [],
+    qnaHotList: [],
     isCommentWrite: false,
     errorMessage: "",
     isFetching: false,
@@ -301,6 +303,20 @@ const qnaSlice = createSlice({
       state.isFetching = true;
     },
     [choiceCommentListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+    //추천 많이받은 게시글
+    [getQnaHotListDB.fulfilled]: (state, { payload }) => {
+      console.log(payload);
+      state.qnaHotList = payload;
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [getQnaHotListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [getQnaHotListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },

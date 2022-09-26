@@ -1,17 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { deleteCookie, getCookie } from "./../../utils/cookie";
 import jwt_decode from "jwt-decode";
-
 import {
   postUserInfoDB,
   putUserInNewDB,
   getUserInfoDB,
   getUserInfoActivityDB,
+  getUserQnaListDB,
+  getUserBlogListDB,
 } from "../async/user";
 
 export const userSlice = createSlice({
   name: "user",
   initialState: {
+    userQnaList: [],
+    userQnaAnswerList: [],
+    userBlogList: [],
+    userBlogCommentList: [],
     isLogin: false,
     userToken: null,
     userName: null,
@@ -99,6 +104,36 @@ export const userSlice = createSlice({
       state.isFetching = true;
     },
     [getUserInfoActivityDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+
+    //회원QnaList 받아오기
+    [getUserQnaListDB.fulfilled]: (state, { payload }) => {
+      state.userQnaList = payload.myQna;
+      state.userQnaAnswerList = payload.myAnswer;
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [getUserQnaListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [getUserQnaListDB.rejected]: (state, { payload: errorMessage }) => {
+      state.isFetching = false;
+      state.errorMessage = errorMessage;
+    },
+
+    //회원BlogList 받아오기
+    [getUserBlogListDB.fulfilled]: (state, { payload }) => {
+      state.userBlogList = payload.post;
+      state.userBlogCommentList = payload.comment;
+      state.isFetching = false;
+      state.errorMessage = null;
+    },
+    [getUserQnaListDB.pending]: (state, { payload }) => {
+      state.isFetching = true;
+    },
+    [getUserQnaListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
