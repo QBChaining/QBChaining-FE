@@ -10,9 +10,9 @@ const BlogHotList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(getHotBlogDB());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getHotBlogDB());
+  // }, []);
   return (
     <SBlogHotList>
       <SHotTitle>최근에 추천 많이 받은 게시글 🔥</SHotTitle>

@@ -166,7 +166,9 @@ const EditorComponent = ({
           content,
           tags,
         }),
-      );
+      ).then(blogWrite => {
+        navigate(`/blog/detail/${blogWrite.payload.id}`);
+      });
     } else if (isBlogEdit) {
       navigate(`/blog/detail/${blogEditId}`);
       dispatch(

@@ -31,7 +31,11 @@ export const blogSlice = createSlice({
     isPreView: false,
     errorMessage: "",
   },
-  reducers: {},
+  reducers: {
+    removeBlogList: state => {
+      state.blogList = [];
+    },
+  },
   extraReducers: {
     //블로그 전체조회 부분
     [getBlogCommunityListDB.pending]: state => {
@@ -39,8 +43,8 @@ export const blogSlice = createSlice({
     },
     [getBlogCommunityListDB.fulfilled]: (state, action) => {
       //블로그 메인 게시물 리스트 GET
-
-      state.blogList = action.payload;
+      // state.blogList = state.blogList.concat(action.payload);
+      state.blogList = [...state.blogList, ...action.payload];
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -68,8 +72,8 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogCommunityDB.fulfilled]: (state, action) => {
-      state.blogList.push(action.payload);
-      // state.blogList = action.payload;
+      console.log(action.payload);
+      state.blogList.unshift(action.payload);
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -285,5 +289,5 @@ export const blogSlice = createSlice({
   },
 });
 
-export const {} = blogSlice.actions;
+export const { removeBlogList } = blogSlice.actions;
 export default blogSlice.reducer;
