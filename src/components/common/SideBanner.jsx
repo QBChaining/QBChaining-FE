@@ -22,9 +22,6 @@ const SideBanner = ({ type }) => {
     type === "qna" ? state.qnaSlice.qnaHotList : state.blogSlice.hotBlog,
   );
 
-  console.log(type);
-
-  console.log(hotList);
   const dispatch = useDispatch();
   const settings = {
     dots: false,

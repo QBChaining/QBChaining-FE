@@ -8,24 +8,30 @@ import {
   setSearchWord,
 } from "../../redux/modules/searchSlice";
 import { errorAlert } from "../../utils/swal";
+import { useSearchParams } from "react-router-dom";
 
 const SearchInput = () => {
   const search = useRef();
   const { searchWord } = useSelector(state => state.searchSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchWords = searchParams.get("q");
+
   const goSearch = () => {
     if (search.current.value.length === 0) {
       errorAlert("검색어를 입력해주세요!");
       return;
     }
 
-    if (search.current.value === searchWord) {
+    if (searchWords === search.current.value) {
       errorAlert("이전과 다른 검색어를 입력해주세요!");
       return;
     }
+
     dispatch(removeSearchList());
     dispatch(setSearchWord(search.current.value));
+
     navigate(`/search?q=${search.current.value}`);
     search.current.value = "";
   };
