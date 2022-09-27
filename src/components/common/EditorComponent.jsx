@@ -102,10 +102,12 @@ const EditorComponent = ({
       errorAlert("제목을 입력해주세요!");
       return;
     }
-    if (editorRef.current.getInstance().getMarkdown().length === 0) {
+
+    if (content.length === 0) {
       errorAlert("본문을 입력해주세요!");
       return;
     }
+
     if (!isCommentWrite && !isBlogEdit) {
       if (tags.length < 1) {
         errorAlert("최소 1개의 태그가 필요합니다!");
@@ -141,6 +143,7 @@ const EditorComponent = ({
           tags,
         }),
       ).then(res => {
+        console.log(res);
         navigate(`/qna/detail/${res.payload.data.id}`);
       });
       //코멘트작성
@@ -252,7 +255,7 @@ const EditorComponent = ({
               onChange={onTitleChangeHandler}
               type="text"
               ref={titleText}
-              maxLength="40"
+              maxLength="100"
               placeholder="제목을 입력해주세요."
               // initialText={blogTitle}
             />
@@ -268,7 +271,12 @@ const EditorComponent = ({
         )}
         <SEditor>
           <Editor
-            placeholder="마크다운으로 내용을 입력하세요!"
+            // placeholder="마크다운으로 내용을 입력하세요!"
+            initialValue="```javascript
+            yourCodeHere(){
+              return thank you!
+          }
+            ```"
             previewStyle={isCommentWrite ? "tab" : "vertical"}
             height={isCommentWrite ? "60vh" : "50vh"}
             initialEditType="markdown"
@@ -291,8 +299,10 @@ const EditorComponent = ({
                   ref(storage, `images/${Date.now()}`),
                   blob,
                 );
+                console.log(uploaded_file);
                 //firebase에 올라간 이미지url 저장
                 const file_url = await getDownloadURL(uploaded_file.ref);
+                console.log(file_url);
                 //firebase에 이미지 업로드 완료 후 url 추출후 textEditor에 삽입
                 callback(file_url);
               },

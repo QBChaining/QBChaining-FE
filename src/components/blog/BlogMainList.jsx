@@ -148,6 +148,7 @@ const STagList = styled.div`
   align-items: center;
   flex-wrap: wrap;
   padding-right: 130px;
+  flex-wrap: wrap;
 `;
 const STag = styled.div`
   overflow: hidden;

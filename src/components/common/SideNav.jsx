@@ -37,7 +37,7 @@ const SideNav = () => {
 export default SideNav;
 
 const SNav = styled.nav`
-  position: absolute;
+  position: fixed;
   top: 130px;
   left: 0;
   z-index: 200;

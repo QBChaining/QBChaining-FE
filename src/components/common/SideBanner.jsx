@@ -13,25 +13,31 @@ import { useSelector, useDispatch } from "react-redux";
 import { getHotBlogDB } from "../../redux/async/blog";
 import { getQnaCategoryListDB } from "../../redux/async/qna.js";
 import { useNavigate } from "react-router-dom";
+import BugReport from "../../assets/images/BugReport.jpg";
+import SurveyReport from "../../assets/images/SurveyReport.jpg";
+import { getQnaHotListDB } from "./../../redux/async/qna";
 const SideBanner = ({ type }) => {
   const navigate = useNavigate();
   const hotList = useSelector(state =>
-    type === "qna" ? state.qnaSlice.qnaList : state.blogSlice.hotBlog,
+    type === "qna" ? state.qnaSlice.qnaHotList : state.blogSlice.hotBlog,
   );
 
-  const hotListSlice = hotList.slice(0, 4);
   const dispatch = useDispatch();
   const settings = {
     dots: false,
     infinite: true,
-    speed: 500,
+    speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    cssEase: "linear",
   };
 
   useEffect(() => {
-    dispatch(getHotBlogDB());
+    dispatch(type === "qna" ? getQnaHotListDB() : getHotBlogDB());
   }, []);
+
 
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);
@@ -42,11 +48,11 @@ const SideBanner = ({ type }) => {
         <SHotHeader>
           <SFireIcon />
           {type === "qna"
-            ? "최근에 추천 많이 받은 질문 "
+            ? "최근에 추천 많이 받은 질문"
             : "최근에 추천 많이 받은 게시글"}
         </SHotHeader>
         <SHotList>
-          {hotListSlice.map(hot => (
+          {hotList.map(hot => (
             <li
               key={hot.id}
               onClick={() => {
@@ -61,10 +67,8 @@ const SideBanner = ({ type }) => {
       </SHotContent>
       <SBanner>
         <Slider {...settings}>
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-          <div>4</div>
+          <img src={BugReport} alt={"BugReport"}></img>
+          <img src={SurveyReport} alt={"SurveyReport"}></img>
         </Slider>
       </SBanner>
     </SBannerWrapper>
@@ -131,7 +135,7 @@ const SBanner = styled.div`
   }
 
   & .slick-slide {
-    background-color: ${props => props.theme.color.mainNavy};
+    cursor: pointer;
     height: 100%;
   }
 `;

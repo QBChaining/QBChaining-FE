@@ -78,7 +78,6 @@ export const blogSlice = createSlice({
     },
     [postBlogCommunityDB.rejected]: (state, action) => {
       state.isFetching = false;
-      console.log(action);
       state.errorMessage = action.payload.errorMessage;
     },
 
