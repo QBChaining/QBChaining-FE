@@ -93,7 +93,7 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
     return (
       <SQnaCommentList>
         <SCommentWrapper>
-          {chooseComment && (
+          {chooseComment.length > 0 && (
             <SItemWrapper id={chooseComment.id}>
               <SUserInfo>
                 <SWinnerUserInfo

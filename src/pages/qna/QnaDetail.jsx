@@ -50,6 +50,8 @@ const QnaDetail = () => {
     };
   }, []);
 
+  console.log(list);
+
   //코멘트 무한스크롤
   useEffect(() => {
     let data = {
