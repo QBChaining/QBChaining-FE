@@ -112,7 +112,8 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
                       )}
                     </SUserNameWrapper>
                     <SCreateAt winner={true}>
-                      {chooseComment.createdAt}
+                      {chooseComment.createdAt?.slice(0, 10)} /{" "}
+                      {chooseComment.createdAt?.slice(11, 16)}
                     </SCreateAt>
                   </SUserInfoText>
                 </SWinnerUserInfo>

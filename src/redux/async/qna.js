@@ -51,7 +51,6 @@ export const getOneQnaListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      networkError();
       Sentry.captureException(`error, QNA게시글 상세 조회 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
     }
