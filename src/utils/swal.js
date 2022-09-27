@@ -32,11 +32,11 @@ export const needLoginAlert = () => {
   });
 };
 
-export const networkError = () => {
+export const networkError = (text = "네트워크 연결 상태를 확인해주세요!") => {
   return Swal.fire({
     icon: "error",
     title: "에러",
-    text: "네트워크 연결 상태를 확인해주세요!",
+    text: text,
     confirmButtonText: "확인",
   });
 };

@@ -27,6 +27,7 @@ const qnaSlice = createSlice({
     qnaList: [],
     qnaTarget: {},
     commentList: [],
+    chooseComment: {},
     bookmarkList: [],
     qnaHotList: [],
     isCommentWrite: false,
@@ -159,7 +160,8 @@ const qnaSlice = createSlice({
     },
     //댓글 조회
     [getCommentListDB.fulfilled]: (state, { payload }) => {
-      state.commentList = state.commentList.concat(payload);
+      state.chooseComment = payload.chooseComment;
+      state.commentList = state.commentList.concat(payload.commentLists);
       state.isCommentFetching = false;
       state.errorMessage = null;
     },
