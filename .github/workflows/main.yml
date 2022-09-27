@@ -47,44 +47,44 @@ jobs:
         run: |
           echo "REACT_APP_FIREBASE_APIKEY=$REACT_APP_FIREBASE_APIKEY" >> .env.production
         env:
-          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_APIKEY }}
+          REACT_APP_FIREBASE_APIKEY: ${{ secrets.REACT_APP_FIREBASE_APIKEY }}
 
       - name: firebase config_2
         run: |
           echo "REACT_APP_FIREBASE_AUTHDOMAIN=$REACT_APP_FIREBASE_AUTHDOMAIN" >> .env.production
         env:
-          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_AUTHDOMAIN }}
+          REACT_APP_FIREBASE_AUTHDOMAIN: ${{ secrets.REACT_APP_FIREBASE_AUTHDOMAIN }}
       - name: firebase config_3
         run: |
           echo "REACT_APP_FIREBASE_PROJECTID=$REACT_APP_FIREBASE_PROJECTID" >> .env.production
         env:
-          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_PROJECTID }}
+          REACT_APP_FIREBASE_PROJECTID: ${{ secrets.REACT_APP_FIREBASE_PROJECTID }}
       - name: firebase config_4
         run: |
           echo "REACT_APP_FIREBASE_STORAGEBUCKET=$REACT_APP_FIREBASE_STORAGEBUCKET" >> .env.production
         env:
-          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_STORAGEBUCKET}}
+          REACT_APP_FIREBASE_STORAGEBUCKET: ${{ secrets.REACT_APP_FIREBASE_STORAGEBUCKET}}
       - name: firebase config_5
         run: |
           echo "REACT_APP_FIREBASE_MESSAGINSERNDERID=$REACT_APP_FIREBASE_MESSAGINSERNDERID" >> .env.production
         env:
-          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_MESSAGINSERNDERID }}
+          REACT_APP_FIREBASE_MESSAGINSERNDERID: ${{ secrets.REACT_APP_FIREBASE_MESSAGINSERNDERID }}
       - name: firebase config_6
         run: |
           echo "REACT_APP_FIREBASE_APPID=$REACT_APP_FIREBASE_APPID" >> .env.production
         env:
-          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_APPID }}
+          REACT_APP_FIREBASE_APPID: ${{ secrets.REACT_APP_FIREBASE_APPID }}
       - name: firebase config_7
         run: |
           echo "REACT_APP_FIREBASE_MEASUREMENTID=$REACT_APP_FIREBASE_MEASUREMENTID" >> .env.production
         env:
-          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_FIREBASE_MEASUREMENTID }}
+          REACT_APP_FIREBASE_MEASUREMENTID: ${{ secrets.REACT_APP_FIREBASE_MEASUREMENTID }}
           # sentry dsn
       - name: sentry dsn
         run: |
           echo "REACT_APP_SENTRYDSN=$REACT_APP_SENTRYDSN" >> .env.production
         env:
-          REACT_APP_GITHUB_API: ${{ secrets.REACT_APP_SENTRYDSN }}
+          REACT_APP_SENTRYDSN: ${{ secrets.REACT_APP_SENTRYDSN }}
 
       - name: Build
         run: yarn build
