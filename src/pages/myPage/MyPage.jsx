@@ -13,6 +13,7 @@ import MyPageActivity from "../../components/myPage/MyPageActivity";
 import MyPageSolveIcon from "../../assets/images/MyPageSolveIcon.png";
 import MyPageUnSolveIcon from "../../assets/images/MyPageUnSolveIcon.png";
 import unlike from "../../assets/images/unlike.png";
+import { nanoid } from "@reduxjs/toolkit";
 const MyPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,140 +41,148 @@ const MyPage = () => {
     navigate(`/${type}/detail/${id}`);
   };
 
-  return (
-    <SMyPage>
-      <SUserInfoWrapper>
-        <SUserInfoInner>
-          <SUserProfile profileImg={userInfo?.profileImg}></SUserProfile>
-          <SUserInfo>
-            <SUserName>
-              {userInfo?.name}
+  console.log(isFetching);
+
+  if (isFetching) {
+    return <div>로딩중</div>;
+  } else {
+    return (
+      <SMyPage>
+        <SUserInfoWrapper>
+          <SUserInfoInner>
+            <SUserProfile profileImg={userInfo?.profileImg}></SUserProfile>
+            <SUserInfo>
+              <SUserName>
+                {userInfo?.name}
+                {loginUserName === userName && (
+                  <button
+                    onClick={() => {
+                      navigate("/register");
+                    }}
+                  >
+                    정보 수정
+                  </button>
+                )}
+              </SUserName>
               {loginUserName === userName && (
-                <button
-                  onClick={() => {
-                    navigate("/register");
-                  }}
-                >
-                  정보 수정
-                </button>
+                <SUserDetail>
+                  <li>{userInfo?.gender}</li>
+                  <li>{userInfo?.age}</li>
+                  <li>{userInfo?.career}</li>
+                  <li>{userInfo?.job}</li>
+                </SUserDetail>
               )}
-            </SUserName>
-            {loginUserName === userName && (
-              <SUserDetail>
-                <li>{userInfo?.gender}</li>
-                <li>{userInfo?.age}</li>
-                <li>{userInfo?.career}</li>
-                <li>{userInfo?.job}</li>
-              </SUserDetail>
-            )}
-          </SUserInfo>
-        </SUserInfoInner>
-        <SCube>
-          <MyPageActivity />
-        </SCube>
-      </SUserInfoWrapper>
-      <SListWrapper>
-        <SList>
-          <SQna>
-            <STitle>Q&A</STitle>
-            <SListContainer>
-              <SHeader type={"qna"}>MY 질문</SHeader>
-              <SMain>
-                {userQnaList.map(data => (
-                  <SListInner
-                    key={data.id}
-                    onClick={() => {
-                      goDetail("qna", data.id);
-                    }}
-                  >
-                    <SListTitleWrapper>
-                      <SListTitle>{data.title}</SListTitle>
-                      <SListDate>{data.createdAt.slice(0, 10)}</SListDate>
-                    </SListTitleWrapper>
-                    <SSolveText resolve={data.isResolve}>
-                      <SSolveIcon resolve={data.isResolve} />
-                      {data.isResolve ? "채택완료" : "채택미완료"}
-                    </SSolveText>
-                  </SListInner>
-                ))}
-              </SMain>
-            </SListContainer>
-            <SListContainer>
-              <SHeader type={"qna"}>MY 답변</SHeader>
-              <SMain>
-                {userQnaAnswerList.map(comment => (
-                  <SListInner
-                    key={comment.id}
-                    onClick={() => {
-                      goDetail("qna", comment.Qna.id);
-                    }}
-                  >
-                    <SListTitleWrapper>
-                      <SListTitle>{comment.Qna.title}</SListTitle>
-                      <SListDate>
-                        {comment.Qna.createdAt.slice(0, 10)}
-                      </SListDate>
-                    </SListTitleWrapper>
-                    <SSolveText resolve={comment.Qna.isResolve}>
-                      <SSolveIcon resolve={comment.Qna.isResolve} />
-                      {comment.Qna.isResolve ? "채택완료" : "채택미완료"}
-                    </SSolveText>
-                  </SListInner>
-                ))}
-              </SMain>
-            </SListContainer>
-          </SQna>
-          <SBlog>
-            <STitle>BLOG</STitle>
-            <SListContainer>
-              <SHeader type={"blog"}>MY 게시글</SHeader>
-              <SMain>
-                {userBlogList.map(data => (
-                  <SListInner
-                    key={data.id}
-                    onClick={() => {
-                      goDetail("blog", data.id);
-                    }}
-                  >
-                    <SListTitleWrapper>
-                      <SListTitle>{data.title}</SListTitle>
-                      <SListDate>{data.createdAt.slice(0, 10)}</SListDate>
-                    </SListTitleWrapper>
-                    <SSolveText>
-                      <SLikeIcon />
-                      {data.like}
-                    </SSolveText>
-                  </SListInner>
-                ))}
-              </SMain>
-            </SListContainer>
-            <SListContainer>
-              <SHeader type={"blog"}>MY 댓글</SHeader>
-              <SMain>
-                {userBlogCommentList.map(data => (
-                  <SListInner
-                    key={data.comment}
-                    onClick={() => {
-                      goDetail("blog", data.Post.id);
-                    }}
-                  >
-                    <SListTitleWrapper>
-                      <SListTitle>{data.Post.title}</SListTitle>
-                      <SListDate>{data.Post.createdAt.slice(0, 10)}</SListDate>
-                    </SListTitleWrapper>
-                    <SSolveText>
-                      <SLikeIcon />
-                      {data.Post.like}
-                    </SSolveText>
-                  </SListInner>
-                ))}
-              </SMain>
-            </SListContainer>
-          </SBlog>
-        </SList>
-      </SListWrapper>
-    </SMyPage>
-  );
+            </SUserInfo>
+          </SUserInfoInner>
+          <SCube>
+            <MyPageActivity />
+          </SCube>
+        </SUserInfoWrapper>
+        <SListWrapper>
+          <SList>
+            <SQna>
+              <STitle>Q&A</STitle>
+              <SListContainer>
+                <SHeader type={"qna"}>MY 질문</SHeader>
+                <SMain>
+                  {userQnaList.map(data => (
+                    <SListInner
+                      key={data.id}
+                      onClick={() => {
+                        goDetail("qna", data.id);
+                      }}
+                    >
+                      <SListTitleWrapper>
+                        <SListTitle>{data.title}</SListTitle>
+                        <SListDate>{data.createdAt.slice(0, 10)}</SListDate>
+                      </SListTitleWrapper>
+                      <SSolveText resolve={data.isResolve}>
+                        <SSolveIcon resolve={data.isResolve} />
+                        {data.isResolve ? "채택완료" : "채택미완료"}
+                      </SSolveText>
+                    </SListInner>
+                  ))}
+                </SMain>
+              </SListContainer>
+              <SListContainer>
+                <SHeader type={"qna"}>MY 답변</SHeader>
+                <SMain>
+                  {userQnaAnswerList.map(comment => (
+                    <SListInner
+                      key={comment.id}
+                      onClick={() => {
+                        goDetail("qna", comment.Qna.id);
+                      }}
+                    >
+                      <SListTitleWrapper>
+                        <SListTitle>{comment.Qna.title}</SListTitle>
+                        <SListDate>
+                          {comment.Qna.createdAt.slice(0, 10)}
+                        </SListDate>
+                      </SListTitleWrapper>
+                      <SSolveText resolve={comment.Qna.isResolve}>
+                        <SSolveIcon resolve={comment.Qna.isResolve} />
+                        {comment.Qna.isResolve ? "채택완료" : "채택미완료"}
+                      </SSolveText>
+                    </SListInner>
+                  ))}
+                </SMain>
+              </SListContainer>
+            </SQna>
+            <SBlog>
+              <STitle>BLOG</STitle>
+              <SListContainer>
+                <SHeader type={"blog"}>MY 게시글</SHeader>
+                <SMain>
+                  {userBlogList.map(data => (
+                    <SListInner
+                      key={data.id}
+                      onClick={() => {
+                        goDetail("blog", data.id);
+                      }}
+                    >
+                      <SListTitleWrapper>
+                        <SListTitle>{data.title}</SListTitle>
+                        <SListDate>{data.createdAt.slice(0, 10)}</SListDate>
+                      </SListTitleWrapper>
+                      <SSolveText>
+                        <SLikeIcon />
+                        {data.like}
+                      </SSolveText>
+                    </SListInner>
+                  ))}
+                </SMain>
+              </SListContainer>
+              <SListContainer>
+                <SHeader type={"blog"}>MY 댓글</SHeader>
+                <SMain>
+                  {userBlogCommentList.map(data => (
+                    <SListInner
+                      key={nanoid()}
+                      onClick={() => {
+                        goDetail("blog", data.Post.id);
+                      }}
+                    >
+                      <SListTitleWrapper>
+                        <SListTitle>{data.Post.title}</SListTitle>
+                        <SListDate>
+                          {data.Post.createdAt.slice(0, 10)}
+                        </SListDate>
+                      </SListTitleWrapper>
+                      <SSolveText>
+                        <SLikeIcon />
+                        {data.Post.like}
+                      </SSolveText>
+                    </SListInner>
+                  ))}
+                </SMain>
+              </SListContainer>
+            </SBlog>
+          </SList>
+        </SListWrapper>
+      </SMyPage>
+    );
+  }
 };
 
 export default MyPage;

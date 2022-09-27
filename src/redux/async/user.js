@@ -70,6 +70,7 @@ export const getUserInfoDB = createAsyncThunk(
         return response.data.userPageInfo;
       }
     } catch (err) {
+      console.log(err);
       networkError();
       Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.message);
@@ -94,6 +95,7 @@ export const getUserInfoActivityDB = createAsyncThunk(
   },
 );
 
+//유저 qnaList
 export const getUserQnaListDB = createAsyncThunk(
   "auth/getuserqnalist",
   async (data, thunkAPI) => {
@@ -111,6 +113,7 @@ export const getUserQnaListDB = createAsyncThunk(
   },
 );
 
+//유저 blogList
 export const getUserBlogListDB = createAsyncThunk(
   "auth/getuserbloglist",
   async (data, thunkAPI) => {

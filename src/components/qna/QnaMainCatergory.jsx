@@ -51,7 +51,7 @@ const QnaMainCatergory = ({
 export default QnaMainCatergory;
 
 const SQnaMainCatergory = styled.div`
-  margin-top: 278px;
+  margin-top: 178px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
