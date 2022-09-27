@@ -83,6 +83,9 @@ const EditorComponent = ({
     ["scrollSync"],
   ];
 
+  const initialValue =
+    "```javascript\n  yourCodeHere(){\n    reutrn thnak you!\n  }\n```";
+
   const onChangeContent = () => {
     const data = editorRef.current.getInstance().getMarkdown();
     setContent(data);
@@ -272,11 +275,7 @@ const EditorComponent = ({
         <SEditor>
           <Editor
             // placeholder="마크다운으로 내용을 입력하세요!"
-            initialValue="```javascript
-            yourCodeHere(){
-              return thank you!
-          }
-            ```"
+            initialValue={initialValue}
             previewStyle={isCommentWrite ? "tab" : "vertical"}
             height={isCommentWrite ? "60vh" : "50vh"}
             initialEditType="markdown"
