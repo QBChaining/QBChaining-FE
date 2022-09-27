@@ -101,6 +101,7 @@ jobs:
           --region ap-northeast-2 \
           build s3://qb-chaning
 
+#ytest
 #CI 보류 코드
 # Gitgub repository Secrtets를 통해 변수 파일을 생성
 
