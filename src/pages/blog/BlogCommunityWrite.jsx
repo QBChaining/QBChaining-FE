@@ -10,7 +10,6 @@ import { Helmet } from "react-helmet-async";
 
 const BlogCommunityWrite = () => {
   const res = useSelector(state => state);
-  console.log(res);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(colorSetBlue());

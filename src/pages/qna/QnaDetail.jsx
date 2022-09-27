@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOneQnaListDB } from "../../redux/async/qna";
 import { colorSetGreen } from "../../redux/modules/userSlice";
@@ -13,10 +13,13 @@ import { removeCommentList, removeQnaList } from "../../redux/modules/qnaSlice";
 import { ClipLoader } from "react-spinners";
 import { useInView } from "react-intersection-observer";
 import { getCommentListDB } from "./../../redux/async/qna";
+import { errorAlert } from "../../utils/swal";
+import { networkError } from "./../../utils/swal";
 
 const QnaDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const target = useSelector(state => state.qnaSlice.qnaTarget);
   const isDetailFetcing = useSelector(state => state.qnaSlice.isDetailFetcing);
@@ -29,7 +32,15 @@ const QnaDetail = () => {
   const [infiniteTarget, inView] = useInView();
 
   useEffect(() => {
-    dispatch(getOneQnaListDB(id));
+    dispatch(getOneQnaListDB(id)).then(
+      res =>
+        res.payload === undefined &&
+        networkError("네트워크 상태가 좋지 않거나 없는 페이지입니다!").then(
+          res => {
+            res.isConfirmed && navigate("/", { replace: true });
+          },
+        ),
+    );
     dispatch(colorSetGreen());
   }, [dispatch, id]);
 
@@ -46,7 +57,7 @@ const QnaDetail = () => {
       pageNumber,
     };
     dispatch(getCommentListDB(data)).then(res =>
-      setHasNextPage(res.payload.length === 10),
+      setHasNextPage(res.payload.commentLists.length === 10),
     );
   }, [id, pageNumber]);
 

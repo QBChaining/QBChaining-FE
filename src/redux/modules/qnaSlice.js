@@ -27,6 +27,7 @@ const qnaSlice = createSlice({
     qnaList: [],
     qnaTarget: {},
     commentList: [],
+    chooseComment: {},
     bookmarkList: [],
     qnaHotList: [],
     isCommentWrite: false,
@@ -50,7 +51,6 @@ const qnaSlice = createSlice({
   extraReducers: {
     //게시글 채택 조회
     [getQnaMainListDB.fulfilled]: (state, { payload }) => {
-      console.log(payload);
       //payload에는 전체 리스트가 들어있다
       state.qnaList = state.qnaList.concat(payload);
       state.isFetching = false;
@@ -131,6 +131,7 @@ const qnaSlice = createSlice({
     },
     //게시글 추천
     [likeQnaListDB.fulfilled]: (state, { payload }) => {
+      console.log(state.qnaTarget.like);
       state.qnaTarget.isLike = true;
       state.qnaTarget.like += 1;
       state.isFetching = false;
@@ -159,7 +160,8 @@ const qnaSlice = createSlice({
     },
     //댓글 조회
     [getCommentListDB.fulfilled]: (state, { payload }) => {
-      state.commentList = state.commentList.concat(payload);
+      state.chooseComment = payload.chooseComment;
+      state.commentList = state.commentList.concat(payload.commentLists);
       state.isCommentFetching = false;
       state.errorMessage = null;
     },

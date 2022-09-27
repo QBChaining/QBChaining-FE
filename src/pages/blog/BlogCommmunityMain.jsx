@@ -92,8 +92,8 @@ const BlogCommmunityMain = () => {
                 <div></div>작성하기
               </SWritingButton>
             </SWritingButtonWrapper>
-            {blogMainLists?.map((posts, idx) => (
-              <BlogMainList posts={posts} key={idx} />
+            {blogMainLists?.map(posts => (
+              <BlogMainList posts={posts} key={posts.id} />
             ))}
           </SLeftContainer>
           <SideBanner type={"blog"} />

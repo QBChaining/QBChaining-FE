@@ -5,16 +5,22 @@ import BlogBookMark from "./BlogBookMark";
 import unlike from "../../assets/images/GreyQnaLike.png";
 import cmtComment from "../../assets/images/GreyQnaComment.png";
 import { getToday } from "./../../utils/today";
+import { useSelector, dispatch, useDispatch } from "react-redux";
+import { getBlogDetailDB } from "../../redux/async/blog";
 const BlogMainList = ({ posts }) => {
-  const [Like, setLike] = useState(posts.isLove);
+  const [Like, setLike] = useState(posts.isLike);
+  // const [likeNum, setLikeNum] = useState(posts.like);
+  const likeNum = useSelector(state => state.blogSlice.blogDetail.like);
+  const dispatch = useDispatch();
+  console.log(likeNum);
   useEffect(() => {
-    if (posts.isLove) {
+    if (posts.isLike) {
       setLike(true);
     }
-    if (!posts.isLove) {
+    if (!posts.isLike) {
       setLike(false);
     }
-  }, [posts.isLove]);
+  }, [posts.isLike]);
   const navigate = useNavigate();
 
   //몇일전 구하는 함수
@@ -74,7 +80,7 @@ const BlogMainList = ({ posts }) => {
           <STagNMark>
             <STagList>
               {posts.tags?.map((tags, i) => (
-                <STag key={i}>{tags}</STag>
+                <STag key={i}>{tags.slice(0, 7)}</STag>
               ))}
             </STagList>
             <SIconContainer>
@@ -138,20 +144,22 @@ const SProfile = styled.div`
 `;
 
 const STagList = styled.div`
-  /* background-color: orange; */
-  align-items: center;
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   padding-right: 130px;
   flex-wrap: wrap;
 `;
 const STag = styled.div`
-  background-color: orange;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100px;
   font-size: 14px;
   color: #ffffff;
-  /* margin-right: 15px; */
   padding: 5px 20px;
   background: ${props => props.theme.color.mainNavy};
   border-radius: 30px;

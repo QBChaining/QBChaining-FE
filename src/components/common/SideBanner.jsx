@@ -22,9 +22,6 @@ const SideBanner = ({ type }) => {
     type === "qna" ? state.qnaSlice.qnaHotList : state.blogSlice.hotBlog,
   );
 
-  console.log(type);
-
-  console.log(hotList);
   const dispatch = useDispatch();
   const settings = {
     dots: false,
@@ -41,9 +38,6 @@ const SideBanner = ({ type }) => {
     dispatch(type === "qna" ? getQnaHotListDB() : getHotBlogDB());
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(getQnaCategoryListDB());
-  // }, []);
 
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);
