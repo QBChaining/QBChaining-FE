@@ -18,11 +18,12 @@ import SearchInput from "./../search/SearchInput";
 import MainLogo from "../../assets/images/MainLogo.png";
 import Notification from "./Notification";
 import { errorAlert } from "../../utils/swal";
-// import Notification from "./Notification";
-import NotifiTest from "./NotifiTest";
 import { throttle } from "lodash";
+import { getNotificationDB } from "../../redux/async/notification";
 
 const Header = () => {
+  const notifiGet = useSelector(state => state);
+  console.log(notifiGet);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = window.location.pathname;
@@ -42,6 +43,7 @@ const Header = () => {
   const beforeScrollY = useRef(0);
 
   useEffect(() => {
+    dispatch(getNotificationDB());
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -73,12 +75,8 @@ const Header = () => {
       </SLogoContainer>
 
       <SearchInput />
+      <Notification />
       <SAlarmLoginWrapper>
-        <SAlarmConatainer className="alarmConatainer active">
-          {/* <HiOutlineBell /> */}
-          {/* <NotifiTest /> */}
-          {/* <Notification /> */}
-        </SAlarmConatainer>
         <SLoginConatainer className="loginConatainer">
           {isLogin ? (
             <button onClick={onLogoutHandler}>로그아웃</button>

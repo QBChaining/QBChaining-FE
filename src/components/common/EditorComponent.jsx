@@ -162,7 +162,6 @@ const EditorComponent = ({
       setContent("");
       //블로그 수정, 생성
     } else if (isBlogWrite) {
-      navigate("/blog");
       dispatch(
         postBlogCommunityDB({
           title,

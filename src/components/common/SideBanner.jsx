@@ -38,9 +38,6 @@ const SideBanner = ({ type }) => {
     dispatch(type === "qna" ? getQnaHotListDB() : getHotBlogDB());
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(getQnaCategoryListDB());
-  // }, []);
 
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);
