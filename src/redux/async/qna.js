@@ -156,6 +156,7 @@ export const getCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getCommentList(data);
+      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }

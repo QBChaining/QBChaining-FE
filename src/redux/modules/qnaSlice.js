@@ -46,6 +46,7 @@ const qnaSlice = createSlice({
     },
     removeCommentList: (state, { payload }) => {
       state.commentList = [];
+      state.chooseComment = {};
     },
   },
   extraReducers: {
