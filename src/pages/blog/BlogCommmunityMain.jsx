@@ -13,6 +13,7 @@ import { Helmet } from "react-helmet-async";
 import SideBanner from "./../../components/common/SideBanner";
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 import { removeBlogList } from "../../redux/modules/blogSlice";
+
 const BlogCommmunityMain = () => {
   const blogMainLists = useSelector(state => state.blogSlice.blogList);
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ const BlogCommmunityMain = () => {
     if (blogMainLists.length !== 0) {
     }
   }, [dispatch, page]);
+
   useEffect(() => {
     if (loading) {
       return;
@@ -69,11 +71,17 @@ const BlogCommmunityMain = () => {
       window.removeEventListener("scroll", _scrollPosition);
     };
   }, [page, loading]);
+
   //메인 블로그 게시글 조회
   useEffect(() => {
-    removeBlogList();
     dispatch(colorSetBlue());
+    return () => {
+      dispatch(removeBlogList());
+    };
   }, []);
+
+  console.log(blogMainLists);
+
   return (
     <SBlogCommmunityMain>
       <Helmet>

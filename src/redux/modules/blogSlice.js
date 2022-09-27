@@ -71,8 +71,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogCommunityDB.fulfilled]: (state, action) => {
-      state.blogList.unshift(action.payload);
-      console.log(action.payload);
       state.isFetching = false;
       state.errorMessage = null;
     },

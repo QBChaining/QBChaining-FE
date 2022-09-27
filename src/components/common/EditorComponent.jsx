@@ -84,7 +84,7 @@ const EditorComponent = ({
   ];
 
   const initialValue =
-    "```javascript\n  yourCodeHere(){\n    reutrn thnak you!\n  }\n```";
+    "```javascript\n  yourCodeHere(){\n    return thnak you!\n  }\n```";
 
   const onChangeContent = () => {
     const data = editorRef.current.getInstance().getMarkdown();

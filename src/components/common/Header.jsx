@@ -23,7 +23,6 @@ import { getNotificationDB } from "../../redux/async/notification";
 
 const Header = () => {
   const notifiGet = useSelector(state => state);
-  console.log(notifiGet);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = window.location.pathname;
@@ -75,7 +74,7 @@ const Header = () => {
       </SLogoContainer>
 
       <SearchInput />
-      <Notification />
+      {/* <Notification /> */}
       <SAlarmLoginWrapper>
         <SLoginConatainer className="loginConatainer">
           {isLogin ? (
