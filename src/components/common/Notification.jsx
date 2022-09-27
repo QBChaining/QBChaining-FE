@@ -1,9 +1,17 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import notifion from "../../assets/images/notifion.png";
+import { getNotificationDB } from "../../redux/async/notification";
+import notificationSlice from "../../redux/modules/notificationSlice";
 const Notification = () => {
-  const isNotifi = useSelector(state => state);
+  const isNotifi = useSelector(state => state.notificationSlice);
+  console.log(isNotifi);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getNotificationDB());
+  }, []);
   console.log(isNotifi);
   return (
     <NotifiItem>

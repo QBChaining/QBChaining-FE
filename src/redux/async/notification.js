@@ -11,7 +11,7 @@ export const getNotificationDB = createAsyncThunk(
   async thunkAPI => {
     try {
       const response = await notification.getNotification();
-      console.log(response);
+      console.log("14번째async", response);
       return response;
     } catch (err) {
       console.log(err);

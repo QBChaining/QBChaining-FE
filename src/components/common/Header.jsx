@@ -19,8 +19,11 @@ import MainLogo from "../../assets/images/MainLogo.png";
 import Notification from "./Notification";
 import { errorAlert } from "../../utils/swal";
 import { throttle } from "lodash";
+import { getNotificationDB } from "../../redux/async/notification";
 
 const Header = () => {
+  const notifiGet = useSelector(state => state);
+  console.log(notifiGet);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = window.location.pathname;
@@ -40,6 +43,7 @@ const Header = () => {
   const beforeScrollY = useRef(0);
 
   useEffect(() => {
+    dispatch(getNotificationDB());
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
