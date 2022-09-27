@@ -17,12 +17,12 @@ import { removeUserInfo } from "../../redux/modules/qnaSlice";
 import SearchInput from "./../search/SearchInput";
 import MainLogo from "../../assets/images/MainLogo.png";
 import Notification from "./Notification";
-import { errorAlert } from "../../utils/swal";
 import { throttle } from "lodash";
 import { getNotificationDB } from "../../redux/async/notification";
 
 const Header = () => {
-  const notifiGet = useSelector(state => state);
+  const isNotifi = useSelector(state => state.notificationSlice.notification);
+  // console.log(notifiGet);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = window.location.pathname;
@@ -71,10 +71,11 @@ const Header = () => {
         }}
       >
         <SLogoImage />
+        <STitle>CHAINING</STitle>
       </SLogoContainer>
 
       <SearchInput />
-      {/* <Notification /> */}
+      <Notification />
       <SAlarmLoginWrapper>
         <SLoginConatainer className="loginConatainer">
           {isLogin ? (
@@ -119,8 +120,8 @@ const SLogoContainer = styled.div`
 `;
 
 const SLogoImage = styled.div`
-  width: 155px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   margin-right: 10px;
   background-image: url(${MainLogo});
   background-position: center;
