@@ -60,7 +60,6 @@ export const blogSlice = createSlice({
     [getBlogDetailDB.fulfilled]: (state, action) => {
       state.blogDetail = action.payload;
       state.isFetching = false;
-      state.isPreView = true;
     },
     [getBlogDetailDB.rejected]: (state, action) => {
       state.isFetching = false;
@@ -72,8 +71,8 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogCommunityDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.blogList.unshift(action.payload);
+      console.log(action.payload);
       state.isFetching = false;
       state.errorMessage = null;
     },

@@ -32,9 +32,6 @@ const SideBanner = ({ type }) => {
   useEffect(() => {
     dispatch(getHotBlogDB());
   }, []);
-  // useEffect(() => {
-  //   dispatch(getQnaCategoryListDB());
-  // }, []);
 
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);

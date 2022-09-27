@@ -17,12 +17,20 @@ import { Helmet } from "react-helmet-async";
 
 const BlogCommunityDetail = () => {
   const { blogDetail: detail } = useSelector(state => state.blogSlice);
+  const detailTitle = useSelector(state => state.blogSlice.blogDetail.title);
+  const userName = useSelector(state => state.blogSlice.blogDetail.userName);
+  const profileImg = useSelector(
+    state => state.blogSlice.blogDetail.profileImg,
+  );
+  const isBookmark = useSelector(
+    state => state.blogSlice.blogDetail.isBookmark,
+  );
+  console.log(detailTitle);
   const userNick = useSelector(state => state.userSlice.userName);
-  // const { blogBookMark } = useSelector(state => state.blogSlice);
 
   const dispatch = useDispatch();
-  const { id } = useParams();
   const navigate = useNavigate();
+  const { id } = useParams();
   //게시글 삭제
 
   const deleteBlogPost = () => {
@@ -38,8 +46,6 @@ const BlogCommunityDetail = () => {
     navigate(`/mypage/${name}`);
   };
 
-  console.log(detail);
-
   return (
     <SContainer>
       <Helmet>
@@ -51,17 +57,17 @@ const BlogCommunityDetail = () => {
             <BlogDetailBookMark
               isdetailbookmark={true}
               target={detail}
-              isbookmark={detail?.isBookmark}
+              isbookmark={isBookmark}
             />
-            <STitle>{detail?.title}</STitle>
+            <STitle>{detailTitle}</STitle>
           </div>
           <SProfileNickNameDate
             onClick={() => {
-              goMypage(detail?.userName);
+              goMypage(userName);
             }}
           >
             <SDate>
-              <div className="name">{detail.userName}</div>
+              <div className="name">{userName}</div>
               <div className="date">
                 {detail.createdAt?.slice(0, 10)} /{" "}
                 {detail.createdAt?.slice(11, 16)}
@@ -94,7 +100,6 @@ const BlogCommunityDetail = () => {
             </ButtonGroup>
           )}
           <SContents>
-            {/* <Notification /> */}
             <ToastViewer className="content1" content={detail.content} />
           </SContents>
           <SLikeNtags>
@@ -117,11 +122,9 @@ const BlogCommunityDetail = () => {
         <CommentAdd />
         <CommentList />
       </SCommentWrapper>
-      {/* <ModalBookmark /> */}
     </SContainer>
   );
 };
-// navigate(`/${type}/detail/${data.id}`)
 export default BlogCommunityDetail;
 
 const SContainer = styled.div`

@@ -18,8 +18,6 @@ import SearchInput from "./../search/SearchInput";
 import MainLogo from "../../assets/images/MainLogo.png";
 import Notification from "./Notification";
 import { errorAlert } from "../../utils/swal";
-// import Notification from "./Notification";
-import NotifiTest from "./NotifiTest";
 import { throttle } from "lodash";
 
 const Header = () => {
@@ -74,12 +72,8 @@ const Header = () => {
       </SLogoContainer>
 
       <SearchInput />
+      <Notification />
       <SAlarmLoginWrapper>
-        <SAlarmConatainer className="alarmConatainer active">
-          {/* <HiOutlineBell /> */}
-          {/* <NotifiTest /> */}
-          {/* <Notification /> */}
-        </SAlarmConatainer>
         <SLoginConatainer className="loginConatainer">
           {isLogin ? (
             <button onClick={onLogoutHandler}>로그아웃</button>
