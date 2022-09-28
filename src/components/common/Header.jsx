@@ -70,7 +70,6 @@ const Header = () => {
         }}
       >
         <SLogoImage />
-        <STitle>CHAINING</STitle>
       </SLogoContainer>
 
       <SearchInput />
@@ -120,8 +119,8 @@ const SLogoContainer = styled.div`
 `;
 
 const SLogoImage = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 155px;
+  height: 38px;
   margin-right: 10px;
   background-image: url(${MainLogo});
   background-position: center;

@@ -18,6 +18,10 @@ export const notificationSlice = createSlice({
       state.isFetching = true;
     },
     [getNotificationDB.fulfilled]: (state, action) => {
+      if (action.payload === undefined) {
+        state.notification = [];
+        return;
+      }
       state.notification = action.payload;
     },
     //알림 확인
@@ -26,19 +30,19 @@ export const notificationSlice = createSlice({
     },
     [postNotificationDB.fulfilled]: (state, action) => {
       const idx = state.notification.findIndex(data => {
-        return data.id === action;
+        return data.notiId === action.payload;
       });
-      state.notification[idx] = true;
+      state.notification[idx].check = true;
     },
     //알림 삭제
     [delNotificationDB.pending]: state => {
       state.isFetching = true;
     },
     [delNotificationDB.fulfilled]: (state, action) => {
-      const index = state.notification.filter(data => {
-        return data.id !== action;
+      const deleteList = state.notification.filter(data => {
+        return data.notiId !== action.payload;
       });
-      state.notification = index;
+      state.notification = deleteList;
     },
   },
 });

@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { notification } from "../../axios/api/notificationAPI";
+import { networkError } from "./../../utils/swal";
+import * as Sentry from "@sentry/react";
 
 export const getNotificationDB = createAsyncThunk(
   "GET_NOTIFICATION",
@@ -8,7 +10,11 @@ export const getNotificationDB = createAsyncThunk(
       const response = await notification.getNotification();
       return response.data.data;
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 404) {
+        networkError();
+      }
+      Sentry.captureException(`error, 알람리스트 조회 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -16,15 +22,15 @@ export const getNotificationDB = createAsyncThunk(
 export const postNotificationDB = createAsyncThunk(
   "POST_NOTIFICATION",
   async (id, data, thunkAPI) => {
-    console.log("payload", id);
-    console.log(data);
     try {
       const response = await notification.postNotification(id);
-      console.log("리스폰", response);
-      console.log(id);
       return id;
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 404) {
+        networkError();
+      }
+      Sentry.captureException(`error, 알람 확인 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -34,7 +40,13 @@ export const delNotificationDB = createAsyncThunk(
     try {
       const response = await notification.deleteNotification(id);
       return id;
-    } catch (err) {}
+    } catch (err) {
+      if (err.response.status === 404) {
+        networkError();
+      }
+      Sentry.captureException(`error, 알람 삭제 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.data.message);
+    }
   },
 );
 //sse test

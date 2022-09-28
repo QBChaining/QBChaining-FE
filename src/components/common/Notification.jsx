@@ -16,11 +16,14 @@ const Notification = () => {
     state => state.notificationSlice.notification,
   );
 
+  const address = window.location.href;
+
   const isNoti = notifiResponse?.filter(data => data.check === false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   // 알림 on,off 상태값
-  const [isNo, setIsNo] = useState(null);
+  const [isNo, setIsNo] = useState(false);
   // 알림 모달창
   const [show, setShow] = useState(false);
   // 더미
@@ -29,10 +32,12 @@ const Notification = () => {
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);
   };
+
   // 알림 보기
   const onShow = () => {
     setShow(!show);
   };
+
   // 확인, 삭제
   const checkNoti = notiId => {
     dispatch(postNotificationDB(notiId));
@@ -42,16 +47,26 @@ const Notification = () => {
   };
 
   const checkk = isNoti => {
+    //isNoti는 아직 안읽은것
     if (isNoti?.length === 0 || isNoti === undefined) {
       setIsNo(true);
     } else {
       setIsNo(false);
     }
   };
+
+  //최초 로딩시 받아오기
   useEffect(() => {
     dispatch(getNotificationDB());
+  }, [address, show]);
+
+  useEffect(() => {
+    setShow(false);
+  }, [address]);
+
+  useEffect(() => {
     checkk(isNoti);
-  }, [isNoti?.length]);
+  }, [notifiResponse]);
 
   return (
     <SNotiBox>
@@ -62,25 +77,26 @@ const Notification = () => {
         {show === true ? (
           <Section>
             <SNotiTry />
-            <SItemList>
+            <SItemList isOpen={show}>
               {notifiResponse?.map(list => (
-                <li
-                  key={list?.notiId}
+                <SNotiList
+                  isChecked={list.check}
+                  key={list.notiId}
                   onClick={() => {
-                    checkNoti(list?.notiId);
-                    goDetail(list?.type, list?.id);
+                    checkNoti(list.notiId);
+                    goDetail(list.type, list.id);
                   }}
                 >
-                  <STitle key={list?.notiId}>{list?.title}</STitle>
+                  <STitle key={list.notiId}>{list.title}</STitle>
                   <SDelButton
                     onClick={e => {
                       e.stopPropagation();
-                      delNoti(list?.notiId);
+                      delNoti(list.notiId);
                     }}
                   >
                     삭제
                   </SDelButton>
-                </li>
+                </SNotiList>
               ))}
             </SItemList>
           </Section>
@@ -119,26 +135,13 @@ const SItemList = styled.div`
   background: #f88f4c;
   border-radius: 20px;
   left: -169px;
-  /* right: 0; */
   top: 0;
+  /* -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  } */
 
-  padding: 20px 20px;
-  & li {
-    border-bottom: 1px solid #dcdcdc;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: #c0c0c0;
-    margin-top: 3px;
-    cursor: pointer;
-
-    &:hover {
-      color: black;
-    }
-    &:last-child {
-      border-bottom: none;
-    }
-  }
+  padding: 5px 20px;
 `;
 
 const SNotiOn = styled.div`
@@ -169,6 +172,10 @@ const Section = styled.div`
 `;
 const STitle = styled.div`
   cursor: pointer;
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const SDelButton = styled.div`
@@ -179,12 +186,35 @@ const SDelButton = styled.div`
   border-radius: 30px;
   font-size: 8px;
   color: #ffffff;
-  width: 33px;
-  height: 17px;
+  padding: 4px 10px;
   /* left: 1724px; */
+
+  &:hover {
+    background-color: ${props => props.theme.color.white};
+    color: ${props => props.theme.color.mainOrange};
+  }
 
   cursor: pointer;
 `;
 
 const SCheckButton = styled.div``;
+
+const SNotiList = styled.li`
+  border-bottom: 1px solid #dcdcdc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: ${props => props.theme.color.white};
+  padding: 10px;
+  cursor: pointer;
+
+  opacity: ${props => (props.isChecked ? "0.5" : "1")};
+
+  &:hover {
+    color: ${props => props.theme.color.mainNavy};
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+`;
 export default Notification;
