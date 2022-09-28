@@ -23,9 +23,11 @@ export const getQnaSearchListDB = createAsyncThunk(
         return [];
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 검색결과 조회 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -47,9 +49,11 @@ export const getBlogSearchListDB = createAsyncThunk(
         return [];
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 검색결과 조회 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );

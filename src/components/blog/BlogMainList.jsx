@@ -12,7 +12,6 @@ const BlogMainList = ({ posts }) => {
   // const [likeNum, setLikeNum] = useState(posts.like);
   const likeNum = useSelector(state => state.blogSlice.blogDetail.like);
   const dispatch = useDispatch();
-  console.log(likeNum);
   useEffect(() => {
     if (posts.isLike) {
       setLike(true);
@@ -51,6 +50,14 @@ const BlogMainList = ({ posts }) => {
 
   const time = timeForToday(posts.createdAt);
 
+  const [content, setContent] = useState(posts.content);
+
+  useEffect(() => {
+    // posts.content = posts.content.replace(/AB/g, "");
+    var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+    setContent(content.replace(reg, ""));
+  }, []);
+
   return (
     <>
       <SBloglist
@@ -75,7 +82,7 @@ const BlogMainList = ({ posts }) => {
           </SPTitleBox>
           <SContentWrapper>
             <SContentTitle className="title">{posts.title}</SContentTitle>
-            <SContent>{posts.content}</SContent>
+            <SContent>{content}</SContent>
           </SContentWrapper>
           <STagNMark>
             <STagList>
@@ -101,7 +108,7 @@ const SBloglist = styled.div`
   position: relative;
   /* width: 100%; */
   width: 480px;
-  height: 350px;
+  min-height: 350px;
   /* height: 100%; */
   background: #ffffff;
   border-radius: 30px;
@@ -148,7 +155,6 @@ const STagList = styled.div`
   align-items: center;
   flex-wrap: wrap;
   padding-right: 130px;
-  flex-wrap: wrap;
 `;
 const STag = styled.div`
   overflow: hidden;
@@ -157,11 +163,11 @@ const STag = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
   font-size: 14px;
   color: #ffffff;
   padding: 5px 20px;
-  background: ${props => props.theme.color.mainNavy};
+  color: ${props => props.theme.color.mainNavy};
+  border: 2px solid ${props => props.theme.color.mainNavy};
   border-radius: 30px;
   margin: 0 10px 10px 0;
 `;

@@ -16,8 +16,6 @@ const InterestItem = ({ data, setLanguage, language }) => {
     setLanguage([...language, data.name]);
   };
 
-  useEffect(() => {}, []);
-
   return (
     <SList
       toggle={toggle}

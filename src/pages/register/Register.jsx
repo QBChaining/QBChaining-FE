@@ -8,6 +8,7 @@ import Select from "../../components/common/Select";
 import WhiteArrow from "../../assets/images/WhiteArrow.png";
 import { errorAlert } from "../../utils/swal";
 import {
+  getUserInfoDB,
   postUserInfoDB,
   putUserInfoDB,
   putUserInNewDB,
@@ -16,70 +17,28 @@ import { successAlert } from "./../../utils/swal";
 import { useNavigate } from "react-router-dom";
 import { userSlice } from "./../../redux/modules/userSlice";
 
-//에러처리
-// {errors.nickname && errors.nickname.type === "required" && (
-//   <p className={"warning"}>닉네임은 필수 입력사항 입니다.</p>
-// )}
-// {errors.nickname && errors.nickname.type === "minLength" && (
-//   <p className={"warning"}>{errors.nickname.message}</p>
-// )}
-// {errors.nickname && errors.nickname.type === "maxLength" && (
-//   <p className={"warning"}>{errors.nickname.message}</p>
-// )}
-
-//select component
-
-//radio component
-// const Radio = ({ register, options, name, ...rest }) => {
-//   return (
-//     <div>
-//       {options.map(value => (
-//         <Fragment key={value}>
-//           <label htmlFor={value}>{value}</label>
-//           <input
-//             {...register(name)}
-//             {...rest}
-//             type="radio"
-//             name={name}
-//             value={value}
-//             id={value}
-//           />
-//         </Fragment>
-//       ))}
-//     </div>
-//   );
-// };
-
-//checkbox component
-// const CheckBox = ({ register, options, name, ...rest }) => {
-//   return (
-//     <>
-//       {options.map(value => (
-//         <span style={{ padding: "10px", display: "inline-block" }} key={value}>
-//           <input
-//             {...register(name)}
-//             {...rest}
-//             type="checkbox"
-//             name={name}
-//             value={value}
-//             id={value}
-//           />
-//           <label htmlFor={value}>{value}</label>
-//         </span>
-//       ))}
-//     </>
-//   );
-// };
-
-const Register = () => {
+const Register = ({ isEdit, editData }) => {
   const navigate = useNavigate();
-  const { userName, userIsNew } = useSelector(state => state.userSlice);
+  const { userName, userIsNew, userInfo, isLogin } = useSelector(
+    state => state.userSlice,
+  );
   const [language, setLanguage] = useState([]);
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [career, setCareer] = useState("");
   const [job, setJob] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isEdit) {
+      console.log(editData);
+      setLanguage(editData.languages);
+      setAge(editData.age);
+      setGender(editData.gender);
+      setCareer(editData.career);
+    }
+  }, [editData]);
+  console.log(language);
 
   const onSubmitHandler = () => {
     if (language.length < 1) {
@@ -191,7 +150,7 @@ export default Register;
 
 const SRegister = styled.div`
   padding: 0 20px;
-  max-width: 900px;
+  min-width: 1500px;
   margin: 0 auto;
 `;
 
@@ -215,6 +174,8 @@ const SSubTitle = styled.p`
 
 const SSelectLangWrapper = styled.div`
   padding-bottom: 20px;
+  width: 800px;
+  margin: 0 auto;
 `;
 
 const SLangUl = styled.ul`
@@ -249,8 +210,9 @@ const SJobInput = styled.input`
 
 const SSubmitButton = styled.div`
   display: flex;
-  float: right;
   align-items: center;
+  justify-content: center;
+  margin: 0 auto;
   padding: 10px;
   cursor: pointer;
 `;
@@ -265,7 +227,11 @@ const SButtonIcon = styled.div`
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: ${props => props.theme.color.mainOrange};
+  transition: 0.3s;
+  background: ${props => props.theme.color.mainNavy};
+  &:hover {
+    background: ${props => props.theme.color.mainOrange};
+  }
 
   &::before {
     content: "";

@@ -99,13 +99,7 @@ const ContentList = ({ data, type, isSearch }) => {
           <STags>
             {data.tags?.map((data, i) => {
               return (
-                <Tag
-                  type={type}
-                  key={i}
-                  onClick={e => {
-                    goSearch(data, e);
-                  }}
-                >
+                <Tag type={type} key={i}>
                   {data}
                 </Tag>
               );
@@ -240,17 +234,18 @@ const STags = styled.div`
 const Tag = styled.div`
   display: flex;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   padding: 4px 20px;
   border-radius: 30px;
-  background-color: ${props => props.theme.color.grey3};
+  color: ${props => props.theme.color.mainNavy};
+  border: 2px solid ${props => props.theme.color.mainNavy};
   margin-right: 12px;
   margin-bottom: 12px;
-  color: white;
+  font-size: 14px;
+  justify-content: center;
   cursor: pointer;
-
-  &:hover {
-    background-color: ${props => props.theme.color.mainOrange};
-  }
 `;
 
 const SCount = styled.div`

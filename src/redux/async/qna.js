@@ -17,9 +17,11 @@ export const getQnaMainListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      networkError();
-      Sentry.captureException(`error, 게시글 전체조회 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      if (err.response.status === 404) {
+        networkError();
+      }
+      Sentry.captureException(`error, QNA게시글 채택 전체조회 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -34,9 +36,11 @@ export const getQnaCategoryListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      networkError();
-      Sentry.captureException(`error, 게시글 전체조회 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      if (err.response.status === 404) {
+        networkError();
+      }
+      Sentry.captureException(`error, QNA게시글 카테고리 조회 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -51,8 +55,11 @@ export const getOneQnaListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 상세 조회 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -68,9 +75,11 @@ export const postQnaListDB = createAsyncThunk(
         return response.data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 작성 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -86,9 +95,11 @@ export const editQnaListDB = createAsyncThunk(
         return;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 수정 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -103,9 +114,11 @@ export const getQnaLikeListDB = createAsyncThunk(
         return;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 추천 조회 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -121,13 +134,11 @@ export const likeQnaListDB = createAsyncThunk(
         return;
       }
     } catch (err) {
-      if (err.response.data.message === "반복해서 눌렀습니다.") {
-        errorLikeAlert(err.response.data.message);
-        return;
+      if (err.response.status === 404) {
+        networkError();
       }
-      networkError();
       Sentry.captureException(`error, QNA게시글 추천 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -143,9 +154,11 @@ export const dislikeQnaListDB = createAsyncThunk(
         return;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 추천 취소 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -156,14 +169,15 @@ export const getCommentListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await qnaApi.getCommentList(data);
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 댓글 전체 조회 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -184,9 +198,11 @@ export const postCommentListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 댓글 추가 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -202,9 +218,11 @@ export const deleteCommentListDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 댓글 삭제 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -220,9 +238,11 @@ export const editCommentListDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 댓글 수정 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -238,13 +258,11 @@ export const likeCommentListDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      if (err.response.data.message === "반복해서 눌렀습니다.") {
-        errorLikeAlert(err.response.data.message);
-        return thunkAPI.rejectWithValue(err.response.data.message);
+      if (err.response.status === 404) {
+        networkError();
       }
-      networkError();
       Sentry.captureException(`error, QNA게시글 댓글 추천 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -264,9 +282,11 @@ export const dislikeCommentListDB = createAsyncThunk(
         errorLikeAlert(err.response.data.message);
         return thunkAPI.rejectWithValue(err.response.data.message);
       }
-      networkError();
-      Sentry.captureException(`error, QNA게시글 댓글 추천 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      if (err.response.status === 404) {
+        networkError();
+      }
+      Sentry.captureException(`error, QNA댓글 추천 취소 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -281,9 +301,11 @@ export const getBookmarkListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 즐겨찾기 조회 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -299,9 +321,11 @@ export const postBookmarkListDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 즐겨찾기 추가 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -317,9 +341,11 @@ export const deleteBookmarkListDB = createAsyncThunk(
         return data.id;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA게시글 즐겨찾기 삭제 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -335,13 +361,11 @@ export const choiceCommentListDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      if (err.response.data.message === "채택은 게시글 작성자만 가능합니다.") {
-        errorLikeAlert(err.response.data.message);
-        return thunkAPI.rejectWithValue(err.response.data.message);
+      if (err.response.status === 404) {
+        networkError();
       }
-      networkError();
       Sentry.captureException(`error, QNA 댓글 채택 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -356,9 +380,11 @@ export const getQnaHotListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, QNA 핫 게시글 조회 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );

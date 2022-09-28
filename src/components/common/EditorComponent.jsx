@@ -146,8 +146,7 @@ const EditorComponent = ({
           tags,
         }),
       ).then(res => {
-        console.log(res);
-        navigate(`/qna/detail/${res.payload.data.id}`);
+        navigate(`/qna/detail/${res.payload.data.id}`, { replace: true });
       });
       //코멘트작성
     } else if (isCommentWrite) {
@@ -318,7 +317,7 @@ const EditorComponent = ({
                 id="tag"
                 ref={tagText}
                 onChange={onChangeTagHandler}
-                maxLength="20"
+                maxLength="10"
                 placeholder="태그를 추가해 주세요."
               />
               <SAddButton type="button" onClick={onAddTagHandler}>

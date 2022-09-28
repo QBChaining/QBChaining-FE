@@ -221,7 +221,7 @@ const SMainCategory = styled.div`
 const SQnaWrapper = styled.div`
   display: flex;
   width: 1560px;
-  padding: 0 20px;
+  padding: 0 20px 0 130px;
   margin: 0 auto;
 `;
 

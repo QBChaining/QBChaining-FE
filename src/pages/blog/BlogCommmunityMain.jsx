@@ -80,8 +80,6 @@ const BlogCommmunityMain = () => {
     };
   }, []);
 
-  console.log(blogMainLists);
-
   return (
     <SBlogCommmunityMain>
       <Helmet>

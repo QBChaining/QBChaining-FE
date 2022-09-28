@@ -13,15 +13,15 @@ export const postUserInfoDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.postUserInfo(data);
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
     } catch (err) {
-      console.log(err);
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -36,9 +36,11 @@ export const putUserInfoDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -53,9 +55,11 @@ export const putUserInNewDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, 유저 신규회원인지 확인 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -70,10 +74,11 @@ export const getUserInfoDB = createAsyncThunk(
         return response.data.userPageInfo;
       }
     } catch (err) {
-      console.log(err);
-      networkError();
-      Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      if (err.response.status === 404) {
+        networkError();
+      }
+      Sentry.captureException(`error, 유저 정보 받아오기 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -88,9 +93,11 @@ export const getUserInfoActivityDB = createAsyncThunk(
         return response.data.userActivity;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -106,9 +113,11 @@ export const getUserQnaListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -124,9 +133,11 @@ export const getUserBlogListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
-      networkError();
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
-      return thunkAPI.rejectWithValue(err.response.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );

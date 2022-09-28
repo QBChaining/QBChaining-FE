@@ -283,6 +283,7 @@ const SButtonWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
+
 const SContentText = styled.div`
   padding: 0 20px 40px 40px;
   border-bottom: 1px solid ${props => props.theme.color.grey5};

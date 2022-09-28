@@ -132,7 +132,6 @@ const qnaSlice = createSlice({
     },
     //게시글 추천
     [likeQnaListDB.fulfilled]: (state, { payload }) => {
-      console.log(state.qnaTarget.like);
       state.qnaTarget.isLike = true;
       state.qnaTarget.like += 1;
       state.isFetching = false;

@@ -14,6 +14,7 @@ const Nodata = ({ type }) => {
 export default Nodata;
 
 const SNodata = styled.div`
+  padding: 10px;
   display: flex;
   flex: 1;
   justify-content: center;
