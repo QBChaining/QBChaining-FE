@@ -57,8 +57,6 @@ const MyPage = () => {
     };
   }, []);
 
-  console.log(isFetching, errorMessage);
-
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);
   };

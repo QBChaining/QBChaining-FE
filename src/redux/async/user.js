@@ -14,7 +14,7 @@ export const postUserInfoDB = createAsyncThunk(
     try {
       const response = await userApi.postUserInfo(data);
       if (response.data.success === true) {
-        return response.data.data;
+        return data;
       }
     } catch (err) {
       if (err.response.status === 404) {
@@ -32,8 +32,9 @@ export const putUserInfoDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.putUserInfo(data);
+      console.log(response);
       if (response.data.success === true) {
-        return response.data.data;
+        return data;
       }
     } catch (err) {
       if (err.response.status === 404) {

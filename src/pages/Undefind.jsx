@@ -8,10 +8,11 @@ const Undefind = () => {
   return (
     <SUndefind>
       <SIcon />
-      <h2>죄송합니다. 해당 페이지를 찾을 수 없습니다.</h2>
+      <h2>죄송합니다.</h2>
+      <p>해당 페이지를 찾을 수 없습니다.</p>
       <button
         onClick={() => {
-          navigate("/");
+          navigate("/", { replace: true });
         }}
       >
         메인으로 돌아가기
@@ -44,16 +45,23 @@ const SUndefind = styled.div`
   & button {
     margin-top: 50px;
     padding: 10px 65px;
-    background: ${props => props.theme.color.backgroundGradient};
+    background: ${props => props.theme.color.mainNavy};
     color: ${props => props.theme.color.white};
     font-size: 20px;
     border-radius: 30px;
     border: none;
+    transition: 0.3s;
+
+    &:hover {
+      background: ${props => props.theme.color.mainOrange};
+    }
   }
 `;
 
 const SIcon = styled.div`
-  width: 90px;
-  height: 100px;
+  width: 304px;
+  height: 227px;
+  position: relative;
+  right: 65px;
   background-image: url(${PrepareIcon});
 `;

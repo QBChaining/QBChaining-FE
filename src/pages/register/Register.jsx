@@ -23,22 +23,24 @@ const Register = ({ isEdit, editData }) => {
     state => state.userSlice,
   );
   const [language, setLanguage] = useState([]);
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [career, setCareer] = useState("");
+  const [age, setAge] = useState("나이를 입력해주세요");
+  const [gender, setGender] = useState("성별을 입력해주세요");
+  const [career, setCareer] = useState("경력을 입력해주세요");
   const [job, setJob] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (isEdit === undefined && userIsNew === "false") {
+      navigate("/register/edit");
+    }
     if (isEdit) {
-      console.log(editData);
       setLanguage(editData.languages);
       setAge(editData.age);
       setGender(editData.gender);
       setCareer(editData.career);
+      setJob(editData.job);
     }
   }, [editData]);
-  console.log(language);
 
   const onSubmitHandler = () => {
     if (language.length < 1) {
@@ -61,6 +63,11 @@ const Register = ({ isEdit, editData }) => {
       errorAlert("포지션을 입력해주세요!");
       return;
     }
+    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]*$/;
+    if (!regex.test(job)) {
+      errorAlert("포지션엔 한글과 영문만 입력가능합니다!");
+      return;
+    }
     const data = {
       language,
       age,
@@ -68,15 +75,22 @@ const Register = ({ isEdit, editData }) => {
       career,
       job,
     };
-    if (userIsNew) {
+    if (userIsNew === "true") {
       dispatch(putUserInNewDB());
       dispatch(postUserInfoDB(data));
-    } else if (!userIsNew) {
+    } else if (userIsNew === "false") {
       dispatch(putUserInfoDB(data));
     }
-    navigate(`/`);
+    successAlert(
+      isEdit
+        ? "정보 수정이 완료 되었습니다. 감사합니다!"
+        : "정보 등록이 되었습니다. 감사합니다!",
+    ).then(res => {
+      (res.dismiss || res.isConfirmed) && navigate(`/mypage/${userName}`);
+    });
   };
 
+  console.log(language);
   return (
     <SRegister>
       <SRegisterTitle>
@@ -93,9 +107,11 @@ const Register = ({ isEdit, editData }) => {
         <SLangUl>
           {categories.interestCategory.map(data => (
             <InterestItem
+              isEdit={isEdit}
               data={data}
               setLanguage={setLanguage}
               language={language}
+              language2={language}
               key={data.id}
             />
           ))}
@@ -103,37 +119,40 @@ const Register = ({ isEdit, editData }) => {
       </SSelectLangWrapper>
       <SelectWrapper>
         <Select
+          isEdit={isEdit}
           options={categories.careerCategory}
-          initialText={"경력을 입력해주세요"}
+          initialText={career}
           setOption={setCareer}
           zIndex={11}
         />
       </SelectWrapper>
       <SelectWrapper>
         <Select
+          isEdit={isEdit}
           options={categories.ageCategory}
-          initialText={"나이를 입력해주세요"}
+          initialText={age}
           setOption={setAge}
           zIndex={10}
         />
       </SelectWrapper>
       <SelectWrapper>
         <Select
+          isEdit={isEdit}
           options={categories.genderCategory}
-          initialText={"성별을 입력해주세요"}
+          initialText={gender}
           setOption={setGender}
           zIndex={9}
         />
       </SelectWrapper>
-
       <SelectWrapper>
         <SJobInput
           type="text"
-          value={job}
+          value={job || ""}
           placeholder={"포지션을 입력해주세요.   예) 안드로이드 개발자"}
           onChange={e => {
             setJob(e.target.value);
           }}
+          maxLength="20"
         />
       </SelectWrapper>
       {/* <Radio name="gender" options={["남", "여"]} required />

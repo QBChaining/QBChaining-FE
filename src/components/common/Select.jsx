@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import selectArrow from "../../assets/images/SelectArrow.png";
 
-const Select = ({ options, setOption, initialText, zIndex }) => {
+const Select = ({ isEdit, options, setOption, initialText, zIndex }) => {
   const [open, setOpen] = useState(false);
   const [initial, setInitial] = useState(initialText);
   const onOpenHandler = () => {
@@ -15,6 +15,12 @@ const Select = ({ options, setOption, initialText, zIndex }) => {
     setOption(value);
     setOpen(!open);
   };
+
+  useEffect(() => {
+    if (isEdit) {
+      setInitial(initialText);
+    }
+  }, [initialText]);
 
   return (
     <SSelectWrapper zIndex={zIndex}>
