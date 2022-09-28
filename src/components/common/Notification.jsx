@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import notifion from "../../assets/images/notifion.png";
 import notifitry from "../../assets/images/notifitry.png";
+import notifion from "../../assets/images/notifion.png";
 import notifioff from "../../assets/images/notifioff.png";
 import {
   getNotificationDB,
@@ -12,51 +12,103 @@ import {
 } from "../../redux/async/notification";
 
 const Notification = () => {
-  const isNotifi = useSelector(state => state.notificationSlice.notification);
+  const notifiResponse = useSelector(
+    state => state.notificationSlice.notification,
+  );
+  console.log("유즈셀렉토", notifiResponse);
 
+  // const isNoti = notifiResponse.filter(data => data.check);
+  // const isNoti = notifiResponse.findIndex(data => data.check);
+  const isNoti = notifiResponse?.filter(data => data.check === false);
+  console.log("필터", isNoti);
   const dispatch = useDispatch();
-  console.log(isNotifi);
-
   const navigate = useNavigate();
-
-  const checkNoti = notiId => {
-    dispatch(postNotificationDB(notiId));
-  };
+  // 알림 on,off 상태값
+  const [isNo, setIsNo] = useState(null);
+  // 알림 모달창
+  const [show, setShow] = useState(false);
+  // 더미
+  // const data = {
+  //   isNoti,
+  // };
+  // 디테일페이지로가기
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);
+  };
+  // 알림 보기
+  const onShow = () => {
+    setShow(!show);
+  };
+  // 확인, 삭제
+  const checkNoti = notiId => {
+    dispatch(postNotificationDB(notiId));
   };
   const delNoti = notiId => {
     dispatch(delNotificationDB(notiId));
   };
+
+  console.log("isNoti11", isNoti);
+  const checkk = isNoti => {
+    console.log("isNoti", isNoti);
+    if (isNoti?.length === 0 || isNoti === undefined) {
+      setIsNo(true);
+    } else {
+      setIsNo(false);
+    }
+    // isNoti.length === 0 ? setIsNo(true) : setIsNo(false);
+  };
   useEffect(() => {
     dispatch(getNotificationDB());
-  }, [dispatch]);
+    // isNoti.length === 0 ? setIsNo(true) : setIsNo(false);
+    checkk(isNoti);
+    return () => {};
+    // const isNoti = notifiResponse.filter(data => data.check === false);
+    // console.log(isNoti); //배열이 일단 안나옴 작동안함
+    // console.log("isNoti", isNoti);
+    // isNoti.length === 0 ? setIsNo(true) : setIsNo(false);
+    // console.log(isNo);
+  }, [isNoti?.length]);
+  console.log(isNo);
+  // useEffect(() => {
+  //   isNoti.length === 0 ? setIsNo(true) : setIsNo(false);
+
+  //   return () => {
+  //     isNoti.length === 0 ? setIsNo(true) : setIsNo(false);
+  //   };
+  // }, []);
   return (
     <SNotiBox>
       <NotifiItem>
-        {isNotifi.findIndex === true ? <SNotiOff /> : <SNotiOn />}
-        <Section>
-          <SNotiTry />
-          <SItemList>
-            {isNotifi?.map(list => (
-              <li
-                onClick={() => {
-                  checkNoti(list?.notiId);
-                  goDetail(list?.type, list?.id);
-                }}
-              >
-                <STitle key={list?.id}>{list?.title}</STitle>
-                <SDelButton
+        <SNotiImage>
+          {/* {isNo ? <SNotiOn onClick={onShow} /> : <SNotiOff onClick={onShow} />} */}
+          {isNo ? <SNotiOff onClick={onShow} /> : <SNotiOn onClick={onShow} />}
+        </SNotiImage>
+        {show === true ? (
+          <Section>
+            <SNotiTry />
+            <SItemList>
+              {notifiResponse?.map(list => (
+                <li
+                  key={list?.notiId}
                   onClick={() => {
-                    delNoti(list?.notiId);
+                    checkNoti(list?.notiId);
+                    goDetail(list?.type, list?.id);
                   }}
                 >
-                  삭제
-                </SDelButton>
-              </li>
-            ))}
-          </SItemList>
-        </Section>
+                  <STitle key={list?.notiId}>{list?.title}</STitle>
+                  <SDelButton
+                    onClick={e => {
+                      e.stopPropagation();
+                      delNoti(list?.notiId);
+                    }}
+                  >
+                    삭제
+                  </SDelButton>
+                </li>
+              ))}
+            </SItemList>
+          </Section>
+        ) : null}
       </NotifiItem>
     </SNotiBox>
   );
@@ -66,12 +118,11 @@ const SNotiBox = styled.div`
   position: relative;
 `;
 const NotifiItem = styled.div`
-  /* position: absolute; */
   width: 50px;
   height: 50px;
-  /* top: 0px;
-  left: 0px; */
-  /* bottom: 20px; */
+`;
+const SNotiImage = styled.div`
+  margin-top: 15px;
 `;
 const SNotiTry = styled.div`
   position: absolute;
@@ -98,12 +149,12 @@ const SItemList = styled.div`
   padding: 20px 20px;
   & li {
     border-bottom: 1px solid #dcdcdc;
-    /* position: relative; */
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: #c0c0c0;
     margin-top: 3px;
+    cursor: pointer;
 
     &:hover {
       color: black;
@@ -120,6 +171,7 @@ const SNotiOn = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${notifion});
+  cursor: pointer;
   /* margin-top: 8px; */
 `;
 const SNotiOff = styled.div`
@@ -128,6 +180,7 @@ const SNotiOff = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${notifioff});
+  cursor: pointer;
 `;
 const Section = styled.div`
   position: relative;

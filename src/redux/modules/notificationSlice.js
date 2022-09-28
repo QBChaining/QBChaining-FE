@@ -18,7 +18,6 @@ export const notificationSlice = createSlice({
       state.isFetching = true;
     },
     [getNotificationDB.fulfilled]: (state, action) => {
-      console.log("알람action", action);
       state.notification = action.payload;
     },
     //알림 확인
@@ -26,7 +25,6 @@ export const notificationSlice = createSlice({
       state.isFetching = true;
     },
     [postNotificationDB.fulfilled]: (state, action) => {
-      console.log(action);
       const idx = state.notification.findIndex(data => {
         return data.id === action;
       });

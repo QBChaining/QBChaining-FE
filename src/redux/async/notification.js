@@ -1,17 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { notification } from "../../axios/api/notificationAPI";
 
-// import { networkError } from "../../utils/swal";
-
-// import * as Sentry from "@sentry/react";
-// import { successAlert } from "../../utils/swal";
-
 export const getNotificationDB = createAsyncThunk(
   "GET_NOTIFICATION",
   async thunkAPI => {
     try {
       const response = await notification.getNotification();
-      console.log("14번째async", response);
       return response.data.data;
     } catch (err) {
       console.log(err);
@@ -21,8 +15,9 @@ export const getNotificationDB = createAsyncThunk(
 
 export const postNotificationDB = createAsyncThunk(
   "POST_NOTIFICATION",
-  async (id, thunkAPI) => {
+  async (id, data, thunkAPI) => {
     console.log("payload", id);
+    console.log(data);
     try {
       const response = await notification.postNotification(id);
       console.log("리스폰", response);
@@ -36,10 +31,8 @@ export const postNotificationDB = createAsyncThunk(
 export const delNotificationDB = createAsyncThunk(
   "DEL_NOTIFICATION",
   async (id, thunkAPI) => {
-    console.log(id);
     try {
       const response = await notification.deleteNotification(id);
-      console.log(response);
       return id;
     } catch (err) {}
   },
