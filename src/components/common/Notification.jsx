@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -15,12 +15,8 @@ const Notification = () => {
   const notifiResponse = useSelector(
     state => state.notificationSlice.notification,
   );
-  console.log("유즈셀렉토", notifiResponse);
 
-  // const isNoti = notifiResponse.filter(data => data.check);
-  // const isNoti = notifiResponse.findIndex(data => data.check);
   const isNoti = notifiResponse?.filter(data => data.check === false);
-  console.log("필터", isNoti);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // 알림 on,off 상태값
@@ -28,9 +24,7 @@ const Notification = () => {
   // 알림 모달창
   const [show, setShow] = useState(false);
   // 더미
-  // const data = {
-  //   isNoti,
-  // };
+
   // 디테일페이지로가기
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);
@@ -47,40 +41,22 @@ const Notification = () => {
     dispatch(delNotificationDB(notiId));
   };
 
-  console.log("isNoti11", isNoti);
   const checkk = isNoti => {
-    console.log("isNoti", isNoti);
     if (isNoti?.length === 0 || isNoti === undefined) {
       setIsNo(true);
     } else {
       setIsNo(false);
     }
-    // isNoti.length === 0 ? setIsNo(true) : setIsNo(false);
   };
   useEffect(() => {
     dispatch(getNotificationDB());
-    // isNoti.length === 0 ? setIsNo(true) : setIsNo(false);
     checkk(isNoti);
-    return () => {};
-    // const isNoti = notifiResponse.filter(data => data.check === false);
-    // console.log(isNoti); //배열이 일단 안나옴 작동안함
-    // console.log("isNoti", isNoti);
-    // isNoti.length === 0 ? setIsNo(true) : setIsNo(false);
-    // console.log(isNo);
   }, [isNoti?.length]);
-  console.log(isNo);
-  // useEffect(() => {
-  //   isNoti.length === 0 ? setIsNo(true) : setIsNo(false);
 
-  //   return () => {
-  //     isNoti.length === 0 ? setIsNo(true) : setIsNo(false);
-  //   };
-  // }, []);
   return (
     <SNotiBox>
       <NotifiItem>
         <SNotiImage>
-          {/* {isNo ? <SNotiOn onClick={onShow} /> : <SNotiOff onClick={onShow} />} */}
           {isNo ? <SNotiOff onClick={onShow} /> : <SNotiOn onClick={onShow} />}
         </SNotiImage>
         {show === true ? (

@@ -25,7 +25,6 @@ const BlogCommunityDetail = () => {
   const isBookmark = useSelector(
     state => state.blogSlice.blogDetail.isBookmark,
   );
-  console.log(detailTitle);
   const userNick = useSelector(state => state.userSlice.userName);
 
   const dispatch = useDispatch();

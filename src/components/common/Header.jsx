@@ -21,7 +21,6 @@ import { throttle } from "lodash";
 import { getNotificationDB } from "../../redux/async/notification";
 
 const Header = () => {
-  const isNotifi = useSelector(state => state.notificationSlice.notification);
   // console.log(notifiGet);
   const navigate = useNavigate();
   const dispatch = useDispatch();

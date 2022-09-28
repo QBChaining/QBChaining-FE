@@ -37,10 +37,9 @@ export const delNotificationDB = createAsyncThunk(
     } catch (err) {}
   },
 );
-
+//sse test
 // export const getTestDB = createAsyncThunk("GET_TEST", async thunkAPI => {
 //   const testNotifiRes = await new EventSource(
-//     "http://43.200.169.141/api/notification/test",
 //   );
 //   //   console.log("알람테스트", testNotifiRes);
 

@@ -146,7 +146,6 @@ const EditorComponent = ({
           tags,
         }),
       ).then(res => {
-        console.log(res);
         navigate(`/qna/detail/${res.payload.data.id}`);
       });
       //코멘트작성

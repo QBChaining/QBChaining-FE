@@ -13,7 +13,6 @@ export const postUserInfoDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.postUserInfo(data);
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
