@@ -218,6 +218,10 @@ const STitleWrapper = styled.div`
 
 const STitle = styled.div`
   font-size: 22px;
+  max-width: 588px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const STagWrapper = styled.div`
