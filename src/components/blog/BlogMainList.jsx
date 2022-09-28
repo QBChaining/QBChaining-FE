@@ -227,6 +227,10 @@ const SContentTitle = styled.div`
   font-size: 20px;
   cursor: pointer;
   margin-top: 10px;
+  max-width: 600px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const SContent = styled.div`

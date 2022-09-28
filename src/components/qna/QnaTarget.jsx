@@ -162,7 +162,7 @@ const SUserInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 60px 20px 0 0;
+  padding: 60px 0 0 0;
   border-bottom: 1px solid ${props => props.theme.color.grey5};
 `;
 
@@ -199,7 +199,9 @@ const SContentTitle = styled.div`
   font-weight: 400;
   padding: 30px 0;
   margin-left: 40px;
+  margin-right: 20px;
   min-width: 200px;
+  word-break: break-all;
 `;
 
 const SContentText = styled.div`
@@ -226,6 +228,7 @@ const STag = styled.li`
 `;
 
 const SUserInfoInner = styled.div`
+  min-width: 200px;
   display: flex;
   align-items: center;
   cursor: pointer;
