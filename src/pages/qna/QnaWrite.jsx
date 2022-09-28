@@ -8,12 +8,21 @@ import ModalBookmark from "../../components/common/ModalBookmark";
 import { useDispatch } from "react-redux";
 import { colorSetGreen } from "../../redux/modules/userSlice";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
+import MdGuide from "../MdGuide";
 
 const QnaWrite = () => {
+  const [guideOpen, setGuideOpen] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(colorSetGreen());
   }, []);
+
+  const openGuide = () => {
+    setGuideOpen(true);
+  };
 
   return (
     <SQnaWrite>

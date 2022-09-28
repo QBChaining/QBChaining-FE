@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 export const successAlert = message => {
   return Swal.fire({
     icon: "success",
-    text: message,
+    title: message,
     confirmButtonText: "확인",
   });
 };
@@ -11,7 +11,7 @@ export const successAlert = message => {
 export const errorAlert = message => {
   return Swal.fire({
     icon: "error",
-    text: message,
+    title: message,
     confirmButtonText: "확인",
   });
 };
@@ -19,7 +19,7 @@ export const errorAlert = message => {
 export const infoAlert = message => {
   return Swal.fire({
     icon: "info",
-    text: message,
+    title: message,
     confirmButtonText: "확인",
   });
 };
@@ -29,6 +29,22 @@ export const needLoginAlert = () => {
     icon: "error",
     title: "로그인이 필요한 기능입니다",
     confirmButtonText: "확인",
+  });
+};
+
+export const confirmAlert = (
+  title,
+  content,
+  confirmButtonText,
+  cancelButtonText,
+) => {
+  return Swal.fire({
+    showCancelButton: true,
+    icon: "info",
+    title: title,
+    text: content,
+    confirmButtonText: confirmButtonText,
+    cancelButtonText: cancelButtonText,
   });
 };
 

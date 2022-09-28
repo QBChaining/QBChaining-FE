@@ -111,7 +111,7 @@ const SListWrapper = styled.div`
   right: 50px;
   background: ${props => props.theme.color.mainNavy};
   border-radius: 25px;
-  padding: 0 30px;
+  padding: 30px 30px;
   box-shadow: -8px 14px 50px rgba(0, 0, 0, 0.15);
   z-index: 100;
   overflow: auto;
@@ -149,4 +149,7 @@ const SListTitle = styled.h2`
   font-size: 20px;
   font-weight: 600;
   color: ${props => props.theme.color.white};
+  &:first-child {
+    margin-top: 0;
+  }
 `;

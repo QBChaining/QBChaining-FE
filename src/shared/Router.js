@@ -18,6 +18,7 @@ import Search from "../pages/search/Search";
 import Preparing from "./../pages/Preparing";
 import Undefind from "./../pages/Undefind";
 import RegisterEdit from "../pages/register/RegisterEdit";
+import MdGuide from "../pages/MdGuide";
 
 const Router = () => {
   const { isLogin } = useSelector(state => state.userSlice);

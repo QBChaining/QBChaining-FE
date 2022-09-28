@@ -62,6 +62,9 @@ const Header = () => {
     [beforeScrollY],
   );
 
+  //알람모달
+  const [show, setShow] = useState(false);
+
   return (
     <SHeader location={location} visible={visible}>
       <SLogoContainer
@@ -73,7 +76,7 @@ const Header = () => {
       </SLogoContainer>
 
       <SearchInput />
-      <Notification />
+      <Notification setShow={setShow} show={show} />
       <SAlarmLoginWrapper>
         <SLoginConatainer className="loginConatainer">
           {isLogin ? (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 import styled from "styled-components";
 import notifitry from "../../assets/images/notifitry.png";
 import notifion from "../../assets/images/notifion.png";
@@ -11,7 +12,7 @@ import {
   delNotificationDB,
 } from "../../redux/async/notification";
 
-const Notification = () => {
+const Notification = ({ show, setShow }) => {
   const notifiResponse = useSelector(
     state => state.notificationSlice.notification,
   );
@@ -25,9 +26,7 @@ const Notification = () => {
   // 알림 on,off 상태값
   const [isNo, setIsNo] = useState(false);
   // 알림 모달창
-  const [show, setShow] = useState(false);
-  // 더미
-
+  const wrapperRef = useRef();
   // 디테일페이지로가기
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);
@@ -67,6 +66,21 @@ const Notification = () => {
   useEffect(() => {
     checkk(isNoti);
   }, [isNoti]);
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
+
+  const handleClickOutside = event => {
+    if (wrapperRef && !wrapperRef.current?.contains(event.target)) {
+      setShow(false);
+    } else {
+      setShow(true);
+    }
+  };
 
   return (
     <SNotiBox>
@@ -77,8 +91,11 @@ const Notification = () => {
         {show === true ? (
           <Section>
             <SNotiTry />
-            <SItemList isOpen={show}>
-              {notifiResponse?.map(list => (
+            <SItemList isOpen={show} ref={wrapperRef}>
+              {notifiResponse.length === 0 && (
+                <SNodata>알림이 오면 여기에 표시됩니다!</SNodata>
+              )}
+              {notifiResponse.map(list => (
                 <SNotiList
                   isChecked={list.check}
                   key={list.notiId}
@@ -217,4 +234,13 @@ const SNotiList = styled.li`
     border-bottom: none;
   }
 `;
+
+const SNodata = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export default Notification;

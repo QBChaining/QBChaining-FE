@@ -23,7 +23,7 @@ import { ClipLoader } from "react-spinners";
 import QnaMainillust from "../../assets/images/QnaMainillust.png";
 import QnaWatingAnswer from "../../assets/images/QnaWatingAnswer.png";
 import QnaAnswer from "../../assets/images/QnaAnswer.png";
-import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
+import MainWriteButton from "../../assets/images/MainWriteButton.png";
 import Hotqna from "../../assets/images/Hotqna.png";
 import SideBanner from "../../components/common/SideBanner";
 
@@ -165,7 +165,7 @@ const SWritingButton = styled.button`
   & div {
     width: 20px;
     height: 20px;
-    background-image: url(${QnaWriteIcon});
+    background-image: url(${MainWriteButton});
     background-size: contain;
     margin-right: 10px;
   }
