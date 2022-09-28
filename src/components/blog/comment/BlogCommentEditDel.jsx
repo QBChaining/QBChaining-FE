@@ -42,8 +42,8 @@ const CommentEditDel = ({ comments }) => {
   //   dispatch(getBlogCommentListDB());
   // }, [dispatch]);
 
-  const goMypage = name => {
-    navigate(`/mypage/${name}`);
+  const goMypage = userName => {
+    navigate(`/mypage/${userName}`);
   };
 
   return (
