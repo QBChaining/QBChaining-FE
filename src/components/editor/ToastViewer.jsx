@@ -8,7 +8,6 @@ import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import styled from "styled-components";
 const ToastViewer = ({ content }) => {
-  console.log(content);
   return (
     <SToastViewer>
       <ReactMarkdown
