@@ -5,6 +5,8 @@ import styled from "styled-components";
 const InterestItem = ({ data, setLanguage, language }) => {
   const [toggle, setToggle] = useState(false);
 
+  console.log(language);
+
   const onToggleHandler = name => {
     setToggle(!toggle);
     if (language.indexOf(name) !== -1) {
@@ -13,6 +15,8 @@ const InterestItem = ({ data, setLanguage, language }) => {
     }
     setLanguage([...language, data.name]);
   };
+
+  useEffect(() => {}, []);
 
   return (
     <SList
@@ -36,7 +40,8 @@ const SList = styled.li`
   margin-bottom: 10px;
   margin-right: 10px;
   border-radius: 30px;
-  background: ${props =>
+  transition: 0.3s;
+  background-color: ${props =>
     props.toggle ? props.theme.color.mainOrange : "white"};
   color: ${props => (props.toggle ? "white" : "black")};
 `;
