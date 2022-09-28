@@ -310,7 +310,6 @@ const qnaSlice = createSlice({
     },
     //추천 많이받은 게시글
     [getQnaHotListDB.fulfilled]: (state, { payload }) => {
-      console.log(payload);
       state.qnaHotList = payload;
       state.isFetching = false;
       state.errorMessage = null;

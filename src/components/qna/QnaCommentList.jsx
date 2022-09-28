@@ -87,62 +87,19 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
     navigate(`/mypage/${username}`);
   };
 
+  console.log(chooseComment);
+
   if (list.length === 0) {
     return <SNoComment>채택받을만한 댓글을 써보세요!</SNoComment>;
   } else {
     return (
       <SQnaCommentList>
         <SCommentWrapper>
-          {chooseComment && (
-            <SItemWrapper id={chooseComment.id}>
-              <SUserInfo>
-                <SWinnerUserInfo
-                  onClick={() => {
-                    goMypage(chooseComment.userName);
-                  }}
-                >
-                  <SUserProfile profile={chooseComment?.profileImg} />
-                  <SUserInfoText>
-                    <SUserNameWrapper>
-                      <SUserName winner={true}>
-                        {chooseComment.userName}
-                      </SUserName>
-                      {target.isResolve && !isPreview && (
-                        <SWinnerButton>채택</SWinnerButton>
-                      )}
-                    </SUserNameWrapper>
-                    <SCreateAt winner={true}>
-                      {chooseComment.createdAt?.slice(0, 10)} /{" "}
-                      {chooseComment.createdAt?.slice(11, 16)}
-                    </SCreateAt>
-                  </SUserInfoText>
-                </SWinnerUserInfo>
-                <SButtonWrapper>
-                  <SHoneyTipButton
-                    isLike={chooseComment.isLike}
-                    onClick={
-                      chooseComment.isLike
-                        ? () => {
-                            onDisLikeHandler(chooseComment.id);
-                          }
-                        : () => {
-                            onLikeHandler(chooseComment.id);
-                          }
-                    }
-                  >
-                    {chooseComment?.like}
-                  </SHoneyTipButton>
-                </SButtonWrapper>
-              </SUserInfo>
-              <SContentText>
-                <ToastViewer content={chooseComment?.comment} />
-              </SContentText>
-            </SItemWrapper>
-          )}
           {list.map(data => (
             <SItemWrapper key={data.id}>
               <SUserInfo>
                 <SUserInfoWrapper
+                  isChoose={data.isChoose}
                   onClick={() => {
                     goMypage(data.user_name);
                   }}
@@ -151,6 +108,9 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
                   <SUserInfoText>
                     <SUserNameWrapper>
                       <SUserName>{data.userName}</SUserName>
+                      {target.isResolve && !isPreview && data.isChoose && (
+                        <SWinnerButton>채택</SWinnerButton>
+                      )}
                       {!target.isResolve &&
                         !isPreview &&
                         target.userName === userName &&
@@ -208,6 +168,22 @@ const SUserInfoWrapper = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  padding: 1px 30px 1px 2px;
+  position: relative;
+  border-radius: 30px;
+  background-color: ${props =>
+    props.isChoose ? props.theme.color.mainOrange : "transparent"};
+  &::before {
+    display: ${props => (props.isChoose ? "block" : "none")};
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 11px;
+    background-image: url(${props => (props.isChoose ? WinnerCrown : "")});
+    width: 28px;
+    height: 28px;
+    z-index: -1;
+  }
 `;
 
 const SUserInfo = styled.div`

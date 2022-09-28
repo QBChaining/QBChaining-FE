@@ -12,6 +12,7 @@ const BlogMainList = ({ posts }) => {
   // const [likeNum, setLikeNum] = useState(posts.like);
   const likeNum = useSelector(state => state.blogSlice.blogDetail.like);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (posts.isLike) {
       setLike(true);
