@@ -10,8 +10,6 @@ import { logIn } from "../../../redux/modules/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { errorAlert } from "../../../utils/swal";
 const CommentEditDel = ({ comments }) => {
-  console.log(comments);
-
   const navigate = useNavigate();
   const userNick = useSelector(state => state.userSlice.userName);
   const [show, setShow] = useState(false);

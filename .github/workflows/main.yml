@@ -100,7 +100,9 @@ jobs:
           --recursive \
           --region ap-northeast-2 \
           build s3://qb-chaning
-
+          
+      - name: Invalidate CloudFront Cache
+      run: aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*"
 #ytest
 #CI 보류 코드
 # Gitgub repository Secrtets를 통해 변수 파일을 생성

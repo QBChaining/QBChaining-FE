@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { notification } from "../../axios/api/notificationAPI";
-import { getNotificationDB, postNotificationDB } from "../async/notification";
+import {
+  getNotificationDB,
+  postNotificationDB,
+  delNotificationDB,
+} from "../async/notification";
 
 export const notificationSlice = createSlice({
   name: "notification",
@@ -15,15 +18,27 @@ export const notificationSlice = createSlice({
       state.isFetching = true;
     },
     [getNotificationDB.fulfilled]: (state, action) => {
-      console.log("알람action", action);
       state.notification = action.payload;
     },
     //알림 확인
-    [postNotificationDB.pending]: state => {
+    [postNotificationDB.pending]: (state, action) => {
       state.isFetching = true;
     },
     [postNotificationDB.fulfilled]: (state, action) => {
-      state.notification = action;
+      const idx = state.notification.findIndex(data => {
+        return data.id === action;
+      });
+      state.notification[idx] = true;
+    },
+    //알림 삭제
+    [delNotificationDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [delNotificationDB.fulfilled]: (state, action) => {
+      const index = state.notification.filter(data => {
+        return data.id !== action;
+      });
+      state.notification = index;
     },
   },
 });

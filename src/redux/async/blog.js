@@ -54,10 +54,8 @@ export const getBlogDetailDB = createAsyncThunk(
 export const postBlogCommunityDB = createAsyncThunk(
   "BLOG_COMMUNITY",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await blogApi.postBlogCommunity(data);
-      console.log(response);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -210,7 +208,6 @@ export const unBlogLikeDB = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await blogApi.unBlogLike(id);
-      console.log(response.data);
       successAlert("좋아요가 취소 되었습니다.");
       return response.data;
     } catch (err) {

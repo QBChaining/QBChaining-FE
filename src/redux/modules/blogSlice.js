@@ -204,7 +204,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogBookMarkDB.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.blogDetail.isBookmark = true;
       state.blogBookMark.push(action.payload);
     },

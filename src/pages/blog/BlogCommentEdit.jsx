@@ -9,7 +9,6 @@ import { Helmet } from "react-helmet-async";
 
 const BlogCommunityEdit = () => {
   const blogEditData = useSelector(state => state.blogSlice.blogDetail);
-  console.log(blogEditData);
   const { id } = useParams();
 
   return (
