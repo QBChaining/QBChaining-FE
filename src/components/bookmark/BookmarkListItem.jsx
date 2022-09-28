@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 const BookmarkListItem = ({ type, isModal, data }) => {
-  console.log(data);
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
 

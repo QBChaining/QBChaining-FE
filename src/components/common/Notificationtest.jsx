@@ -11,7 +11,6 @@ import Polygon from "../../assets/images/Polygon 4.png";
 const Notification = () => {
   // const notificationUser = useSelector(state => state.userSlice.userName);
   const notificationResponse = useSelector(state => state);
-  console.log(notificationResponse);
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
 
