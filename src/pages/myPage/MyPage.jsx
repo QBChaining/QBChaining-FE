@@ -17,6 +17,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import { errorAlert, networkError } from "../../utils/swal";
 import { ClipLoader } from "react-spinners";
 import { removeUserInfo } from "../../redux/modules/userSlice";
+import { Helmet } from "react-helmet-async";
 const MyPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -76,6 +77,9 @@ const MyPage = () => {
   } else {
     return (
       <SMyPage>
+        <Helmet>
+          <title>MyPage</title>
+        </Helmet>
         <SUserInfoWrapper>
           <SUserInfoInner>
             <SUserProfile profileImg={userInfo?.profileImg}></SUserProfile>

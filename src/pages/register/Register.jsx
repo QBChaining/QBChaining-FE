@@ -16,6 +16,7 @@ import {
 import { successAlert } from "./../../utils/swal";
 import { useNavigate } from "react-router-dom";
 import { userSlice } from "./../../redux/modules/userSlice";
+import { Helmet } from "react-helmet-async";
 
 const Register = ({ isEdit, editData }) => {
   const navigate = useNavigate();
@@ -91,6 +92,9 @@ const Register = ({ isEdit, editData }) => {
   };
   return (
     <SRegister>
+      <Helmet>
+        <title>Register</title>
+      </Helmet>
       <SRegisterTitle>
         <STitle>환영합니다.</STitle>
         <SSubTitle>

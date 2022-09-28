@@ -87,6 +87,8 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
     navigate(`/mypage/${username}`);
   };
 
+  console.log(list);
+
   if (list.length === 0) {
     return <SNoComment>채택받을만한 댓글을 써보세요!</SNoComment>;
   } else {
@@ -99,16 +101,14 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
                 <SUserInfoWrapper
                   isChoose={data.isChoose}
                   onClick={() => {
-                    goMypage(data.user_name);
+                    goMypage(data.userName);
                   }}
                 >
                   <SUserProfile profile={data.profileImg} />
                   <SUserInfoText>
                     <SUserNameWrapper>
                       <SUserName>{data.userName}</SUserName>
-                      {target.isResolve && !isPreview && data.isChoose && (
-                        <SWinnerButton>채택</SWinnerButton>
-                      )}
+                      {data.isChoose && <SWinnerButton>채택</SWinnerButton>}
                       {!target.isResolve &&
                         !isPreview &&
                         target.userName === userName &&
