@@ -111,7 +111,7 @@ const BlogCommmunityMain = () => {
 };
 
 export default BlogCommmunityMain;
-//전체
+
 const SBlogCommmunityMain = styled.div``;
 
 //탑박스
