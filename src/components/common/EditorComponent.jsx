@@ -146,7 +146,7 @@ const EditorComponent = ({
           tags,
         }),
       ).then(res => {
-        navigate(`/qna/detail/${res.payload.data.id}`, { replace: true });
+        navigate(`/qna/detail/${res.payload.data.id}`);
       });
       //코멘트작성
     } else if (isCommentWrite) {

@@ -64,7 +64,7 @@ const Register = ({ isEdit, editData }) => {
       errorAlert("포지션을 입력해주세요!");
       return;
     }
-    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]*$/;
+    const regex = /^[0-9a-zA-Zㄱ-ㅎ가-힣 ]*$/;
     if (!regex.test(job)) {
       errorAlert("포지션엔 한글과 영문만 입력가능합니다!");
       return;
