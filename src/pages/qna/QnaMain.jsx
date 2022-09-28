@@ -141,38 +141,6 @@ export default QnaMain;
 
 const SQnaMain = styled.div``;
 
-const SHeader = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: ${props => props.theme.color.mainGreen};
-  padding: 35px 20px;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: calc(100% - 88px);
-    transform: translateX(-50%);
-    height: 1px;
-    background-color: ${props => props.theme.color.white};
-  }
-`;
-
-const SWritingTitle = styled.h2`
-  font-weight: 600;
-  font-size: 30px;
-  margin-top: 61px;
-  margin-bottom: 5px;
-`;
-
-const SWritingInfo = styled.p`
-  font-size: 20px;
-`;
-
 const SWritingButtonWrapper = styled.div`
   position: absolute;
   bottom: 0;
@@ -220,8 +188,8 @@ const SMainCategory = styled.div`
 
 const SQnaWrapper = styled.div`
   display: flex;
-  width: 1560px;
-  padding: 0 20px 0 130px;
+  width: 1760px;
+  padding: 0 130px;
   margin: 0 auto;
 `;
 
@@ -289,21 +257,6 @@ const SBannerWrapper = styled.div`
   height: 490px;
   position: sticky;
   top: 416px;
-`;
-
-const SHotContent = styled.div`
-  width: 100%;
-  height: 260px;
-  margin-bottom: 30px;
-  background-color: white;
-  border-radius: 20px;
-`;
-
-const SBanner = styled.div`
-  width: 100%;
-  height: 200px;
-  background-color: white;
-  border-radius: 20px;
 `;
 
 const STitle = styled.h2`
