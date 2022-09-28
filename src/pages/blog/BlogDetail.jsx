@@ -137,8 +137,8 @@ const BlogCommunityDetail = () => {
 export default BlogCommunityDetail;
 
 const SContainer = styled.div`
-  width: 1660px;
-  margin: auto;
+  min-width: 1300px;
+  margin: 0 auto;
   margin-top: 40px;
   padding: 0 200px;
   padding-bottom: 20px;
@@ -152,6 +152,10 @@ const ButtonGroup = styled.div`
   gap: 6px;
   font-size: 16px;
   color: #7a7a7a;
+
+  & div:hover {
+    color: ${props => props.theme.color.mainNavy};
+  }
   & .editbtn {
     cursor: pointer;
   }

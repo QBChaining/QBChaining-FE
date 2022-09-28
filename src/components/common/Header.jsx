@@ -100,7 +100,8 @@ const Header = () => {
 export default Header;
 
 const SHeader = styled.header`
-  min-width: 1560px;
+  min-width: 1300px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;

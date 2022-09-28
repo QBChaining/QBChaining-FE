@@ -41,6 +41,7 @@ const QnaWrite = () => {
 export default QnaWrite;
 
 const SQnaWrite = styled.div`
+  min-width: 1300px;
   display: flex;
   width: 100%;
   min-height: calc(100vh - 100px);

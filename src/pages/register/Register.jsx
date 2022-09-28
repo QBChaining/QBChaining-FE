@@ -171,7 +171,7 @@ export default Register;
 
 const SRegister = styled.div`
   padding: 0 20px;
-  min-width: 1500px;
+  min-width: 1300px;
   margin: 0 auto;
 `;
 

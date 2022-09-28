@@ -144,7 +144,7 @@ const SQnaMain = styled.div``;
 const SWritingButtonWrapper = styled.div`
   position: absolute;
   bottom: 0;
-  right: 20px;
+  right: 0;
   cursor: pointer;
   width: 130px;
   height: 40px;
@@ -188,7 +188,8 @@ const SMainCategory = styled.div`
 
 const SQnaWrapper = styled.div`
   display: flex;
-  width: 1760px;
+  min-width: 1300px;
+  width: 100%;
   padding: 0 130px;
   margin: 0 auto;
 `;
@@ -196,6 +197,7 @@ const SQnaWrapper = styled.div`
 const SContentContainer = styled.div`
   min-height: calc(100vh - 100px);
   flex: 1;
+  min-width: 480px;
   margin-left: 100px;
   margin-right: 90px;
   display: flex;
@@ -231,32 +233,6 @@ const SLoading = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const SBannerWrapper = styled.div`
-  position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    top: -156px;
-    left: 203px;
-    width: 197px;
-    height: 156px;
-    background-image: url(${QnaMainillust});
-  }
-  &::after {
-    content: "";
-    position: absolute;
-    top: -52px;
-    left: 20px;
-    width: 213px;
-    height: 42px;
-    background-image: url(${Hotqna});
-  }
-  width: 400px;
-  height: 490px;
-  position: sticky;
-  top: 416px;
 `;
 
 const STitle = styled.h2`

@@ -133,7 +133,7 @@ const STopBox = styled.div`
 `;
 
 const SBody = styled.div`
-  width: 1920px;
+  min-width: 1300px;
   padding: 0 200px;
   margin: 0 auto;
 `;
@@ -148,7 +148,6 @@ const SLeftContainer = styled.div`
   flex-wrap: wrap;
   flex: 1;
   position: relative;
-  margin-right: 90px;
 `;
 
 const STitle = styled.h2`
@@ -163,7 +162,7 @@ const STitle = styled.h2`
 const SWritingButtonWrapper = styled.div`
   position: absolute;
   top: -70px;
-  right: 0;
+  right: 60px;
   cursor: pointer;
   width: 130px;
   height: 40px;

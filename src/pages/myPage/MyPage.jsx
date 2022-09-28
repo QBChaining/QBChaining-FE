@@ -221,9 +221,9 @@ export default MyPage;
 
 const SMyPage = styled.div`
   position: relative;
-  min-width: 1500px;
+  min-width: 1300px;
   margin: 45px auto 0;
-  padding: 0 200px 50px;
+  padding: 0 130px 50px;
 `;
 
 const SUserInfoWrapper = styled.div`
@@ -231,11 +231,12 @@ const SUserInfoWrapper = styled.div`
   align-items: center;
   width: 100%;
   margin-bottom: 140px;
+  justify-content: space-between;
 `;
 
 const SUserProfile = styled.div`
-  width: 150px;
-  height: 150px;
+  min-width: 150px;
+  min-height: 150px;
   border-radius: 50%;
   margin-right: 35px;
   background-image: url(${props => props.profileImg});
@@ -256,17 +257,20 @@ const SUserName = styled.div`
     background-color: ${props => props.theme.color.mainNavy};
     color: ${props => props.theme.color.white};
     padding: 5px 20px;
+    min-width: 93px;
   }
 `;
 
 const SUserDetail = styled.div`
   display: flex;
+  flex-wrap: wrap;
 
   & li {
     margin-right: 10px;
     border-radius: 30px;
     border: 1px solid black;
     padding: 2px 10px;
+    margin-bottom: 5px;
   }
 `;
 
@@ -274,23 +278,37 @@ const SListWrapper = styled.div``;
 const SList = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 const SListContainer = styled.div`
-  width: 310px;
+  width: 50%;
+  min-width: 310px;
   height: 500px;
   margin-right: 30px;
   border-radius: 30px;
   overflow: hidden;
   box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
+  @media screen and (max-width: 1635px) {
+    height: 300px;
+    &:first-child {
+      margin-right: 100px;
+    }
+  }
 `;
 const SQna = styled.div`
   display: flex;
   position: relative;
+  flex: 1;
 `;
 const SBlog = styled.div`
   display: flex;
   position: relative;
+  flex: 1;
+
+  @media screen and (max-width: 1635px) {
+    margin-top: 100px;
+  }
 `;
 
 const SHeader = styled.div`
@@ -364,6 +382,7 @@ const SUserInfoInner = styled.div`
   width: 50%;
   display: flex;
   align-items: center;
+  margin-right: 50px;
 `;
 
 const SSolveText = styled.div`
