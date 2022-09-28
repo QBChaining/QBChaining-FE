@@ -66,7 +66,7 @@ const Notification = () => {
 
   useEffect(() => {
     checkk(isNoti);
-  }, [notifiResponse]);
+  }, [isNoti]);
 
   return (
     <SNotiBox>
