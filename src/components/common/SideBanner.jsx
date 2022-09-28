@@ -94,7 +94,7 @@ const SBannerWrapper = styled.div`
     content: "";
     position: absolute;
     top: -156px;
-    left: 203px;
+    right: 0;
     width: 197px;
     height: 156px;
     background-image: url(${props =>
@@ -111,7 +111,8 @@ const SBannerWrapper = styled.div`
     background-image: url(${props =>
       props.type === "qna" ? HotQna : Hotblog});
   }
-  width: 400px;
+  max-width: 400px;
+  min-width: 320px;
   height: 490px;
   position: sticky;
   top: 320px;

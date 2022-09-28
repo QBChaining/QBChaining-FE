@@ -114,6 +114,7 @@ const QnaDetail = () => {
 export default QnaDetail;
 
 const SQnaDetail = styled.div`
+  min-width: 1300px;
   display: flex;
   min-height: calc(100vh - 100px);
   margin: 0 auto;
@@ -128,7 +129,7 @@ const SLeftContainer = styled.div`
 `;
 
 const SRightContainer = styled.div`
-  position: fixed;
+  position: sticky;
   top: 0;
   right: 0;
   height: 100vh;
@@ -140,7 +141,7 @@ const SRightContainer = styled.div`
   &::before {
     content: "";
     position: absolute;
-    top: 150px;
+    top: 100px;
     left: -4px;
     width: 53px;
     height: 53px;
@@ -153,7 +154,7 @@ const SRightContainer = styled.div`
 const SAddCommentTitle = styled.h2`
   font-size: 20px;
   font-weight: 400;
-  padding: 60px 0 30px 0;
+  padding: 0 0 30px 0;
 `;
 
 const SLoading = styled.div`

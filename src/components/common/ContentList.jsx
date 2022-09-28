@@ -278,6 +278,7 @@ const SLikeIcon = styled(SIcon)`
         : GreyQnaLikeIcon
       : unlike});
 `;
+
 const SCommentIcon = styled(SIcon)`
   background-image: url(${props =>
     props.type === "qna"

@@ -55,7 +55,7 @@ const Search = () => {
 export default Search;
 
 const SSearch = styled.div`
-  width: 1560px;
+  min-width: 1300px;
   padding: 0 120px;
   margin: 0 auto;
 `;

@@ -108,7 +108,8 @@ export default BlogMainList;
 const SBloglist = styled.div`
   position: relative;
   /* width: 100%; */
-  width: 480px;
+  min-width: 480px;
+  flex: 1;
   min-height: 350px;
   /* height: 100%; */
   background: #ffffff;
@@ -116,11 +117,7 @@ const SBloglist = styled.div`
   padding: 30px 40px;
   margin-right: 60px;
   margin-bottom: 40px;
-  transition: 0.5s;
   cursor: pointer;
-  &:nth-child(2n + 1) {
-    margin-right: 0;
-  }
   &:hover {
     box-shadow: #fce3cd -10px 10px 0px 0px;
   }

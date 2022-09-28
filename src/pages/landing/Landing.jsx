@@ -13,21 +13,23 @@ const Landing = () => {
         <title>QB-Chaning</title>
       </Helmet>
       <div className="logo"></div>
-      <div
-        className="goQna container"
-        onClick={() => {
-          navigate("/qna");
-        }}
-      >
-        <span className="arrow"></span>Q&A
+      <div className="goQna container">
+        <SNavigateButton
+          onClick={() => {
+            navigate("/qna");
+          }}
+        >
+          <span className="arrow"></span>Q&A
+        </SNavigateButton>
       </div>
-      <div
-        className="goBlog container"
-        onClick={() => {
-          navigate("/blog");
-        }}
-      >
-        블로그<span className="arrow right"></span>
+      <div className="goBlog container">
+        <SNavigateButton
+          onClick={() => {
+            navigate("/blog");
+          }}
+        >
+          블로그<span className="arrow right"></span>
+        </SNavigateButton>
       </div>
     </SLanding>
   );
@@ -70,10 +72,7 @@ const SLanding = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${props => props.theme.color.mainNavy};
-    font-weight: 600;
-    font-size: 24px;
-    cursor: pointer;
+
     z-index: 1;
     & .arrow {
       display: flex;
@@ -90,10 +89,26 @@ const SLanding = styled.div`
       background-image: url(${LeftArrow});
       background-repeat: no-repeat;
       background-position: center;
+      transition: 0.3s;
 
       &.right {
         transform: rotate(180deg);
       }
     }
+  }
+`;
+
+const SNavigateButton = styled.button`
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: ${props => props.theme.color.mainNavy};
+  font-weight: 400;
+  font-size: 24px;
+  padding: 30px;
+  &:hover .arrow {
+    background-color: ${props => props.theme.color.mainOrange};
   }
 `;

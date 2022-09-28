@@ -38,7 +38,7 @@ const SearchInput = () => {
 
   return (
     <SSearchInput>
-      <SInput ref={search} type="text" placeholder="Javascript" />
+      <SInput ref={search} type="text" placeholder="검색어를 입력해주세요!" />
       <SSearchButton onClick={goSearch}>검색</SSearchButton>
     </SSearchInput>
   );
@@ -47,7 +47,8 @@ const SearchInput = () => {
 export default SearchInput;
 
 const SSearchInput = styled.div`
-  width: 984px;
+  flex: 1;
+  max-width: 900px;
   position: relative;
   &::before {
     position: absolute;
@@ -69,7 +70,7 @@ const SInput = styled.input`
   background-image: url(${SearchIcon});
   background-repeat: no-repeat;
   background-position: left 16px center;
-
+  font-size: 15px;
   &:active {
     outline: none;
   }

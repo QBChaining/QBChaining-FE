@@ -28,6 +28,7 @@ const BlogCommunityWrite = () => {
 };
 const STWrite = styled.div`
   display: flex;
+  min-width: 1300px;
 `;
 const STitleSet = styled.div`
   margin-left: 200px;

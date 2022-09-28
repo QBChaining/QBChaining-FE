@@ -14,6 +14,7 @@ import BlogLike from "../../components/blog/BlogLike";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
 import { Helmet } from "react-helmet-async";
+import { confirmAlert, infoAlert, successAlert } from "./../../utils/swal";
 
 const BlogCommunityDetail = () => {
   const { blogDetail: detail } = useSelector(state => state.blogSlice);
@@ -33,7 +34,17 @@ const BlogCommunityDetail = () => {
   //게시글 삭제
 
   const deleteBlogPost = () => {
-    dispatch(deleteBlogCommunityDB(id));
+    confirmAlert("삭제", "이 게시글을 삭제하시겠습니까?", "삭제", "취소").then(
+      res => {
+        res.isConfirmed === true
+          ? dispatch(deleteBlogCommunityDB(id)).then(() => {
+              successAlert("삭제되었습니다!").then(res => {
+                (res.isConfirmed || res.isDismissed) && navigate("/blog");
+              });
+            })
+          : infoAlert("취소되었습니다!");
+      },
+    );
   };
 
   useEffect(() => {
@@ -90,7 +101,6 @@ const BlogCommunityDetail = () => {
               <div
                 className="delbtn"
                 onClick={id => {
-                  navigate("/blog");
                   deleteBlogPost(id);
                 }}
               >
@@ -127,8 +137,8 @@ const BlogCommunityDetail = () => {
 export default BlogCommunityDetail;
 
 const SContainer = styled.div`
-  width: 1660px;
-  margin: auto;
+  min-width: 1300px;
+  margin: 0 auto;
   margin-top: 40px;
   padding: 0 200px;
   padding-bottom: 20px;
@@ -142,6 +152,10 @@ const ButtonGroup = styled.div`
   gap: 6px;
   font-size: 16px;
   color: #7a7a7a;
+
+  & div:hover {
+    color: ${props => props.theme.color.mainNavy};
+  }
   & .editbtn {
     cursor: pointer;
   }

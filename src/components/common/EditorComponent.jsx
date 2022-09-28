@@ -37,6 +37,7 @@ import {
 } from "../../redux/async/qna";
 
 const EditorComponent = ({
+  isGuide,
   isEdit,
   isWrite,
   isCommentWrite,
@@ -82,9 +83,7 @@ const EditorComponent = ({
     ["image"],
     ["scrollSync"],
   ];
-
-  const initialValue =
-    "```javascript\n  yourCodeHere(){\n    return thank you!\n  }\n```";
+  const initialValue = "";
 
   const onChangeContent = () => {
     const data = editorRef.current.getInstance().getMarkdown();
@@ -337,7 +336,7 @@ const EditorComponent = ({
         )}
         {isCommentWrite ? (
           <SCommentWriteButton type="submit" onClick={onSubmitHandler}>
-            제출하기
+            댓글쓰기
           </SCommentWriteButton>
         ) : (
           <SSubmitButton
@@ -346,7 +345,7 @@ const EditorComponent = ({
             location={location}
           >
             {isEdit || isWrite || isBlogWrite || isBlogEdit
-              ? "제출하기"
+              ? "작성하기"
               : "댓글쓰기"}
           </SSubmitButton>
         )}

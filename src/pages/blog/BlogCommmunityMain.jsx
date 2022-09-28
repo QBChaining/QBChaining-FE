@@ -4,14 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { getBlogCommunityListDB } from "../../redux/async/blog";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import blogplus from "../../assets/images/blogplus.png";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogMainList from "../../components/blog/BlogMainList";
-import mainpage from "../../assets/images/mainpage.png";
 import { Helmet } from "react-helmet-async";
 import SideBanner from "./../../components/common/SideBanner";
-import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
+import MainWriteButton from "../../assets/images/MainWriteButton.png";
 import { removeBlogList } from "../../redux/modules/blogSlice";
 
 const BlogCommmunityMain = () => {
@@ -34,6 +32,7 @@ const BlogCommmunityMain = () => {
     };
     return getFinish();
   }, [page, blogMainLists]);
+
   /**
    * 스크롤 위치 계산
    */
@@ -134,7 +133,7 @@ const STopBox = styled.div`
 `;
 
 const SBody = styled.div`
-  width: 1920px;
+  min-width: 1300px;
   padding: 0 200px;
   margin: 0 auto;
 `;
@@ -149,7 +148,6 @@ const SLeftContainer = styled.div`
   flex-wrap: wrap;
   flex: 1;
   position: relative;
-  margin-right: 90px;
 `;
 
 const STitle = styled.h2`
@@ -164,7 +162,7 @@ const STitle = styled.h2`
 const SWritingButtonWrapper = styled.div`
   position: absolute;
   top: -70px;
-  right: 0;
+  right: 60px;
   cursor: pointer;
   width: 130px;
   height: 40px;
@@ -185,7 +183,7 @@ const SWritingButton = styled.button`
   & div {
     width: 20px;
     height: 20px;
-    background-image: url(${QnaWriteIcon});
+    background-image: url(${MainWriteButton});
     background-size: contain;
     margin-right: 10px;
   }
