@@ -35,15 +35,17 @@ const WriteBookmark = ({ type, id, onToggleHandler }) => {
       <SWriteBookmarkWrapper>
         {!isFetching ? (
           <>
-            <SBackButton color={color} onClick={onToggleHandler}>
-              돌아가기
-            </SBackButton>
             <SUserInfo>
-              <SUserProfile profile={target.profileImg} />
-              <SUserInfoText>
-                <SUserName>{target.userName}</SUserName>
-                <SCreateAt>{target.createdAt}</SCreateAt>
-              </SUserInfoText>
+              <UserInfoInner>
+                <SUserProfile profile={target.profileImg} />
+                <SUserInfoText>
+                  <SUserName>{target.userName}</SUserName>
+                  <SCreateAt>{target.createdAt}</SCreateAt>
+                </SUserInfoText>
+              </UserInfoInner>
+              <SBackButton color={color} onClick={onToggleHandler}>
+                돌아가기
+              </SBackButton>
             </SUserInfo>
             <SContent>
               <SContentTitle>{target.title}</SContentTitle>
@@ -121,13 +123,11 @@ const SWriteBookmarkWrapper = styled.div`
 const SUserInfo = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
 `;
 
 const SBackButton = styled.button`
-  position: fixed;
-  top: 190px;
-  right: 100px;
   border: none;
   border-radius: 30px;
   padding: 10px 40px 10px 20px;
@@ -227,4 +227,10 @@ const SLoading = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const UserInfoInner = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;

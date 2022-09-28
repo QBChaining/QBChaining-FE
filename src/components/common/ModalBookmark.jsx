@@ -17,12 +17,12 @@ const ModalBookmark = ({ isWrite, type }) => {
   const blogBookmarkList = useSelector(state => state.blogSlice.blogBookMark);
 
   const { isLogin, color } = useSelector(state => state.userSlice);
-  const [modal, setModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const toggle = () => {
     if (!isLogin) {
       return needLoginAlert();
     }
-    setModal(!modal);
+    setOpenModal(!openModal);
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const ModalBookmark = ({ isWrite, type }) => {
 
   return (
     <>
-      {modal && (
+      {openModal && (
         <SModalBookmark isWrite={isWrite}>
           <SListWrapper color={color}>
             <SList className="blog">
@@ -48,7 +48,7 @@ const ModalBookmark = ({ isWrite, type }) => {
                     type={"blog"}
                   />
                 ))}
-                {blogBookmarkList.length < 4 && <Nodata />}
+                {blogBookmarkList.length < 3 && <Nodata />}
               </SUnorderedList>
             </SList>
             <SList className="qna">
@@ -62,7 +62,7 @@ const ModalBookmark = ({ isWrite, type }) => {
                     type={"qna"}
                   />
                 ))}
-                {qnaBookmarkList.length < 4 && <Nodata />}
+                {qnaBookmarkList.length < 3 && <Nodata />}
               </SUnorderedList>
             </SList>
           </SListWrapper>
@@ -114,9 +114,20 @@ const SListWrapper = styled.div`
   padding: 0 30px;
   box-shadow: -8px 14px 50px rgba(0, 0, 0, 0.15);
   z-index: 100;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SList = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 50%;
   &.blog {
     padding-bottom: 10px;
   }
@@ -125,8 +136,8 @@ const SList = styled.div`
 const SUnorderedList = styled.ul`
   display: flex;
   flex-direction: column;
-  height: 250px;
   overflow: auto;
+  height: 100%;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;

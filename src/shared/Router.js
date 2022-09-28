@@ -17,6 +17,7 @@ import NoLogin from "../pages/NoLogin";
 import Search from "../pages/search/Search";
 import Preparing from "./../pages/Preparing";
 import Undefind from "./../pages/Undefind";
+import RegisterEdit from "../pages/register/RegisterEdit";
 
 const Router = () => {
   const { isLogin } = useSelector(state => state.userSlice);
@@ -27,6 +28,10 @@ const Router = () => {
       <Route path="/*" element={<Undefind />} />
       <Route path="/search" element={<Search />} />
       <Route path="/register" element={isLogin ? <Register /> : <NoLogin />} />
+      <Route
+        path="/register/edit"
+        element={isLogin ? <RegisterEdit /> : <NoLogin />}
+      />
       <Route path="/ranking" element={<Preparing />} />
       <Route path="/mypage/:userName" element={<MyPage />} />
       <Route path="/qna" element={<QnaMain />} />

@@ -124,6 +124,11 @@ const SCommentList = styled.div`
   border-radius: 20px;
   padding: 20px 40px;
   position: relative;
+  &::after {
+    clear: both;
+    content: "";
+    display: block;
+  }
 `;
 const SDate = styled.div`
   margin-left: 10px;

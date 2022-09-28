@@ -41,7 +41,7 @@ const Header = () => {
   const beforeScrollY = useRef(0);
 
   useEffect(() => {
-    dispatch(getNotificationDB());
+    // dispatch(getNotificationDB());
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -98,6 +98,7 @@ const Header = () => {
 export default Header;
 
 const SHeader = styled.header`
+  min-width: 1560px;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -38,7 +38,6 @@ const SideBanner = ({ type }) => {
     dispatch(type === "qna" ? getQnaHotListDB() : getHotBlogDB());
   }, []);
 
-
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);
   };
@@ -67,8 +66,20 @@ const SideBanner = ({ type }) => {
       </SHotContent>
       <SBanner>
         <Slider {...settings}>
-          <img src={BugReport} alt={"BugReport"}></img>
-          <img src={SurveyReport} alt={"SurveyReport"}></img>
+          <img
+            onClick={() => {
+              window.open("https://forms.gle/dJkEaE5APAW7Wixx9", "_blank");
+            }}
+            src={BugReport}
+            alt={"BugReport"}
+          ></img>
+          <img
+            onClick={() => {
+              window.open("https://forms.gle/wbxoBSTM8mZDh3LK6", "_blank");
+            }}
+            src={SurveyReport}
+            alt={"SurveyReport"}
+          ></img>
         </Slider>
       </SBanner>
     </SBannerWrapper>

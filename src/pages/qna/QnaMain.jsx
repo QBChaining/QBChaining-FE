@@ -204,24 +204,31 @@ const SWritingButton = styled.button`
 `;
 
 const SMainCategory = styled.div`
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 200px;
-  height: 100%;
-  border-left: 1px solid ${props => props.theme.color.mainNavy};
+  height: calc(100vh - 100px);
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100vh;
+    background-color: ${props => props.theme.color.mainNavy};
+  }
 `;
 
 const SQnaWrapper = styled.div`
   display: flex;
   width: 1560px;
-  padding: 0 20px;
+  padding: 0 20px 0 130px;
   margin: 0 auto;
 `;
 
 const SContentContainer = styled.div`
   min-height: calc(100vh - 100px);
   flex: 1;
-  margin-left: 280px;
+  margin-left: 100px;
   margin-right: 90px;
   display: flex;
   flex-direction: column;
@@ -309,7 +316,6 @@ const STitle = styled.h2`
 `;
 
 const SNodata = styled.div`
-  flex: 1;
   border: ${props =>
     props.resolve
       ? `1px solid ${props.theme.color.mainGreen}`

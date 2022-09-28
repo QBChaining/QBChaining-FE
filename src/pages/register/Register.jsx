@@ -8,6 +8,7 @@ import Select from "../../components/common/Select";
 import WhiteArrow from "../../assets/images/WhiteArrow.png";
 import { errorAlert } from "../../utils/swal";
 import {
+  getUserInfoDB,
   postUserInfoDB,
   putUserInfoDB,
   putUserInNewDB,
@@ -16,70 +17,30 @@ import { successAlert } from "./../../utils/swal";
 import { useNavigate } from "react-router-dom";
 import { userSlice } from "./../../redux/modules/userSlice";
 
-//에러처리
-// {errors.nickname && errors.nickname.type === "required" && (
-//   <p className={"warning"}>닉네임은 필수 입력사항 입니다.</p>
-// )}
-// {errors.nickname && errors.nickname.type === "minLength" && (
-//   <p className={"warning"}>{errors.nickname.message}</p>
-// )}
-// {errors.nickname && errors.nickname.type === "maxLength" && (
-//   <p className={"warning"}>{errors.nickname.message}</p>
-// )}
-
-//select component
-
-//radio component
-// const Radio = ({ register, options, name, ...rest }) => {
-//   return (
-//     <div>
-//       {options.map(value => (
-//         <Fragment key={value}>
-//           <label htmlFor={value}>{value}</label>
-//           <input
-//             {...register(name)}
-//             {...rest}
-//             type="radio"
-//             name={name}
-//             value={value}
-//             id={value}
-//           />
-//         </Fragment>
-//       ))}
-//     </div>
-//   );
-// };
-
-//checkbox component
-// const CheckBox = ({ register, options, name, ...rest }) => {
-//   return (
-//     <>
-//       {options.map(value => (
-//         <span style={{ padding: "10px", display: "inline-block" }} key={value}>
-//           <input
-//             {...register(name)}
-//             {...rest}
-//             type="checkbox"
-//             name={name}
-//             value={value}
-//             id={value}
-//           />
-//           <label htmlFor={value}>{value}</label>
-//         </span>
-//       ))}
-//     </>
-//   );
-// };
-
-const Register = () => {
+const Register = ({ isEdit, editData }) => {
   const navigate = useNavigate();
-  const { userName, userIsNew } = useSelector(state => state.userSlice);
+  const { userName, userIsNew, userInfo, isLogin } = useSelector(
+    state => state.userSlice,
+  );
   const [language, setLanguage] = useState([]);
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [career, setCareer] = useState("");
+  const [age, setAge] = useState("나이를 입력해주세요");
+  const [gender, setGender] = useState("성별을 입력해주세요");
+  const [career, setCareer] = useState("경력을 입력해주세요");
   const [job, setJob] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isEdit === undefined && userIsNew === "false") {
+      navigate("/register/edit");
+    }
+    if (isEdit) {
+      setLanguage(editData.languages);
+      setAge(editData.age);
+      setGender(editData.gender);
+      setCareer(editData.career);
+      setJob(editData.job);
+    }
+  }, [editData]);
 
   const onSubmitHandler = () => {
     if (language.length < 1) {
@@ -102,6 +63,11 @@ const Register = () => {
       errorAlert("포지션을 입력해주세요!");
       return;
     }
+    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]*$/;
+    if (!regex.test(job)) {
+      errorAlert("포지션엔 한글과 영문만 입력가능합니다!");
+      return;
+    }
     const data = {
       language,
       age,
@@ -109,15 +75,22 @@ const Register = () => {
       career,
       job,
     };
-    if (userIsNew) {
+    if (userIsNew === "true") {
       dispatch(putUserInNewDB());
       dispatch(postUserInfoDB(data));
-    } else if (!userIsNew) {
+    } else if (userIsNew === "false") {
       dispatch(putUserInfoDB(data));
     }
-    navigate(`/`);
+    successAlert(
+      isEdit
+        ? "정보 수정이 완료 되었습니다. 감사합니다!"
+        : "정보 등록이 되었습니다. 감사합니다!",
+    ).then(res => {
+      (res.dismiss || res.isConfirmed) && navigate(`/mypage/${userName}`);
+    });
   };
 
+  console.log(language);
   return (
     <SRegister>
       <SRegisterTitle>
@@ -134,9 +107,11 @@ const Register = () => {
         <SLangUl>
           {categories.interestCategory.map(data => (
             <InterestItem
+              isEdit={isEdit}
               data={data}
               setLanguage={setLanguage}
               language={language}
+              language2={language}
               key={data.id}
             />
           ))}
@@ -144,37 +119,40 @@ const Register = () => {
       </SSelectLangWrapper>
       <SelectWrapper>
         <Select
+          isEdit={isEdit}
           options={categories.careerCategory}
-          initialText={"경력을 입력해주세요"}
+          initialText={career}
           setOption={setCareer}
           zIndex={11}
         />
       </SelectWrapper>
       <SelectWrapper>
         <Select
+          isEdit={isEdit}
           options={categories.ageCategory}
-          initialText={"나이를 입력해주세요"}
+          initialText={age}
           setOption={setAge}
           zIndex={10}
         />
       </SelectWrapper>
       <SelectWrapper>
         <Select
+          isEdit={isEdit}
           options={categories.genderCategory}
-          initialText={"성별을 입력해주세요"}
+          initialText={gender}
           setOption={setGender}
           zIndex={9}
         />
       </SelectWrapper>
-
       <SelectWrapper>
         <SJobInput
           type="text"
-          value={job}
+          value={job || ""}
           placeholder={"포지션을 입력해주세요.   예) 안드로이드 개발자"}
           onChange={e => {
             setJob(e.target.value);
           }}
+          maxLength="20"
         />
       </SelectWrapper>
       {/* <Radio name="gender" options={["남", "여"]} required />
@@ -191,7 +169,7 @@ export default Register;
 
 const SRegister = styled.div`
   padding: 0 20px;
-  max-width: 900px;
+  min-width: 1500px;
   margin: 0 auto;
 `;
 
@@ -215,6 +193,8 @@ const SSubTitle = styled.p`
 
 const SSelectLangWrapper = styled.div`
   padding-bottom: 20px;
+  width: 800px;
+  margin: 0 auto;
 `;
 
 const SLangUl = styled.ul`
@@ -249,8 +229,9 @@ const SJobInput = styled.input`
 
 const SSubmitButton = styled.div`
   display: flex;
-  float: right;
   align-items: center;
+  justify-content: center;
+  margin: 0 auto;
   padding: 10px;
   cursor: pointer;
 `;
@@ -265,7 +246,11 @@ const SButtonIcon = styled.div`
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: ${props => props.theme.color.mainOrange};
+  transition: 0.3s;
+  background: ${props => props.theme.color.mainNavy};
+  &:hover {
+    background: ${props => props.theme.color.mainOrange};
+  }
 
   &::before {
     content: "";

@@ -8,6 +8,7 @@ import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import styled from "styled-components";
 const ToastViewer = ({ content }) => {
+  console.log(content);
   return (
     <SToastViewer>
       <ReactMarkdown
@@ -44,6 +45,24 @@ const SToastViewer = styled.div`
 
   & p {
     word-break: break-all;
+  }
+
+  * & ol > li {
+    list-style: decimal;
+  }
+
+  * & ul > li {
+    list-style: disc;
+  }
+
+  * & table,
+  th,
+  td {
+    border: 1px solid;
+  }
+
+  & * img {
+    max-width: 100%;
   }
 `;
 
