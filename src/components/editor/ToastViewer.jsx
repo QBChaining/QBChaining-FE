@@ -60,6 +60,10 @@ const SToastViewer = styled.div`
   td {
     border: 1px solid;
   }
+
+  & * img {
+    max-width: 100%;
+  }
 `;
 
 export default ToastViewer;

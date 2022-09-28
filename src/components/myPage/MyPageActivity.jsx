@@ -41,7 +41,7 @@ const SCubeWrapper = styled.div`
   display: flex;
   position: relative;
   flex-wrap: wrap;
-  width: 675px;
+  max-width: 675px;
 
   & > div {
     width: 45px;

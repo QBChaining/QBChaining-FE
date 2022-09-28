@@ -21,10 +21,11 @@ export const userSlice = createSlice({
     userToken: null,
     userName: null,
     userProfile: null,
-    userInfo: null,
+    userInfo: {},
     userIsNew: null,
     isFetching: false,
     userActivity: [],
+    errorMessage: null,
     color: "backgroundGradient",
   },
   reducers: {
@@ -51,6 +52,13 @@ export const userSlice = createSlice({
     },
     colorSetGrad: (state, action) => {
       state.color = "backgroundGradient";
+    },
+    removeUserInfo: (state, action) => {
+      state.userQnaList = [];
+      state.userQnaAnswerList = [];
+      state.userBlogList = [];
+      state.userBlogCommentList = [];
+      state.userActivity = [];
     },
   },
   extraReducers: {
@@ -140,6 +148,12 @@ export const userSlice = createSlice({
   },
 });
 
-export const { logOut, logIn, colorSetGreen, colorSetBlue, colorSetGrad } =
-  userSlice.actions;
+export const {
+  logOut,
+  logIn,
+  colorSetGreen,
+  colorSetBlue,
+  colorSetGrad,
+  removeUserInfo,
+} = userSlice.actions;
 export default userSlice.reducer;

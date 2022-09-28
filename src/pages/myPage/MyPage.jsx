@@ -14,6 +14,9 @@ import MyPageSolveIcon from "../../assets/images/MyPageSolveIcon.png";
 import MyPageUnSolveIcon from "../../assets/images/MyPageUnSolveIcon.png";
 import unlike from "../../assets/images/unlike.png";
 import { nanoid } from "@reduxjs/toolkit";
+import { errorAlert, networkError } from "../../utils/swal";
+import { ClipLoader } from "react-spinners";
+import { removeUserInfo } from "../../redux/modules/userSlice";
 const MyPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,23 +31,48 @@ const MyPage = () => {
     userQnaAnswerList,
     userBlogList,
     userBlogCommentList,
+    errorMessage,
   } = useSelector(state => state.userSlice);
-
+  // .then(res => {
+  //   // return (
+  //   //   res.payload === undefined &&
+  //   //   networkError("네트워크 상태가 좋지 않거나 없는 페이지 입니다.").then(
+  //   //     res => {
+  //   //       (res.isConfirmed || res.isDismissed) &&
+  //   //         navigate("/", { replace: true });
+  //   //     },
+  //   //   )
+  //   // );
+  // });
   useEffect(() => {
-    dispatch(getUserInfoActivityDB(userName));
     dispatch(getUserInfoDB(userName));
+    dispatch(getUserInfoActivityDB(userName));
     dispatch(getUserQnaListDB(userName));
     dispatch(getUserBlogListDB(userName));
   }, [userName]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(removeUserInfo());
+    };
+  }, []);
+
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);
   };
-
-  console.log(isFetching);
+  if (errorMessage === "조회하려는 사용자가 존재하지 않습니다.") {
+    errorAlert("조회하려는 사용자가 존재하지 않습니다.").then(res => {
+      (res.isConfirmed || res.isDismissed) && navigate(-1, { replace: true });
+    });
+    // return navigate(-1, { replace: true });
+  }
 
   if (isFetching) {
-    return <div>로딩중</div>;
+    return (
+      <SLoading>
+        <ClipLoader />
+      </SLoading>
+    );
   } else {
     return (
       <SMyPage>
@@ -57,7 +85,7 @@ const MyPage = () => {
                 {loginUserName === userName && (
                   <button
                     onClick={() => {
-                      navigate("/register");
+                      navigate("/register/edit");
                     }}
                   >
                     정보 수정
@@ -189,7 +217,7 @@ export default MyPage;
 
 const SMyPage = styled.div`
   position: relative;
-  width: 1920px;
+  min-width: 1500px;
   margin: 45px auto 0;
   padding: 0 200px 50px;
 `;
@@ -316,7 +344,6 @@ const SCube = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-left: 160px;
 `;
 
 const STitle = styled.div`
@@ -355,4 +382,12 @@ const SLikeIcon = styled.div`
   margin-right: 4px;
   background-image: url(${unlike});
   background-size: cover;
+`;
+
+const SLoading = styled.div`
+  width: 100%;
+  height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

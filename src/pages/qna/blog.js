@@ -18,11 +18,7 @@ export const getBlogCommunityListDB = createAsyncThunk(
       }
     } catch (err) {
       if (err.response.status === 404) {
-        if (err.response.status === 404) {
-          if (err.response.status === 404) {
-            networkError();
-          }
-        }
+        networkError();
       }
       Sentry.captureException(`error, 블로그 전체조회 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
@@ -169,7 +165,7 @@ export const deleteBlogCommentDB = createAsyncThunk(
         return id;
       }
     } catch (err) {
-      Sentry.captureException(`error, 블로그 댓글 삭제 성공! : ${err}`);
+      Sentry.captureException(`error, 블로그 댓글 삭제 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
@@ -198,7 +194,7 @@ export const postBlogLikeDB = createAsyncThunk(
         return response.data;
       }
     } catch (err) {
-      Sentry.captureException(`error, 좋아요 에러. ${err}`);
+      Sentry.captureException(`error, 좋아요 추가 ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
@@ -214,7 +210,7 @@ export const unBlogLikeDB = createAsyncThunk(
       successAlert("좋아요가 취소 되었습니다.");
       return response.data;
     } catch (err) {
-      Sentry.captureException(`error, 좋아요 에러. ${err}`);
+      Sentry.captureException(`error, 좋아요 삭제 ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
@@ -227,7 +223,7 @@ export const getBlogBookMarkDB = createAsyncThunk(
       const response = await blogApi.getBlogBookMark();
       return response.data.data;
     } catch (err) {
-      Sentry.captureException(`error, 좋아요 에러. ${err}`);
+      Sentry.captureException(`error, 즐겨찾기 조회 ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
@@ -244,7 +240,7 @@ export const postBlogBookMarkDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      Sentry.captureException(`error, 좋아요 에러. ${err}`);
+      Sentry.captureException(`error, 즐겨찾기 추가 ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
@@ -261,7 +257,7 @@ export const deleteBlogBookMarkDB = createAsyncThunk(
         return id;
       }
     } catch (err) {
-      Sentry.captureException(`error, 좋아요 에러. ${err}`);
+      Sentry.captureException(`error, 즐겨찾기 삭제 ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
@@ -273,7 +269,7 @@ export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
     const response = await blogApi.getHotBlog();
     return response.data.data;
   } catch (err) {
-    Sentry.captureException(`error, 좋아요 에러. ${err}`);
+    Sentry.captureException(`error, 핫 블로그 게시글 ${err}`);
     return thunkAPI.rejectWithValue(err.response.data.message);
   }
 });

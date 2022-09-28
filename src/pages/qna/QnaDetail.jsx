@@ -37,7 +37,8 @@ const QnaDetail = () => {
         res.payload === undefined &&
         networkError("네트워크 상태가 좋지 않거나 없는 페이지입니다!").then(
           res => {
-            res.isConfirmed && navigate("/", { replace: true });
+            (res.isConfirmed || res.isDismissed) &&
+              navigate("/", { replace: true });
           },
         ),
     );

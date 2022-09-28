@@ -56,12 +56,18 @@ const SBookmarkListItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-image: url(${BookmarkFillIcon});
-  background-repeat: no-repeat;
-  background-position: left 30px top 17px;
-  background-size: 14px;
   text-overflow: ellipsis;
   font-size: 14px;
+
+  &::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background-image: url(${BookmarkFillIcon});
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 14px;
+  }
 `;
 
 const SUserName = styled.p`
