@@ -251,7 +251,6 @@ export const editCommentListDB = createAsyncThunk(
 export const likeCommentListDB = createAsyncThunk(
   "qna/likecomment",
   async (data, thunkAPI) => {
-    console.log(data);
     try {
       const response = await qnaApi.likeCommentList(data);
       if (response.data.success === true) {

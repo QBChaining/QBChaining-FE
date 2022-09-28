@@ -89,8 +89,6 @@ const Register = ({ isEdit, editData }) => {
       (res.dismiss || res.isConfirmed) && navigate(`/mypage/${userName}`);
     });
   };
-
-  console.log(language);
   return (
     <SRegister>
       <SRegisterTitle>

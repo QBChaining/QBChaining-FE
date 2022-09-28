@@ -32,7 +32,6 @@ export const putUserInfoDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.putUserInfo(data);
-      console.log(response);
       if (response.data.success === true) {
         return data;
       }
@@ -109,7 +108,6 @@ export const getUserQnaListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.getUserQnaList(data);
-      console.log("UserQnaList", response.data);
       if (response.data.success === true) {
         return response.data.data;
       }
@@ -129,7 +127,6 @@ export const getUserBlogListDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.getUserBlogList(data);
-      console.log("UserBlogList", response.data);
       if (response.data.success === true) {
         return response.data.data;
       }

@@ -297,10 +297,8 @@ const EditorComponent = ({
                   ref(storage, `images/${Date.now()}`),
                   blob,
                 );
-                console.log(uploaded_file);
                 //firebase에 올라간 이미지url 저장
                 const file_url = await getDownloadURL(uploaded_file.ref);
-                console.log(file_url);
                 //firebase에 이미지 업로드 완료 후 url 추출후 textEditor에 삽입
                 callback(file_url);
               },

@@ -9,7 +9,6 @@ import { Helmet } from "react-helmet-async";
 // import Tag from "../../components//blog/Tag";
 
 const BlogCommunityWrite = () => {
-  const res = useSelector(state => state);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(colorSetBlue());

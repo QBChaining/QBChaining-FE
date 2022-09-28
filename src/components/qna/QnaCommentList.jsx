@@ -87,8 +87,6 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
     navigate(`/mypage/${username}`);
   };
 
-  console.log(chooseComment);
-
   if (list.length === 0) {
     return <SNoComment>채택받을만한 댓글을 써보세요!</SNoComment>;
   } else {
