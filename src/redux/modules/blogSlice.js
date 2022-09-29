@@ -125,11 +125,9 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogCommentDB.fulfilled]: (state, action) => {
-      // state.commentList.push(action.payload.data);
       state.commentList.push(action.payload.data);
       state.isFetching = false;
 
-      // state.commentList = action.payload.data;
       state.errorMessage = null;
     },
     [postBlogCommentDB.rejected]: (state, action) => {
