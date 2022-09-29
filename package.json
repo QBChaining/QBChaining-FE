@@ -15,6 +15,7 @@
     "@toast-ui/editor-plugin-color-syntax": "^3.1.0",
     "@toast-ui/react-editor": "^3.2.0",
     "@types/chart.js": "^2.9.37",
+    "aws": "^0.0.3-2",
     "axios": "^0.27.2",
     "chart.js": "^3.9.1",
     "dayjs": "^1.11.5",
