@@ -14,8 +14,8 @@ import QnaTarget from "../qna/QnaTarget.jsx";
 import { getToday } from "../../utils/today.js";
 const BlogBookMark = ({ isbookmark, posts, isdetailbookmark }) => {
   const { isLogin } = useSelector(state => state.userSlice);
-  console.log(posts);
-  console.log("isbookmark", isbookmark);
+  // console.log(posts);
+  // console.log("isbookmark", isbookmark);
   const dispatch = useDispatch();
   const totalData = {
     id: posts.id,

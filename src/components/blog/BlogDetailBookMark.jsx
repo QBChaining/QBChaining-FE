@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import { getToday } from "./../../utils/today";
 const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
   const { isLogin } = useSelector(state => state.userSlice);
-  console.log("target", isbookmark);
+  // console.log("target", isbookmark);
 
   const dispatch = useDispatch();
   const { id } = useParams();
