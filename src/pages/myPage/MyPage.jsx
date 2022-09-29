@@ -47,10 +47,8 @@ const MyPage = () => {
   //   // );
   // });
 
-  console.log(userIsNew);
-
   useEffect(() => {
-    if (userIsNew === "true") {
+    if (loginUserName === userInfo.userName && userIsNew === "true") {
       errorAlert("정보 등록후 이용 가능합니다!").then(res => {
         (res.isConfirmed || res.isDismissed) && navigate("/register");
       });
