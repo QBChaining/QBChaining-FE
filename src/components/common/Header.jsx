@@ -21,7 +21,6 @@ import { throttle } from "lodash";
 import { getNotificationDB } from "../../redux/async/notification";
 
 const Header = () => {
-  // console.log(notifiGet);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = window.location.pathname;
@@ -41,7 +40,7 @@ const Header = () => {
   const beforeScrollY = useRef(0);
 
   useEffect(() => {
-    // dispatch(getNotificationDB());
+    dispatch(getNotificationDB());
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
