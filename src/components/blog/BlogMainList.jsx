@@ -5,13 +5,12 @@ import BlogBookMark from "./BlogBookMark";
 import unlike from "../../assets/images/GreyQnaLike.png";
 import cmtComment from "../../assets/images/GreyQnaComment.png";
 import { getToday } from "./../../utils/today";
-import { useSelector, dispatch, useDispatch } from "react-redux";
-import { getBlogDetailDB } from "../../redux/async/blog";
+import { useSelector } from "react-redux";
+import ToastViewer from "../editor/ToastViewer";
 const BlogMainList = ({ posts }) => {
   const [Like, setLike] = useState(posts.isLike);
   // const [likeNum, setLikeNum] = useState(posts.like);
   const likeNum = useSelector(state => state.blogSlice.blogDetail.like);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (posts.isLike) {
@@ -98,7 +97,6 @@ const BlogMainList = ({ posts }) => {
           </STagNMark>
         </SContentsGroup>
       </SBloglist>
-      {/* </BlogHover> */}
     </>
   );
 };
