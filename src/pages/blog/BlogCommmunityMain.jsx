@@ -56,9 +56,10 @@ const BlogCommmunityMain = () => {
       dispatch(getBlogCommunityListDB(page));
       setPage(page => page + 1);
     }
-    if (blogMainLists.length !== 0) {
+    if (blogMainLists.length === 0) {
+      return;
     }
-  }, [dispatch, page]);
+  }, [page]);
 
   useEffect(() => {
     if (loading) {
