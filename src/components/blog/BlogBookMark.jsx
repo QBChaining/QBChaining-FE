@@ -13,34 +13,40 @@ import { useParams } from "react-router-dom";
 import QnaTarget from "../qna/QnaTarget.jsx";
 import { getToday } from "../../utils/today.js";
 const BlogBookMark = ({ isbookmark, posts, isdetailbookmark }) => {
-  console.log(posts);
   const { isLogin } = useSelector(state => state.userSlice);
+  console.log(posts);
+  console.log("isbookmark", isbookmark);
   const dispatch = useDispatch();
   const totalData = {
     id: posts.id,
-    title: QnaTarget.title,
-    user_name: QnaTarget.userName,
-    createAt: getToday(),
+    title: posts.title,
+    userName: posts.userName,
+    createdAt: posts.createdAt,
   };
+
   const onAddBookMark = () => {
     if (!isLogin) {
       needLoginAlert();
       return;
     }
+
     dispatch(postBlogBookMarkDB(totalData));
   };
   const onDeleteBookMark = id => {
-    dispatch(deleteBlogBookMarkDB(`${id}`));
+    dispatch(deleteBlogBookMarkDB(id));
   };
   return (
     <>
       <div>
         {isbookmark === false ? (
-          <SBookMarkBtn onClick={onAddBookMark} />
+          <SBookMarkBtn
+            onClick={() => {
+              onAddBookMark(totalData);
+            }}
+          />
         ) : (
           <SbookMarkBtnAdd
             onClick={e => {
-              e.stopPropagation();
               onDeleteBookMark(posts.id);
             }}
           />
