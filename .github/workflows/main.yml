@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout source code
         uses: actions/checkout@main
@@ -100,11 +100,12 @@ jobs:
           --region ap-northeast-2 \
           build s3://qb-chaning
 
-      - name: Invalidate CloudFront Cache
-        run: aws cloudfront create-invalidation --distribution-id --paths "/*"
-        env:
-          CLOUDFRONT_DISTRIBUTION_ID: ${{secrets.CLOUDFRONT_DISTRIBUTION_ID}}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - name: Invalidate CloudFront Cache
+      #   run: aws cloudfront create-invalidation --distribution-id --paths "/*"
+      #   env:
+      #     CLOUDFRONT_DISTRIBUTION_ID: ${{secrets.CLOUDFRONT_DISTRIBUTION_ID}}
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 #CI 보류 코드
 # Gitgub repository Secrtets를 통해 변수 파일을 생성
 
