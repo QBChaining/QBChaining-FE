@@ -117,6 +117,7 @@ const SBloglist = styled.div`
   padding: 30px 40px;
   margin-right: 60px;
   margin-bottom: 40px;
+  transition: 0.5s;
   cursor: pointer;
   &:hover {
     box-shadow: #fce3cd -10px 10px 0px 0px;
@@ -172,13 +173,6 @@ const STag = styled.div`
 const SBookMark = styled.div``;
 
 const SContentsGroup = styled.div``;
-const Sprofile = styled.div`
-  background-position: center;
-  background-size: cover;
-  background-image: url(${props => props.url});
-  width: 20px;
-  height: 20px;
-`;
 
 const STagNMark = styled.div`
   display: flex;
@@ -227,14 +221,15 @@ const SContentTitle = styled.div`
   font-size: 20px;
   cursor: pointer;
   margin-top: 10px;
-  max-width: 600px;
-  white-space: nowrap;
+  max-width: 400px;
+  align-items: center;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const SContent = styled.div`
-  height: 120px;
+  height: 100px;
   overflow: hidden;
   margin-top: 20px;
 `;

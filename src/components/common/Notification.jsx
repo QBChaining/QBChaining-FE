@@ -11,11 +11,16 @@ import {
   postNotificationDB,
   delNotificationDB,
 } from "../../redux/async/notification";
+import { needLoginAlert } from "../../utils/swal";
 
 const Notification = ({ show, setShow }) => {
   const notifiResponse = useSelector(
     state => state.notificationSlice.notification,
   );
+
+  const { isLogin } = useSelector(state => state.userSlice);
+
+  console.log();
 
   const address = window.location.href;
 
@@ -34,6 +39,10 @@ const Notification = ({ show, setShow }) => {
 
   // 알림 보기
   const onShow = () => {
+    if (!isLogin) {
+      needLoginAlert();
+      return;
+    }
     setShow(!show);
   };
 
@@ -56,7 +65,9 @@ const Notification = ({ show, setShow }) => {
 
   //최초 로딩시 받아오기
   useEffect(() => {
-    dispatch(getNotificationDB());
+    if (isLogin) {
+      dispatch(getNotificationDB());
+    }
   }, [address, show]);
 
   useEffect(() => {
