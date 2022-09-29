@@ -76,8 +76,8 @@ const Header = () => {
       </SLogoContainer>
 
       <SearchInput />
-      <Notification setShow={setShow} show={show} />
       <SAlarmLoginWrapper>
+        <Notification setShow={setShow} show={show} />
         <SLoginConatainer className="loginConatainer">
           {isLogin ? (
             <button onClick={onLogoutHandler}>로그아웃</button>
