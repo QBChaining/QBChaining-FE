@@ -240,6 +240,12 @@ const EditorComponent = ({
     tagText.current.value = "";
   };
 
+  const onKeyPress = e => {
+    if (e.key === "Enter") {
+      onAddTagHandler();
+    }
+  };
+
   //태그 삭제
   const onDeleteTagHandler = data => {
     setTags(tags.filter(tag => tag !== data));
@@ -256,7 +262,7 @@ const EditorComponent = ({
               onChange={onTitleChangeHandler}
               type="text"
               ref={titleText}
-              maxLength="100"
+              maxLength="50"
               placeholder="제목을 입력해주세요."
               // initialText={blogTitle}
             />
@@ -310,6 +316,7 @@ const EditorComponent = ({
           <STagContainer>
             <SInputContainer>
               <input
+                onKeyPress={onKeyPress}
                 type="text"
                 id="tag"
                 ref={tagText}
@@ -335,12 +342,12 @@ const EditorComponent = ({
           </STagContainer>
         )}
         {isCommentWrite ? (
-          <SCommentWriteButton type="submit" onClick={onSubmitHandler}>
+          <SCommentWriteButton type="button" onClick={onSubmitHandler}>
             댓글쓰기
           </SCommentWriteButton>
         ) : (
           <SSubmitButton
-            type="submit"
+            type="button"
             onClick={onSubmitHandler}
             location={location}
           >

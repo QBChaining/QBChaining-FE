@@ -21,7 +21,7 @@ import { Helmet } from "react-helmet-async";
 const MyPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userName } = useParams();
+  const { userName, userIsNew } = useParams();
 
   const {
     isLogin,
@@ -45,6 +45,14 @@ const MyPage = () => {
   //   //   )
   //   // );
   // });
+  useEffect(() => {
+    if (userIsNew) {
+      errorAlert("정보 등록후 이용 가능합니다!").then(res => {
+        (res.isConfirmed || res.isDismissed) && navigate("/register");
+      });
+      return;
+    }
+  }, []);
   useEffect(() => {
     dispatch(getUserInfoDB(userName));
     dispatch(getUserInfoActivityDB(userName));

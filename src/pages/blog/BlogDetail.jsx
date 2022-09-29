@@ -180,10 +180,6 @@ const STitle = styled.div`
   font-weight: 600;
   line-height: 30px;
   padding-left: 7px;
-  /* overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 600px; */
   word-break: break-all;
 `;
 

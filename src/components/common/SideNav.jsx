@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SideNav = () => {
   const navigate = useNavigate();
@@ -8,6 +9,8 @@ const SideNav = () => {
   const goPage = page => {
     navigate(`/${page}`);
   };
+
+  const { userName, isLogin } = useSelector(state => state.userSlice);
   return (
     <SNav>
       <SUl>
@@ -29,6 +32,17 @@ const SideNav = () => {
         >
           BLOG
         </SList>
+        {isLogin && (
+          <SList
+            location={location}
+            type={"mypage"}
+            onClick={() => {
+              goPage(`mypage/${userName}`);
+            }}
+          >
+            MyPage
+          </SList>
+        )}
       </SUl>
     </SNav>
   );

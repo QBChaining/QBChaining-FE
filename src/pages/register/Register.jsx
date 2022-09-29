@@ -90,6 +90,12 @@ const Register = ({ isEdit, editData }) => {
       (res.dismiss || res.isConfirmed) && navigate(`/mypage/${userName}`);
     });
   };
+
+  const onKeyPress = e => {
+    if (e.key === "Enter") {
+      onSubmitHandler();
+    }
+  };
   return (
     <SRegister>
       <Helmet>
@@ -155,6 +161,7 @@ const Register = ({ isEdit, editData }) => {
             setJob(e.target.value);
           }}
           maxLength="20"
+          onKeyPress={onKeyPress}
         />
       </SelectWrapper>
       {/* <Radio name="gender" options={["남", "여"]} required />

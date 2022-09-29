@@ -36,9 +36,20 @@ const SearchInput = () => {
     search.current.value = "";
   };
 
+  const onKeyPress = e => {
+    if (e.key === "Enter") {
+      goSearch(search.current.value);
+    }
+  };
+
   return (
     <SSearchInput>
-      <SInput ref={search} type="text" placeholder="검색어를 입력해주세요!" />
+      <SInput
+        onKeyPress={onKeyPress}
+        ref={search}
+        type="text"
+        placeholder="검색어를 입력해주세요!"
+      />
       <SSearchButton onClick={goSearch}>검색</SSearchButton>
     </SSearchInput>
   );

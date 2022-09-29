@@ -213,6 +213,7 @@ const SContentText = styled.div`
 const STags = styled.ul`
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 4px;
   padding-right: 40px;
 `;
