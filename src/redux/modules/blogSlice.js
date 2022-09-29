@@ -84,9 +84,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [patchBlogCommunityDB.fulfilled]: (state, action) => {
-      // state.blogList = action.payload;
-      state.blogList.push(action.payload);
-
       state.isFetching = false;
       state.errorMessage = null;
     },

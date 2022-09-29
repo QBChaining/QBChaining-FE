@@ -70,7 +70,7 @@ export const getUserInfoDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.getUserInfo(data);
-      if (response.data.success === "ok") {
+      if (response.data.success === true) {
         return response.data.userPageInfo;
       }
     } catch (err) {
@@ -89,7 +89,7 @@ export const getUserInfoActivityDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await userApi.getUserInfoActivity(data);
-      if (response.statusText === "OK") {
+      if (response.data.success === true) {
         return response.data.userActivity;
       }
     } catch (err) {
@@ -115,7 +115,7 @@ export const getUserQnaListDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
+      Sentry.captureException(`error, 유저 QnaList : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
@@ -134,7 +134,7 @@ export const getUserBlogListDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      Sentry.captureException(`error, 유저 정보 추가 : ${err}`);
+      Sentry.captureException(`error, 유저 BlogList : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
