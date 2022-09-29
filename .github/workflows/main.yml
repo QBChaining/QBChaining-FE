@@ -102,7 +102,7 @@ jobs:
         # run: aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*"
         run: |
           aws cloudfront create-invalidation \
-          --distribution-E3ITNVXPK10GT5$ \
+          --distribution-I1QE9LMB4JJZTQ \
           --paths "/*"
 
 #CI 보류 코드
