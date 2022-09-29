@@ -99,9 +99,8 @@ jobs:
           build s3://qb-chaning
 
       - name: Invalidate CloudFront Cache
-    # run: aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*"
-      run: aws cloudfront create-invalidation --distribution-E3ITNVXPK10GT5$ --paths "/index.html" "/bundle.js"
-
+        # run: aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-E3ITNVXPK10GT5$ --paths "/index.html" "/bundle.js"
 #CI 보류 코드
 # Gitgub repository Secrtets를 통해 변수 파일을 생성
 
