@@ -10,6 +10,7 @@ import { logIn } from "../../../redux/modules/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { errorAlert } from "../../../utils/swal";
 const CommentEditDel = ({ comments }) => {
+  console.log(comments);
   const navigate = useNavigate();
   const userNick = useSelector(state => state.userSlice.userName);
   const [show, setShow] = useState(false);
@@ -42,8 +43,8 @@ const CommentEditDel = ({ comments }) => {
   //   dispatch(getBlogCommentListDB());
   // }, [dispatch]);
 
-  const goMypage = name => {
-    navigate(`/mypage/${name}`);
+  const goMypage = userName => {
+    navigate(`/mypage/${userName}`);
   };
 
   return (
@@ -52,7 +53,7 @@ const CommentEditDel = ({ comments }) => {
         <SProfileWrapper>
           <SProfile
             onClick={() => {
-              goMypage(comments.User?.userName);
+              goMypage(comments.userName);
             }}
             url={comments.profileImg}
           />

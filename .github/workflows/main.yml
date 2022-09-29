@@ -2,9 +2,6 @@ name: main
 
 on:
   # Branch에 push하면 실행
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -100,6 +97,10 @@ jobs:
           --recursive \
           --region ap-northeast-2 \
           build s3://qb-chaning
+
+      - name: Invalidate CloudFront Cache
+    # run: aws cloudfront create-invalidation --distribution-id ${{secrets.CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*"
+      run: aws cloudfront create-invalidation --distribution-E3ITNVXPK10GT5$ --paths "/index.html" "/bundle.js"
 
 #CI 보류 코드
 # Gitgub repository Secrtets를 통해 변수 파일을 생성
