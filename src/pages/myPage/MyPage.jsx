@@ -55,6 +55,9 @@ const MyPage = () => {
       return;
     }
   }, []);
+
+  console.log(userInfo);
+
   useEffect(() => {
     dispatch(getUserInfoDB(userName));
     dispatch(getUserInfoActivityDB(userName));

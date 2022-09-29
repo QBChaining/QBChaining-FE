@@ -200,6 +200,7 @@ export const blogSlice = createSlice({
     },
     [postBlogBookMarkDB.fulfilled]: (state, action) => {
       state.blogDetail.isBookmark = true;
+      console.log(action);
       state.blogBookMark.push(action.payload);
     },
     [postBlogBookMarkDB.rejected]: (state, action) => {

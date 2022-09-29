@@ -12,8 +12,10 @@ import blogbookmarkadd from "../../assets/images/BookmarkFillIcon.png";
 import { useParams } from "react-router-dom";
 import { getToday } from "./../../utils/today";
 const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
-  const dispatch = useDispatch();
   const { isLogin } = useSelector(state => state.userSlice);
+  console.log("target", isbookmark);
+
+  const dispatch = useDispatch();
   const { id } = useParams();
 
   const totalData = {

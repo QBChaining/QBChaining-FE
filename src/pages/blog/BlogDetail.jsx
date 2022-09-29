@@ -50,7 +50,7 @@ const BlogCommunityDetail = () => {
   useEffect(() => {
     dispatch(getBlogDetailDB(id));
     dispatch(colorSetBlue());
-  }, [id]);
+  }, []);
 
   const goMypage = name => {
     navigate(`/mypage/${name}`);
