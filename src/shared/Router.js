@@ -34,7 +34,7 @@ const Router = () => {
         element={isLogin ? <RegisterEdit /> : <NoLogin />}
       />
       <Route path="/ranking" element={<Preparing />} />
-      <Route path="/mypage/:userName" element={<MyPage />} />
+      <Route path="/mypage/:userName" element={<Preparing />} />
       <Route path="/qna" element={<QnaMain />} />
       <Route path="/qna/write" element={isLogin ? <QnaWrite /> : <NoLogin />} />
       <Route path="/qna/detail/:id" element={<QnaDetail />} />
