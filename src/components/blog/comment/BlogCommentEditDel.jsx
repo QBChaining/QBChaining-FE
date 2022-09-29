@@ -83,6 +83,7 @@ const CommentEditDel = ({ comments }) => {
               setTextAreaText(e.target.value);
             }}
             ref={editRef}
+            maxLength={"500"}
           />
         )}
         {userNick === comments.userName && (

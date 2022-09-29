@@ -21,12 +21,13 @@ import { Helmet } from "react-helmet-async";
 const MyPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userName, userIsNew } = useParams();
+  const { userName } = useParams();
 
   const {
     isLogin,
     isFetching,
     userInfo,
+    userIsNew,
     userName: loginUserName,
     userQnaList,
     userQnaAnswerList,
@@ -45,6 +46,9 @@ const MyPage = () => {
   //   //   )
   //   // );
   // });
+
+  console.log(userIsNew);
+
   useEffect(() => {
     if (userIsNew) {
       errorAlert("정보 등록후 이용 가능합니다!").then(res => {
@@ -93,7 +97,7 @@ const MyPage = () => {
             <SUserProfile profileImg={userInfo?.profileImg}></SUserProfile>
             <SUserInfo>
               <SUserName>
-                {userInfo?.name}
+                {userInfo?.userName}
                 {loginUserName === userName && (
                   <button
                     onClick={() => {
