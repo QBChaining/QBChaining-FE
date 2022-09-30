@@ -5,11 +5,16 @@ import { Provider } from "react-redux";
 import App from "./App";
 import store from "./redux/config/configStore";
 
+import ReactGA from "react-ga";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import GlobalThemeProvider from "./style/GlobalThemeProvider";
 import ScrollToTop from "./pages/ScrollTop";
 import { HelmetProvider } from "react-helmet-async";
+
+const TRACKING_ID = process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID;
+
+ReactGA.initialize(TRACKING_ID);
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRYDSN,
