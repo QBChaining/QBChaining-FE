@@ -22,11 +22,14 @@ import {
   successAlert,
 } from "./../../utils/swal";
 import { removeErrorMessage } from "../../redux/modules/blogSlice";
+import { ClipLoader } from "react-spinners";
 
 const BlogCommunityDetail = () => {
-  const { blogDetail: detail, detailErrorMessage } = useSelector(
-    state => state.blogSlice,
-  );
+  const {
+    blogDetail: detail,
+    detailErrorMessage,
+    isDetailFetcing,
+  } = useSelector(state => state.blogSlice);
   const detailTitle = useSelector(state => state.blogSlice.blogDetail.title);
   const userName = useSelector(state => state.blogSlice.blogDetail.userName);
   const profileImg = useSelector(
@@ -76,6 +79,14 @@ const BlogCommunityDetail = () => {
       dispatch(removeErrorMessage());
     };
   }, []);
+
+  if (isDetailFetcing) {
+    return (
+      <SLoading>
+        <ClipLoader />
+      </SLoading>
+    );
+  }
 
   return (
     <SContainer>
@@ -268,4 +279,12 @@ const SContentWrapper = styled.div`
 
 const SCommentWrapper = styled.div`
   padding: 0 40px;
+`;
+
+const SLoading = styled.div`
+  width: 100%;
+  height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

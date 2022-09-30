@@ -29,6 +29,7 @@ export const blogSlice = createSlice({
     blogBookMark: [],
     likebookmark: {},
     isFetching: false,
+    isDetailFetcing: false,
     errorMessage: "",
     detailErrorMessage: "",
   },
@@ -60,14 +61,14 @@ export const blogSlice = createSlice({
 
     //블로그 디테일 조회
     [getBlogDetailDB.pending]: state => {
-      state.isFetching = true;
+      state.isDetailFetcing = true;
     },
     [getBlogDetailDB.fulfilled]: (state, action) => {
       state.blogDetail = action.payload;
-      state.isFetching = false;
+      state.isDetailFetcing = false;
     },
     [getBlogDetailDB.rejected]: (state, action) => {
-      state.isFetching = false;
+      state.isDetailFetcing = false;
       state.detailErrorMessage = action.payload;
     },
 
