@@ -4,8 +4,6 @@
 
 [사이트 링크](http://qb-chaning.s3-website.ap-northeast-2.amazonaws.com)
 
--
-
 ## ⚙ 주요 기능
 ***
 * **QnA, Blog, 답변, 댓글 작성**
