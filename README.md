@@ -6,14 +6,28 @@
 
 -
 
-## 1. 팀 소개
+## ⚙ 주요 기능
+***
+* **QnA, Blog, 답변, 댓글 작성**
+* **QnA 답변 채택 및 좋아요, 즐겨찾기**
+* **Blog 게시글 수정,삭제, 댓글 수정삭제, 좋아요, 즐겨찾기**
+* **메인페이지, 상세페이지 무한스크롤**
+* **카테고리, 채택, 비채택 구분하여 목록 보기**
+* **최근 추천 많이받은 게시글 보기**
+* **원하는 검색어로 검색 가능**
+* **사이트 이용시 댓글, 채택등 활동관련하여 알람활성화**
+* **마이페이지에서 쓴글 모아보기, 최근 한달간 활동내역 확인**
+* **사이드 롤링배너**
 
-### ⚙ 주요 기능
 
  ### 📆 Project Timeline
 * 총 기간: 2022/08/25 ~ 2022/10/07
 * 배포: 2022/09/28
 
+
+
+
+## 🙌 팀 소개
 
 👨‍💻👩‍💻 FE Team
 
@@ -26,8 +40,10 @@
 
 ```Blog 메인, 상세페이지,``` ```UI/UX```
 ```CI/CD(w/Github Actions)``` ```배포환경 구축(w/AWS S#, Route53, Cloudfront)```
+
+
   
-## 2. Tech Stack & Platfrom
+## 🛠 Tech Stack & Platfrom
 
 ### Tech
 
@@ -60,5 +76,27 @@
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 </div>
 
-## 3. 서비스 아키텍쳐
+
+## 📚 Library
+***
+
+| Name | Appliance | Version |
+| --- | --- | --- |
+|Axios  |Http 클라이언트 라이브러리  | 0.27. 2|
+| React-redux | 상태관리 | 8.0.2 |
+| React-router-dom | 라우터 | 18.2.0 |
+| Redux-toolkit | 리덕스 간편화 | 1.8.5 |
+|Dotenv  |환경변수  | 16.0.1 |
+|React-intersection-observer  | 무한스크롤 | 9.4.0 |
+|toast-ui/react-editor  | 텍스트 에디터 |3.2.0  |
+|react-markdown  | 마크다운 렌더링 | 8.0.3 |
+|react-syntax-highlighter  | 코드블럭스타일링  | 15.5.0 |
+|  slick-carousel|  캐러셀| 1.8.1 |
+|sweetalert2  | 알럿  | 11.4.29 |
+| universal-cookie | 쿠키관리 | 4.0.4 |
+| jwt-decode |유저정보 관리  |3.1.2  |
+| firebase |이미지 저장  |9.9.3  |
+
+
+## 서비스 아키텍쳐
 ![image](https://user-images.githubusercontent.com/92949174/190838795-f642f2b5-3670-499a-b8d8-577e57c013f6.png)
