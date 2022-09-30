@@ -84,10 +84,11 @@ const Notification = ({ show, setShow }) => {
   useEffect(() => {
     // document.removeEventListener("mousedown", handleClickOutside);
     document.addEventListener("click", handleClickOutside);
-    document.removeEventListener("mousedown", handleClickOutside);
-    return () => {};
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
-
+  //이벤트 헨들러
   const handleClickOutside = event => {
     if (wrapperRef && !wrapperRef.current?.contains(event.target)) {
       setShow(false);
@@ -95,7 +96,6 @@ const Notification = ({ show, setShow }) => {
       setShow(true);
     }
   };
-
   return (
     <SNotiBox>
       <NotifiItem>
