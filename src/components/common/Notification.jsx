@@ -38,14 +38,17 @@ const Notification = ({ show, setShow }) => {
   };
 
   // 알림 보기
-  const onShow = () => {
+  const onShow = e => {
+    e.stopPropagation();
     if (!isLogin) {
       needLoginAlert();
       return;
     }
     setShow(!show);
   };
-
+  const offShow = () => {
+    setShow(show);
+  };
   // 확인, 삭제
   const checkNoti = notiId => {
     dispatch(postNotificationDB(notiId));
@@ -79,8 +82,8 @@ const Notification = ({ show, setShow }) => {
   }, [isNoti]);
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
+    // document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -93,7 +96,6 @@ const Notification = ({ show, setShow }) => {
       setShow(true);
     }
   };
-
   return (
     <SNotiBox>
       <NotifiItem>

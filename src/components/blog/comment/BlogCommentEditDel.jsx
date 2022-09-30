@@ -10,9 +10,11 @@ import {
 } from "../../../redux/async/blog";
 //알럿
 import { errorAlert } from "../../../utils/swal";
-
+// 댓글 좋아요
+import CommentLike from "./CommentLike";
 const CommentEditDel = ({ comments }) => {
   const navigate = useNavigate();
+
   const userNick = useSelector(state => state.userSlice.userName);
   const [show, setShow] = useState(false);
   const [textAreaText, setTextAreaText] = useState("");
@@ -40,9 +42,6 @@ const CommentEditDel = ({ comments }) => {
     e.preventDefault();
     dispatch(deleteBlogCommentDB(comments.id));
   };
-  // useEffect(() => {
-  //   dispatch(getBlogCommentListDB());
-  // }, [dispatch]);
 
   const goMypage = userName => {
     navigate(`/mypage/${userName}`);
@@ -74,6 +73,7 @@ const CommentEditDel = ({ comments }) => {
             {comments.createdAt?.slice(0, 10)} /
             {comments.createdAt?.slice(11, 16)}
           </SDate>
+          <CommentLike isLike={comments.isLike} comments={comments} />
         </SProfileWrapper>
         {!show ? (
           <SComment>{comments.comment}</SComment>
@@ -136,6 +136,7 @@ const SDate = styled.div`
   margin-left: 10px;
   font-size: 14px;
   color: #939393;
+  margin-right: 10px;
   cursor: pointer;
 `;
 
