@@ -1,20 +1,16 @@
 import React, { useEffect, useState, useCallback } from "react";
 import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
+import { getBlogCommunityListDB } from "../../redux/async/blog";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Helmet } from "react-helmet-async";
-
-//컴포넌트
-import SideBanner from "./../../components/common/SideBanner";
-import BlogMainList from "../../components/blog/BlogMainList";
 import ModalBookmark from "../../components/common/ModalBookmark";
-//통신
-import { getBlogCommunityListDB } from "../../redux/async/blog";
-import { removeBlogList } from "../../redux/modules/blogSlice";
-
-//이미지
+import { colorSetBlue } from "../../redux/modules/userSlice";
+import BlogMainList from "../../components/blog/BlogMainList";
+import { Helmet } from "react-helmet-async";
+import SideBanner from "./../../components/common/SideBanner";
 import MainWriteButton from "../../assets/images/MainWriteButton.png";
+import { removeBlogList } from "../../redux/modules/blogSlice";
 
 const BlogCommmunityMain = () => {
   const blogMainList = useSelector(state => state.blogSlice.blogList);
@@ -80,6 +76,7 @@ const BlogCommmunityMain = () => {
 
   //메인 블로그 게시글 조회
   useEffect(() => {
+    dispatch(colorSetBlue());
     return () => {
       dispatch(removeBlogList());
     };

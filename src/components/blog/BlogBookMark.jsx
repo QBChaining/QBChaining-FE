@@ -38,21 +38,7 @@ const BlogBookMark = ({ isbookmark, posts, isdetailbookmark }) => {
   };
   return (
     <>
-      <div>
-        {isbookmark === false ? (
-          <SBookMarkBtn
-            onClick={() => {
-              onAddBookMark(totalData);
-            }}
-          />
-        ) : (
-          <SbookMarkBtnAdd
-            onClick={e => {
-              onDeleteBookMark(posts.id);
-            }}
-          />
-        )}
-      </div>
+      <div>{isbookmark === false ? <SBookMarkBtn /> : <SbookMarkBtnAdd />}</div>
     </>
   );
 };
