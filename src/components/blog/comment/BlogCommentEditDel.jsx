@@ -1,14 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+//통신
 import {
   patchBlogCommentDB,
   deleteBlogCommentDB,
-  getBlogCommentListDB,
 } from "../../../redux/async/blog";
-import { useDispatch, useSelector } from "react-redux";
-import { logIn } from "../../../redux/modules/userSlice";
-import { useNavigate, useParams } from "react-router-dom";
+//알럿
 import { errorAlert } from "../../../utils/swal";
+
 const CommentEditDel = ({ comments }) => {
   const navigate = useNavigate();
   const userNick = useSelector(state => state.userSlice.userName);

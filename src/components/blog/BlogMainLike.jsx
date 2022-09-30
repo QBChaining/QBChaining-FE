@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  postBlogLikeDB,
-  unBlogLikeDB,
-  // getBlogDetailDB,
-} from "../../redux/async/blog";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+
+//통신
+import { postBlogLikeDB, unBlogLikeDB } from "../../redux/async/blog";
+//알럿
+import { needLoginAlert } from "../../utils/swal";
+
+//이미지
 import addlike from "../../assets/images/addLike.png";
 import unlike from "../../assets/images/unlike.png";
-import styled from "styled-components";
-import { errorAlert, needLoginAlert } from "../../utils/swal";
+
 const BlogLike = ({ isLove }) => {
   const { isLogin } = useSelector(state => state.userSlice);
   const dispatch = useDispatch();

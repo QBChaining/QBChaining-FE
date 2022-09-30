@@ -3,16 +3,19 @@ import SearchIcon from "../../assets/images/SearchIcon.png";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+
+//통신
 import {
   removeSearchList,
   setSearchWord,
 } from "../../redux/modules/searchSlice";
+
+//알럿
 import { errorAlert } from "../../utils/swal";
-import { useSearchParams } from "react-router-dom";
 
 const SearchInput = () => {
   const search = useRef();
-  const { searchWord } = useSelector(state => state.searchSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();

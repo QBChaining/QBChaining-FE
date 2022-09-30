@@ -1,35 +1,18 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import queryString from "query-string";
-import styled from "styled-components";
-import ContentList from "../../components/common/ContentList";
-import {
-  getBlogSearchListDB,
-  getQnaSearchListDB,
-} from "./../../redux/async/search";
-import { useInView } from "react-intersection-observer";
-import {
-  removeSearchList,
-  setSearchWord,
-} from "../../redux/modules/searchSlice";
-import { ClipLoader } from "react-spinners";
-import SearchList from "./../../components/search/SearchList";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import styled from "styled-components";
 
+//컴포넌트
+import SearchList from "./../../components/search/SearchList";
+
+//검색 목록 초기화 슬라이스
+import { removeSearchList } from "../../redux/modules/searchSlice";
 const Search = () => {
   const dispatch = useDispatch();
-  const { blogSearchList } = useSelector(state => state.searchSlice);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const searchWord = searchParams.get("q");
-
-  // const searchWord = queryString.parse(window.location.search).q;
-  // useEffect(() => {
-  //   if (searchWord) {
-  //     dispatch(getQnaSearchListDB(searchWord));
-  //     dispatch(getBlogSearchListDB(searchWord));
-  //   }
-  // }, [searchWord]);
 
   useEffect(() => {
     return () => {

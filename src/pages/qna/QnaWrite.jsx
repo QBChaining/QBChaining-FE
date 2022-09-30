@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Editor from "../../components/common/EditorComponent";
-import { useForm } from "react-hook-form";
-import axios from "axios";
 import styled from "styled-components";
-import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
-import ModalBookmark from "../../components/common/ModalBookmark";
-import { useDispatch } from "react-redux";
-import { colorSetGreen } from "../../redux/modules/userSlice";
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
-import MdGuide from "../MdGuide";
+
+//컴포넌트
+import ModalBookmark from "../../components/common/ModalBookmark";
+import Editor from "../../components/common/EditorComponent";
+
+//이미지
+import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 
 const QnaWrite = () => {
-  const [guideOpen, setGuideOpen] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(colorSetGreen());
-  }, []);
-
-  const openGuide = () => {
-    setGuideOpen(true);
-  };
-
   return (
     <SQnaWrite>
       <Helmet>

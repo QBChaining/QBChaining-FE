@@ -1,6 +1,6 @@
 const qnaCategory = [
   { id: 1, name: "JavaScript" },
-  { id: 2, name: "Nodejs" },
+  { id: 2, name: "Node.js" },
   { id: 3, name: "React" },
   { id: 4, name: "Vue" },
   { id: 5, name: "Kotline" },
@@ -26,7 +26,7 @@ const interestCategory = [
   { id: 11, name: "Vue" },
   { id: 12, name: "React" },
   { id: 13, name: "Angular" },
-  { id: 14, name: "Node" },
+  { id: 14, name: "Node.js" },
   { id: 15, name: "Spring" },
   { id: 16, name: "SQL" },
   { id: 17, name: "Assembly language" },
@@ -79,13 +79,14 @@ const jobs = [
 ];
 
 const careerCategory = [
-  { id: 1, name: "1년 이하" },
-  { id: 2, name: "1년 이상" },
-  { id: 3, name: "2년 이상" },
-  { id: 4, name: "3년 이상" },
-  { id: 5, name: "4년 이상" },
-  { id: 6, name: "5년 이상" },
-  { id: 7, name: "10년 이상" },
+  { id: 1, name: "취준생" },
+  { id: 2, name: "1년 이하" },
+  { id: 3, name: "1년 이상" },
+  { id: 4, name: "2년 이상" },
+  { id: 5, name: "3년 이상" },
+  { id: 6, name: "4년 이상" },
+  { id: 7, name: "5년 이상" },
+  { id: 8, name: "10년 이상" },
 ];
 
 const categories = {

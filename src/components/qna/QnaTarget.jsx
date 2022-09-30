@@ -2,28 +2,32 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { getToday } from "../../utils/today";
+
+//컴포넌트
+import ToastViewer from "../editor/ToastViewer";
+
+//통신
 import {
   dislikeQnaListDB,
-  getBookmarkListDB,
   likeQnaListDB,
   postBookmarkListDB,
 } from "../../redux/async/qna";
 import { deleteBookmarkListDB } from "./../../redux/async/qna";
-import { errorAlert, needLoginAlert } from "../../utils/swal";
-
+//알럿
+import { needLoginAlert } from "../../utils/swal";
+//이미지
 import QnaLike from "../../assets/images/unlike.png";
 import QnaLikeFill from "../../assets/images/addLike.png";
 import BookmarkNoFillIcon from "../../assets/images/BookmarkNoFillIcon.png";
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
-import ToastViewer from "../editor/ToastViewer";
-import { getToday } from "../../utils/today";
 
 const QnaTarget = ({ isDatail }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const target = useSelector(state => state.qnaSlice.qnaTarget);
   const bookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
-  const { isLogin, userName } = useSelector(state => state.userSlice);
+  const { isLogin } = useSelector(state => state.userSlice);
   //내 즐겨찾기 목록에 있는지 확인
   const isBookmarked =
     bookmarkList.filter(mark => mark.id === target.id).length > 0;
@@ -66,13 +70,6 @@ const QnaTarget = ({ isDatail }) => {
     }
     dispatch(dislikeQnaListDB(totalId));
   };
-
-  //최초진입시 get요청
-  // useEffect(() => {
-  //   if (isLogin) {
-  //     dispatch(getBookmarkListDB());
-  //   }
-  // }, []);
 
   return (
     <SQnaTarget>

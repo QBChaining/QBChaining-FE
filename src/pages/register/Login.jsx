@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
-import { setCookie, deleteCookie, getCookie } from "../../utils/cookie";
+import { setCookie, getCookie } from "../../utils/cookie";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../redux/modules/userSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { isLogin, userName } = useSelector(state => state.userSlice);
+  const { isLogin } = useSelector(state => state.userSlice);
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import queryString from "query-string";
 import styled from "styled-components";
+import { nanoid } from "@reduxjs/toolkit";
+
+//무한스크롤
+import { useInView } from "react-intersection-observer";
+import { ClipLoader } from "react-spinners";
+//컴포넌트
 import ContentList from "../common/ContentList";
+//통신
 import {
   getBlogSearchListDB,
   getQnaSearchListDB,
 } from "../../redux/async/search";
-import { useInView } from "react-intersection-observer";
-import {
-  removeSearchList,
-  setSearchWord,
-} from "../../redux/modules/searchSlice";
-import { ClipLoader } from "react-spinners";
-import { nanoid } from "@reduxjs/toolkit";
 
 const SearchList = ({ searchWord, type }) => {
   const dispatch = useDispatch();

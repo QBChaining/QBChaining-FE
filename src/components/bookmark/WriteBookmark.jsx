@@ -3,11 +3,15 @@ import { useDispatch } from "react-redux";
 import { getCommentListDB, getOneQnaListDB } from "../../redux/async/qna";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { ClipLoader } from "react-spinners";
+
+//컴포넌트
 import ToastViewer from "../editor/ToastViewer";
+import { getBlogCommentListDB, getBlogDetailDB } from "../../redux/async/blog";
+
+//이미지
 import QnaLike from "../../assets/images/unlike.png";
 import GobackArrow from "../../assets/images/GobackArrow.png";
-import { ClipLoader } from "react-spinners";
-import { getBlogCommentListDB, getBlogDetailDB } from "../../redux/async/blog";
 
 const WriteBookmark = ({ type, id, onToggleHandler }) => {
   const dispatch = useDispatch();

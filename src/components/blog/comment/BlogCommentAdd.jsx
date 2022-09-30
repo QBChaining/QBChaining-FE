@@ -1,9 +1,14 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { postBlogCommentDB } from "../../../redux/async/blog.js";
 import { useParams } from "react-router-dom";
+
+//알럿
+import { postBlogCommentDB } from "../../../redux/async/blog.js";
+
+//이미지
 import porfilecomment from "../../../assets/images/porfilecomment.png";
+
 const CommentAdd = () => {
   const { userProfile, isLogin } = useSelector(state => state.userSlice);
   const dispatch = useDispatch();

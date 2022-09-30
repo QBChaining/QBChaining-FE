@@ -2,22 +2,31 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { nanoid } from "@reduxjs/toolkit";
+import { Helmet } from "react-helmet-async";
+import { useNavigate, useParams } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+
+//컴포넌트
+import MyPageActivity from "../../components/myPage/MyPageActivity";
+
+//통신
 import {
   getUserBlogListDB,
   getUserInfoActivityDB,
   getUserQnaListDB,
 } from "../../redux/async/user";
-import { useNavigate, useParams } from "react-router-dom";
 import { getUserInfoDB } from "./../../redux/async/user";
-import MyPageActivity from "../../components/myPage/MyPageActivity";
+import { removeUserInfo } from "../../redux/modules/userSlice";
+
+//알럿
+import { errorAlert } from "../../utils/swal";
+
+//이미지
 import MyPageSolveIcon from "../../assets/images/MyPageSolveIcon.png";
 import MyPageUnSolveIcon from "../../assets/images/MyPageUnSolveIcon.png";
 import unlike from "../../assets/images/unlike.png";
-import { nanoid } from "@reduxjs/toolkit";
-import { errorAlert, networkError } from "../../utils/swal";
-import { ClipLoader } from "react-spinners";
-import { removeUserInfo } from "../../redux/modules/userSlice";
-import { Helmet } from "react-helmet-async";
+
 const MyPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,17 +44,6 @@ const MyPage = () => {
     userBlogCommentList,
     errorMessage,
   } = useSelector(state => state.userSlice);
-  // .then(res => {
-  //   // return (
-  //   //   res.payload === undefined &&
-  //   //   networkError("네트워크 상태가 좋지 않거나 없는 페이지 입니다.").then(
-  //   //     res => {
-  //   //       (res.isConfirmed || res.isDismissed) &&
-  //   //         navigate("/", { replace: true });
-  //   //     },
-  //   //   )
-  //   // );
-  // });
 
   useEffect(() => {
     if (loginUserName === userInfo.userName && userIsNew === "true") {

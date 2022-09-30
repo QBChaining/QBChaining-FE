@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+
+//이미지
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 import BookmarkNoFillIcon from "../../assets/images/BookmarkNoFillIcon.png";
-import GreyBookmarkFillIcon from "../../assets/images/GreyBookmarkFillIcon.png";
-import GreyBookmarkNoFillIcon from "../../assets/images/GreyBookmarkNoFillIcon.png";
-import blogbookmark from "../../assets/images/blogbookmark.png";
-import bookmarkadd from "../../assets/images/bookmarkadd.png";
+
 const QnaBookmarkButton = ({ is_bookmark, id, resolve, type }) => {
   return (
     <SBookmarkIcon

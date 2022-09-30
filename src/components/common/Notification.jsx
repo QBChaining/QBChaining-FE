@@ -3,27 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import styled from "styled-components";
-import notifitry from "../../assets/images/notifitry.png";
-import notifion from "../../assets/images/notifion.png";
-import notifioff from "../../assets/images/notifioff.png";
+
+//통신
 import {
   getNotificationDB,
   postNotificationDB,
   delNotificationDB,
 } from "../../redux/async/notification";
+//알럿
 import { needLoginAlert } from "../../utils/swal";
+
+//이미지
+import notifitry from "../../assets/images/notifitry.png";
+import notifion from "../../assets/images/notifion.png";
+import notifioff from "../../assets/images/notifioff.png";
 
 const Notification = ({ show, setShow }) => {
   const notifiResponse = useSelector(
     state => state.notificationSlice.notification,
   );
-
   const { isLogin } = useSelector(state => state.userSlice);
-
-  console.log();
-
   const address = window.location.href;
-
   const isNoti = notifiResponse?.filter(data => data.check === false);
   const dispatch = useDispatch();
   const navigate = useNavigate();

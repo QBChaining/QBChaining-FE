@@ -1,31 +1,31 @@
-import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+
+//컴포넌트
+import ContentList from "../../components/common/ContentList";
+import QnaMainCatergory from "./../../components/qna/QnaMainCatergory";
+import ModalBookmark from "../../components/common/ModalBookmark";
+import SideBanner from "../../components/common/SideBanner";
+
+//무한스크롤
+import { useInView } from "react-intersection-observer";
+import { ClipLoader } from "react-spinners";
+
+//통신
+import { colorSetGreen } from "../../redux/modules/userSlice";
+import { removeQnaList } from "../../redux/modules/qnaSlice";
 import {
   getQnaCategoryListDB,
   getQnaMainListDB,
 } from "./../../redux/async/qna";
-import ContentList from "../../components/common/ContentList";
-import QnaMainCatergory from "./../../components/qna/QnaMainCatergory";
-import ModalBookmark from "../../components/common/ModalBookmark";
-import WritingButton from "../../assets/images/WritingButton.png";
-import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
-import NoResolvedListIcon from "../../assets/images/NoResolvedListIcon.png";
-import { colorSetGreen } from "../../redux/modules/userSlice";
-import { useInView } from "react-intersection-observer";
-import { removeQnaList } from "../../redux/modules/qnaSlice";
-import { Helmet } from "react-helmet-async";
-import ToastViewer from "./../../components/editor/ToastViewer";
-import QnaPreview from "./../../components/qna/QnaPreview";
-import { ClipLoader } from "react-spinners";
-import QnaMainillust from "../../assets/images/QnaMainillust.png";
+
+//이미지
 import QnaWatingAnswer from "../../assets/images/QnaWatingAnswer.png";
 import QnaAnswer from "../../assets/images/QnaAnswer.png";
 import MainWriteButton from "../../assets/images/MainWriteButton.png";
-import Hotqna from "../../assets/images/Hotqna.png";
-import SideBanner from "../../components/common/SideBanner";
 
 const QnaMain = () => {
   const navigate = useNavigate();

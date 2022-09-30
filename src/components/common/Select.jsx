@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
+
+//이미지
 import selectArrow from "../../assets/images/SelectArrow.png";
 
 const Select = ({ isEdit, options, setOption, initialText, zIndex }) => {

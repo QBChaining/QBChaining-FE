@@ -1,11 +1,15 @@
 import React, { useEffect, useDispatch } from "react";
-import EditorComponent from "../../components/common/EditorComponent";
 import { useParams } from "react-router-dom";
-import ModalBookmark from "../../components/common/ModalBookmark";
 import styled from "styled-components";
-import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
+
+//컴포넌트
+import ModalBookmark from "../../components/common/ModalBookmark";
+import EditorComponent from "../../components/common/EditorComponent";
+
+//이미지
+import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 
 const BlogCommunityEdit = () => {
   const blogEditData = useSelector(state => state.blogSlice.blogDetail);

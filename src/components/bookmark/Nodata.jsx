@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+
+//이미지
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 
 const Nodata = ({ type }) => {

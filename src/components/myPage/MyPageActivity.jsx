@@ -48,27 +48,6 @@ const SCubeWrapper = styled.div`
     height: 45px;
     border: 5px solid ${props => props.theme.color.mainIvory};
   }
-
-  /* &:first-child {
-    transform: rotate(0deg) skew(0deg, 30deg);
-  }
-
-  &:nth-child(2) {
-    transform: rotateX(180deg) skew(0deg, 30deg);
-  }
-
-  &:nth-child(3) {
-    width: 91px;
-    position: absolute;
-    top: -77px;
-    left: 45px;
-    transform: rotate(120deg) skew(0deg, 30deg);
-
-    & > div {
-      width: 30.1px;
-      height: 34.5px;
-    } */
-  /* } */
 `;
 
 const STitle = styled.div``;

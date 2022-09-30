@@ -1,18 +1,15 @@
 import React, { useEffect } from "react";
+import styled from "styled-components";
+import { Helmet } from "react-helmet-async";
+
+//컴포넌트
 import EditorComponent from "../../components/common/EditorComponent";
 import ModalBookmark from "../../components/common/ModalBookmark";
-import { colorSetBlue } from "../../redux/modules/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+
+//이미지
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
-import { Helmet } from "react-helmet-async";
-// import Tag from "../../components//blog/Tag";
 
 const BlogCommunityWrite = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(colorSetBlue());
-  }, []);
   return (
     <STWrite>
       <Helmet>

@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./Header";
 import SideNav from "./SideNav";
 import styled from "styled-components";
+import Footer from "./Footer";
 
 const Layout = props => {
   return (
@@ -9,6 +10,7 @@ const Layout = props => {
       <Header />
       <SideNav />
       {props.children}
+      {/* <Footer /> */}
     </SLayout>
   );
 };

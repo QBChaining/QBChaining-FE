@@ -2,22 +2,22 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { FiThumbsUp } from "react-icons/fi";
-import { BiComment } from "react-icons/bi";
+
+//컴포넌트
 import QnaCategoryImage from "../qna/QnaCategoryImage";
 import QnaBookmarkButton from "../bookmark/QnaBookmarkButton";
+//통신
+import { setSearchWord } from "../../redux/modules/searchSlice";
+
+//이미지
 import ResolveWrapper from "../../assets/images/ResolveList.png";
 import ResolvedListIcon from "../../assets/images/ResolvedListIcon.png";
 import NoResolvedListIcon from "../../assets/images/NoResolvedListIcon.png";
-import QnaLikeIcon from "../../assets/images/QnaLike.png";
-import QnaCommentIcon from "../../assets/images/QnaComment.png";
 import GreyQnaLikeIcon from "../../assets/images/GreyQnaLike.png";
 import GreyQnaCommentIcon from "../../assets/images/GreyQnaComment.png";
-import ProfileDefault from "../../assets/images/ProfileDefault.png";
 import unlike from "../../assets/images/unlike.png";
 import BlogComment from "../../assets/images/BlogComment.png";
-import { setSearchWord } from "../../redux/modules/searchSlice";
-import { getOneQnaListDB } from "../../redux/async/qna";
+
 const ContentList = ({ data, type, isSearch }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

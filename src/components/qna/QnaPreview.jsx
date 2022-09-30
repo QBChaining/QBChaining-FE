@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import ToastViewer from "./../editor/ToastViewer";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import QnaCommentList from "./QnaCommentList";
-import { produceWithPatches } from "immer";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+
+//컴포넌트
+import ToastViewer from "./../editor/ToastViewer";
+import QnaCommentList from "./QnaCommentList";
 
 const QnaPreview = () => {
   const navigate = useNavigate();

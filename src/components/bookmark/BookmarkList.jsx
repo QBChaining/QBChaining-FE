@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getBookmarkListDB } from "../../redux/async/qna";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import WriteBookmark from "./WriteBookmark";
+
+//컴포넌트
 import BookmarkListItem from "./BookmarkListItem";
+
+//통신
+import { getBookmarkListDB } from "../../redux/async/qna";
 
 const BookmarkList = () => {
   const dispatch = useDispatch();

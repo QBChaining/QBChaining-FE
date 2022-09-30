@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import BookmarkStar from "../../assets/images/BookmarkStar.png";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+
+//컴포넌트
+import Nodata from "./../bookmark/Nodata";
+import BookmarkListItem from "./../bookmark/BookmarkListItem";
+
+//통신
 import { getBookmarkListDB } from "../../redux/async/qna";
 import { getBlogBookMarkDB } from "../../redux/async/blog";
-import BookmarkListItem from "./../bookmark/BookmarkListItem";
+//알럿
 import { needLoginAlert } from "./../../utils/swal";
-import Nodata from "./../bookmark/Nodata";
-import { useNavigate } from "react-router-dom";
+//이미지
+import BookmarkStar from "../../assets/images/BookmarkStar.png";
+
 const ModalBookmark = ({ isWrite, type }) => {
   const dispatch = useDispatch();
-  const location = window.location.pathname;
 
   const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
   const blogBookmarkList = useSelector(state => state.blogSlice.blogBookMark);

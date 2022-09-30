@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getOneQnaListDB } from "../../redux/async/qna";
-import { colorSetGreen } from "../../redux/modules/userSlice";
-import QnaCommentList from "./../../components/qna/QnaCommentList";
-import QnaTarget from "../../components/qna/QnaTarget";
 import styled from "styled-components";
-import QnaWriteArrow from "../../assets/images/QnaWriteArrow.png";
-import EditorComponent from "../../components/common/EditorComponent";
 import { Helmet } from "react-helmet-async";
-import { removeCommentList, removeQnaList } from "../../redux/modules/qnaSlice";
+
+//무한스크롤
 import { ClipLoader } from "react-spinners";
 import { useInView } from "react-intersection-observer";
-import { getCommentListDB } from "./../../redux/async/qna";
-import { errorAlert } from "../../utils/swal";
-import { networkError } from "./../../utils/swal";
+
+//통신
+import { getOneQnaListDB, getCommentListDB } from "../../redux/async/qna";
+import { removeCommentList, removeQnaList } from "../../redux/modules/qnaSlice";
+
+//컴포넌트
+import QnaCommentList from "./../../components/qna/QnaCommentList";
+import QnaTarget from "../../components/qna/QnaTarget";
+import EditorComponent from "../../components/common/EditorComponent";
+
+//알럿
+import { networkError } from "../../utils/swal";
+
+//이미지
+import QnaWriteArrow from "../../assets/images/QnaWriteArrow.png";
 
 const QnaDetail = () => {
   const { id } = useParams();
@@ -38,11 +45,10 @@ const QnaDetail = () => {
         networkError("네트워크 상태가 좋지 않거나 없는 페이지입니다!").then(
           res => {
             (res.isConfirmed || res.isDismissed) &&
-              navigate("/", { replace: true });
+              navigate(-1, { replace: true });
           },
         ),
     );
-    dispatch(colorSetGreen());
   }, [dispatch, id]);
 
   useEffect(() => {
