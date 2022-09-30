@@ -117,7 +117,8 @@ const SBannerWrapper = styled.div`
     background-image: url(${props =>
       props.type === "qna" ? HotQna : Hotblog});
   }
-  width: 400px;
+  max-width: 400px;
+  min-width: 320px;
   height: 490px;
   position: sticky;
   top: 320px;
@@ -154,6 +155,16 @@ const SBanner = styled.div`
   & .slick-slide {
     cursor: pointer;
     height: 100%;
+  }
+
+  & div {
+    height: 100%;
+  }
+
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
   }
 `;
 
@@ -199,11 +210,13 @@ const SHotList = styled.div`
 
 const SListTitle = styled.div`
   padding: 10px 0;
+  padding-right: 10px;
   width: 250px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
+
 const SLike = styled.div`
   display: flex;
   align-items: center;
