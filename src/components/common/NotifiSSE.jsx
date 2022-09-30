@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function NotifiTest() {
-  const evtSource = new EventSource(
-    "http://43.200.169.141/api/notification/test",
-  );
+  const evtSource = new EventSource("http:///api/notification/test");
   console.log(evtSource);
   console.log("2");
 

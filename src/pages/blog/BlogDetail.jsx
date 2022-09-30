@@ -24,6 +24,7 @@ const BlogCommunityDetail = () => {
   const profileImg = useSelector(
     state => state.blogSlice.blogDetail.profileImg,
   );
+  console.log(detail);
   const isBookmark = useSelector(
     state => state.blogSlice.blogDetail.isBookmark,
   );

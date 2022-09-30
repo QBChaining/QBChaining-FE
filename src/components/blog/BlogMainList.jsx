@@ -64,7 +64,11 @@ const BlogMainList = ({ posts }) => {
   return (
     <>
       <SBloglist>
-        <SContentsGroup>
+        <SContentsGroup
+          onClick={() => {
+            navigate(`/blog/detail/${posts.id}`);
+          }}
+        >
           <SPTitleBox>
             <SUserInfo>
               <SProfile url={posts.profileImg} />
@@ -79,11 +83,7 @@ const BlogMainList = ({ posts }) => {
               />
             </SBookMark>
           </SPTitleBox>
-          <SContentWrapper
-            onClick={() => {
-              navigate(`/blog/detail/${posts.id}`);
-            }}
-          >
+          <SContentWrapper>
             <SContentTitle className="title">{posts.title}</SContentTitle>
             <SContent>{content}</SContent>
           </SContentWrapper>

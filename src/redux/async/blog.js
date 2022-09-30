@@ -224,7 +224,7 @@ export const getBlogBookMarkDB = createAsyncThunk(
       const response = await blogApi.getBlogBookMark();
       return response.data.data;
     } catch (err) {
-      Sentry.captureException(`error, 좋아요 에러. ${err}`);
+      Sentry.captureException(`error, 북마크 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
@@ -241,7 +241,7 @@ export const postBlogBookMarkDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
-      Sentry.captureException(`error, 좋아요 에러. ${err}`);
+      Sentry.captureException(`error, 북마크 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
@@ -258,7 +258,7 @@ export const deleteBlogBookMarkDB = createAsyncThunk(
         return id;
       }
     } catch (err) {
-      Sentry.captureException(`error, 좋아요 에러. ${err}`);
+      Sentry.captureException(`error, 북마크 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
@@ -275,10 +275,38 @@ export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
   }
 });
 
-//블로그 미리보기
-export const getPreViewDB = createAsyncThunk("PREVIEW", async thunkAPI => {
-  try {
-    const response = await blogApi.getPreView();
-    return response;
-  } catch (err) {}
-});
+// 댓글 좋아요
+export const postCommentLikeDB = createAsyncThunk(
+  "COMMENT_POST_LIKE",
+  async (id, data, thunkAPI) => {
+    console.log(data);
+    try {
+      const response = await blogApi.postCommentLike(id, data);
+      console.log("추가아이디", id);
+      console.log("추가리스폰", response);
+      if (response.data.success === true) {
+        successAlert("좋아요가 추가 되었습니다.");
+      }
+      return;
+    } catch (err) {
+      // return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  },
+);
+// 댓글 좋아요 취소
+export const delCommentLikeDB = createAsyncThunk(
+  "COMMENT_UN_LIKE",
+  async (id, thunkAPI) => {
+    console.log("삭제아이디", id);
+    try {
+      const response = await blogApi.delCommentLike(id);
+      console.log("삭제리스폰", response);
+      if (response.data.success === true) {
+        successAlert("좋아요가 취소 되었습니다.");
+      }
+      return;
+    } catch (err) {
+      // return thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  },
+);

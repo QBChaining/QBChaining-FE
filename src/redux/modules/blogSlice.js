@@ -15,7 +15,8 @@ import {
   deleteBlogBookMarkDB,
   postBlogBookMarkDB,
   unBlogLikeDB,
-  getPreViewDB,
+  postCommentLikeDB,
+  delCommentLikeDB,
 } from "../async/blog";
 export const blogSlice = createSlice({
   name: "blog",
@@ -28,7 +29,6 @@ export const blogSlice = createSlice({
     blogBookMark: [],
     likebookmark: {},
     isFetching: false,
-    isPreView: false,
     errorMessage: "",
   },
   reducers: {
@@ -242,6 +242,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogLikeDB.fulfilled]: (state, action) => {
+      console.log(state.blogDetail.isLike);
       state.blogDetail.isLike = true;
       state.blogDetail.like += 1;
       state.isFetching = false;
@@ -256,6 +257,7 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [unBlogLikeDB.fulfilled]: (state, action) => {
+      console.log(state.blogDetail.isLike);
       state.blogDetail.isLike = false;
       state.blogDetail.like -= 1;
       state.likebookmark = action.payload;
@@ -264,16 +266,29 @@ export const blogSlice = createSlice({
     [unBlogLikeDB.rejected]: (state, action) => {
       state.errorMessage = action.payload.errorMessage;
     },
-
-    // 프리뷰
-    [getPreViewDB.pending]: state => {
+    //--- 댓글 좋아요 ---
+    // 댓글 좋아요 추가
+    [postCommentLikeDB.pending]: state => {
       state.isFetching = true;
     },
-    [getPreViewDB.fulfilled]: (state, action) => {
-      state.preView = action.payload;
+    [postCommentLikeDB.fulfilled]: (state, action) => {
+      console.log(action);
+      // state.commentList = [{ ...state.commentList, isLike: true }];
+      // state.commentList.push({ isLike: true });
       state.isFetching = false;
     },
-    [getPreViewDB.rejected]: (state, action) => {
+    [postCommentLikeDB.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.errorMessage = action.payload.errorMessage;
+    },
+    // 댓글 좋아요 취소
+    [delCommentLikeDB.pending]: state => {
+      state.isFetching = true;
+    },
+    [delCommentLikeDB.fulfilled]: (state, action) => {
+      state.isFetching = false;
+    },
+    [delCommentLikeDB.rejected]: (state, action) => {
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },
