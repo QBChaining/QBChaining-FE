@@ -20,14 +20,12 @@ const CommentLike = ({ comments, isLike }) => {
     }
     dispatch(postCommentLikeDB(id));
     setIsOn(!isOn);
-    console.log(isLike);
   };
 
   const likeOff = id => {
     dispatch(delCommentLikeDB(id));
     setIsOn(!isOn);
   };
-  console.log(isOn);
   useEffect(() => {
     setIsOn(isLike);
   }, []);

@@ -200,7 +200,6 @@ export const blogSlice = createSlice({
     },
     [postBlogBookMarkDB.fulfilled]: (state, action) => {
       state.blogDetail.isBookmark = true;
-      console.log(action);
       state.blogBookMark.push(action.payload);
     },
     [postBlogBookMarkDB.rejected]: (state, action) => {
@@ -242,7 +241,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postBlogLikeDB.fulfilled]: (state, action) => {
-      console.log(state.blogDetail.isLike);
       state.blogDetail.isLike = true;
       state.blogDetail.like += 1;
       state.isFetching = false;
@@ -257,7 +255,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [unBlogLikeDB.fulfilled]: (state, action) => {
-      console.log(state.blogDetail.isLike);
       state.blogDetail.isLike = false;
       state.blogDetail.like -= 1;
       state.likebookmark = action.payload;
@@ -272,9 +269,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [postCommentLikeDB.fulfilled]: (state, action) => {
-      console.log(action);
-      // state.commentList = [{ ...state.commentList, isLike: true }];
-      // state.commentList.push({ isLike: true });
       state.isFetching = false;
     },
     [postCommentLikeDB.rejected]: (state, action) => {

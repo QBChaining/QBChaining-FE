@@ -17,7 +17,6 @@ const BlogCommmunityMain = () => {
   const blogMainLists = [...new Set(blogMainList.map(JSON.stringify))].map(
     JSON.parse,
   );
-  console.log(blogMainLists);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   /**
