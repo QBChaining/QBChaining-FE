@@ -38,14 +38,17 @@ const Notification = ({ show, setShow }) => {
   };
 
   // 알림 보기
-  const onShow = () => {
+  const onShow = e => {
+    e.stopPropagation();
     if (!isLogin) {
       needLoginAlert();
       return;
     }
     setShow(!show);
   };
-
+  const offShow = () => {
+    setShow(show);
+  };
   // 확인, 삭제
   const checkNoti = notiId => {
     dispatch(postNotificationDB(notiId));
@@ -77,14 +80,15 @@ const Notification = ({ show, setShow }) => {
   useEffect(() => {
     checkk(isNoti);
   }, [isNoti]);
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
 
+  useEffect(() => {
+    // document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
-
+  }, []);
+  //이벤트 헨들러
   const handleClickOutside = event => {
     if (wrapperRef && !wrapperRef.current?.contains(event.target)) {
       setShow(false);
@@ -92,12 +96,11 @@ const Notification = ({ show, setShow }) => {
       setShow(true);
     }
   };
-
   return (
     <SNotiBox>
       <NotifiItem>
         <SNotiImage>
-          {isNo ? <SNotiOff onClick={onShow} /> : <SNotiOn onClick={onShow} />}
+          {isNo ? <SNotiOff onClick={onShow} /> : <SNotiOn onClick={offShow} />}
         </SNotiImage>
         {show === true ? (
           <Section>
