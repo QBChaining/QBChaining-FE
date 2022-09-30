@@ -17,7 +17,11 @@ import { removeBlogList } from "../../redux/modules/blogSlice";
 import MainWriteButton from "../../assets/images/MainWriteButton.png";
 
 const BlogCommmunityMain = () => {
-  const blogMainLists = useSelector(state => state.blogSlice.blogList);
+  const blogMainList = useSelector(state => state.blogSlice.blogList);
+  const blogMainLists = [...new Set(blogMainList.map(JSON.stringify))].map(
+    JSON.parse,
+  );
+  console.log(blogMainLists);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   /**
@@ -60,9 +64,8 @@ const BlogCommmunityMain = () => {
       dispatch(getBlogCommunityListDB(page));
       setPage(page => page + 1);
     }
-    if (blogMainLists.length === 0) {
-      return;
-    }
+    // if (blogMainLists.length !== 100) {
+    // }
   }, [page]);
 
   useEffect(() => {
