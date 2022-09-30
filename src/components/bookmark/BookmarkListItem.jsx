@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import WriteBookmark from "./WriteBookmark";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
+//컴포넌트
+import WriteBookmark from "./WriteBookmark";
+
+//이미지
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
+
 const BookmarkListItem = ({ type, isModal, data }) => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);

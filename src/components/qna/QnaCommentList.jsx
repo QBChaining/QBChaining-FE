@@ -1,26 +1,24 @@
-import { legacy_createStore, nanoid } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Swal from "sweetalert2";
-import Editor from "../common/EditorComponent";
-import { successAlert, errorAlert } from "./../../utils/swal";
 import styled from "styled-components";
-import QnaLike from "../../assets/images/unlike.png";
-import QnaLikeFill from "../../assets/images/addLike.png";
-import WinnerCrown from "../../assets/images/WinnerCrown.png";
 import ToastViewer from "./../editor/ToastViewer";
 import { useNavigate } from "react-router-dom";
-import { useInView } from "react-intersection-observer";
-import { ClipLoader } from "react-spinners";
-import { removeCommentList } from "../../redux/modules/qnaSlice";
+
+//통신
 import {
   choiceCommentListDB,
   deleteCommentListDB,
-  getCommentListDB,
-  getOneQnaListDB,
   likeCommentListDB,
   dislikeCommentListDB,
 } from "./../../redux/async/qna";
+
+//알럿
+import Swal from "sweetalert2";
+import { errorAlert } from "./../../utils/swal";
+//이미지
+import QnaLike from "../../assets/images/unlike.png";
+import QnaLikeFill from "../../assets/images/addLike.png";
+import WinnerCrown from "../../assets/images/WinnerCrown.png";
 
 const QnaCommentList = ({ id, qnaId, isPreview }) => {
   const dispatch = useDispatch();
@@ -28,11 +26,7 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
 
   const [winner, setWinner] = useState([]);
   //commentList 구독
-  const {
-    commentList: list,
-    chooseComment,
-    isCommentFetching,
-  } = useSelector(state => state.qnaSlice);
+  const { commentList: list } = useSelector(state => state.qnaSlice);
 
   //디테일정보 구독
   const target = useSelector(state => state.qnaSlice.qnaTarget);

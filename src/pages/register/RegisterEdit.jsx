@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
-import categories from "../../utils/category";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getUserInfoDB } from "./../../redux/async/user";

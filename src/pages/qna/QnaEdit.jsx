@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+
+//컴포넌트
 import EditorComponent from "../../components/common/EditorComponent";
-import axios from "axios";
-import qnaSlice from "./../../redux/modules/qnaSlice";
-import { getOneQnaListDB, getQnaListDB } from "./../../redux/async/qna";
+
+//통신
+import { getOneQnaListDB } from "./../../redux/async/qna";
 
 const QnaEdit = () => {
   const dispatch = useDispatch();

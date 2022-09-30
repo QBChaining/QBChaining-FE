@@ -1,21 +1,27 @@
 import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
+//슬라이드
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+//통신
+import { getHotBlogDB } from "../../redux/async/blog";
+import { getQnaHotListDB } from "./../../redux/async/qna";
+
+//이미지
 import QnaMainillust from "../../assets/images/QnaMainillust.png";
 import HotQna from "../../assets/images/Hotqna.png";
 import BlogMainillust from "../../assets/images/BlogMainillust.png";
 import Hotblog from "../../assets/images/Hotblog.png";
 import Fire from "../../assets/images/Fire.png";
 import Like from "../../assets/images/unlike.png";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { useSelector, useDispatch } from "react-redux";
-import { getHotBlogDB } from "../../redux/async/blog";
-import { getQnaCategoryListDB } from "../../redux/async/qna.js";
-import { useNavigate } from "react-router-dom";
 import BugReport from "../../assets/images/BugReport.jpg";
 import SurveyReport from "../../assets/images/SurveyReport.jpg";
-import { getQnaHotListDB } from "./../../redux/async/qna";
+
 const SideBanner = ({ type }) => {
   const navigate = useNavigate();
   const hotList = useSelector(state =>

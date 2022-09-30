@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
-// import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { getBlogCommentListDB } from "../../../redux/async/blog";
-import CommentEditDel from "./BlogCommentEditDel";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+
+//컴포넌트
+import CommentEditDel from "./BlogCommentEditDel";
+
+//통신
+import { getBlogCommentListDB } from "../../../redux/async/blog";
 
 const CommentList = () => {
   const commentLists = useSelector(state => state.blogSlice.commentList);

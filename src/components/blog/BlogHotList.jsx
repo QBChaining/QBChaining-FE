@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { getHotBlogDB } from "../../redux/async/blog";
-import unlike from "../../assets/images/unlike.png";
 import { useNavigate } from "react-router-dom";
+
+//이미지
+import unlike from "../../assets/images/unlike.png";
+
 const BlogHotList = () => {
   const hotcommunits = useSelector(state => state.blogSlice.hotBlog);
   const hotcommunity = hotcommunits.slice(0, 4);

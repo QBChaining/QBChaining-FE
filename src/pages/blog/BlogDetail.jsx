@@ -1,19 +1,20 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import CommentAdd from "../../components/blog/comment/BlogCommentAdd";
-import CommentList from "../../components/blog/comment/BlogCommentList";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getBlogDetailDB } from "../../redux/async/blog";
 import { useParams } from "react-router-dom";
-import { deleteBlogCommunityDB } from "../../redux/async/blog";
-import ModalBookmark from "../../components/common/ModalBookmark";
+
+//컴포넌트
+import CommentAdd from "../../components/blog/comment/BlogCommentAdd";
+import CommentList from "../../components/blog/comment/BlogCommentList";
 import ToastViewer from "./../../components/editor/ToastViewer";
 import BlogLike from "../../components/blog/BlogLike";
-// import BlogBookMark from "../../components/blog/BlogBookMark";
-import { colorSetBlue } from "../../redux/modules/userSlice";
 import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
-import { Helmet } from "react-helmet-async";
+//통신
+import { deleteBlogCommunityDB } from "../../redux/async/blog";
+import { getBlogDetailDB } from "../../redux/async/blog";
+//알럿
 import { confirmAlert, infoAlert, successAlert } from "./../../utils/swal";
 
 const BlogCommunityDetail = () => {
@@ -49,7 +50,6 @@ const BlogCommunityDetail = () => {
 
   useEffect(() => {
     dispatch(getBlogDetailDB(id));
-    dispatch(colorSetBlue());
   }, []);
 
   const goMypage = name => {

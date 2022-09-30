@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import isLeapYear from "dayjs/plugin/isLeapYear"; // 윤년 판단 플러그인
 import "dayjs/locale/ko"; // 한국어 가져오기
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 
 const MyPageCube = ({
   data,
@@ -17,12 +14,8 @@ const MyPageCube = ({
 }) => {
   dayjs.locale("ko");
   const Today = dayjs(new Date()).add(-29, "day");
-  // const day = Today.add(-index, "day").format("YYYY-MM-DD");
   const day = Today.add(index, "day").format("YYYY-MM-DD");
   const [hover, setHover] = useState(false);
-
-  // for (let i = 0; i < 27; i++) {
-  //   const day = Today.add(-index, "day").format("YYYY-MM-DD");
 
   return (
     <SCube

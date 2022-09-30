@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+
+//통신
 import {
   postBlogBookMarkDB,
   deleteBlogBookMarkDB,
-  getBlogBookMarkDB,
 } from "../../redux/async/blog.js";
-import { useDispatch, useSelector } from "react-redux";
-import { errorAlert, needLoginAlert } from "../../utils/swal";
+//알럿
+import { needLoginAlert } from "../../utils/swal";
+//이미지
 import blogbookmark from "../../assets/images/BookmarkNoFillIcon.png";
 import blogbookmarkadd from "../../assets/images/BookmarkFillIcon.png";
-import { useParams } from "react-router-dom";
-import QnaTarget from "../qna/QnaTarget.jsx";
-import { getToday } from "../../utils/today.js";
+
 const BlogBookMark = ({ isbookmark, posts, isdetailbookmark }) => {
   const { isLogin } = useSelector(state => state.userSlice);
   // console.log(posts);

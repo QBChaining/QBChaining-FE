@@ -1,31 +1,28 @@
 import React, { useEffect, useRef, useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "./Select";
-import styled from "styled-components";
-//유틸 카테고리
-import categories from "../../utils/category";
-// firebase storage
-import { storage } from "../../utils/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
-import DeleteButton from "../../assets/images/DeleteButton.png";
-
-//에러알럿
-import { errorAlert } from "../../utils/swal";
 import { nanoid } from "@reduxjs/toolkit";
+import styled from "styled-components";
+import categories from "../../utils/category";
+import { storage } from "../../utils/firebase";
+
+//파이어베이스
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+//텍스트에디터
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import "tui-color-picker/dist/tui-color-picker.css";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor/dist/i18n/ko-kr";
-
 import Prism from "prismjs";
 import "prismjs/themes/prism.css";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
 
+//컴포넌트
+import Select from "./Select";
+//통신
 import {
   patchBlogCommunityDB,
   postBlogCommunityDB,
@@ -35,7 +32,10 @@ import {
   postCommentListDB,
   postQnaListDB,
 } from "../../redux/async/qna";
-
+//알럿
+import { errorAlert } from "../../utils/swal";
+//이미지
+import DeleteButton from "../../assets/images/DeleteButton.png";
 const EditorComponent = ({
   isGuide,
   isEdit,

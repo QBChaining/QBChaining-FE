@@ -1,28 +1,31 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import categories from "../../utils/category";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import InterestItem from "./../../components/register/InterestItem";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
+//컴포넌트
+import InterestItem from "./../../components/register/InterestItem";
 import Select from "../../components/common/Select";
-import WhiteArrow from "../../assets/images/WhiteArrow.png";
-import { errorAlert } from "../../utils/swal";
+
+import { Helmet } from "react-helmet-async";
+
+//알럿
+import { errorAlert, successAlert } from "../../utils/swal";
+
+//통신
 import {
-  getUserInfoDB,
   postUserInfoDB,
   putUserInfoDB,
   putUserInNewDB,
 } from "./../../redux/async/user";
-import { successAlert } from "./../../utils/swal";
-import { useNavigate } from "react-router-dom";
-import { userSlice } from "./../../redux/modules/userSlice";
-import { Helmet } from "react-helmet-async";
+
+//이미지
+import WhiteArrow from "../../assets/images/WhiteArrow.png";
 
 const Register = ({ isEdit, editData }) => {
   const navigate = useNavigate();
-  const { userName, userIsNew, userInfo, isLogin } = useSelector(
-    state => state.userSlice,
-  );
+  const { userName, userIsNew } = useSelector(state => state.userSlice);
   const [language, setLanguage] = useState([]);
   const [age, setAge] = useState("나이를 입력해주세요");
   const [gender, setGender] = useState("성별을 입력해주세요");

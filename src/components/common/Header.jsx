@@ -1,24 +1,22 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import axios from "axios";
-import { HiOutlineBell } from "react-icons/hi";
-import { getCookie } from "../../utils/cookie";
-import Swal from "sweetalert2";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { throttle } from "lodash";
+
+//컴포넌트
+import Notification from "./Notification";
+import SearchInput from "./../search/SearchInput";
+
+//통신
+import { getNotificationDB } from "../../redux/async/notification";
 import { logIn, logOut } from "../../redux/modules/userSlice";
 import { removeUserInfo } from "../../redux/modules/qnaSlice";
-import SearchInput from "./../search/SearchInput";
+//알럿
+import Swal from "sweetalert2";
+
+//이미지
 import MainLogo from "../../assets/images/MainLogo.png";
-import Notification from "./Notification";
-import { throttle } from "lodash";
-import { getNotificationDB } from "../../redux/async/notification";
 
 const Header = () => {
   const navigate = useNavigate();

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+//컴포넌트
 import BlogBookMark from "./BlogBookMark";
+
+//이미지
 import unlike from "../../assets/images/GreyQnaLike.png";
 import cmtComment from "../../assets/images/GreyQnaComment.png";
-import { getToday } from "./../../utils/today";
-import { useSelector } from "react-redux";
-import ToastViewer from "../editor/ToastViewer";
+
 const BlogMainList = ({ posts }) => {
   const [Like, setLike] = useState(posts.isLike);
   // const [likeNum, setLikeNum] = useState(posts.like);
