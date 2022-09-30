@@ -42,7 +42,7 @@ const SideNav = () => {
             location={location}
             type={"mypage"}
             onClick={() => {
-              goPage(`mypage/${userName}`);
+              goPage(`mypage/${loginUserName}`);
             }}
           >
             MyPage
