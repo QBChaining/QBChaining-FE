@@ -30,10 +30,15 @@ export const blogSlice = createSlice({
     isFetching: false,
     isPreView: false,
     errorMessage: "",
+    detailErrorMessage: "",
   },
   reducers: {
     removeBlogList: state => {
       state.blogList = [];
+    },
+    removeErrorMessage: state => {
+      state.errorMessage = "";
+      state.detailErrorMessage = "";
     },
   },
   extraReducers: {
@@ -63,7 +68,7 @@ export const blogSlice = createSlice({
     },
     [getBlogDetailDB.rejected]: (state, action) => {
       state.isFetching = false;
-      state.errorMessage = action.payload.errorMessage;
+      state.detailErrorMessage = action.payload;
     },
 
     //블로그 게시글 생성
@@ -279,5 +284,5 @@ export const blogSlice = createSlice({
   },
 });
 
-export const { removeBlogList } = blogSlice.actions;
+export const { removeBlogList, removeErrorMessage } = blogSlice.actions;
 export default blogSlice.reducer;

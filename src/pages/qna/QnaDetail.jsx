@@ -11,6 +11,7 @@ import { useInView } from "react-intersection-observer";
 //통신
 import { getOneQnaListDB, getCommentListDB } from "../../redux/async/qna";
 import { removeCommentList, removeQnaList } from "../../redux/modules/qnaSlice";
+import { removeErrorMessage } from "../../redux/modules/qnaSlice";
 
 //컴포넌트
 import QnaCommentList from "./../../components/qna/QnaCommentList";
@@ -18,7 +19,7 @@ import QnaTarget from "../../components/qna/QnaTarget";
 import EditorComponent from "../../components/common/EditorComponent";
 
 //알럿
-import { networkError } from "../../utils/swal";
+import { errorAlert, networkError } from "../../utils/swal";
 
 //이미지
 import QnaWriteArrow from "../../assets/images/QnaWriteArrow.png";
@@ -28,32 +29,33 @@ const QnaDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const target = useSelector(state => state.qnaSlice.qnaTarget);
-  const isDetailFetcing = useSelector(state => state.qnaSlice.isDetailFetcing);
-  const { commentList: list, isCommentFetching } = useSelector(
-    state => state.qnaSlice,
-  );
+  const {
+    qnaTarget: target,
+    commentList: list,
+    isCommentFetching,
+    isDetailFetcing,
+    detailErrorMessage,
+  } = useSelector(state => state.qnaSlice);
 
   const [pageNumber, setPageNumber] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [infiniteTarget, inView] = useInView();
 
   useEffect(() => {
-    dispatch(getOneQnaListDB(id)).then(
-      res =>
-        res.payload === undefined &&
-        networkError("네트워크 상태가 좋지 않거나 없는 페이지입니다!").then(
-          res => {
-            (res.isConfirmed || res.isDismissed) &&
-              navigate(-1, { replace: true });
-          },
-        ),
-    );
+    if (detailErrorMessage === "게시글이 존재하지 않습니다.") {
+      errorAlert(detailErrorMessage);
+      return navigate("/qna", { replace: true });
+    }
+  }, [detailErrorMessage]);
+
+  useEffect(() => {
+    dispatch(getOneQnaListDB(id));
   }, [dispatch, id]);
 
   useEffect(() => {
     return () => {
       dispatch(removeQnaList());
+      dispatch(removeErrorMessage());
     };
   }, []);
 

@@ -9,7 +9,7 @@ const RouterChangeTracker = () => {
   const [initialized, setInitiallized] = useState(false);
 
   useEffect(() => {
-    if (window.location.href.includes("qb-chaining")) {
+    if (window.location.href.includes("qb-chaning")) {
       ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID);
     }
     setInitiallized(true);
