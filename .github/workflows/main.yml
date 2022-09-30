@@ -109,6 +109,7 @@ jobs:
       #     CLOUDFRONT_DISTRIBUTION_ID: ${{secrets.CLOUDFRONT_DISTRIBUTION_ID}}
       #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-#CI 보류 코드
+# google Edit
+# CI 보류 코드
 # Gitgub repository Secrtets를 통해 변수 파일을 생성
 
