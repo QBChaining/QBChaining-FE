@@ -39,6 +39,11 @@ jobs:
           echo "REACT_APP_ENDPOINT=$REACT_APP_ENDPOINT" >> .env.production
         env:
           REACT_APP_ENDPOINT: ${{ secrets.REACT_APP_ENDPOINT }}
+      - name: GOOGLE_ANALYTICS
+        run: |
+          echo "REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID=$REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID" >> .env.production
+        env:
+          REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: ${{ secrets.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID }}
         # firebase config
       - name: firebase config_1
         run: |
