@@ -45,14 +45,14 @@ const MyPage = () => {
     errorMessage,
   } = useSelector(state => state.userSlice);
 
-  useEffect(() => {
-    if (loginUserName === userInfo.userName && userIsNew === "true") {
-      errorAlert("정보 등록후 이용 가능합니다!").then(res => {
-        (res.isConfirmed || res.isDismissed) && navigate("/register");
-      });
-      return;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (loginUserName === userInfo.userName && userIsNew === "true") {
+  //     errorAlert("정보 등록후 이용 가능합니다!").then(res => {
+  //       (res.isConfirmed || res.isDismissed) && navigate("/register");
+  //     });
+  //     return;
+  //   }
+  // }, []);
 
   useEffect(() => {
     dispatch(getUserInfoDB(userName));
@@ -70,6 +70,7 @@ const MyPage = () => {
   const goDetail = (type, id) => {
     navigate(`/${type}/detail/${id}`);
   };
+
   if (errorMessage === "조회하려는 사용자가 존재하지 않습니다.") {
     errorAlert("조회하려는 사용자가 존재하지 않습니다.").then(res => {
       (res.isConfirmed || res.isDismissed) && navigate(-1, { replace: true });
@@ -101,11 +102,13 @@ const MyPage = () => {
                       navigate("/register/edit");
                     }}
                   >
-                    정보 수정
+                    {Object.keys(userInfo).length > 2
+                      ? "정보 수정"
+                      : "정보 등록"}
                   </button>
                 )}
               </SUserName>
-              {loginUserName === userName && (
+              {loginUserName === userName && Object.keys(userInfo).length > 2 && (
                 <SUserDetail>
                   <li>{userInfo?.gender}</li>
                   <li>{userInfo?.age}</li>

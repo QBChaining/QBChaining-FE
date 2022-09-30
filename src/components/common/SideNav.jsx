@@ -1,16 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const SideNav = () => {
   const navigate = useNavigate();
   const location = window.location.pathname;
+  const { userName } = useParams();
   const goPage = page => {
     navigate(`/${page}`);
   };
 
-  const { userName, isLogin } = useSelector(state => state.userSlice);
+  const { userName: loginUserName, isLogin } = useSelector(
+    state => state.userSlice,
+  );
+
   return (
     <SNav>
       <SUl>
@@ -33,15 +37,16 @@ const SideNav = () => {
           BLOG
         </SList>
         {isLogin && (
-          <SList
+          <SMypage
+            isMine={location.slice(8) === loginUserName}
             location={location}
             type={"mypage"}
             onClick={() => {
-              goPage(`mypage/${userName}`);
+              goPage(`mypage/${loginUserName}`);
             }}
           >
             MyPage
-          </SList>
+          </SMypage>
         )}
       </SUl>
     </SNav>
@@ -67,6 +72,30 @@ const SList = styled.li`
   /* background-color: ${props => props.theme.color.mainNavy}; */
   width: 93px;
   width: ${props => (props.location.includes(props.type) ? "120px" : "93px")};
+  height: 40px;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${props => props.theme.color.white};
+  margin-bottom: 10px;
+  border-radius: 0 20px 20px 0;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    width: 120px;
+    background-color: ${props => props.theme.color.mainOrange};
+  }
+`;
+
+const SMypage = styled(SList)`
+  background-color: ${props =>
+    props.isMine ? props.theme.color.mainOrange : props.theme.color.mainNavy};
+  /* background-color: ${props => props.theme.color.mainNavy}; */
+  width: 93px;
+  width: ${props => (props.isMine ? "120px" : "93px")};
   height: 40px;
   font-size: 18px;
   font-weight: 600;
