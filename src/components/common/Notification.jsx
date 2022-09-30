@@ -100,7 +100,7 @@ const Notification = ({ show, setShow }) => {
     <SNotiBox>
       <NotifiItem>
         <SNotiImage>
-          {isNo ? <SNotiOff onClick={onShow} /> : <SNotiOn onClick={offShow} />}
+          {isNo ? <SNotiOff onClick={onShow} /> : <SNotiOn onClick={onShow} />}
         </SNotiImage>
         {show === true ? (
           <Section>
