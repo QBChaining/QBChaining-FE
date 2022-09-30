@@ -1,37 +1,102 @@
 # 🎉 QBChaining (큐브체이닝)
-![Logo](https://user-images.githubusercontent.com/105795166/190722200-d44cc994-8c67-4d95-a818-db781f437862.png)
+![image](https://user-images.githubusercontent.com/92949174/193185370-5f76fd74-9dc0-479e-a99c-e86f8a9ec53f.png)
 
 
 [사이트 링크](http://qb-chaning.s3-website.ap-northeast-2.amazonaws.com)
 
-- 지식있는 개발자들과 입문하는 개발자들을 위한 커뮤니티 사이트
-- 질문게시판과 개인블로그 서비스 제공하고 두개의 서비스를 유저들이 한 웹사이트에서 통합적으로 이용할 수 있습니다.
-- 
+-
 
-## 1. 팀 소개
-- REACT, NODE.JS
-- 개발인원 6명
-  > FRONT_END:  윤창순 | 김영건
+## ⚙ 주요 기능
+***
+* **QnA, Blog, 답변, 댓글 작성**
+* **QnA 답변 채택 및 좋아요, 즐겨찾기**
+* **Blog 게시글 수정,삭제, 댓글 수정삭제, 좋아요, 즐겨찾기**
+* **메인페이지, 상세페이지 무한스크롤**
+* **카테고리, 채택, 비채택 구분하여 목록 보기**
+* **최근 추천 많이받은 게시글 보기**
+* **원하는 검색어로 검색 가능**
+* **사이트 이용시 댓글, 채택등 활동관련하여 알람활성화**
+* **마이페이지에서 쓴글 모아보기, 최근 한달간 활동내역 확인**
+* **사이드 롤링배너**
 
-  > BACK_END :  윤태식 | 윤상돈 | 이지훈
 
-  > DESIGNER :  최정빈
+ ### 📆 Project Timeline
+* 총 기간: 2022/08/25 ~ 2022/10/07
+* 배포: 2022/09/28
+
+
+
+
+## 🙌 팀 소개
+
+👨‍💻👩‍💻 FE Team
+
+#### 윤창순
+
+```랜딩페이지``` ```Q&A메인, 상세 페이지``` ```마이페이지```
+```검색결과 페이지``` ```글작성 페이지``` ```UI/UX``` 
+
+#### 김영건
+
+```Blog 메인, 상세페이지,``` ```UI/UX```
+```CI/CD(w/Github Actions)``` ```배포환경 구축(w/AWS S#, Route53, Cloudfront)```
+
+
   
-## 2. 프로젝트 설명
-- 개발언어 : JAVASCRIPT | REACT
-- 협업 툴 : GIT | NOTION | FIGMA 
+## 🛠 Tech Stack & Platfrom
 
-- 프로젝트 취지 : 개발프로그램 특성상 영어로된 질문과 답변들이 많은데, 영어라는 언어의 장벽과, 프로그래밍 언어라는 두개의 장벽을 한번에 깨보고자 개발자 커뮤니티를 만들고자 했습니다.
+### Tech
+
+<div align=left> 
+    <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
+    <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white"> 
+  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
+  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+  <img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white">
+  <img src="https://img.shields.io/badge/styled-components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
+    <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> 
+  <img src="https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"> 
+  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+  <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+</div>
+
+### Design
+
+<div align=left> 
+  <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
+</div>
+
+### Tools
+
+<div align=left> 
+  <img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
+  <img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">
+  <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+</div>
 
 
-## 3. 서비스 아키텍쳐
+## 📚 Library
+***
+
+| Name | Appliance | Version |
+| --- | --- | --- |
+|Axios  |Http 클라이언트 라이브러리  | 0.27. 2|
+| React-redux | 상태관리 | 8.0.2 |
+| React-router-dom | 라우터 | 18.2.0 |
+| Redux-toolkit | 리덕스 간편화 | 1.8.5 |
+|Dotenv  |환경변수  | 16.0.1 |
+|React-intersection-observer  | 무한스크롤 | 9.4.0 |
+|toast-ui/react-editor  | 텍스트 에디터 |3.2.0  |
+|react-markdown  | 마크다운 렌더링 | 8.0.3 |
+|react-syntax-highlighter  | 코드블럭스타일링  | 15.5.0 |
+|  slick-carousel|  캐러셀| 1.8.1 |
+|sweetalert2  | 알럿  | 11.4.29 |
+| universal-cookie | 쿠키관리 | 4.0.4 |
+| jwt-decode |유저정보 관리  |3.1.2  |
+| firebase |이미지 저장  |9.9.3  |
+
+
+## 서비스 아키텍쳐
 ![image](https://user-images.githubusercontent.com/92949174/190838795-f642f2b5-3670-499a-b8d8-577e57c013f6.png)
-
-
-## 4. 기술 소개
-- 통합 검색 기능
-- 즐겨 찾기, 추천, 채택 기능
-- GITHUB 소셜 로그인 구현
-- 글작성, 코드블럭 에디터 구현
-
-## 5. [와이어 프레임](https://www.figma.com/file/G4YHvEgoH0xztDLEQyiJuk/%ED%95%AD%ED%95%B499_%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83(3)?node-id=0%3A1)
