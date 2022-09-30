@@ -1,5 +1,5 @@
 # 🎉 QBChaining (큐브체이닝)
-![Logo](https://user-images.githubusercontent.com/105795166/190722200-d44cc994-8c67-4d95-a818-db781f437862.png)
+![image](https://user-images.githubusercontent.com/92949174/193185370-5f76fd74-9dc0-479e-a99c-e86f8a9ec53f.png)
 
 
 [사이트 링크](http://qb-chaning.s3-website.ap-northeast-2.amazonaws.com)
