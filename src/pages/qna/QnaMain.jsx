@@ -115,9 +115,16 @@ const QnaMain = () => {
             </SWritingButtonWrapper>
             <STap>
               <STapItem
-                isResolve={resolveTap}
                 onClick={resolveTap !== 0 ? onGetNoResolve : onGetResolve}
-              ></STapItem>
+              >
+                <STapText className={resolveTap === 1 && "isActive"}>
+                  채택완료
+                </STapText>
+                <STapText className={resolveTap === 0 && "isActive"}>
+                  채택 미완료
+                </STapText>
+                <STapBackground className={resolveTap === 0 && "isActive"} />
+              </STapItem>
             </STap>
           </SListHeader>
           {qnaList.length === 0 && <SNodata>검색결과가 없습니다.</SNodata>}
@@ -146,8 +153,8 @@ const SWritingButtonWrapper = styled.div`
   bottom: 0;
   right: 0;
   cursor: pointer;
-  width: 130px;
-  height: 40px;
+  width: 94px;
+  height: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -160,11 +167,13 @@ const SWritingButton = styled.button`
   width: 100%;
   height: 100%;
   border: none;
+  font-size: 14px;
+  font-weight: 600;
   color: ${props => props.theme.color.white};
   background-color: ${props => props.theme.color.mainOrange};
   & div {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     background-image: url(${MainWriteButton});
     background-size: contain;
     margin-right: 10px;
@@ -218,14 +227,49 @@ const STap = styled.ul`
 `;
 
 const STapItem = styled.li`
-  width: 328px;
-  height: 63px;
-  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+  height: 34px;
+  padding: 3px;
   border-radius: 30px;
-  background-image: url(${props =>
-    props.isResolve === 0 ? QnaWatingAnswer : QnaAnswer});
   background-repeat: no-repeat;
   cursor: pointer;
+  border-radius: 20px;
+  background-color: ${props => props.theme.color.mainOrange};
+  position: relative;
+`;
+
+const STapBackground = styled.div`
+  position: absolute;
+  top: 3px;
+  border-radius: 20px;
+  height: 28px;
+  background-color: white;
+  transition: 0.5s;
+  z-index: 0;
+  right: 117px;
+  width: 80px;
+  &.isActive {
+    right: 3px;
+    width: 100px;
+  }
+`;
+
+const STapText = styled.div`
+  line-height: 16px;
+  padding: 5px 10px;
+  font-weight: 600;
+  border-radius: 20px;
+  color: ${props => props.theme.color.white};
+  opacity: 0.5;
+  transition: 0.5s;
+  z-index: 1;
+  &.isActive {
+    opacity: 1;
+    color: ${props => props.theme.color.mainOrange};
+  }
 `;
 
 const SLoading = styled.div`

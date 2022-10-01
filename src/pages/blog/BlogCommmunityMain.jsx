@@ -164,11 +164,11 @@ const STitle = styled.h2`
 
 const SWritingButtonWrapper = styled.div`
   position: absolute;
-  top: -70px;
+  top: -60px;
   right: 60px;
   cursor: pointer;
-  width: 130px;
-  height: 40px;
+  width: 94px;
+  height: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -180,12 +180,13 @@ const SWritingButton = styled.button`
   justify-content: center;
   width: 100%;
   height: 100%;
+  font-weight: 600;
   border: none;
   color: ${props => props.theme.color.white};
   background-color: ${props => props.theme.color.mainOrange};
   & div {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     background-image: url(${MainWriteButton});
     background-size: contain;
     margin-right: 10px;
