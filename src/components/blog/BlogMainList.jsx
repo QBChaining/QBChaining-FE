@@ -233,6 +233,7 @@ const SContent = styled.div`
   height: 100px;
   overflow: hidden;
   margin-top: 20px;
+  word-break: break-all;
 `;
 
 const SIconContainer = styled.div`
