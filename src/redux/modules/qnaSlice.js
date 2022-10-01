@@ -32,6 +32,7 @@ const qnaSlice = createSlice({
     qnaHotList: [],
     isCommentWrite: false,
     errorMessage: "",
+    detailErrorMessage: "",
     isFetching: false,
     isDetailFetcing: false,
     isCommentFetching: false,
@@ -47,6 +48,10 @@ const qnaSlice = createSlice({
     removeCommentList: (state, { payload }) => {
       state.commentList = [];
       state.chooseComment = {};
+    },
+    removeErrorMessage: (state, { payload }) => {
+      state.errorMessage = "";
+      state.detailErrorMessage = "";
     },
   },
   extraReducers: {
@@ -92,7 +97,7 @@ const qnaSlice = createSlice({
     },
     [getOneQnaListDB.rejected]: (state, { payload: errorMessage }) => {
       state.isDetailFetcing = false;
-      state.errorMessage = errorMessage;
+      state.detailErrorMessage = errorMessage;
     },
     //게시글 생성
     [postQnaListDB.fulfilled]: (state, { payload }) => {
@@ -323,6 +328,11 @@ const qnaSlice = createSlice({
     },
   },
 });
-export const { removeUserInfo, removeQnaList, removeCommentList } =
-  qnaSlice.actions;
+
+export const {
+  removeUserInfo,
+  removeQnaList,
+  removeCommentList,
+  removeErrorMessage,
+} = qnaSlice.actions;
 export default qnaSlice.reducer;

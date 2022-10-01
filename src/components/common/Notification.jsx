@@ -88,7 +88,7 @@ const Notification = ({ show, setShow }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  //이벤트 헨들러
+
   const handleClickOutside = event => {
     if (wrapperRef && !wrapperRef.current?.contains(event.target)) {
       setShow(false);

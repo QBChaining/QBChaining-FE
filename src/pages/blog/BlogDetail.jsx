@@ -15,10 +15,21 @@ import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
 import { deleteBlogCommunityDB } from "../../redux/async/blog";
 import { getBlogDetailDB } from "../../redux/async/blog";
 //알럿
-import { confirmAlert, infoAlert, successAlert } from "./../../utils/swal";
+import {
+  confirmAlert,
+  errorAlert,
+  infoAlert,
+  successAlert,
+} from "./../../utils/swal";
+import { removeErrorMessage } from "../../redux/modules/blogSlice";
+import { ClipLoader } from "react-spinners";
 
 const BlogCommunityDetail = () => {
-  const { blogDetail: detail } = useSelector(state => state.blogSlice);
+  const {
+    blogDetail: detail,
+    detailErrorMessage,
+    isDetailFetcing,
+  } = useSelector(state => state.blogSlice);
   const detailTitle = useSelector(state => state.blogSlice.blogDetail.title);
   const userName = useSelector(state => state.blogSlice.blogDetail.userName);
   const profileImg = useSelector(
@@ -49,12 +60,33 @@ const BlogCommunityDetail = () => {
   };
 
   useEffect(() => {
+    if (detailErrorMessage === "존재하지 않는 게시물입니다") {
+      errorAlert("삭제되었거나 존재하지 않는 게시물입니다.");
+      return navigate("/blog", { replace: true });
+    }
+  }, [detailErrorMessage]);
+
+  useEffect(() => {
     dispatch(getBlogDetailDB(id));
   }, []);
 
   const goMypage = name => {
     navigate(`/mypage/${name}`);
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeErrorMessage());
+    };
+  }, []);
+
+  if (isDetailFetcing) {
+    return (
+      <SLoading>
+        <ClipLoader />
+      </SLoading>
+    );
+  }
 
   return (
     <SContainer>
@@ -247,4 +279,12 @@ const SContentWrapper = styled.div`
 
 const SCommentWrapper = styled.div`
   padding: 0 40px;
+`;
+
+const SLoading = styled.div`
+  width: 100%;
+  height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

@@ -493,4 +493,6 @@ const SEditor = styled.div`
   & .toastui-editor-main-container {
     background-color: ${props => props.theme.color.white};
   }
+
+  color: black;
 `;

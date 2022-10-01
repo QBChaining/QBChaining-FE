@@ -29,11 +29,17 @@ export const blogSlice = createSlice({
     blogBookMark: [],
     likebookmark: {},
     isFetching: false,
+    isDetailFetcing: false,
     errorMessage: "",
+    detailErrorMessage: "",
   },
   reducers: {
     removeBlogList: state => {
       state.blogList = [];
+    },
+    removeErrorMessage: state => {
+      state.errorMessage = "";
+      state.detailErrorMessage = "";
     },
   },
   extraReducers: {
@@ -55,15 +61,15 @@ export const blogSlice = createSlice({
 
     //블로그 디테일 조회
     [getBlogDetailDB.pending]: state => {
-      state.isFetching = true;
+      state.isDetailFetcing = true;
     },
     [getBlogDetailDB.fulfilled]: (state, action) => {
       state.blogDetail = action.payload;
-      state.isFetching = false;
+      state.isDetailFetcing = false;
     },
     [getBlogDetailDB.rejected]: (state, action) => {
-      state.isFetching = false;
-      state.errorMessage = action.payload.errorMessage;
+      state.isDetailFetcing = false;
+      state.detailErrorMessage = action.payload;
     },
 
     //블로그 게시글 생성
@@ -289,5 +295,5 @@ export const blogSlice = createSlice({
   },
 });
 
-export const { removeBlogList } = blogSlice.actions;
+export const { removeBlogList, removeErrorMessage } = blogSlice.actions;
 export default blogSlice.reducer;
