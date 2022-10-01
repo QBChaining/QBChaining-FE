@@ -11,9 +11,6 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 //텍스트에디터
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
-import "tui-color-picker/dist/tui-color-picker.css";
-import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor/dist/i18n/ko-kr";
 import Prism from "prismjs";
 import "prismjs/themes/prism.css";
@@ -288,10 +285,7 @@ const EditorComponent = ({
             }
             useCommandShortcut={false}
             hideModeSwitch={true}
-            plugins={[
-              colorSyntax,
-              [codeSyntaxHighlight, { highligher: Prism }],
-            ]}
+            plugins={[[codeSyntaxHighlight, { highligher: Prism }]]}
             language="ko-KR"
             ref={editorRef}
             onChange={onChangeContent}
