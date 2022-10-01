@@ -46,9 +46,7 @@ const Notification = ({ show, setShow }) => {
     }
     setShow(!show);
   };
-  const offShow = () => {
-    setShow(show);
-  };
+
   // 확인, 삭제
   const checkNoti = notiId => {
     dispatch(postNotificationDB(notiId));
@@ -80,9 +78,7 @@ const Notification = ({ show, setShow }) => {
   useEffect(() => {
     checkk(isNoti);
   }, [isNoti]);
-
   useEffect(() => {
-    // document.removeEventListener("mousedown", handleClickOutside);
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -96,6 +92,7 @@ const Notification = ({ show, setShow }) => {
       setShow(true);
     }
   };
+
   return (
     <SNotiBox>
       <NotifiItem>
@@ -167,10 +164,10 @@ const SItemList = styled.div`
   border-radius: 20px;
   left: -169px;
   top: 0;
-  /* -ms-overflow-style: none;
+  -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
-  } */
+  }
 
   padding: 5px 20px;
 `;
