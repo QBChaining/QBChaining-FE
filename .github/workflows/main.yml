@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           # node-version: ${{ matrix.node-version }}
-          node-version: [16.13.0]
+          node-version: "16.13.0"
           registry-url: "https://registry.npmjs.org"
           # Cache
       - name: Cache node modules
