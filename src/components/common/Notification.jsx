@@ -81,7 +81,7 @@ const Notification = ({ show, setShow }) => {
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
