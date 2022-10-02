@@ -150,7 +150,8 @@ const NotifiItem = styled.div`
   height: 50px;
 `;
 const SNotiImage = styled.div`
-  margin-top: 15px;
+  margin-top: 20px;
+  margin-left: 10px;
 `;
 const SNotiTry = styled.div`
   position: absolute;
@@ -181,8 +182,8 @@ const SItemList = styled.div`
 `;
 
 const SNotiOn = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 26px;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${allamOff});
@@ -190,8 +191,8 @@ const SNotiOn = styled.div`
   /* margin-top: 8px; */
 `;
 const SNotiOff = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 26px;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${allamOn});
@@ -200,22 +201,20 @@ const SNotiOff = styled.div`
 
 const SNDot = styled.div`
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 10px;
+  height: 10px;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${allamDot});
-  top: -3px;
-  left: 9.5px;
+  top: 4.9px;
+  left: 16.5px;
 `;
 
 const SAlNum = styled.div`
   position: relative;
-
-  font-size: 2px;
-
-  top: 12px;
-  left: 17px;
+  font-size: 5px;
+  top: -2.3px;
+  left: 1.5px;
 `;
 
 const Section = styled.div`
