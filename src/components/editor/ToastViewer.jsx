@@ -42,7 +42,7 @@ const SToastViewer = styled.div`
     text-shadow: none;
   }
 
-  & p {
+  & * {
     word-break: break-all;
   }
 
