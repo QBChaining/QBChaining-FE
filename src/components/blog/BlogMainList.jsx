@@ -86,6 +86,7 @@ const BlogMainList = ({ posts }) => {
           <SContentWrapper>
             <SContentTitle className="title">{posts.title}</SContentTitle>
             <SContent>{content}</SContent>
+            <SContent >{content}</SContent>
           </SContentWrapper>
           <STagNMark>
             <STagList>
