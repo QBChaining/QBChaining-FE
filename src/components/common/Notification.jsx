@@ -15,9 +15,9 @@ import { needLoginAlert } from "../../utils/swal";
 
 //이미지
 import notifitry from "../../assets/images/notifitry.png";
-import notifion from "../../assets/images/notifion.png";
-import notifioff from "../../assets/images/notifioff.png";
-
+import allamOff from "../../assets/images/allimOff.png";
+import allamOn from "../../assets/images/allimOn.png";
+import allamDot from "../../assets/images/allamDot.png";
 const Notification = ({ show, setShow }) => {
   const notifiResponse = useSelector(
     state => state.notificationSlice.notification,
@@ -28,7 +28,7 @@ const Notification = ({ show, setShow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // 알림 on,off 상태값
+  // 알림 on,off 상태값o
   const [isNo, setIsNo] = useState(false);
   // 알림 모달창
   const wrapperRef = useRef();
@@ -97,7 +97,15 @@ const Notification = ({ show, setShow }) => {
     <SNotiBox>
       <NotifiItem>
         <SNotiImage>
-          {isNo ? <SNotiOff onClick={onShow} /> : <SNotiOn onClick={onShow} />}
+          {isNo ? (
+            <SNotiOff onClick={onShow} />
+          ) : (
+            <SNotiOn onClick={onShow}>
+              <SNDot>
+                <SAlNum>{isNoti.length}</SAlNum>
+              </SNDot>
+            </SNotiOn>
+          )}
         </SNotiImage>
         {show === true ? (
           <Section>
@@ -177,7 +185,7 @@ const SNotiOn = styled.div`
   height: 40px;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url(${notifion});
+  background-image: url(${allamOff});
   cursor: pointer;
   /* margin-top: 8px; */
 `;
@@ -186,9 +194,30 @@ const SNotiOff = styled.div`
   height: 40px;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url(${notifioff});
+  background-image: url(${allamOn});
   cursor: pointer;
 `;
+
+const SNDot = styled.div`
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(${allamDot});
+  top: -3px;
+  left: 9.5px;
+`;
+
+const SAlNum = styled.div`
+  position: relative;
+
+  font-size: 2px;
+
+  top: 12px;
+  left: 17px;
+`;
+
 const Section = styled.div`
   position: relative;
 
