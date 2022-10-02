@@ -91,13 +91,18 @@ const QnaDetail = () => {
       <SLeftContainer>
         {!isDetailFetcing ? (
           <>
-            <QnaTarget isDatail={true} />
-            <QnaCommentList
-              author={target.user?.userName}
-              resolve={target.isResolve}
-              id={id}
-              qnaId={id}
-            />
+            <SLeftHeader>
+              <QnaTarget isDatail={true} />
+            </SLeftHeader>
+            <SLeftBody>
+              <h3>답변 {list.length}개</h3>
+              <QnaCommentList
+                author={target.user?.userName}
+                resolve={target.isResolve}
+                id={id}
+                qnaId={id}
+              />
+            </SLeftBody>
             {!isCommentFetching && hasNextPage && (
               <SLoading ref={infiniteTarget}>
                 <ClipLoader />
@@ -122,7 +127,7 @@ const QnaDetail = () => {
 export default QnaDetail;
 
 const SQnaDetail = styled.div`
-  min-width: 1300px;
+  width: 100%;
   display: flex;
   min-height: calc(100vh - 100px);
   margin: 0 auto;
@@ -130,10 +135,29 @@ const SQnaDetail = styled.div`
 
 const SLeftContainer = styled.div`
   width: 50%;
-  padding-left: 200px;
-  padding-right: 30px;
+  background-color: white;
   display: flex;
   flex-direction: column;
+`;
+
+const SLeftHeader = styled.div`
+  padding-left: 200px;
+  padding-right: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+`;
+
+const SLeftBody = styled.div`
+  flex: 1;
+  padding-left: 200px;
+  padding-right: 30px;
+  background-color: #f4f5f6;
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    padding: 20px;
+  }
 `;
 
 const SRightContainer = styled.div`
@@ -141,7 +165,7 @@ const SRightContainer = styled.div`
   top: 0;
   right: 0;
   height: 100vh;
-  padding: 100px 200px 50px 50px;
+  padding: 100px 130px 50px 50px;
   width: 50%;
   overflow: auto;
   background-color: ${props => props.theme.color.mainNavy};

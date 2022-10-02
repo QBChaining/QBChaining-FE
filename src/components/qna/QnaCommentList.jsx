@@ -152,7 +152,12 @@ export default QnaCommentList;
 
 const SQnaCommentList = styled.div``;
 const SCommentWrapper = styled.div``;
-const SItemWrapper = styled.div``;
+const SItemWrapper = styled.div`
+  background-color: white;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  border: 1px solid #eee;
+`;
 
 const SUserInfoWrapper = styled.div`
   display: flex;
@@ -162,7 +167,8 @@ const SUserInfoWrapper = styled.div`
   position: relative;
   border-radius: 30px;
   background-color: ${props =>
-    props.isChoose ? props.theme.color.mainOrange : "transparent"};
+    props.isChoose ? props.theme.color.mainOrange : "transparent"}
+
   &::before {
     display: ${props => (props.isChoose ? "block" : "none")};
     content: "";
@@ -180,24 +186,10 @@ const SUserInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 40px 20px 30px 40px;
-`;
-
-const SWinnerUserInfo = styled(SUserInfoWrapper)`
-  background-color: ${props => props.theme.color.mainOrange};
-  border-radius: 30px;
-  padding: 1px 30px 1px 2px;
-  position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    top: -20px;
-    left: 11px;
-    background-image: url(${WinnerCrown});
-    width: 28px;
-    height: 28px;
-    z-index: -1;
-  }
+  padding: 40px 0 30px 0;
+  margin: 0 20px 0 40px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
 `;
 
 const SUserProfile = styled.div`
@@ -226,6 +218,7 @@ const SUserName = styled.div`
 `;
 
 const SCreateAt = styled.div`
+  font-size: 12px;
   color: ${props =>
     props.winner ? props.theme.color.white : props.theme.color.grey6};
 `;
@@ -252,7 +245,6 @@ const SButtonWrapper = styled.div`
 
 const SContentText = styled.div`
   padding: 0 20px 40px 40px;
-  border-bottom: 1px solid ${props => props.theme.color.grey5};
 `;
 
 const SChoiceButton = styled.button`
@@ -291,6 +283,7 @@ const SNoComment = styled.div`
   font-size: 26px;
   font-weight: 500;
   min-height: 100px;
+  background-color: white;
 `;
 
 const SLoading = styled.div`

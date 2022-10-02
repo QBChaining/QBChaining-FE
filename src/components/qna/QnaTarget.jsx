@@ -188,7 +188,6 @@ const SCreateAt = styled.div`
 
 const SContent = styled.div`
   padding: 0 20px 0 40px;
-  border-bottom: 1px solid ${props => props.theme.color.grey5};
 `;
 
 const SContentTitle = styled.div`
@@ -229,5 +228,6 @@ const SUserInfoInner = styled.div`
   min-width: 200px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   cursor: pointer;
 `;
