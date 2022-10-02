@@ -169,8 +169,7 @@ const BlogCommunityDetail = () => {
 export default BlogCommunityDetail;
 
 const SContainer = styled.div`
-  min-width: 1300px;
-  max-width: 1920px;
+  width: 1300px;
   margin: 0 auto;
   margin-top: 40px;
   padding: 0 200px;
