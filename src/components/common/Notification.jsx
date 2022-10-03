@@ -103,6 +103,7 @@ const Notification = ({ show, setShow }) => {
             <SNotiOn onClick={onShow}>
               <SNDot>
                 <SAlNum>{isNoti.length}</SAlNum>
+                {/* <SAlNum>99</SAlNum> */}
               </SNDot>
             </SNotiOn>
           )}
@@ -182,7 +183,7 @@ const SItemList = styled.div`
 `;
 
 const SNotiOn = styled.div`
-  width: 24px;
+  width: 22px;
   height: 26px;
   background-position: center;
   background-repeat: no-repeat;
@@ -191,8 +192,8 @@ const SNotiOn = styled.div`
   /* margin-top: 8px; */
 `;
 const SNotiOff = styled.div`
-  width: 24px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${allamOn});
@@ -206,15 +207,21 @@ const SNDot = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${allamDot});
-  top: 4.9px;
-  left: 16.5px;
+  top: 5px;
+  left: 15.3px;
 `;
 
 const SAlNum = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2px;
+  height: 2px;
   position: relative;
-  font-size: 5px;
-  top: -2.3px;
-  left: 1.5px;
+  font-size: 3px;
+  top: 3.8px;
+  left: 3.5px;
+  letter-spacing: -1px;
 `;
 
 const Section = styled.div`
