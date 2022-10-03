@@ -173,7 +173,7 @@ const SContainer = styled.div`
   width: 1300px;
   margin: 0 auto;
   margin-top: 40px;
-  padding: 0 200px;
+  padding: 0 130px;
   padding-bottom: 20px;
 `;
 const SNickName = styled.div``;
