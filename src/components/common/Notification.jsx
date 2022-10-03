@@ -192,8 +192,8 @@ const SNotiOn = styled.div`
   /* margin-top: 8px; */
 `;
 const SNotiOff = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 26px;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${allamOn});
