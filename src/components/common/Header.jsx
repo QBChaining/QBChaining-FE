@@ -28,7 +28,7 @@ const Header = () => {
   const onLogoutHandler = () => {
     dispatch(logOut());
     dispatch(removeUserInfo());
-    Swal.fire("로그아웃", "성공", "success").then(() => {
+    Swal.fire("로그아웃 되었습니다", "", "success").then(() => {
       navigate("/", { replace: true });
     });
   };

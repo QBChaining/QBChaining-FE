@@ -76,8 +76,8 @@ const QnaTarget = ({ isDatail }) => {
       <SUserInfo>
         <SUserInfoWrapper>
           <SBookmarkButton
-            isBookmarked={isBookmarked}
-            onClick={isBookmarked ? onDeleteBookmark : onAddBookmark}
+            isBookmarked={target.isBookmark}
+            onClick={target.isBookmark ? onDeleteBookmark : onAddBookmark}
           ></SBookmarkButton>
           <SContentTitle>{target.title}</SContentTitle>
           <SUserInfoInner
