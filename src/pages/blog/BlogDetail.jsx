@@ -166,6 +166,7 @@ const BlogCommunityDetail = () => {
     </SContainer>
   );
 };
+
 export default BlogCommunityDetail;
 
 const SContainer = styled.div`
