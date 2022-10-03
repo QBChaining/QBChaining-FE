@@ -14,8 +14,9 @@ export const getBlogCommunityListDB = createAsyncThunk(
     try {
       const response = await blogApi.getBlogCommunityList(data);
       if (response.data.success === true) {
-        return response.data.data;
       }
+      // return response.data.data.length >= 1 ? response.data.data : [];
+      return response.data.data;
     } catch (err) {
       if (err.response.status === 404) {
         if (err.response.status === 404) {

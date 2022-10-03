@@ -32,6 +32,7 @@ export const blogSlice = createSlice({
     isDetailFetcing: false,
     errorMessage: "",
     detailErrorMessage: "",
+    isMore: 0,
   },
   reducers: {
     removeBlogList: state => {
@@ -48,13 +49,14 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogCommunityListDB.fulfilled]: (state, action) => {
-      //블로그 메인 게시물 리스트 GET
-      // state.blogList = state.blogList.concat(action.payload);
-      state.blogList = [...state.blogList, ...action.payload];
+      // state.blogList = [...state.blogList, ...action.payload];
+      state.blogList = state.blogList.concat(action.payload);
+      state.isMore = action.payload.length;
       state.isFetching = false;
       state.errorMessage = null;
     },
     [getBlogCommunityListDB.rejected]: (state, action) => {
+      state.isMore = false;
       state.isFetching = false;
       state.errorMessage = action.payload.errorMessage;
     },
