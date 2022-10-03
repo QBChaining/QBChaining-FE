@@ -8,10 +8,11 @@ export const successAlert = message => {
   });
 };
 
-export const errorAlert = message => {
+export const errorAlert = (message, text) => {
   return Swal.fire({
     icon: "error",
     title: message,
+    text: text,
     confirmButtonText: "확인",
   });
 };

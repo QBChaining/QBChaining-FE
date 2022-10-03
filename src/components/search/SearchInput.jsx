@@ -58,7 +58,6 @@ const SearchInput = () => {
         }),
       );
     }
-    setKeyword(prev => [newKeyword, ...prev]);
 
     dispatch(removeSearchList());
     dispatch(setSearchWord(search.current.value));
@@ -66,7 +65,12 @@ const SearchInput = () => {
     // window.localStorage.setItem("search", search.current.value);
     setOpen(false);
     navigate(`/search?q=${search.current.value}`);
-
+    for (let i = 0; i < keyword.length; i++) {
+      if (keyword[i].text === search.current.value) {
+        return;
+      }
+    }
+    setKeyword(prev => [newKeyword, ...prev]);
     search.current.value = "";
   };
 
@@ -117,8 +121,7 @@ const SearchInput = () => {
       <SSearchButton onClick={goSearch}>검색</SSearchButton>
       {open && (
         <SSearchWordList>
-          <h2>최근검색어</h2>
-          {keyword.length < 1 && <div>검색어가 없습니다!</div>}
+          {keyword.length < 1 && <SNoword>검색어가 없습니다!</SNoword>}
           {keyword.map(data => (
             <SSearchWord
               key={data.id}
@@ -180,6 +183,7 @@ const SInput = styled.input`
   background-repeat: no-repeat;
   background-position: left 16px center;
   font-size: 15px;
+  z-index: 1;
   &:active {
     outline: none;
   }
@@ -203,22 +207,27 @@ const SSearchButton = styled.button`
 
 const SSearchWordList = styled.ul`
   position: absolute;
-  top: 50px;
+  z-index: 0;
+  top: 0;
   left: 0;
   width: 100%;
-  background-color: black;
+  padding-top: 50px;
+  border: 1px solid #939393;
+  background-color: white;
+  border-radius: 30px;
+  z-index: -1;
+  color: black;
 `;
 
 const SSearchWord = styled.li`
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid black;
-  padding: 10px;
   padding-left: 70px;
-  background-color: ${props => props.theme.color.mainNavy};
+  background-color: ${props => props.theme.color.white};
   cursor: pointer;
   &:hover {
-    background-color: ${props => props.theme.color.black};
+    background-color: #eee;
   }
 `;
 
@@ -226,12 +235,26 @@ const SSearchWordText = styled.div``;
 
 const SSearchDeleteButton = styled.button`
   border: none;
-  background-color: red;
+  width: 87px;
   padding: 10px;
+  background-color: transparent;
+
+  &:hover {
+    color: #1a73e8;
+  }
 `;
 
 const SDeleteAllButton = styled.button`
   width: 100%;
   padding: 10px;
-  background-color: ivory;
+  border: none;
+  border-radius: 0 0 30px 30px;
+  &:hover {
+    color: #1a73e8;
+  }
+`;
+
+const SNoword = styled.div`
+  padding: 12px 120px 12px 70px;
+  color: ${props => props.theme.color.grey5};
 `;

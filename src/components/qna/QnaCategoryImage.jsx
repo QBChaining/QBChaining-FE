@@ -19,7 +19,7 @@ const QnaCategoryImage = ({ item }) => {
       case "JavaScript":
         setIcon(javascript);
         break;
-      case "Nodejs":
+      case "Node.js":
         setIcon(nodejs);
         break;
       case "React":

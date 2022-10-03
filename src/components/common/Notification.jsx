@@ -67,7 +67,9 @@ const Notification = ({ show, setShow }) => {
   //최초 로딩시 받아오기
   useEffect(() => {
     if (isLogin) {
-      dispatch(getNotificationDB());
+      dispatch(getNotificationDB()).then(res => {
+        console.log(res);
+      });
     }
   }, [address, show]);
 
