@@ -49,7 +49,6 @@ export const blogSlice = createSlice({
       state.isFetching = true;
     },
     [getBlogCommunityListDB.fulfilled]: (state, action) => {
-      // state.blogList = [...state.blogList, ...action.payload];
       state.blogList = state.blogList.concat(action.payload);
       state.isMore = action.payload.length;
       state.isFetching = false;

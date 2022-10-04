@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { blogApi } from "../../axios/api/blogApi";
 //경고창
-import { networkError } from "../../utils/swal";
+import { errorAlert, networkError } from "../../utils/swal";
 
 //에러 로딩
 import * as Sentry from "@sentry/react";
@@ -15,14 +15,11 @@ export const getBlogCommunityListDB = createAsyncThunk(
       const response = await blogApi.getBlogCommunityList(data);
       if (response.data.success === true) {
       }
-      // return response.data.data.length >= 1 ? response.data.data : [];
       return response.data.data;
     } catch (err) {
       if (err.response.status === 404) {
         if (err.response.status === 404) {
-          if (err.response.status === 404) {
-            networkError();
-          }
+          networkError();
         }
       }
       Sentry.captureException(`error, 블로그 전체조회 : ${err}`);
@@ -64,6 +61,9 @@ export const postBlogCommunityDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
+      if (err.response.status === 419) {
+        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
+      }
       Sentry.captureException(`error, 블로그 작성: ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -102,6 +102,10 @@ export const deleteBlogCommunityDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
+      if (err.response.status === 404) {
+        networkError();
+      }
+
       Sentry.captureException(`error, 블로그 게시물 삭제 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -119,6 +123,10 @@ export const getBlogCommentListDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
+      if (err.response.status === 404) {
+        networkError();
+      }
+
       Sentry.captureException(`error, 댓글 조회 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -135,6 +143,12 @@ export const postBlogCommentDB = createAsyncThunk(
         return response.data;
       }
     } catch (err) {
+      if (err.response.status === 404) {
+        networkError();
+      }
+      if (err.response.status === 419) {
+        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
+      }
       Sentry.captureException(`error, 블로그 댓글 추가 : ${err}`);
       return thunkAPI.rejectWithValue(err.response);
     }
@@ -152,6 +166,9 @@ export const patchBlogCommentDB = createAsyncThunk(
         return response.data.data;
       }
     } catch (err) {
+      if (err.response.status === 404) {
+        networkError();
+      }
       Sentry.captureException(`error, 블로그 댓글 수정 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -168,7 +185,10 @@ export const deleteBlogCommentDB = createAsyncThunk(
         return id;
       }
     } catch (err) {
-      Sentry.captureException(`error, 블로그 댓글 삭제 성공! : ${err}`);
+      if (err.response.status === 404) {
+        networkError();
+      }
+      Sentry.captureException(`error, 블로그 댓글 삭제 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
@@ -181,6 +201,12 @@ export const getMyBlogDB = createAsyncThunk("GET_MY_BLOG", async thunkAPI => {
       return response.data.data;
     }
   } catch (err) {
+    if (err.response.status === 404) {
+      networkError();
+    }
+    if (err.response.status === 419) {
+      errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
+    }
     Sentry.captureException(`error, MYBLOG 조회 : ${err}`);
     return thunkAPI.rejectWithValue(err.response.data.message);
   }
@@ -197,6 +223,12 @@ export const postBlogLikeDB = createAsyncThunk(
         return response.data;
       }
     } catch (err) {
+      if (err.response.status === 404) {
+        networkError();
+      }
+      if (err.response.status === 419) {
+        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
+      }
       Sentry.captureException(`error, 좋아요 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -212,6 +244,12 @@ export const unBlogLikeDB = createAsyncThunk(
       successAlert("좋아요가 취소 되었습니다.");
       return response.data;
     } catch (err) {
+      if (err.response.status === 404) {
+        networkError();
+      }
+      if (err.response.status === 419) {
+        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
+      }
       Sentry.captureException(`error, 좋아요 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -225,6 +263,12 @@ export const getBlogBookMarkDB = createAsyncThunk(
       const response = await blogApi.getBlogBookMark();
       return response.data.data;
     } catch (err) {
+      if (err.response.status === 404) {
+        networkError();
+      }
+      if (err.response.status === 419) {
+        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
+      }
       Sentry.captureException(`error, 북마크 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -242,6 +286,12 @@ export const postBlogBookMarkDB = createAsyncThunk(
         return data;
       }
     } catch (err) {
+      if (err.response.status === 404) {
+        networkError();
+      }
+      if (err.response.status === 419) {
+        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
+      }
       Sentry.captureException(`error, 북마크 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -259,6 +309,12 @@ export const deleteBlogBookMarkDB = createAsyncThunk(
         return id;
       }
     } catch (err) {
+      if (err.response.status === 404) {
+        networkError();
+      }
+      if (err.response.status === 419) {
+        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
+      }
       Sentry.captureException(`error, 북마크 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -271,7 +327,10 @@ export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
     const response = await blogApi.getHotBlog();
     return response.data.data;
   } catch (err) {
-    Sentry.captureException(`error, 좋아요 에러. ${err}`);
+    if (err.response.status === 404) {
+      networkError();
+    }
+    Sentry.captureException(`error, 추천 많이 받은 블로그 조회: ${err}`);
     return thunkAPI.rejectWithValue(err.response.data.message);
   }
 });
@@ -287,7 +346,14 @@ export const postCommentLikeDB = createAsyncThunk(
       }
       return;
     } catch (err) {
-      // return thunkAPI.rejectWithValue(err.response.data.message);
+      if (err.response.status === 404) {
+        networkError();
+      }
+      if (err.response.status === 419) {
+        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
+      }
+      Sentry.captureException(`error, 댓글 좋아요 추가 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );
@@ -302,7 +368,14 @@ export const delCommentLikeDB = createAsyncThunk(
       }
       return;
     } catch (err) {
-      // return thunkAPI.rejectWithValue(err.response.data.message);
+      if (err.response.status === 404) {
+        networkError();
+      }
+      if (err.response.status === 419) {
+        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
+      }
+      Sentry.captureException(`error, 댓글 좋아요 삭제: ${err}`);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   },
 );

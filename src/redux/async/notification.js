@@ -33,7 +33,7 @@ export const postNotificationDB = createAsyncThunk(
         networkError();
       }
       if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다", "재로그인이 필요합니다!");
+        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
       }
       Sentry.captureException(`error, 알람 확인 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
@@ -51,7 +51,7 @@ export const delNotificationDB = createAsyncThunk(
         networkError();
       }
       if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다", "재로그인이 필요합니다!");
+        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
       }
       Sentry.captureException(`error, 알람 삭제 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
