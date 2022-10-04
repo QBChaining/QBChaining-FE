@@ -19,7 +19,9 @@ export const getBlogCommunityListDB = createAsyncThunk(
     } catch (err) {
       if (err.response.status === 404) {
         if (err.response.status === 404) {
-          networkError();
+          if (err.response.status === 404) {
+            networkError();
+          }
         }
       }
       Sentry.captureException(`error, 블로그 전체조회 : ${err}`);
