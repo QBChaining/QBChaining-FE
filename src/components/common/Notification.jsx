@@ -23,6 +23,7 @@ const Notification = ({ show, setShow }) => {
     state => state.notificationSlice.notification,
   );
   const { isLogin } = useSelector(state => state.userSlice);
+
   const address = window.location.href;
   const isNoti = notifiResponse?.filter(data => data.check === false);
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const Notification = ({ show, setShow }) => {
   //최초 로딩시 받아오기
   useEffect(() => {
     if (isLogin) {
-      dispatch(getNotificationDB()).then(res => {});
+      dispatch(getNotificationDB());
     }
   }, [address, show]);
 

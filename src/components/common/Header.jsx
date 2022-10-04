@@ -38,7 +38,9 @@ const Header = () => {
   const beforeScrollY = useRef(0);
 
   useEffect(() => {
-    dispatch(getNotificationDB());
+    if (isLogin) {
+      dispatch(getNotificationDB());
+    }
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
