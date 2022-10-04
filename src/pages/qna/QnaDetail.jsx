@@ -151,7 +151,7 @@ const SLeftBody = styled.div`
   flex: 1;
   padding-left: 200px;
   padding-right: 30px;
-  background-color: #f4f5f6;
+  background-color: #f4f5f6
   display: flex;
   flex-direction: column;
 
