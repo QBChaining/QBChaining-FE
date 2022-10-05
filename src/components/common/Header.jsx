@@ -33,8 +33,6 @@ const Header = () => {
     });
   };
 
-  console.log("gitTest");
-
   const [position, setPosition] = useState(0);
   const [visible, setVisible] = useState(true);
   const beforeScrollY = useRef(0);
