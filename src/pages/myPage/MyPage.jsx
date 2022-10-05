@@ -234,7 +234,7 @@ const SMyPage = styled.div`
   position: relative;
   min-width: 1300px;
   margin: 45px auto 0;
-  padding: 0 130px 50px;
+  padding: 0 100px 50px 130px;
 `;
 
 const SUserInfoWrapper = styled.div`

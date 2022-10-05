@@ -86,9 +86,7 @@ const Register = ({ isEdit, editData }) => {
       dispatch(putUserInfoDB(data));
     }
     successAlert(
-      isEdit
-        ? "정보 수정이 완료 되었습니다. 감사합니다!"
-        : "정보 등록이 되었습니다. 감사합니다!",
+      isEdit ? "정보가 수정 되었습니다." : "정보 등록이 되었습니다.",
     ).then(res => {
       (res.dismiss || res.isConfirmed) && navigate(`/mypage/${userName}`);
     });
@@ -243,6 +241,7 @@ const SSubmitButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 150px;
   margin: 0 auto;
   padding: 10px;
   cursor: pointer;
@@ -253,6 +252,7 @@ const SButtonText = styled.p`
   font-size: 18px;
   font-weight: 500;
 `;
+
 const SButtonIcon = styled.div`
   position: relative;
   width: 42px;

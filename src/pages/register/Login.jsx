@@ -15,6 +15,10 @@ const Login = () => {
       navigate("/");
     }
 
+    if (window.location.search.length === 0) {
+      navigate("/");
+    }
+
     if (window.location.search) {
       //주소창에서 토큰값 자르기
       const token = window.location.search.split("=");
