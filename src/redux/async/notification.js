@@ -3,6 +3,9 @@ import { notification } from "../../axios/api/notificationAPI";
 import { errorAlert, networkError } from "./../../utils/swal";
 import * as Sentry from "@sentry/react";
 
+/**
+ * 알림 리스트 조회
+ */
 export const getNotificationDB = createAsyncThunk(
   "GET_NOTIFICATION",
   async thunkAPI => {
@@ -23,9 +26,12 @@ export const getNotificationDB = createAsyncThunk(
   },
 );
 
+/**
+ * 알림 확인
+ */
 export const postNotificationDB = createAsyncThunk(
   "POST_NOTIFICATION",
-  async (id, data, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
       const response = await notification.postNotification(id);
       return id;
@@ -41,6 +47,10 @@ export const postNotificationDB = createAsyncThunk(
     }
   },
 );
+
+/**
+ * 알람 삭제
+ */
 export const delNotificationDB = createAsyncThunk(
   "DEL_NOTIFICATION",
   async (id, thunkAPI) => {
@@ -59,20 +69,3 @@ export const delNotificationDB = createAsyncThunk(
     }
   },
 );
-//sse test
-// export const getTestDB = createAsyncThunk("GET_TEST", async thunkAPI => {
-//   const testNotifiRes = await new EventSource(
-//   );
-//   //   console.log("알람테스트", testNotifiRes);
-
-//   testNotifiRes.onmessage = function (event) {
-//     // 이벤트 설정이안된 기본 데이터 처리
-//   };
-//   testNotifiRes.addEventListener(
-//     "myevent",
-//     function (e) {
-//       // 'myevent' 이벤트의 데이터 처리
-//     },
-//     false,
-//   );
-// });

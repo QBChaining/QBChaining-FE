@@ -1,4 +1,4 @@
-import React, { useEffect, useDispatch } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
@@ -17,7 +17,6 @@ const BlogCommunityEdit = () => {
 
   return (
     <SEdit>
-      sdfsdfsd
       <Helmet>
         <title>Blog Edit</title>
       </Helmet>
