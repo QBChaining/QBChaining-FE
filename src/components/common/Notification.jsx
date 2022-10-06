@@ -79,6 +79,7 @@ const Notification = ({ show, setShow }) => {
   useEffect(() => {
     checkk(isNoti);
   }, [isNoti]);
+
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     return () => {

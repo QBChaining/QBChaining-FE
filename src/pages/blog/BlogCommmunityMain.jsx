@@ -142,7 +142,7 @@ const STopBox = styled.div`
 
 const SBody = styled.div`
   min-width: 1300px;
-  padding: 0 200px;
+  padding: 0 100px 0 200px;
   margin: 0 auto;
 `;
 

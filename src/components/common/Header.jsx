@@ -28,7 +28,7 @@ const Header = () => {
   const onLogoutHandler = () => {
     dispatch(logOut());
     dispatch(removeUserInfo());
-    Swal.fire("로그아웃", "성공", "success").then(() => {
+    Swal.fire("로그아웃 되었습니다", "", "success").then(() => {
       navigate("/", { replace: true });
     });
   };
@@ -38,9 +38,6 @@ const Header = () => {
   const beforeScrollY = useRef(0);
 
   useEffect(() => {
-    if (isLogin) {
-      dispatch(getNotificationDB());
-    }
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -57,7 +54,7 @@ const Header = () => {
           setVisible(true);
         }
         beforeScrollY.current = currentScrollY;
-      }, 10),
+      }, 100),
     [beforeScrollY],
   );
 

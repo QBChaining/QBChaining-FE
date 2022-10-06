@@ -20,20 +20,21 @@ const SearchList = ({ searchWord, type }) => {
     state => state.searchSlice,
   );
 
-  const [pageNumber, setPageNumber] = useState(0);
+  const [endid, setEndid] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [target, inView] = useInView();
 
   useEffect(() => {
-    setPageNumber(0);
+    setEndid(0);
     setHasNextPage(true);
+    window.scrollTo(0, 0);
   }, [searchWord]);
 
   //무한스크롤
   useEffect(() => {
     let data = {
       word: searchWord,
-      pageNumber,
+      endid,
     };
 
     //qnalist 조회 후 res.payload.length가 10이라면 다음페이지 존재
@@ -47,17 +48,17 @@ const SearchList = ({ searchWord, type }) => {
         setHasNextPage(res.payload.length === 10);
       });
     }
-  }, [searchWord, pageNumber]);
+  }, [searchWord, endid]);
 
-  //페이지가 바닥에 닿을때마다 pageNumber+1
+  //페이지가 바닥에 닿을때마다 SearchList의 마지막id를 구해 endid를 변경
   useEffect(() => {
     if (type === "qna") {
       if (qnaSearchList.length !== 0 && inView && hasNextPage) {
-        setPageNumber(pageNumber => pageNumber + 1);
+        setEndid(qnaSearchList[qnaSearchList.length - 1].id);
       }
     } else if (type === "blog") {
       if (blogSearchList.length !== 0 && inView && hasNextPage) {
-        setPageNumber(pageNumber => pageNumber + 1);
+        setEndid(blogSearchList[blogSearchList.length - 1].id);
       }
     }
   }, [inView]);

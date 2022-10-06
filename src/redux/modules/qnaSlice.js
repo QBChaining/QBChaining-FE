@@ -270,6 +270,7 @@ const qnaSlice = createSlice({
     //게시글 즐겨찾기 추가
     [postBookmarkListDB.fulfilled]: (state, { payload }) => {
       state.bookmarkList.unshift(payload);
+      state.qnaTarget.isBookmark = true;
       state.isFetching = false;
       state.errorMessage = null;
     },
@@ -286,6 +287,7 @@ const qnaSlice = createSlice({
         data => data.id !== payload,
       );
       state.bookmarkList = newBookmarkList;
+      state.qnaTarget.isBookmark = false;
       state.isFetching = false;
       state.errorMessage = null;
     },
