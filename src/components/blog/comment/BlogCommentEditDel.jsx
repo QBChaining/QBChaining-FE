@@ -8,10 +8,13 @@ import {
   patchBlogCommentDB,
   deleteBlogCommentDB,
 } from "../../../redux/async/blog";
+
 //알럿
 import { errorAlert } from "../../../utils/swal";
+
 // 댓글 좋아요
 import CommentLike from "./CommentLike";
+
 const CommentEditDel = ({ comments }) => {
   const navigate = useNavigate();
 

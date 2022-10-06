@@ -23,7 +23,6 @@ const Notification = ({ show, setShow }) => {
     state => state.notificationSlice.notification,
   );
   const { isLogin } = useSelector(state => state.userSlice);
-
   const address = window.location.href;
   const isNoti = notifiResponse?.filter(data => data.check === false);
   const dispatch = useDispatch();
@@ -79,11 +78,10 @@ const Notification = ({ show, setShow }) => {
   useEffect(() => {
     checkk(isNoti);
   }, [isNoti]);
-
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -105,7 +103,6 @@ const Notification = ({ show, setShow }) => {
             <SNotiOn onClick={onShow}>
               <SNDot>
                 <SAlNum>{isNoti.length}</SAlNum>
-                {/* <SAlNum>99</SAlNum> */}
               </SNDot>
             </SNotiOn>
           )}
@@ -153,8 +150,7 @@ const NotifiItem = styled.div`
   height: 50px;
 `;
 const SNotiImage = styled.div`
-  margin-top: 20px;
-  margin-left: 10px;
+  margin-top: 15px;
 `;
 const SNotiTry = styled.div`
   position: absolute;
@@ -185,8 +181,8 @@ const SItemList = styled.div`
 `;
 
 const SNotiOn = styled.div`
-  width: 22px;
-  height: 26px;
+  width: 40px;
+  height: 40px;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${allamOff});
@@ -194,8 +190,8 @@ const SNotiOn = styled.div`
   /* margin-top: 8px; */
 `;
 const SNotiOff = styled.div`
-  width: 22px;
-  height: 26px;
+  width: 40px;
+  height: 40px;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${allamOn});
@@ -204,26 +200,22 @@ const SNotiOff = styled.div`
 
 const SNDot = styled.div`
   position: relative;
-  width: 10px;
-  height: 10px;
+  width: 40px;
+  height: 40px;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${allamDot});
-  top: 5px;
-  left: 15.3px;
+  top: -3px;
+  left: 9.5px;
 `;
 
 const SAlNum = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2px;
-  height: 2px;
   position: relative;
-  font-size: 3px;
-  top: 3.8px;
-  left: 3.5px;
-  letter-spacing: -1px;
+
+  font-size: 2px;
+
+  top: 12px;
+  left: 17px;
 `;
 
 const Section = styled.div`

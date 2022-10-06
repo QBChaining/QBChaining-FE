@@ -85,6 +85,7 @@ const QnaDetail = () => {
 
   return (
     <SQnaDetail>
+      sdfsdfsdf
       <Helmet>
         <title>Qna Detail</title>
       </Helmet>

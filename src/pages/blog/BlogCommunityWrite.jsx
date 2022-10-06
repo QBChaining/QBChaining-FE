@@ -12,6 +12,7 @@ import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 const BlogCommunityWrite = () => {
   return (
     <STWrite>
+      sdfsdfss
       <Helmet>
         <title>Blog Write</title>
       </Helmet>

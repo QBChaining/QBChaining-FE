@@ -80,6 +80,7 @@ const MyPage = () => {
   if (isFetching) {
     return (
       <SLoading>
+        sdfsdf
         <ClipLoader />
       </SLoading>
     );
