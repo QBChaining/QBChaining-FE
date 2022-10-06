@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet-async";
 
@@ -12,7 +12,6 @@ import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 const QnaWrite = () => {
   return (
     <SQnaWrite>
-      sdfsdf
       <Helmet>
         <title>QNA Write</title>
       </Helmet>

@@ -19,7 +19,6 @@ import blogbookmarkadd from "../../assets/images/BookmarkFillIcon.png";
 
 const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
   const { isLogin } = useSelector(state => state.userSlice);
-  // console.log("target", isbookmark);
 
   const dispatch = useDispatch();
   const { id } = useParams();

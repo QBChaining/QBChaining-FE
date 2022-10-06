@@ -90,7 +90,6 @@ const BlogCommunityDetail = () => {
 
   return (
     <SContainer>
-      sdfsdf
       <Helmet>
         <title>Blog Detail</title>
       </Helmet>

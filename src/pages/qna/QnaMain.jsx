@@ -89,7 +89,6 @@ const QnaMain = () => {
 
   return (
     <SQnaMain>
-      sdfsdfsdf
       <Helmet>
         <title>Qna Main</title>
       </Helmet>

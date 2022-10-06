@@ -56,7 +56,6 @@ const BlogMainList = ({ posts }) => {
   const [content, setContent] = useState(posts.content);
 
   useEffect(() => {
-    // posts.content = posts.content.replace(/AB/g, "");
     var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
     setContent(content.replace(reg, ""));
   }, []);

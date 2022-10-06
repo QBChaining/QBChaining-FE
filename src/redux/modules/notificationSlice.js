@@ -13,7 +13,9 @@ export const notificationSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    // 알림 조회
+    /**
+     *알림 조회
+     */
     [getNotificationDB.pending]: state => {
       state.isFetching = true;
     },
@@ -24,7 +26,10 @@ export const notificationSlice = createSlice({
       }
       state.notification = action.payload;
     },
-    //알림 확인
+
+    /**
+     * 알림 확인
+     */
     [postNotificationDB.pending]: (state, action) => {
       state.isFetching = true;
     },
@@ -34,7 +39,10 @@ export const notificationSlice = createSlice({
       });
       state.notification[idx].check = true;
     },
-    //알림 삭제
+
+    /**
+     * 알림 삭제
+     */
     [delNotificationDB.pending]: state => {
       state.isFetching = true;
     },
