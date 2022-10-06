@@ -14,6 +14,7 @@ import { removeBlogList } from "../../redux/modules/blogSlice";
 
 const BlogCommmunityMain = () => {
   const blogMainList = useSelector(state => state.blogSlice.blogList);
+  const isFinish = useSelector(state => state.blogSlice.isMore);
   const blogMainLists = [...new Set(blogMainList.map(JSON.stringify))].map(
     JSON.parse,
   );
@@ -29,11 +30,13 @@ const BlogCommmunityMain = () => {
    */
 
   const getBlogMainCoumunity = useCallback(() => {
-    const getFinish = async () => {
-      await dispatch(getBlogCommunityListDB(page));
-      setLoading(false);
+    const finish = async () => {
+      if (isFinish >= 1) {
+        await dispatch(getBlogCommunityListDB(page));
+        setLoading(false);
+      }
     };
-    return getFinish();
+    return finish();
   }, [page, blogMainLists]);
 
   /**
@@ -59,8 +62,8 @@ const BlogCommmunityMain = () => {
       dispatch(getBlogCommunityListDB(page));
       setPage(page => page + 1);
     }
-    // if (blogMainLists.length !== 100) {
-    // }
+    if (isFinish === 0) {
+    }
   }, [page]);
 
   useEffect(() => {
@@ -72,7 +75,7 @@ const BlogCommmunityMain = () => {
     return () => {
       window.removeEventListener("scroll", _scrollPosition);
     };
-  }, [page, loading]);
+  }, [page, loading, isFinish]);
 
   //메인 블로그 게시글 조회
   useEffect(() => {
@@ -109,6 +112,8 @@ const BlogCommmunityMain = () => {
       </SBody>
       <ModalBookmark />
     </SBlogCommmunityMain>
+    // {hasMore ? (isLoading ? null : <div ref={ref} style={{ border: "1px solid white" }}></div>)
+    //  : <HashMore txt={'맨 하단 페이지 입니다.'} />}
   );
 };
 
