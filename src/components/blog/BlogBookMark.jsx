@@ -7,16 +7,17 @@ import {
   postBlogBookMarkDB,
   deleteBlogBookMarkDB,
 } from "../../redux/async/blog.js";
+
 //알럿
 import { needLoginAlert } from "../../utils/swal";
+
 //이미지
 import blogbookmark from "../../assets/images/BookmarkNoFillIcon.png";
 import blogbookmarkadd from "../../assets/images/BookmarkFillIcon.png";
 
-const BlogBookMark = ({ isbookmark, posts, isdetailbookmark }) => {
+const BlogBookMark = ({ isbookmark, posts }) => {
   const { isLogin } = useSelector(state => state.userSlice);
-  // console.log(posts);
-  // console.log("isbookmark", isbookmark);
+
   const dispatch = useDispatch();
   const totalData = {
     id: posts.id,
@@ -25,17 +26,6 @@ const BlogBookMark = ({ isbookmark, posts, isdetailbookmark }) => {
     createdAt: posts.createdAt,
   };
 
-  const onAddBookMark = () => {
-    if (!isLogin) {
-      needLoginAlert();
-      return;
-    }
-
-    dispatch(postBlogBookMarkDB(totalData));
-  };
-  const onDeleteBookMark = id => {
-    dispatch(deleteBlogBookMarkDB(id));
-  };
   return (
     <>
       <div>{isbookmark === false ? <SBookMarkBtn /> : <SbookMarkBtnAdd />}</div>

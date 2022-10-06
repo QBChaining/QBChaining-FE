@@ -63,7 +63,6 @@ const Header = () => {
 
   return (
     <SHeader location={location} visible={visible}>
-      ㄴㅇㄹㄴㅇㄹㄴㅇㄹ
       <SLogoContainer
         onClick={() => {
           navigate("/");

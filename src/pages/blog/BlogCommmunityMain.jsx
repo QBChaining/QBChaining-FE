@@ -94,7 +94,6 @@ const BlogCommmunityMain = () => {
 
   return (
     <SBlogCommmunityMain>
-      sdfsdfsdf
       <Helmet>
         <title>Blog Main</title>
       </Helmet>

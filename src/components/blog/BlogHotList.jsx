@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,13 +8,12 @@ import unlike from "../../assets/images/unlike.png";
 
 const BlogHotList = () => {
   const hotcommunits = useSelector(state => state.blogSlice.hotBlog);
+  /**
+   * 히트게시물리스트 4개만 보여주기
+   */
   const hotcommunity = hotcommunits.slice(0, 4);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   dispatch(getHotBlogDB());
-  // }, []);
   return (
     <SBlogHotList>
       <SHotTitle>최근에 추천 많이 받은 게시글 🔥</SHotTitle>

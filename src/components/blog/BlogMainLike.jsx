@@ -25,18 +25,7 @@ const BlogLike = ({ isLove }) => {
       setLike(false);
     }
   }, [isLove]);
-  const onLikeBlog = () => {
-    if (!isLogin) {
-      needLoginAlert();
-      return;
-    }
-    dispatch(postBlogLikeDB(id));
-    setLike(!Like);
-  };
-  const onUnLikeBlog = () => {
-    dispatch(unBlogLikeDB(id));
-    setLike(!Like);
-  };
+
   return <div>{Like === false ? <UnLike /> : <AddLike />}</div>;
 };
 
