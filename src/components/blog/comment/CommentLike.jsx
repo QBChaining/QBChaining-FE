@@ -46,29 +46,12 @@ const CommentLike = ({ comments, isLike }) => {
           }}
         />
       )}
+      {/* <SNum>{comments.like}</SNum> */}
     </SBlogLike>
   );
 };
 
 export default CommentLike;
-const UnLike = styled.div`
-  width: 18px;
-  height: 18px;
-  background-position: center;
-  background-size: contain;
-  background-image: url(${unlike});
-  background-repeat: no-repeat;
-`;
-
-const AddLike = styled.div`
-  width: 18px;
-  height: 18px;
-
-  background-position: center;
-  background-size: contain;
-  background-image: url(${addlike});
-  background-repeat: no-repeat;
-`;
 const SBlogLike = styled.div`
   display: flex;
   align-items: center;
@@ -76,3 +59,28 @@ const SBlogLike = styled.div`
   line-height: 20px;
   cursor: pointer;
 `;
+const UnLike = styled.div`
+  width: 13px;
+  height: 13px;
+  background-position: center;
+  background-size: contain;
+  background-image: url(${unlike});
+  background-repeat: no-repeat;
+`;
+
+const AddLike = styled.div`
+  width: 13px;
+  height: 13px;
+
+  background-position: center;
+  background-size: contain;
+  background-image: url(${addlike});
+  background-repeat: no-repeat;
+`;
+// const SNum = styled.div`
+//   position: absolute;
+//   display: flex;
+//   font-size: 10px;
+
+//   right: 515px;
+// `;

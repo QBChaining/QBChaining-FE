@@ -44,7 +44,6 @@ const MyPage = () => {
     userBlogCommentList,
     errorMessage,
   } = useSelector(state => state.userSlice);
-
   // useEffect(() => {
   //   if (loginUserName === userInfo.userName && userIsNew === "true") {
   //     errorAlert("정보 등록후 이용 가능합니다!").then(res => {
@@ -192,7 +191,7 @@ const MyPage = () => {
                       </SListTitleWrapper>
                       <SSolveText>
                         <SLikeIcon />
-                        {data.like}
+                        {data.likes}
                       </SSolveText>
                     </SListInner>
                   ))}
@@ -216,7 +215,7 @@ const MyPage = () => {
                       </SListTitleWrapper>
                       <SSolveText>
                         <SLikeIcon />
-                        {data.Post.like}
+                        {data.Post.likes}
                       </SSolveText>
                     </SListInner>
                   ))}

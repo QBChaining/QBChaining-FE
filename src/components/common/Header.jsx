@@ -38,7 +38,6 @@ const Header = () => {
   const beforeScrollY = useRef(0);
 
   useEffect(() => {
-    dispatch(getNotificationDB());
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -55,7 +54,7 @@ const Header = () => {
           setVisible(true);
         }
         beforeScrollY.current = currentScrollY;
-      }, 10),
+      }, 200),
     [beforeScrollY],
   );
 

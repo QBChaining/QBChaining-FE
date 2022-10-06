@@ -108,11 +108,9 @@ export default BlogMainList;
 
 const SBloglist = styled.div`
   position: relative;
-  /* width: 100%; */
   min-width: 480px;
   flex: 1;
   min-height: 350px;
-  /* height: 100%; */
   background: #ffffff;
   border-radius: 30px;
   padding: 30px 40px;
@@ -137,7 +135,6 @@ const SUserInfo = styled.div`
   display: flex;
   align-items: center;
 `;
-
 const SProfile = styled.div`
   width: 37px;
   height: 37px;
