@@ -1,16 +1,22 @@
 import React, { useEffect, useState, useCallback } from "react";
-import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
-import { getBlogCommunityListDB } from "../../redux/async/blog";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import ModalBookmark from "../../components/common/ModalBookmark";
-import { colorSetBlue } from "../../redux/modules/userSlice";
-import BlogMainList from "../../components/blog/BlogMainList";
 import { Helmet } from "react-helmet-async";
+import styled from "styled-components";
+import _ from "lodash";
+
+//컴포넌트
+import ModalBookmark from "../../components/common/ModalBookmark";
+import BlogMainList from "../../components/blog/BlogMainList";
 import SideBanner from "./../../components/common/SideBanner";
-import MainWriteButton from "../../assets/images/MainWriteButton.png";
+
+//통신
+import { getBlogCommunityListDB } from "../../redux/async/blog";
 import { removeBlogList } from "../../redux/modules/blogSlice";
+import { colorSetBlue } from "../../redux/modules/userSlice";
+
+//이미지
+import MainWriteButton from "../../assets/images/MainWriteButton.png";
 
 const BlogCommmunityMain = () => {
   const blogMainList = useSelector(state => state.blogSlice.blogList);
@@ -19,15 +25,16 @@ const BlogCommmunityMain = () => {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   /**
    * 처음 보여줄 페이지 카운트
    */
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
+
   /**
    * 처음 게시물 불러오기 비동기요청
    */
-
   const getBlogMainCoumunity = useCallback(() => {
     const getFinish = async () => {
       await dispatch(getBlogCommunityListDB(page));
@@ -59,8 +66,6 @@ const BlogCommmunityMain = () => {
       dispatch(getBlogCommunityListDB(page));
       setPage(page => page + 1);
     }
-    // if (blogMainLists.length !== 100) {
-    // }
   }, [page]);
 
   useEffect(() => {
@@ -68,7 +73,6 @@ const BlogCommmunityMain = () => {
       return;
     }
     window.addEventListener("scroll", _scrollPosition);
-
     return () => {
       window.removeEventListener("scroll", _scrollPosition);
     };
@@ -84,6 +88,7 @@ const BlogCommmunityMain = () => {
 
   return (
     <SBlogCommmunityMain>
+      sdfsdfsdf
       <Helmet>
         <title>Blog Main</title>
       </Helmet>

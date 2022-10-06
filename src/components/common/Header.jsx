@@ -64,6 +64,7 @@ const Header = () => {
 
   return (
     <SHeader location={location} visible={visible}>
+      ㄴㅇㄹㄴㅇㄹㄴㅇㄹ
       <SLogoContainer
         onClick={() => {
           navigate("/");
@@ -71,7 +72,6 @@ const Header = () => {
       >
         <SLogoImage />
       </SLogoContainer>
-
       <SearchInput />
       <SAlarmLoginWrapper>
         {isLogin && <Notification setShow={setShow} show={show} />}
