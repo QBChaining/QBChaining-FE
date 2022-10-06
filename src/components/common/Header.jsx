@@ -54,7 +54,7 @@ const Header = () => {
           setVisible(true);
         }
         beforeScrollY.current = currentScrollY;
-      }, 10),
+      }, 100),
     [beforeScrollY],
   );
 
