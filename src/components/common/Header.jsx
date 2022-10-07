@@ -9,8 +9,7 @@ import Notification from "./Notification";
 import SearchInput from "./../search/SearchInput";
 
 //통신
-import { getNotificationDB } from "../../redux/async/notification";
-import { logIn, logOut } from "../../redux/modules/userSlice";
+import { logOut } from "../../redux/modules/userSlice";
 import { removeUserInfo } from "../../redux/modules/qnaSlice";
 //알럿
 import Swal from "sweetalert2";
@@ -32,8 +31,6 @@ const Header = () => {
       navigate("/", { replace: true });
     });
   };
-
-  const [position, setPosition] = useState(0);
   const [visible, setVisible] = useState(true);
   const beforeScrollY = useRef(0);
 
