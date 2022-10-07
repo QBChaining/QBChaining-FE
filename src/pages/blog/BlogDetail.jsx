@@ -176,7 +176,7 @@ const SContainer = styled.div`
   padding: 0 130px;
   padding-bottom: 20px;
 `;
-const SNickName = styled.div``;
+
 const ButtonGroup = styled.div`
   position: absolute;
   top: 20px;
@@ -196,6 +196,7 @@ const ButtonGroup = styled.div`
     cursor: pointer;
   }
 `;
+
 const STitleSection = styled.div`
   display: flex;
   justify-content: space-between;

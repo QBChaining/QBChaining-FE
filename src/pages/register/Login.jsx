@@ -35,24 +35,8 @@ const Login = () => {
         dispatch(logIn());
         navigate("/", { replace: true });
       }
-      // navigate("/", { replace: true });
-      // dispatch(logIn());
     }
   }, []);
-
-  // const alerts = () => {
-  //   Swal.fire({ icon: "error", text: "로그아웃 후 이용해주세요" }).then(res => {
-  //     navigate("/", { replace: true });
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   //login상태라면 로그아웃 하라는 alert
-  //   if (isLogin) {
-  //     alerts();
-  //     return;
-  //   }
-  // }, []);
 
   return <div></div>;
 };

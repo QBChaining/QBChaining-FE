@@ -127,37 +127,11 @@ const SLogoImage = styled.div`
   background-repeat: no-repeat;
 `;
 
-const STitle = styled.h1`
-  font-size: 16px;
-  font-weight: 500;
-`;
-
 const SAlarmLoginWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
-const SAlarmConatainer = styled.div`
-  margin-right: 64px;
-  cursor: pointer;
-  position: relative;
-  padding: 10px;
-  & svg {
-    width: 24px;
-    height: 26px;
-  }
 
-  &.active::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background-color: #ff2626;
-  }
-`;
 const SLoginConatainer = styled.div`
   display: flex;
   align-items: center;

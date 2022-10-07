@@ -128,25 +128,6 @@ export default BlogCommmunityMain;
 
 const SBlogCommmunityMain = styled.div``;
 
-//탑박스
-const STopBox = styled.div`
-  position: relative;
-  background-color: #2676ed;
-  padding-top: 40px;
-  padding-bottom: 60px;
-  //라인
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0%;
-    left: 50%;
-    width: calc(100% - 88px);
-    transform: translateX(-50%);
-    height: 1px;
-    background-color: ${props => props.theme.color.white};
-  }
-`;
-
 const SBody = styled.div`
   min-width: 1300px;
   padding: 0 100px 0 200px;

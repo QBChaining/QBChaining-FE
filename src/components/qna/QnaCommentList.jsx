@@ -24,7 +24,6 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [winner, setWinner] = useState([]);
   //commentList 구독
   const { commentList: list } = useSelector(state => state.qnaSlice);
 
@@ -72,10 +71,6 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
       }
     });
   };
-
-  useEffect(() => {
-    setWinner(list.find(data => data.isChoose));
-  }, [list]);
 
   const goMypage = username => {
     navigate(`/mypage/${username}`);
@@ -166,8 +161,6 @@ const SUserInfoWrapper = styled.div`
   padding: 1px 30px 1px 2px;
   position: relative;
   border-radius: 30px;
-  background-color: ${props =>
-    props.isChoose ? props.theme.color.mainOrange : "transparent"}
 
   &::before {
     display: ${props => (props.isChoose ? "block" : "none")};
@@ -180,6 +173,9 @@ const SUserInfoWrapper = styled.div`
     height: 28px;
     z-index: -1;
   }
+
+  background-color: ${props =>
+    props.isChoose ? props.theme.color.mainOrange : "transparent"};
 `;
 
 const SUserInfo = styled.div`
@@ -284,11 +280,4 @@ const SNoComment = styled.div`
   font-weight: 500;
   min-height: 100px;
   background-color: white;
-`;
-
-const SLoading = styled.div`
-  min-height: 1px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;

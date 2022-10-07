@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { useRef } from "react";
 // MARK DOWN
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
