@@ -95,7 +95,7 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
                   <SUserInfoText>
                     <SUserNameWrapper>
                       <SUserName>{data.userName}</SUserName>
-                      {data.isChoose && <SWinnerButton>채택</SWinnerButton>}
+                      {data.isChoose && <SWinnerButton>채택됨</SWinnerButton>}
                       {!target.isResolve &&
                         !isPreview &&
                         target.userName === userName &&
@@ -109,7 +109,7 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
                           </SChoiceButton>
                         )}
                     </SUserNameWrapper>
-                    <SCreateAt>
+                    <SCreateAt isChoose={data.isChoose}>
                       {data.createdAt?.slice(0, 10)} /{" "}
                       {data.createdAt?.slice(11, 16)}
                     </SCreateAt>
@@ -216,7 +216,7 @@ const SUserName = styled.div`
 const SCreateAt = styled.div`
   font-size: 12px;
   color: ${props =>
-    props.winner ? props.theme.color.white : props.theme.color.grey6};
+    props.isChoose ? props.theme.color.white : props.theme.color.grey6};
 `;
 
 const ButtonBackground = styled.button`

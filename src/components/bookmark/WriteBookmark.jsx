@@ -79,7 +79,7 @@ const WriteBookmark = ({ type, id, onToggleHandler }) => {
                       <SUserProfile profile={data.profileImg} />
                     )}
                     <SUserInfoText>
-                      <SUserName>{target.userName}</SUserName>
+                      <SUserName>{data.userName}</SUserName>
                     </SUserInfoText>
                   </SUserInfo>
                   <ToastViewer content={data.comment} />
