@@ -50,7 +50,7 @@ const SComment = styled.div`
     border: 1px solid ${props => props.theme.color.grey5};
     border-radius: 30px;
     height: 44px;
-    padding: 0 60px 0 20px;
+    padding: 0 160px 0 20px;
   }
 
   button {

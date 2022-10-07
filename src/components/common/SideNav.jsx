@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const SideNav = () => {
   const navigate = useNavigate();
   const location = window.location.pathname;
-  const { userName } = useParams();
   const goPage = page => {
     navigate(`/${page}`);
   };

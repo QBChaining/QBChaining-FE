@@ -96,30 +96,3 @@ const SRightContainer = styled(STip)`
     }
   }
 `;
-
-const SNodata = styled.div`
-  padding-left: 30px;
-  border: ${props =>
-    props.resolve
-      ? `1px solid ${props.theme.color.mainGreen}`
-      : `1px solid ${props.theme.color.grey3}`};
-  box-shadow: ${props =>
-    props.resolve
-      ? "4px 6px 15px rgba(0, 0, 0, 0.1);"
-      : "-4px 6px 15px rgba(0, 0, 0, 0.1)"};
-  border-radius: 30px;
-  margin: 30px 0;
-  min-height: 209px;
-  background-color: ${props => props.theme.color.white};
-  font-size: 22px;
-  color: ${props => props.theme.color.grey5};
-  display: flex;
-  align-items: center;
-`;
-
-const SLoading = styled.div`
-  min-height: 1px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;

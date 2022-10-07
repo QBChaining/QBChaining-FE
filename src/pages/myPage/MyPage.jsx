@@ -33,10 +33,8 @@ const MyPage = () => {
   const { userName } = useParams();
 
   const {
-    isLogin,
     isFetching,
     userInfo,
-    userIsNew,
     userName: loginUserName,
     userQnaList,
     userQnaAnswerList,

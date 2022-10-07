@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Landing from "./../pages/landing/Landing";
 import MyPage from "./../pages/myPage/MyPage";
 import QnaWrite from "./../pages/qna/QnaWrite";
@@ -12,13 +13,11 @@ import Register from "./../pages/register/Register";
 import Login from "../pages/register/Login";
 import BlogWrite from "../pages/blog/BlogCommunityWrite";
 import BlogEdit from "../pages/blog/BlogCommentEdit";
-import { useSelector } from "react-redux";
 import NoLogin from "../pages/NoLogin";
 import Search from "../pages/search/Search";
 import Preparing from "./../pages/Preparing";
 import Undefind from "./../pages/Undefind";
 import RegisterEdit from "../pages/register/RegisterEdit";
-import MdGuide from "../pages/MdGuide";
 
 const Router = () => {
   const { isLogin } = useSelector(state => state.userSlice);
