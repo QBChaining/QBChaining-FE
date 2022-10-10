@@ -18,7 +18,11 @@ instance.interceptors.request.use(config => {
 });
 
 instance.interceptors.response.use(
-  res => {},
+  res => {
+    if (res.status === 200 || res.status === 201) {
+      return res;
+    }
+  },
   err => {
     if (err.response.data.code === 419) {
       errorAlert("재로그인이 필요합니다!", "토큰이 만료되었습니다.");
