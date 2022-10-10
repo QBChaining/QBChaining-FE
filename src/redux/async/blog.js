@@ -18,11 +18,7 @@ export const getBlogCommunityListDB = createAsyncThunk(
       return response.data.data;
     } catch (err) {
       if (err.response.status === 404) {
-        if (err.response.status === 404) {
-          if (err.response.status === 404) {
-            networkError();
-          }
-        }
+        networkError();
       }
       Sentry.captureException(`error, 블로그 전체조회 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
@@ -62,9 +58,6 @@ export const postBlogCommunityDB = createAsyncThunk(
     } catch (err) {
       if (err.response.status === 404) {
         networkError();
-      }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
       }
       Sentry.captureException(`error, 블로그 작성: ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
@@ -148,9 +141,6 @@ export const postBlogCommentDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
-      }
       Sentry.captureException(`error, 블로그 댓글 추가 : ${err}`);
       return thunkAPI.rejectWithValue(err.response);
     }
@@ -206,9 +196,6 @@ export const getMyBlogDB = createAsyncThunk("GET_MY_BLOG", async thunkAPI => {
     if (err.response.status === 404) {
       networkError();
     }
-    if (err.response.status === 419) {
-      errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
-    }
     Sentry.captureException(`error, MYBLOG 조회 : ${err}`);
     return thunkAPI.rejectWithValue(err.response.data.message);
   }
@@ -228,9 +215,6 @@ export const postBlogLikeDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
-      }
       Sentry.captureException(`error, 좋아요 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -249,9 +233,6 @@ export const unBlogLikeDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
-      }
       Sentry.captureException(`error, 좋아요 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -267,9 +248,6 @@ export const getBlogBookMarkDB = createAsyncThunk(
     } catch (err) {
       if (err.response.status === 404) {
         networkError();
-      }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
       }
       Sentry.captureException(`error, 북마크 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
@@ -291,9 +269,6 @@ export const postBlogBookMarkDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
-      }
       Sentry.captureException(`error, 북마크 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -313,9 +288,6 @@ export const deleteBlogBookMarkDB = createAsyncThunk(
     } catch (err) {
       if (err.response.status === 404) {
         networkError();
-      }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
       }
       Sentry.captureException(`error, 북마크 에러. ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
@@ -351,9 +323,6 @@ export const postCommentLikeDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
-      }
       Sentry.captureException(`error, 댓글 좋아요 추가 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -372,9 +341,6 @@ export const delCommentLikeDB = createAsyncThunk(
     } catch (err) {
       if (err.response.status === 404) {
         networkError();
-      }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다.", "재로그인이 필요합니다!");
       }
       Sentry.captureException(`error, 댓글 좋아요 삭제: ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
