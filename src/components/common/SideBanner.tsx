@@ -10,7 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 //통신
 import { getHotBlogDB } from "../../redux/async/blog";
-import { getQnaHotListDB } from "./../../redux/async/qna";
+import { getQnaHotListDB } from "../../redux/async/qna";
 
 //이미지
 import QnaMainillust from "../../assets/images/QnaMainillust.png";

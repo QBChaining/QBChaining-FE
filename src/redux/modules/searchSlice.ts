@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getQnaSearchListDB, getBlogSearchListDB } from "./../async/search";
+import { getQnaSearchListDB, getBlogSearchListDB } from "../async/search";
 
 const searchSlice = createSlice({
   name: "search",

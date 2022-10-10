@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import EditorComponent from "../../components/common/EditorComponent";
 
 //통신
-import { getOneQnaListDB } from "./../../redux/async/qna";
+import { getOneQnaListDB } from "../../redux/async/qna";
 
 const QnaEdit = () => {
   const dispatch = useDispatch();

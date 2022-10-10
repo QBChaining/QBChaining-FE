@@ -10,7 +10,7 @@ import {
 
 //error loging
 import * as Sentry from "@sentry/react";
-import { getToday } from "./../../utils/today";
+import { getToday } from "../../utils/today";
 
 //게시글 채택 조회
 export const getQnaMainListDB = createAsyncThunk(

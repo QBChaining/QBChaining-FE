@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteCookie, getCookie } from "./../../utils/cookie";
+import { deleteCookie, getCookie } from "../../utils/cookie";
 import jwt_decode from "jwt-decode";
 import {
   postUserInfoDB,

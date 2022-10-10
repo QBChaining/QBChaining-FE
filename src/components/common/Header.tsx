@@ -6,7 +6,7 @@ import { throttle } from "lodash";
 
 //컴포넌트
 import Notification from "./Notification";
-import SearchInput from "./../search/SearchInput";
+import SearchInput from "../search/SearchInput";
 
 //통신
 import { logOut } from "../../redux/modules/userSlice";

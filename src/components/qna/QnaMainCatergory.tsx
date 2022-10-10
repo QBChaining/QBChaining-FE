@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import categories from "./../../utils/category";
+import categories from "../../utils/category";
 
 const QnaMainCatergory = ({
   pageNumber,

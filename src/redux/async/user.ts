@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { userApi } from "./../../axios/api/userAPI";
+import { userApi } from "../../axios/api/userAPI";
 
 //alert
 import { errorLikeAlert, networkError, successAlert } from "../../utils/swal";

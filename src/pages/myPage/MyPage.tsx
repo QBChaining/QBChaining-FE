@@ -16,7 +16,7 @@ import {
   getUserInfoActivityDB,
   getUserQnaListDB,
 } from "../../redux/async/user";
-import { getUserInfoDB } from "./../../redux/async/user";
+import { getUserInfoDB } from "../../redux/async/user";
 import { removeUserInfo } from "../../redux/modules/userSlice";
 
 //알럿

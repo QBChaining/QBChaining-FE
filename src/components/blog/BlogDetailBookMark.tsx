@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getToday } from "./../../utils/today";
+import { getToday } from "../../utils/today";
 
 //통신
 import {

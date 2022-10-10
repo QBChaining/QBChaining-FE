@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { notification } from "../../axios/api/notificationAPI";
-import { errorAlert, networkError } from "./../../utils/swal";
+import { errorAlert, networkError } from "../../utils/swal";
 import * as Sentry from "@sentry/react";
 
 /**

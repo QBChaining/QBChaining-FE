@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet-async";
 
 //컴포넌트
 import ContentList from "../../components/common/ContentList";
-import QnaMainCatergory from "./../../components/qna/QnaMainCatergory";
+import QnaMainCatergory from "../../components/qna/QnaMainCatergory";
 import ModalBookmark from "../../components/common/ModalBookmark";
 import SideBanner from "../../components/common/SideBanner";
 
@@ -17,10 +17,7 @@ import { ClipLoader } from "react-spinners";
 //통신
 import { colorSetGreen } from "../../redux/modules/userSlice";
 import { removeQnaList } from "../../redux/modules/qnaSlice";
-import {
-  getQnaCategoryListDB,
-  getQnaMainListDB,
-} from "./../../redux/async/qna";
+import { getQnaCategoryListDB, getQnaMainListDB } from "../../redux/async/qna";
 
 //이미지
 import QnaWatingAnswer from "../../assets/images/QnaWatingAnswer.png";

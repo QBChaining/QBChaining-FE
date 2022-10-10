@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 //컴포넌트
 import CommentAdd from "../../components/blog/comment/BlogCommentAdd";
 import CommentList from "../../components/blog/comment/BlogCommentList";
-import ToastViewer from "./../../components/editor/ToastViewer";
+import ToastViewer from "../../components/editor/ToastViewer";
 import BlogLike from "../../components/blog/BlogLike";
 import BlogDetailBookMark from "../../components/blog/BlogDetailBookMark";
 //통신
@@ -20,7 +20,7 @@ import {
   errorAlert,
   infoAlert,
   successAlert,
-} from "./../../utils/swal";
+} from "../../utils/swal";
 import { removeErrorMessage } from "../../redux/modules/blogSlice";
 import { ClipLoader } from "react-spinners";
 

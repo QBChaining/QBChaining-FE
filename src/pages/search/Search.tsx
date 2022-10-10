@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
 //컴포넌트
-import SearchList from "./../../components/search/SearchList";
+import SearchList from "../../components/search/SearchList";
 
 //검색 목록 초기화 슬라이스
 import { removeSearchList } from "../../redux/modules/searchSlice";

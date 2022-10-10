@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import ToastViewer from "./../editor/ToastViewer";
+import ToastViewer from "../editor/ToastViewer";
 import { useNavigate } from "react-router-dom";
 
 //통신
@@ -10,11 +10,11 @@ import {
   deleteCommentListDB,
   likeCommentListDB,
   dislikeCommentListDB,
-} from "./../../redux/async/qna";
+} from "../../redux/async/qna";
 
 //알럿
 import Swal from "sweetalert2";
-import { errorAlert } from "./../../utils/swal";
+import { errorAlert } from "../../utils/swal";
 //이미지
 import QnaLike from "../../assets/images/unlike.png";
 import QnaLikeFill from "../../assets/images/addLike.png";

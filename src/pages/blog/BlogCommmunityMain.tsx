@@ -8,7 +8,7 @@ import _ from "lodash";
 //컴포넌트
 import ModalBookmark from "../../components/common/ModalBookmark";
 import BlogMainList from "../../components/blog/BlogMainList";
-import SideBanner from "./../../components/common/SideBanner";
+import SideBanner from "../../components/common/SideBanner";
 
 //통신
 import { getBlogCommunityListDB } from "../../redux/async/blog";

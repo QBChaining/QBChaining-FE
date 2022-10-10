@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUserInfoDB } from "./../../redux/async/user";
+import { getUserInfoDB } from "../../redux/async/user";
 import Register from "./Register";
 
 const RegisterEdit = () => {

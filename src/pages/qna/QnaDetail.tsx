@@ -14,7 +14,7 @@ import { removeCommentList, removeQnaList } from "../../redux/modules/qnaSlice";
 import { removeErrorMessage } from "../../redux/modules/qnaSlice";
 
 //컴포넌트
-import QnaCommentList from "./../../components/qna/QnaCommentList";
+import QnaCommentList from "../../components/qna/QnaCommentList";
 import QnaTarget from "../../components/qna/QnaTarget";
 import EditorComponent from "../../components/common/EditorComponent";
 

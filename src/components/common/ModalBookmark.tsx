@@ -4,14 +4,14 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 //컴포넌트
-import Nodata from "./../bookmark/Nodata";
-import BookmarkListItem from "./../bookmark/BookmarkListItem";
+import Nodata from "../bookmark/Nodata";
+import BookmarkListItem from "../bookmark/BookmarkListItem";
 
 //통신
 import { getBookmarkListDB } from "../../redux/async/qna";
 import { getBlogBookMarkDB } from "../../redux/async/blog";
 //알럿
-import { needLoginAlert } from "./../../utils/swal";
+import { needLoginAlert } from "../../utils/swal";
 //이미지
 import BookmarkStar from "../../assets/images/BookmarkStar.png";
 

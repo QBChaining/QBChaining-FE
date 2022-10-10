@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 //컴포넌트
-import InterestItem from "./../../components/register/InterestItem";
+import InterestItem from "../../components/register/InterestItem";
 import Select from "../../components/common/Select";
 
 import { Helmet } from "react-helmet-async";
@@ -18,7 +18,7 @@ import {
   postUserInfoDB,
   putUserInfoDB,
   putUserInNewDB,
-} from "./../../redux/async/user";
+} from "../../redux/async/user";
 
 //이미지
 import WhiteArrow from "../../assets/images/WhiteArrow.png";

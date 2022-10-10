@@ -1,22 +1,22 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Landing from "./../pages/landing/Landing";
-import MyPage from "./../pages/myPage/MyPage";
-import QnaWrite from "./../pages/qna/QnaWrite";
-import QnaMain from "./../pages/qna/QnaMain";
-import BlogCommmunityMain from "./../pages/blog/BlogCommmunityMain";
+import Landing from "../pages/landing/Landing";
+import MyPage from "../pages/myPage/MyPage";
+import QnaWrite from "../pages/qna/QnaWrite";
+import QnaMain from "../pages/qna/QnaMain";
+import BlogCommmunityMain from "../pages/blog/BlogCommmunityMain";
 import BlogDetail from "../pages/blog/BlogDetail";
-import QnaEdit from "./../pages/qna/QnaEdit";
-import QnaDetail from "./../pages/qna/QnaDetail";
-import Register from "./../pages/register/Register";
+import QnaEdit from "../pages/qna/QnaEdit";
+import QnaDetail from "../pages/qna/QnaDetail";
+import Register from "../pages/register/Register";
 import Login from "../pages/register/Login";
 import BlogWrite from "../pages/blog/BlogCommunityWrite";
 import BlogEdit from "../pages/blog/BlogCommentEdit";
 import NoLogin from "../pages/NoLogin";
 import Search from "../pages/search/Search";
-import Preparing from "./../pages/Preparing";
-import Undefind from "./../pages/Undefind";
+import Preparing from "../pages/Preparing";
+import Undefind from "../pages/Undefind";
 import RegisterEdit from "../pages/register/RegisterEdit";
 
 const Router = () => {

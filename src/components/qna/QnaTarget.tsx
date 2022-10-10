@@ -13,7 +13,7 @@ import {
   likeQnaListDB,
   postBookmarkListDB,
 } from "../../redux/async/qna";
-import { deleteBookmarkListDB } from "./../../redux/async/qna";
+import { deleteBookmarkListDB } from "../../redux/async/qna";
 //알럿
 import { needLoginAlert } from "../../utils/swal";
 //이미지
