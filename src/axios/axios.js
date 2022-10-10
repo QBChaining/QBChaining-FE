@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getCookie } from "../utils/cookie";
+import { errorAlert, networkError } from "../utils/swal";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_ENDPOINT,
@@ -16,8 +17,13 @@ instance.interceptors.request.use(config => {
   return config;
 });
 
-instance.interceptors.response.use(res => {
-  return res;
-});
+instance.interceptors.response.use(
+  res => {},
+  err => {
+    if (err.response.data.code === 419) {
+      errorAlert("재로그인이 필요합니다!", "토큰이 만료되었습니다.");
+    }
+  },
+);
 
 export default instance;

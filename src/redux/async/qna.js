@@ -83,9 +83,7 @@ export const postQnaListDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다", "재로그인이 필요합니다!");
-      }
+
       Sentry.captureException(`error, QNA게시글 작성 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -145,9 +143,7 @@ export const likeQnaListDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다", "재로그인이 필요합니다!");
-      }
+
       Sentry.captureException(`error, QNA게시글 추천 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -168,9 +164,7 @@ export const dislikeQnaListDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다", "재로그인이 필요합니다!");
-      }
+
       Sentry.captureException(`error, QNA게시글 추천 취소 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -215,9 +209,7 @@ export const postCommentListDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다", "재로그인이 필요합니다!");
-      }
+
       Sentry.captureException(`error, QNA게시글 댓글 추가 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -279,9 +271,7 @@ export const likeCommentListDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다", "재로그인이 필요합니다!");
-      }
+
       Sentry.captureException(`error, QNA게시글 댓글 추천 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -306,9 +296,7 @@ export const dislikeCommentListDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다", "재로그인이 필요합니다!");
-      }
+
       Sentry.captureException(`error, QNA댓글 추천 취소 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -348,9 +336,7 @@ export const postBookmarkListDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다", "재로그인이 필요합니다!");
-      }
+
       Sentry.captureException(`error, QNA게시글 즐겨찾기 추가 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -371,9 +357,7 @@ export const deleteBookmarkListDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다", "재로그인이 필요합니다!");
-      }
+
       Sentry.captureException(`error, QNA게시글 즐겨찾기 삭제 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
@@ -394,9 +378,7 @@ export const choiceCommentListDB = createAsyncThunk(
       if (err.response.status === 404) {
         networkError();
       }
-      if (err.response.status === 419) {
-        errorAlert("토큰이 만료되었습니다", "재로그인이 필요합니다!");
-      }
+
       Sentry.captureException(`error, QNA 댓글 채택 : ${err}`);
       return thunkAPI.rejectWithValue(err.response.data.message);
     }
