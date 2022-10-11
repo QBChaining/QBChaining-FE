@@ -1,6 +1,7 @@
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { RootState } from "redux/config/configStore";
 import Landing from "../pages/landing/Landing";
 import MyPage from "../pages/myPage/MyPage";
 import QnaWrite from "../pages/qna/QnaWrite";
@@ -20,7 +21,7 @@ import Undefind from "../pages/Undefind";
 import RegisterEdit from "../pages/register/RegisterEdit";
 
 const Router = () => {
-  const { isLogin } = useSelector(state => state.userSlice);
+  const { isLogin } = useSelector((state: RootState) => state.userSlice);
 
   return (
     <Routes>

@@ -56,7 +56,7 @@ const qnaSlice = createSlice({
   },
   extraReducers: {
     //게시글 채택 조회
-    [getQnaMainListDB.fulfilled]: (state, { payload }) => {
+    [getQnaMainListDB.fulfilled]: (state: any, { payload }: any) => {
       //payload에는 전체 리스트가 들어있다
       state.qnaList = state.qnaList.concat(payload);
       state.isFetching = false;
