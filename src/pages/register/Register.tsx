@@ -21,9 +21,10 @@ import {
 } from "../../redux/async/user";
 
 //이미지
+// import WhiteArrow from "../../assets/images/WhiteArrow.png";
 import WhiteArrow from "../../assets/images/WhiteArrow.png";
 
-const Register = ({ isEdit, editData }) => {
+const Register = ({ isEdit, editData }: { isEdit: boolean; editData: {} }) => {
   const navigate = useNavigate();
   const { userName, userIsNew } = useSelector(state => state.userSlice);
   const [language, setLanguage] = useState([]);

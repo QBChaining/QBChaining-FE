@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../redux/modules/userSlice";
+import { RootState } from "redux/config/configStore";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { isLogin } = useSelector(state => state.userSlice);
+  const { isLogin } = useSelector((state: RootState) => state.userSlice);
   const navigate = useNavigate();
 
   useEffect(() => {

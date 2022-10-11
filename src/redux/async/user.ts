@@ -16,7 +16,7 @@ export const postUserInfoDB = createAsyncThunk(
       if (response.data.success === true) {
         return data;
       }
-    } catch (err) {
+    } catch (err: { response: any }) {
       if (err.response.status === 404) {
         networkError();
       }

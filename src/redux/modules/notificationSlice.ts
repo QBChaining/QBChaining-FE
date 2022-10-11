@@ -16,10 +16,10 @@ export const notificationSlice = createSlice({
     /**
      *알림 조회
      */
-    [getNotificationDB.pending]: state => {
+    [getNotificationDB.pending.type]: state => {
       state.isFetching = true;
     },
-    [getNotificationDB.fulfilled]: (state, action) => {
+    [getNotificationDB.fulfilled.type]: (state, action) => {
       if (action.payload === undefined) {
         state.notification = [];
         return;
@@ -30,10 +30,10 @@ export const notificationSlice = createSlice({
     /**
      * 알림 확인
      */
-    [postNotificationDB.pending]: (state, action) => {
+    [postNotificationDB.pending.type]: (state, action) => {
       state.isFetching = true;
     },
-    [postNotificationDB.fulfilled]: (state, action) => {
+    [postNotificationDB.fulfilled.type]: (state, action) => {
       const idx = state.notification.findIndex(data => {
         return data.notiId === action.payload;
       });
@@ -43,10 +43,10 @@ export const notificationSlice = createSlice({
     /**
      * 알림 삭제
      */
-    [delNotificationDB.pending]: state => {
+    [delNotificationDB.pending.type]: state => {
       state.isFetching = true;
     },
-    [delNotificationDB.fulfilled]: (state, action) => {
+    [delNotificationDB.fulfilled.type]: (state, action) => {
       const deleteList = state.notification.filter(data => {
         return data.notiId !== action.payload;
       });

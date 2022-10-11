@@ -10,7 +10,6 @@ import BlogCommmunityMain from "../pages/blog/BlogCommmunityMain";
 import BlogDetail from "../pages/blog/BlogDetail";
 import QnaEdit from "../pages/qna/QnaEdit";
 import QnaDetail from "../pages/qna/QnaDetail";
-import Register from "../pages/register/Register";
 import Login from "../pages/register/Login";
 import BlogWrite from "../pages/blog/BlogCommunityWrite";
 import BlogEdit from "../pages/blog/BlogCommentEdit";
@@ -19,6 +18,7 @@ import Search from "../pages/search/Search";
 import Preparing from "../pages/Preparing";
 import Undefind from "../pages/Undefind";
 import RegisterEdit from "../pages/register/RegisterEdit";
+import Register from "./../pages/register/Register";
 
 const Router = () => {
   const { isLogin } = useSelector((state: RootState) => state.userSlice);
@@ -28,7 +28,12 @@ const Router = () => {
       <Route path="/" element={<Landing />} />
       <Route path="/*" element={<Undefind />} />
       <Route path="/search" element={<Search />} />
-      <Route path="/register" element={isLogin ? <Register /> : <NoLogin />} />
+      <Route
+        path="/register"
+        element={
+          isLogin ? <Register isEdit={false} editData={{}} /> : <NoLogin />
+        }
+      />
       <Route
         path="/register/edit"
         element={isLogin ? <RegisterEdit /> : <NoLogin />}

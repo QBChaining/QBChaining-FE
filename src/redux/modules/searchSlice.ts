@@ -7,6 +7,7 @@ const searchSlice = createSlice({
     qnaSearchList: [],
     blogSearchList: [],
     searchWord: "",
+    errorMessage: null,
     isFetching: false,
   },
   reducers: {
@@ -21,29 +22,29 @@ const searchSlice = createSlice({
   },
   extraReducers: {
     //qna검색결과 조회
-    [getQnaSearchListDB.pending]: (state, { payload }) => {
+    [getQnaSearchListDB.pending.type]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getQnaSearchListDB.fulfilled]: (state, { payload }) => {
+    [getQnaSearchListDB.fulfilled.type]: (state, { payload }) => {
       state.qnaSearchList = state.qnaSearchList.concat(payload);
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getQnaSearchListDB.rejected]: (state, { payload: errorMessage }) => {
+    [getQnaSearchListDB.rejected.type]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
 
     //블로그 검색결과 조회
-    [getBlogSearchListDB.pending]: (state, { payload }) => {
+    [getBlogSearchListDB.pending.type]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getBlogSearchListDB.fulfilled]: (state, { payload }) => {
+    [getBlogSearchListDB.fulfilled.type]: (state, { payload }) => {
       state.blogSearchList = state.blogSearchList.concat(payload);
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getBlogSearchListDB.rejected]: (state, { payload: errorMessage }) => {
+    [getBlogSearchListDB.rejected.type]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },

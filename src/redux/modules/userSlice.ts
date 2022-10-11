@@ -10,6 +10,12 @@ import {
   getUserBlogListDB,
 } from "../async/user";
 
+interface IUser {
+  userName: string;
+  profileImg: string;
+  isNew: string;
+}
+
 export const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -40,9 +46,9 @@ export const userSlice = createSlice({
     logIn: (state, action) => {
       state.isLogin = true;
       state.userToken = getCookie("token");
-      state.userName = jwt_decode(getCookie("token")).userName;
-      state.userProfile = jwt_decode(getCookie("token")).profileImg;
-      state.userIsNew = jwt_decode(getCookie("token")).isNew;
+      state.userName = jwt_decode<IUser>(getCookie("token")).userName;
+      state.userProfile = jwt_decode<IUser>(getCookie("token")).profileImg;
+      state.userIsNew = jwt_decode<IUser>(getCookie("token")).isNew;
     },
     colorSetGreen: (state, action) => {
       state.color = "mainGreen";
@@ -62,86 +68,89 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [postUserInfoDB.fulfilled]: (state, { payload }) => {
+    [postUserInfoDB.fulfilled.type]: (state, { payload }) => {
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [postUserInfoDB.pending]: (state, { payload }) => {
+    [postUserInfoDB.pending.type]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [postUserInfoDB.rejected]: (state, { payload: errorMessage }) => {
+    [postUserInfoDB.rejected.type]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
 
     //신규회원인지 확인
-    [putUserInNewDB.fulfilled]: (state, { payload }) => {
+    [putUserInNewDB.fulfilled.type]: (state, { payload }) => {
       state.userIsNew = false;
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [putUserInNewDB.pending]: (state, { payload }) => {
+    [putUserInNewDB.pending.type]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [putUserInNewDB.rejected]: (state, { payload: errorMessage }) => {
+    [putUserInNewDB.rejected.type]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
 
     //회원정보 받아오기
-    [getUserInfoDB.fulfilled]: (state, { payload }) => {
+    [getUserInfoDB.fulfilled.type]: (state, { payload }) => {
       state.userInfo = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getUserInfoDB.pending]: (state, { payload }) => {
+    [getUserInfoDB.pending.type]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getUserInfoDB.rejected]: (state, { payload: errorMessage }) => {
+    [getUserInfoDB.rejected.type]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
 
     //회원활동내역 받아오기
-    [getUserInfoActivityDB.fulfilled]: (state, { payload }) => {
+    [getUserInfoActivityDB.fulfilled.type]: (state, { payload }) => {
       state.userActivity = payload;
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getUserInfoActivityDB.pending]: (state, { payload }) => {
+    [getUserInfoActivityDB.pending.type]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getUserInfoActivityDB.rejected]: (state, { payload: errorMessage }) => {
+    [getUserInfoActivityDB.rejected.type]: (
+      state,
+      { payload: errorMessage },
+    ) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
 
     //회원QnaList 받아오기
-    [getUserQnaListDB.fulfilled]: (state, { payload }) => {
+    [getUserQnaListDB.fulfilled.type]: (state, { payload }) => {
       state.userQnaList = payload.myQna;
       state.userQnaAnswerList = payload.myAnswer;
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getUserQnaListDB.pending]: (state, { payload }) => {
+    [getUserQnaListDB.pending.type]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getUserQnaListDB.rejected]: (state, { payload: errorMessage }) => {
+    [getUserQnaListDB.rejected.type]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
 
     //회원BlogList 받아오기
-    [getUserBlogListDB.fulfilled]: (state, { payload }) => {
+    [getUserBlogListDB.fulfilled.type]: (state, { payload }) => {
       state.userBlogList = payload.post;
       state.userBlogCommentList = payload.comment;
       state.isFetching = false;
       state.errorMessage = null;
     },
-    [getUserQnaListDB.pending]: (state, { payload }) => {
+    [getUserQnaListDB.pending.type]: (state, { payload }) => {
       state.isFetching = true;
     },
-    [getUserQnaListDB.rejected]: (state, { payload: errorMessage }) => {
+    [getUserQnaListDB.rejected.type]: (state, { payload: errorMessage }) => {
       state.isFetching = false;
       state.errorMessage = errorMessage;
     },
