@@ -11,6 +11,7 @@ import {
 //error loging
 import * as Sentry from "@sentry/react";
 import { getToday } from "../../utils/today";
+import { off } from "process";
 
 //게시글 채택 조회
 export const getQnaMainListDB = createAsyncThunk(
@@ -21,7 +22,7 @@ export const getQnaMainListDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -40,7 +41,7 @@ export const getQnaCategoryListDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -59,7 +60,7 @@ export const getOneQnaListDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         return thunkAPI.rejectWithValue(err.response.data.message);
       }
@@ -79,7 +80,7 @@ export const postQnaListDB = createAsyncThunk(
         successAlert("정상적으로 추가 되었습니다.");
         return response.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -100,7 +101,7 @@ export const editQnaListDB = createAsyncThunk(
         successAlert("정상적으로 수정 되었습니다.");
         return;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -119,7 +120,7 @@ export const getQnaLikeListDB = createAsyncThunk(
       if (response.data.success === true) {
         return;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -139,7 +140,7 @@ export const likeQnaListDB = createAsyncThunk(
         successAlert("정상적으로 추천 되었습니다.");
         return;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -160,7 +161,7 @@ export const dislikeQnaListDB = createAsyncThunk(
         successAlert("정상적으로 추천 취소 되었습니다.");
         return;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -180,7 +181,7 @@ export const getCommentListDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -193,7 +194,7 @@ export const getCommentListDB = createAsyncThunk(
 //댓글 추가
 export const postCommentListDB = createAsyncThunk(
   "qna/postcomment",
-  async (data, thunkAPI) => {
+  async (data: { userName: string; profileImg: string }, thunkAPI) => {
     try {
       const response = await qnaApi.postCommentList(data);
       if (response.data.success === true) {
@@ -205,7 +206,7 @@ export const postCommentListDB = createAsyncThunk(
         response.data.data.createdAt = getToday();
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -226,7 +227,7 @@ export const deleteCommentListDB = createAsyncThunk(
         successAlert("정상적으로 삭제 되었습니다.");
         return data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -247,7 +248,7 @@ export const editCommentListDB = createAsyncThunk(
         successAlert("정상적으로 수정 되었습니다.");
         return data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -260,14 +261,14 @@ export const editCommentListDB = createAsyncThunk(
 //댓글 추천
 export const likeCommentListDB = createAsyncThunk(
   "qna/likecomment",
-  async (data, thunkAPI) => {
+  async (data: { commentId: number; id: number }, thunkAPI) => {
     try {
-      const response = await qnaApi.likeCommentList(data);
+      const response = await qnaApi.likeCommentList(data.commentId, data.id);
       if (response.data.success === true) {
         successAlert("정상적으로 추천 되었습니다.");
         return data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -281,14 +282,14 @@ export const likeCommentListDB = createAsyncThunk(
 //댓글 취소
 export const dislikeCommentListDB = createAsyncThunk(
   "qna/dislikecomment",
-  async (data, thunkAPI) => {
+  async (data: { commentId: number; id: number }, thunkAPI) => {
     try {
-      const response = await qnaApi.dislikeCommentList(data);
+      const response = await qnaApi.dislikeCommentList(data.commentId, data.id);
       if (response.data.success === true) {
         successAlert("정상적으로 추천 취소 되었습니다.");
         return data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.data.message === "반복해서 눌렀습니다.") {
         errorLikeAlert(err.response.data.message);
         return thunkAPI.rejectWithValue(err.response.data.message);
@@ -312,7 +313,7 @@ export const getBookmarkListDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -332,7 +333,7 @@ export const postBookmarkListDB = createAsyncThunk(
         successAlert("정상적으로 즐겨찾기에 추가 되었습니다.");
         return data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -346,14 +347,14 @@ export const postBookmarkListDB = createAsyncThunk(
 //게시글 즐겨찾기 삭제
 export const deleteBookmarkListDB = createAsyncThunk(
   "qna/deletebookmark",
-  async (data, thunkAPI) => {
+  async (data: { id: number }, thunkAPI) => {
     try {
       const response = await qnaApi.deleteBookmarkList(data);
       if (response.data.success === true) {
         successAlert("정상적으로 즐겨찾기 삭제 되었습니다.");
         return data.id;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -374,7 +375,7 @@ export const choiceCommentListDB = createAsyncThunk(
         successAlert("정상적으로 채택 되었습니다.");
         return data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -394,7 +395,7 @@ export const getQnaHotListDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }

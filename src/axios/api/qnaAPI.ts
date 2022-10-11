@@ -59,11 +59,11 @@ export const qnaApi = {
   editCommentList: data => instance.edit(`/qna/comments/${data.id}`, data),
 
   //댓글 추천
-  likeCommentList: (commentId, id) =>
+  likeCommentList: (commentId: number, id: number) =>
     instance.post(`/qna/comments/${commentId}/like`),
 
   //댓글 추천
-  dislikeCommentList: (commentId, id) =>
+  dislikeCommentList: (commentId: number, id: number) =>
     instance.delete(`/qna/comments/${commentId}/like`),
 
   //댓글 채택

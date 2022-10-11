@@ -8,11 +8,11 @@ import * as Sentry from "@sentry/react";
  */
 export const getNotificationDB = createAsyncThunk(
   "GET_NOTIFICATION",
-  async thunkAPI => {
+  async (data, thunkAPI) => {
     try {
       const response = await notification.getNotification();
       return response.data.data;
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -32,7 +32,7 @@ export const postNotificationDB = createAsyncThunk(
     try {
       const response = await notification.postNotification(id);
       return id;
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -54,7 +54,7 @@ export const delNotificationDB = createAsyncThunk(
     try {
       const response = await notification.deleteNotification(id);
       return id;
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }

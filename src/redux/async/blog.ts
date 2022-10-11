@@ -16,7 +16,7 @@ export const getBlogCommunityListDB = createAsyncThunk(
       if (response.data.success === true) {
       }
       return response.data.data;
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -36,7 +36,7 @@ export const getBlogDetailDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         return thunkAPI.rejectWithValue(err.response.data.message);
       }
@@ -55,7 +55,7 @@ export const postBlogCommunityDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -76,7 +76,7 @@ export const patchBlogCommunityDB = createAsyncThunk(
         successAlert("수정 되었습니다!");
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -96,7 +96,7 @@ export const deleteBlogCommunityDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -117,7 +117,7 @@ export const getBlogCommentListDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -137,7 +137,7 @@ export const postBlogCommentDB = createAsyncThunk(
         successAlert("정상적으로 추가 되었습니다.");
         return response.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -157,7 +157,7 @@ export const patchBlogCommentDB = createAsyncThunk(
         successAlert("정상적으로 수정 되었습니다.");
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -176,7 +176,7 @@ export const deleteBlogCommentDB = createAsyncThunk(
         successAlert("정상적으로 삭제 되었습니다.");
         return id;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -186,20 +186,23 @@ export const deleteBlogCommentDB = createAsyncThunk(
   },
 );
 //마이블로그조회
-export const getMyBlogDB = createAsyncThunk("GET_MY_BLOG", async thunkAPI => {
-  try {
-    const response = await blogApi.getMyBlog();
-    if (response.data.success === true) {
-      return response.data.data;
+export const getMyBlogDB = createAsyncThunk(
+  "GET_MY_BLOG",
+  async (data: { id: number }, thunkAPI) => {
+    try {
+      const response = await blogApi.getMyBlog(data.id);
+      if (response.data.success === true) {
+        return response.data.data;
+      }
+    } catch (err: any) {
+      if (err.response.status === 404) {
+        networkError();
+      }
+      Sentry.captureException(`error, MYBLOG 조회 : ${err}`);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
-  } catch (err) {
-    if (err.response.status === 404) {
-      networkError();
-    }
-    Sentry.captureException(`error, MYBLOG 조회 : ${err}`);
-    return thunkAPI.rejectWithValue(err.response.data.message);
-  }
-});
+  },
+);
 
 // 좋아요 추가
 export const postBlogLikeDB = createAsyncThunk(
@@ -211,7 +214,7 @@ export const postBlogLikeDB = createAsyncThunk(
         successAlert("좋아요를 누르셨습니다.");
         return response.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -229,7 +232,7 @@ export const unBlogLikeDB = createAsyncThunk(
       const response = await blogApi.unBlogLike(id);
       successAlert("좋아요가 취소 되었습니다.");
       return response.data;
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -241,11 +244,11 @@ export const unBlogLikeDB = createAsyncThunk(
 //블로그 북마크 조회
 export const getBlogBookMarkDB = createAsyncThunk(
   "GET_BOOK_MRRK",
-  async thunkAPI => {
+  async (data, thunkAPI) => {
     try {
       const response = await blogApi.getBlogBookMark();
       return response.data.data;
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -265,7 +268,7 @@ export const postBlogBookMarkDB = createAsyncThunk(
         successAlert("블로그 즐겨찾기에 추가가 되었습니다.");
         return data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -285,7 +288,7 @@ export const deleteBlogBookMarkDB = createAsyncThunk(
         successAlert("블로그 즐겨찾기에서 제거 되었습니다.");
         return id;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -296,30 +299,33 @@ export const deleteBlogBookMarkDB = createAsyncThunk(
 );
 
 // 추천 많이 받은 블로그
-export const getHotBlogDB = createAsyncThunk("HOT_BLOG", async thunkAPI => {
-  try {
-    const response = await blogApi.getHotBlog();
-    return response.data.data;
-  } catch (err) {
-    if (err.response.status === 404) {
-      networkError();
+export const getHotBlogDB = createAsyncThunk(
+  "HOT_BLOG",
+  async (data, thunkAPI) => {
+    try {
+      const response = await blogApi.getHotBlog();
+      return response.data.data;
+    } catch (err: any) {
+      if (err.response.status === 404) {
+        networkError();
+      }
+      Sentry.captureException(`error, 추천 많이 받은 블로그 조회: ${err}`);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
-    Sentry.captureException(`error, 추천 많이 받은 블로그 조회: ${err}`);
-    return thunkAPI.rejectWithValue(err.response.data.message);
-  }
-});
+  },
+);
 
 // 댓글 좋아요
 export const postCommentLikeDB = createAsyncThunk(
   "COMMENT_POST_LIKE",
-  async (id, data, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
       const response = await blogApi.postCommentLike(id);
       if (response.data.success === true) {
         successAlert("좋아요가 추가 되었습니다.");
       }
       return;
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -338,7 +344,7 @@ export const delCommentLikeDB = createAsyncThunk(
         successAlert("좋아요가 취소 되었습니다.");
       }
       return;
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }

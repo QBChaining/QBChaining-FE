@@ -16,7 +16,7 @@ export const postUserInfoDB = createAsyncThunk(
       if (response.data.success === true) {
         return data;
       }
-    } catch (err: { response: any }) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -35,7 +35,7 @@ export const putUserInfoDB = createAsyncThunk(
       if (response.data.success === true) {
         return data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -54,7 +54,7 @@ export const putUserInNewDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -73,7 +73,7 @@ export const getUserInfoDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.userPageInfo;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -92,7 +92,7 @@ export const getUserInfoActivityDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.userActivity;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -111,7 +111,7 @@ export const getUserQnaListDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -130,7 +130,7 @@ export const getUserBlogListDB = createAsyncThunk(
       if (response.data.success === true) {
         return response.data.data;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }

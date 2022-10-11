@@ -22,7 +22,7 @@ export const getQnaSearchListDB = createAsyncThunk(
       ) {
         return [];
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }
@@ -48,7 +48,7 @@ export const getBlogSearchListDB = createAsyncThunk(
       ) {
         return [];
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err.response.status === 404) {
         networkError();
       }

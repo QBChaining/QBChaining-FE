@@ -98,6 +98,7 @@ const Register = ({ isEdit, editData }: { isEdit: boolean; editData: {} }) => {
       onSubmitHandler();
     }
   };
+
   return (
     <SRegister>
       <Helmet>
