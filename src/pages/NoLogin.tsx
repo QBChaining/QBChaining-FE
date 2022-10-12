@@ -6,10 +6,10 @@ const NoLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const needLogoutAlert = text => {
+  const needLogoutAlert = (text: string) => {
     Swal.fire({ icon: "error", text: text }).then(result => {
       if (result.isConfirmed || result.isDismissed)
-        navigate(-1, { replace: true });
+        navigate("-1", { replace: true });
     });
   };
 
@@ -21,7 +21,7 @@ const NoLogin = () => {
       confirmButtonText: "확인",
     }).then(res => {
       if (res.isConfirmed || res.isDismissed) {
-        navigate(-1, { replace: true });
+        navigate("-1", { replace: true });
       }
     });
   };

@@ -3,6 +3,7 @@ import categories from "../../utils/category";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //컴포넌트
 import InterestItem from "../../components/register/InterestItem";
@@ -24,15 +25,29 @@ import {
 // import WhiteArrow from "../../assets/images/WhiteArrow.png";
 import WhiteArrow from "../../assets/images/WhiteArrow.png";
 
-const Register = ({ isEdit, editData }: { isEdit: boolean; editData: {} }) => {
+const Register = ({
+  isEdit,
+  editData,
+}: {
+  isEdit: boolean;
+  editData: {
+    languages: string[];
+    age: string;
+    gender: string;
+    career: string;
+    job: string;
+  };
+}) => {
   const navigate = useNavigate();
-  const { userName, userIsNew } = useSelector(state => state.userSlice);
+  const { userName, userIsNew } = useSelector(
+    (state: RootState) => state.userSlice,
+  );
   const [language, setLanguage] = useState([]);
   const [age, setAge] = useState("나이를 입력해주세요");
   const [gender, setGender] = useState("성별을 입력해주세요");
   const [career, setCareer] = useState("경력을 입력해주세요");
   const [job, setJob] = useState("");
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
     if (isEdit === undefined && userIsNew === "false") {
@@ -49,28 +64,28 @@ const Register = ({ isEdit, editData }: { isEdit: boolean; editData: {} }) => {
 
   const onSubmitHandler = () => {
     if (language.length < 1) {
-      errorAlert("관심언어는 최소 한개 이상 선택해주세요!");
+      errorAlert("관심언어는 최소 한개 이상 선택해주세요!", "");
       return;
     }
     if (career.length < 1) {
-      errorAlert("경력을 입력해주세요!");
+      errorAlert("경력을 입력해주세요!", "");
       return;
     }
     if (age.length < 1) {
-      errorAlert("나이를 입력해주세요!");
+      errorAlert("나이를 입력해주세요!", "");
       return;
     }
     if (gender.length < 1) {
-      errorAlert("성별을 입력해주세요!");
+      errorAlert("성별을 입력해주세요!", "");
       return;
     }
     if (job.length < 1) {
-      errorAlert("포지션을 입력해주세요!");
+      errorAlert("포지션을 입력해주세요!", "");
       return;
     }
     const regex = /^[0-9a-zA-Zㄱ-ㅎ가-힣 ]*$/;
     if (!regex.test(job)) {
-      errorAlert("포지션엔 한글과 영문만 입력가능합니다!");
+      errorAlert("포지션엔 한글과 영문만 입력가능합니다!", "");
       return;
     }
     const data = {
@@ -93,7 +108,7 @@ const Register = ({ isEdit, editData }: { isEdit: boolean; editData: {} }) => {
     });
   };
 
-  const onKeyPress = e => {
+  const onKeyPress = (e: any) => {
     if (e.key === "Enter") {
       onSubmitHandler();
     }
@@ -163,7 +178,7 @@ const Register = ({ isEdit, editData }: { isEdit: boolean; editData: {} }) => {
           onChange={e => {
             setJob(e.target.value);
           }}
-          maxLength="20"
+          maxLength={20}
           onKeyPress={onKeyPress}
         />
       </SelectWrapper>

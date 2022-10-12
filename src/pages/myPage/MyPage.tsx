@@ -6,6 +6,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import { Helmet } from "react-helmet-async";
 import { useNavigate, useParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //컴포넌트
 import MyPageActivity from "../../components/myPage/MyPageActivity";
@@ -29,7 +30,7 @@ import unlike from "../../assets/images/unlike.png";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const { userName } = useParams();
 
   const {
@@ -41,7 +42,7 @@ const MyPage = () => {
     userBlogList,
     userBlogCommentList,
     errorMessage,
-  } = useSelector(state => state.userSlice);
+  } = useSelector((state: RootState) => state.userSlice);
   // useEffect(() => {
   //   if (loginUserName === userInfo.userName && userIsNew === "true") {
   //     errorAlert("정보 등록후 이용 가능합니다!").then(res => {
@@ -64,13 +65,13 @@ const MyPage = () => {
     };
   }, []);
 
-  const goDetail = (type, id) => {
+  const goDetail = (type: string, id: number) => {
     navigate(`/${type}/detail/${id}`);
   };
 
   if (errorMessage === "조회하려는 사용자가 존재하지 않습니다.") {
-    errorAlert("조회하려는 사용자가 존재하지 않습니다.").then(res => {
-      (res.isConfirmed || res.isDismissed) && navigate(-1, { replace: true });
+    errorAlert("조회하려는 사용자가 존재하지 않습니다.", "").then(res => {
+      (res.isConfirmed || res.isDismissed) && navigate("-1", { replace: true });
     });
     // return navigate(-1, { replace: true });
   }
@@ -243,7 +244,7 @@ const SUserInfoWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const SUserProfile = styled.div`
+const SUserProfile = styled.div<{ profileImg: string }>`
   min-width: 150px;
   min-height: 150px;
   border-radius: 50%;
@@ -320,7 +321,7 @@ const SBlog = styled.div`
   }
 `;
 
-const SHeader = styled.div`
+const SHeader = styled.div<{ type: string }>`
   background-color: ${props => props.theme.color.mainOrange};
   height: 50px;
   display: flex;
@@ -394,13 +395,13 @@ const SUserInfoInner = styled.div`
   margin-right: 50px;
 `;
 
-const SSolveText = styled.div`
+const SSolveText = styled.div<{ resolve?: boolean }>`
   font-size: 12px;
   display: flex;
   align-items: center;
   color: ${props => (props.resolve ? "#1e1e1e" : "#c0c0c0")};
 `;
-const SSolveIcon = styled.div`
+const SSolveIcon = styled.div<{ resolve: boolean }>`
   width: 16px;
   height: 16px;
   margin-right: 4px;

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import ToastViewer from "../editor/ToastViewer";
 import { useNavigate } from "react-router-dom";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //통신
 import {
@@ -20,42 +21,51 @@ import QnaLike from "../../assets/images/unlike.png";
 import QnaLikeFill from "../../assets/images/addLike.png";
 import WinnerCrown from "../../assets/images/WinnerCrown.png";
 
-const QnaCommentList = ({ id, qnaId, isPreview }) => {
-  const dispatch = useDispatch();
+type TQnaCommentList = {
+  id: string;
+  qnaId: string;
+};
+
+const QnaCommentList = ({ id, qnaId }: TQnaCommentList) => {
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
   //commentList 구독
-  const { commentList: list } = useSelector(state => state.qnaSlice);
+  const { commentList: list } = useSelector(
+    (state: RootState) => state.qnaSlice,
+  );
 
   //디테일정보 구독
-  const target = useSelector(state => state.qnaSlice.qnaTarget);
+  const target = useSelector((state: RootState) => state.qnaSlice.qnaTarget);
 
-  const { isLogin, userName } = useSelector(state => state.userSlice);
+  const { isLogin, userName } = useSelector(
+    (state: RootState) => state.userSlice,
+  );
 
-  //코멘트 삭제 dispatch
-  const onDeleteHandler = id => {
-    if (!isLogin) {
-      errorAlert("로그인이 필요한 기능입니다!");
-      return;
-    }
-    dispatch(deleteCommentListDB(id));
-  };
+  // //코멘트 삭제 dispatch
+  // const onDeleteHandler = id => {
+  //   if (!isLogin) {
+  //     errorAlert("로그인이 필요한 기능입니다!", "");
+  //     return;
+  //   }
+  //   dispatch(deleteCommentListDB(id));
+  // };
 
   //댓글 추천
-  const onLikeHandler = id => {
+  const onLikeHandler = (commentId: number) => {
     if (!isLogin) {
-      errorAlert("로그인이 필요한 기능입니다!");
+      errorAlert("로그인이 필요한 기능입니다!", "");
       return;
     }
-    dispatch(likeCommentListDB(id));
+    dispatch(likeCommentListDB(commentId));
   };
 
   //댓글 추천 취소
-  const onDisLikeHandler = id => {
-    dispatch(dislikeCommentListDB(id));
+  const onDisLikeHandler = (commentId: number) => {
+    dispatch(dislikeCommentListDB(commentId));
   };
 
-  const onChoiceHandler = (e, id) => {
+  const onChoiceHandler = (e: any, id: string) => {
     e.stopPropagation();
     Swal.fire({
       title: "채택 하시겠습니까?",
@@ -67,12 +77,12 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
       if (res.isConfirmed) {
         dispatch(choiceCommentListDB({ id, qnaId, userName }));
       } else if (res.isDenied || res.isDismissed) {
-        errorAlert("취소 하셨습니다.");
+        errorAlert("취소 하셨습니다.", "");
       }
     });
   };
 
-  const goMypage = username => {
+  const goMypage = (username: string) => {
     navigate(`/mypage/${username}`);
   };
 
@@ -97,7 +107,6 @@ const QnaCommentList = ({ id, qnaId, isPreview }) => {
                       <SUserName>{data.userName}</SUserName>
                       {data.isChoose && <SWinnerButton>채택됨</SWinnerButton>}
                       {!target.isResolve &&
-                        !isPreview &&
                         target.userName === userName &&
                         target.userName !== data.userName && (
                           <SChoiceButton
@@ -154,7 +163,7 @@ const SItemWrapper = styled.div`
   border: 1px solid #eee;
 `;
 
-const SUserInfoWrapper = styled.div`
+const SUserInfoWrapper = styled.div<{ isChoose: boolean }>`
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -188,7 +197,7 @@ const SUserInfo = styled.div`
   margin-bottom: 20px;
 `;
 
-const SUserProfile = styled.div`
+const SUserProfile = styled.div<{ profile: string }>`
   width: 44px;
   height: 44px;
   background-image: url(${props => props.profile});
@@ -207,13 +216,11 @@ const SUserNameWrapper = styled.div`
 
 const SUserName = styled.div`
   margin-bottom: 2px;
-  font-weight: ${props => (props.winner ? "600" : "400")};
-  color: ${props =>
-    props.winner ? props.theme.color.white : props.theme.color.black};
+  font-weight: 400;
   cursor: pointer;
 `;
 
-const SCreateAt = styled.div`
+const SCreateAt = styled.div<{ isChoose: boolean }>`
   font-size: 12px;
   color: ${props =>
     props.isChoose ? props.theme.color.white : props.theme.color.grey6};
@@ -225,7 +232,7 @@ const ButtonBackground = styled.button`
   background-color: transparent;
 `;
 
-const SHoneyTipButton = styled(ButtonBackground)`
+const SHoneyTipButton = styled(ButtonBackground)<{ isLike: boolean }>`
   padding-right: 24px;
   background-position: right center;
   background-size: 16px 16px;

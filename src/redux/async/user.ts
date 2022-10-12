@@ -10,7 +10,7 @@ import * as Sentry from "@sentry/react";
 //회원가입 후 유저정보 입력
 export const postUserInfoDB = createAsyncThunk(
   "auth/postuserinfo",
-  async (data, thunkAPI) => {
+  async (data: {}, thunkAPI) => {
     try {
       const response = await userApi.postUserInfo(data);
       if (response.data.success === true) {
@@ -29,7 +29,7 @@ export const postUserInfoDB = createAsyncThunk(
 //유저정보 수정
 export const putUserInfoDB = createAsyncThunk(
   "auth/putuserinfo",
-  async (data, thunkAPI) => {
+  async (data: {}, thunkAPI) => {
     try {
       const response = await userApi.putUserInfo(data);
       if (response.data.success === true) {
@@ -67,7 +67,7 @@ export const putUserInNewDB = createAsyncThunk(
 //유저정보 받아오기
 export const getUserInfoDB = createAsyncThunk(
   "auth/getuserinfo",
-  async (data, thunkAPI) => {
+  async (data: string, thunkAPI) => {
     try {
       const response = await userApi.getUserInfo(data);
       if (response.data.success === true) {
@@ -86,7 +86,7 @@ export const getUserInfoDB = createAsyncThunk(
 //유저활동기록 받아오기
 export const getUserInfoActivityDB = createAsyncThunk(
   "auth/getuserinfoactivity",
-  async (data, thunkAPI) => {
+  async (data: string, thunkAPI) => {
     try {
       const response = await userApi.getUserInfoActivity(data);
       if (response.data.success === true) {
@@ -105,7 +105,7 @@ export const getUserInfoActivityDB = createAsyncThunk(
 //유저 qnaList
 export const getUserQnaListDB = createAsyncThunk(
   "auth/getuserqnalist",
-  async (data, thunkAPI) => {
+  async (data: string, thunkAPI) => {
     try {
       const response = await userApi.getUserQnaList(data);
       if (response.data.success === true) {
@@ -124,7 +124,7 @@ export const getUserQnaListDB = createAsyncThunk(
 //유저 blogList
 export const getUserBlogListDB = createAsyncThunk(
   "auth/getuserbloglist",
-  async (data, thunkAPI) => {
+  async (data: string, thunkAPI) => {
     try {
       const response = await userApi.getUserBlogList(data);
       if (response.data.success === true) {

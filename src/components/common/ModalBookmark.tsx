@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //컴포넌트
 import Nodata from "../bookmark/Nodata";
@@ -15,13 +16,22 @@ import { needLoginAlert } from "../../utils/swal";
 //이미지
 import BookmarkStar from "../../assets/images/BookmarkStar.png";
 
-const ModalBookmark = ({ isWrite, type }) => {
-  const dispatch = useDispatch();
+type TModal = {
+  isWrite?: boolean;
+  type?: string;
+};
 
-  const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
-  const blogBookmarkList = useSelector(state => state.blogSlice.blogBookMark);
+const ModalBookmark = ({ isWrite, type }: TModal) => {
+  const dispatch: AppDispatch = useDispatch();
 
-  const { isLogin, color } = useSelector(state => state.userSlice);
+  const qnaBookmarkList = useSelector(
+    (state: RootState) => state.qnaSlice.bookmarkList,
+  );
+  const blogBookmarkList = useSelector(
+    (state: RootState) => state.blogSlice.blogBookMark,
+  );
+
+  const { isLogin, color } = useSelector((state: RootState) => state.userSlice);
   const [openModal, setOpenModal] = useState(false);
   const toggle = () => {
     if (!isLogin) {
@@ -101,7 +111,7 @@ const SModalBookmarkIcon = styled.div`
   }
 `;
 
-const SModalBookmark = styled.div`
+const SModalBookmark = styled.div<{ isWrite: boolean }>`
   position: ${props => (props.isWrite ? "relative" : "fixed")};
   top: 0;
   left: 0;

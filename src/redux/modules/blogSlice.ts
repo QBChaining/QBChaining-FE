@@ -21,7 +21,18 @@ import {
 
 export interface IBlogProps {
   blogList: any[];
-  blogDetail: { isBookmark: boolean; isLike: boolean; like: number };
+  blogDetail: {
+    isBookmark: boolean;
+    isLike: boolean;
+    like: number;
+    title: string;
+    userName: string;
+    profileImg: string;
+    id: number;
+    createdAt: string;
+    content: string;
+    tags: string[];
+  };
   commentList: any[];
   myblog: any[];
   hotBlog: any[];
@@ -29,8 +40,8 @@ export interface IBlogProps {
   likebookmark: {};
   isFetching: boolean;
   isDetailFetcing: boolean;
-  errorMessage: "";
-  detailErrorMessage: "";
+  errorMessage: string;
+  detailErrorMessage: string;
   isMore: boolean;
 }
 

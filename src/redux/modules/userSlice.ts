@@ -16,6 +16,47 @@ interface IUser {
   isNew: string;
 }
 
+export interface TUserSlice {
+  userInfo: {
+    profileImg: string;
+    userName: string;
+    age?: string;
+    career?: string;
+    gender?: string;
+    job?: string;
+    languages?: string[];
+  };
+  userQnaList: {
+    id: number;
+    title: string;
+    createdAt: string;
+    isResolve: boolean;
+  }[];
+  userQnaAnswerList: {
+    id: number;
+    Qna: { id: number; title: string; createdAt: string; isResolve: boolean };
+  }[];
+  userBlogList: {
+    id: number;
+    title: string;
+    createdAt: string;
+    likes: number;
+  }[];
+  userBlogCommentList: {
+    id: number;
+    Post: { id: number; title: string; createdAt: string; likes: number };
+  }[];
+  isLogin: boolean;
+  userToken: string | null;
+  userName: string | null;
+  userProfile: string | null;
+  userIsNew: null | string;
+  isFetching: boolean;
+  userActivity: [];
+  errorMessage: null;
+  color: string;
+}
+
 export const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -33,9 +74,9 @@ export const userSlice = createSlice({
     userActivity: [],
     errorMessage: null,
     color: "backgroundGradient",
-  },
+  } as TUserSlice,
   reducers: {
-    logOut: (state, action) => {
+    logOut: state => {
       deleteCookie("token");
       state.isLogin = false;
       state.userToken = null;
@@ -43,23 +84,23 @@ export const userSlice = createSlice({
       state.userProfile = null;
       state.userIsNew = null;
     },
-    logIn: (state, action) => {
+    logIn: state => {
       state.isLogin = true;
       state.userToken = getCookie("token");
       state.userName = jwt_decode<IUser>(getCookie("token")).userName;
       state.userProfile = jwt_decode<IUser>(getCookie("token")).profileImg;
       state.userIsNew = jwt_decode<IUser>(getCookie("token")).isNew;
     },
-    colorSetGreen: (state, action) => {
+    colorSetGreen: state => {
       state.color = "mainGreen";
     },
-    colorSetBlue: (state, action) => {
+    colorSetBlue: state => {
       state.color = "mainBlue";
     },
-    colorSetGrad: (state, action) => {
+    colorSetGrad: state => {
       state.color = "backgroundGradient";
     },
-    removeUserInfo: (state, action) => {
+    removeUserInfo: state => {
       state.userQnaList = [];
       state.userQnaAnswerList = [];
       state.userBlogList = [];
@@ -82,7 +123,7 @@ export const userSlice = createSlice({
 
     //신규회원인지 확인
     [putUserInNewDB.fulfilled.type]: (state, { payload }) => {
-      state.userIsNew = false;
+      state.userIsNew = "false";
       state.isFetching = false;
       state.errorMessage = null;
     },

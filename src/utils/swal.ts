@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const successAlert = message => {
+export const successAlert = (message: string) => {
   return Swal.fire({
     icon: "success",
     title: message,
@@ -8,7 +8,7 @@ export const successAlert = message => {
   });
 };
 
-export const errorAlert = (message, text) => {
+export const errorAlert = (message: string, text: string) => {
   return Swal.fire({
     icon: "error",
     title: message,
@@ -17,7 +17,7 @@ export const errorAlert = (message, text) => {
   });
 };
 
-export const infoAlert = message => {
+export const infoAlert = (message: string) => {
   return Swal.fire({
     icon: "info",
     title: message,
@@ -34,10 +34,10 @@ export const needLoginAlert = () => {
 };
 
 export const confirmAlert = (
-  title,
-  content,
-  confirmButtonText,
-  cancelButtonText,
+  title: string,
+  content: string,
+  confirmButtonText: string,
+  cancelButtonText: string,
 ) => {
   return Swal.fire({
     showCancelButton: true,
@@ -78,10 +78,10 @@ const Toast = Swal.mixin({
   },
 });
 
-export const likeAlert = message => {
+export const likeAlert = (message: string) => {
   return Toast.fire({ icon: "success", title: message });
 };
 
-export const errorLikeAlert = message => {
+export const errorLikeAlert = (message: string) => {
   return Toast.fire({ icon: "error", title: message });
 };

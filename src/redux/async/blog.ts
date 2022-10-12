@@ -29,7 +29,7 @@ export const getBlogCommunityListDB = createAsyncThunk(
 //블로그 디테일
 export const getBlogDetailDB = createAsyncThunk(
   "BLOG_DETAIL",
-  async (id, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
       const response = await blogApi.getBlogDetail(id);
 
@@ -89,7 +89,7 @@ export const patchBlogCommunityDB = createAsyncThunk(
 //블로그 게시글 삭제
 export const deleteBlogCommunityDB = createAsyncThunk(
   "BLOG_DELETE",
-  async (id, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
       const response = await blogApi.deleteBlogCommunity(id);
 
@@ -207,7 +207,7 @@ export const getMyBlogDB = createAsyncThunk(
 // 좋아요 추가
 export const postBlogLikeDB = createAsyncThunk(
   "ADD_LIKE",
-  async (id, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
       const response = await blogApi.postBlogLike(id);
       if (response.data.success === true) {
@@ -227,7 +227,7 @@ export const postBlogLikeDB = createAsyncThunk(
 //좋아요 삭제
 export const unBlogLikeDB = createAsyncThunk(
   "UN_LIKE",
-  async (id, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
       const response = await blogApi.unBlogLike(id);
       successAlert("좋아요가 취소 되었습니다.");
@@ -261,7 +261,10 @@ export const getBlogBookMarkDB = createAsyncThunk(
 //블로그 북마크 추가
 export const postBlogBookMarkDB = createAsyncThunk(
   "ADD_BOOK_MARK",
-  async (data, thunkAPI) => {
+  async (
+    data: { id: string; title: string; user_name: string; createdAt: string },
+    thunkAPI,
+  ) => {
     try {
       const response = await blogApi.postBlogBookMark(data);
       if (response.data.success === true) {
@@ -281,7 +284,7 @@ export const postBlogBookMarkDB = createAsyncThunk(
 //블로그 북마크 삭제
 export const deleteBlogBookMarkDB = createAsyncThunk(
   "DEL_BOOK_MARK",
-  async (id, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
       const response = await blogApi.delBlogBookMark(id);
       if (response.data.success === true) {

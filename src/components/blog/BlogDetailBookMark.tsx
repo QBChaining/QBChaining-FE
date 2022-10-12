@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getToday } from "../../utils/today";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //통신
 import {
@@ -17,10 +18,26 @@ import { needLoginAlert } from "../../utils/swal";
 import blogbookmark from "../../assets/images/BookmarkNoFillIcon.png";
 import blogbookmarkadd from "../../assets/images/BookmarkFillIcon.png";
 
-const BlogBookMark = ({ target, isbookmark, isdetailbookmark, ismainlist }) => {
-  const { isLogin } = useSelector(state => state.userSlice);
+type TBlogBookMark = {
+  target: {
+    isBookmark: boolean;
+    isLike: boolean;
+    like: number;
+    title: string;
+    userName: string;
+    profileImg: string;
+    id: number;
+    createdAt: string;
+    content: string;
+  };
 
-  const dispatch = useDispatch();
+  isbookmark: boolean;
+};
+
+const BlogBookMark = ({ target, isbookmark }: TBlogBookMark) => {
+  const { isLogin } = useSelector((state: RootState) => state.userSlice);
+
+  const dispatch: AppDispatch = useDispatch();
   const { id } = useParams();
 
   const totalData = {

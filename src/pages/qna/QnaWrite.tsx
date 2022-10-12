@@ -17,7 +17,7 @@ const QnaWrite = () => {
       </Helmet>
       <SEditor>
         <h2 className="title">새 질문 작성하기</h2>
-        <Editor className="editor" isWrite={true} />
+        <Editor isWrite={true} />
       </SEditor>
       <ModalBookmark isWrite={true} />
     </SQnaWrite>

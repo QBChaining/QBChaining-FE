@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import styled from "styled-components";
+import { RootState, AppDispatch } from "redux/config/configStore";
 import _ from "lodash";
 
 //컴포넌트
@@ -19,11 +20,13 @@ import { colorSetBlue } from "../../redux/modules/userSlice";
 import MainWriteButton from "../../assets/images/MainWriteButton.png";
 
 const BlogCommmunityMain = () => {
-  const blogMainList = useSelector(state => state.blogSlice.blogList);
-  const isFinish = useSelector(state => state.blogSlice.isMore);
-  const blogMainLists = [...new Set(blogMainList.map(JSON.stringify))].map(
-    JSON.parse,
+  const blogMainList = useSelector(
+    (state: RootState) => state.blogSlice.blogList,
   );
+  const isFinish = useSelector((state: RootState) => state.blogSlice.isMore);
+  // const blogMainLists = [...new Set(blogMainList.map(JSON.stringify))].map(
+  //   JSON.parse,
+  // );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -38,13 +41,13 @@ const BlogCommmunityMain = () => {
    */
   const getBlogMainCoumunity = useCallback(() => {
     const finish = async () => {
-      if (isFinish >= 1) {
+      if (isFinish) {
         await dispatch(getBlogCommunityListDB(page));
         setLoading(false);
       }
     };
     return finish();
-  }, [page, blogMainLists]);
+  }, [page, blogMainList]);
 
   /**
    * 스크롤 위치 계산
@@ -110,7 +113,7 @@ const BlogCommmunityMain = () => {
                 <div></div>작성하기
               </SWritingButton>
             </SWritingButtonWrapper>
-            {blogMainLists?.map(posts => (
+            {blogMainList?.map(posts => (
               <BlogMainList posts={posts} key={posts.id} />
             ))}
           </SLeftContainer>

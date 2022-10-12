@@ -24,10 +24,10 @@ const Login = () => {
       //주소창에서 토큰값 자르기
       const token = window.location.search.split("=");
       //자른 값에 뒷부분을 token이란 이름으로 쿠키에 저장
-      setCookie("token", token[1]);
+      setCookie("token", token[1], "");
 
       //쿠키를 디코드해서 값 추출
-      let decoded = jwt_decode(getCookie("token"));
+      let decoded: { isNew: string } = jwt_decode(getCookie("token"));
       //추출한 값중에 is_new값에 따라 분기처리
       if (decoded.isNew === "true") {
         dispatch(logIn());

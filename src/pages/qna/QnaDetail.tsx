@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Helmet } from "react-helmet-async";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //무한스크롤
 import { ClipLoader } from "react-spinners";
@@ -26,7 +27,7 @@ import QnaWriteArrow from "../../assets/images/QnaWriteArrow.png";
 
 const QnaDetail = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
   const {
@@ -35,7 +36,7 @@ const QnaDetail = () => {
     isCommentFetching,
     isDetailFetcing,
     detailErrorMessage,
-  } = useSelector(state => state.qnaSlice);
+  } = useSelector((state: RootState) => state.qnaSlice);
 
   const [pageNumber, setPageNumber] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -43,7 +44,7 @@ const QnaDetail = () => {
 
   useEffect(() => {
     if (detailErrorMessage === "게시글이 존재하지 않습니다.") {
-      errorAlert(detailErrorMessage);
+      errorAlert(detailErrorMessage, "");
       return navigate("/qna", { replace: true });
     }
   }, [detailErrorMessage]);
@@ -68,7 +69,7 @@ const QnaDetail = () => {
     dispatch(getCommentListDB(data)).then(res =>
       setHasNextPage(res.payload.commentLists.length === 10),
     );
-  }, [id, pageNumber]);
+  }, [id, pageNumber, dispatch]);
 
   //페이지가 바닥에 닿을때마다 pageNumber+1
   useEffect(() => {
@@ -95,13 +96,8 @@ const QnaDetail = () => {
               <QnaTarget isDatail={true} />
             </SLeftHeader>
             <SLeftBody>
-              <h3>답변 {list.length}개</h3>
-              <QnaCommentList
-                author={target.user?.userName}
-                resolve={target.isResolve}
-                id={id}
-                qnaId={id}
-              />
+              <h3>답변</h3>
+              <QnaCommentList id={id} qnaId={id} />
             </SLeftBody>
             {!isCommentFetching && hasNextPage && (
               <SLoading ref={infiniteTarget}>

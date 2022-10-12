@@ -24,10 +24,18 @@ import {
 export interface IQnaProps {
   qnaList: any[];
   qnaTarget: {
-    isLike: boolean;
-    like: number;
+    category: string;
+    content: string;
+    createdAt: string;
+    id: number;
     isBookmark: boolean;
-    isResolve: boolean;
+    isLike: boolean;
+    isResolve: number;
+    like: number;
+    profileImg: string;
+    tags: string[];
+    title: string;
+    userName: string;
   };
   commentList: any[];
   chooseComment: {};
@@ -58,10 +66,10 @@ const qnaSlice = createSlice({
     isCommentFetching: false,
   } as IQnaProps,
   reducers: {
-    removeUserInfo: (state, { payload }) => {
+    removeUserInfo: state => {
       state.bookmarkList = [];
     },
-    removeQnaList: (state, { payload }) => {
+    removeQnaList: state => {
       state.qnaList = [];
       state.qnaTarget = {
         isLike: false,
@@ -70,11 +78,11 @@ const qnaSlice = createSlice({
         isResolve: false,
       };
     },
-    removeCommentList: (state, { payload }) => {
+    removeCommentList: state => {
       state.commentList = [];
       state.chooseComment = {};
     },
-    removeErrorMessage: (state, { payload }) => {
+    removeErrorMessage: state => {
       state.errorMessage = "";
       state.detailErrorMessage = "";
     },

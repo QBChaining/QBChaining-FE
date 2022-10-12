@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //컴포넌트
 import CommentAdd from "../../components/blog/comment/BlogCommentAdd";
@@ -29,18 +30,22 @@ const BlogCommunityDetail = () => {
     blogDetail: detail,
     detailErrorMessage,
     isDetailFetcing,
-  } = useSelector(state => state.blogSlice);
-  const detailTitle = useSelector(state => state.blogSlice.blogDetail.title);
-  const userName = useSelector(state => state.blogSlice.blogDetail.userName);
+  } = useSelector((state: RootState) => state.blogSlice);
+  const detailTitle = useSelector(
+    (state: RootState) => state.blogSlice.blogDetail.title,
+  );
+  const userName = useSelector(
+    (state: RootState) => state.blogSlice.blogDetail.userName,
+  );
   const profileImg = useSelector(
-    state => state.blogSlice.blogDetail.profileImg,
+    (state: RootState) => state.blogSlice.blogDetail.profileImg,
   );
   const isBookmark = useSelector(
-    state => state.blogSlice.blogDetail.isBookmark,
+    (state: RootState) => state.blogSlice.blogDetail.isBookmark,
   );
-  const userNick = useSelector(state => state.userSlice.userName);
+  const userNick = useSelector((state: RootState) => state.userSlice.userName);
 
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
   //게시글 삭제
@@ -61,7 +66,7 @@ const BlogCommunityDetail = () => {
 
   useEffect(() => {
     if (detailErrorMessage === "존재하지 않는 게시물입니다") {
-      errorAlert("삭제되었거나 존재하지 않는 게시물입니다.");
+      errorAlert("삭제되었거나 존재하지 않는 게시물입니다.", "");
       return navigate("/blog", { replace: true });
     }
   }, [detailErrorMessage]);
@@ -70,7 +75,7 @@ const BlogCommunityDetail = () => {
     dispatch(getBlogDetailDB(id));
   }, []);
 
-  const goMypage = name => {
+  const goMypage = (name: string) => {
     navigate(`/mypage/${name}`);
   };
 
@@ -96,11 +101,7 @@ const BlogCommunityDetail = () => {
       <div key={detail.id}>
         <STitleSection>
           <div className="bookMark">
-            <BlogDetailBookMark
-              isdetailbookmark={true}
-              target={detail}
-              isbookmark={isBookmark}
-            />
+            <BlogDetailBookMark target={detail} isbookmark={isBookmark} />
             <STitle>{detailTitle}</STitle>
           </div>
           <SProfileNickNameDate
@@ -130,32 +131,23 @@ const BlogCommunityDetail = () => {
                 수정
               </div>
               <div>|</div>
-              <div
-                className="delbtn"
-                onClick={id => {
-                  deleteBlogPost(id);
-                }}
-              >
+              <div className="delbtn" onClick={deleteBlogPost}>
                 삭제
               </div>
             </ButtonGroup>
           )}
           <SContents>
-            <ToastViewer className="content1" content={detail.content} />
+            <ToastViewer content={detail.content} />
           </SContents>
           <SLikeNtags>
             <TagList>
-              {detail.tags?.map((tags, i) => (
+              {detail.tags?.map((tag: string, i: number) => (
                 <STag key={i}>
-                  <div>{tags}</div>
+                  <div>{tag}</div>
                 </STag>
               ))}
             </TagList>
-            <BlogLike
-              isLike={detail.isLike}
-              like={detail.like}
-              isbookmark={detail.isBookmark}
-            />
+            <BlogLike isLike={detail.isLike} like={detail.like} />
           </SLikeNtags>
         </SContentWrapper>
       </div>
@@ -247,7 +239,7 @@ const TagList = styled.div`
   display: flex;
   margin-top: 20px;
 `;
-const SProfile = styled.div`
+const SProfile = styled.div<{ url: string }>`
   width: 44px;
   height: 44px;
   border-radius: 50%;

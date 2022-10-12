@@ -18,12 +18,30 @@ import GreyQnaCommentIcon from "../../assets/images/GreyQnaComment.png";
 import unlike from "../../assets/images/unlike.png";
 import BlogComment from "../../assets/images/BlogComment.png";
 
-const ContentList = ({ data, type, isSearch }) => {
+type TContentList = {
+  data?: {
+    createdAt: string;
+    isResolve: boolean;
+    isBookmark: boolean;
+    id: number;
+    profileImg: string;
+    userName: string;
+    category: string;
+    title: string;
+    tags: string[];
+    like: number;
+    cntcomment: number;
+  };
+  type?: string;
+  isSearch?: boolean;
+};
+
+const ContentList = ({ data, type, isSearch }: TContentList) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   //몇일전 구하는 함수
-  const timeForToday = value => {
+  const timeForToday = (value: string) => {
     const today = new Date();
     const timeValue = new Date(value);
 
@@ -50,18 +68,18 @@ const ContentList = ({ data, type, isSearch }) => {
 
   const time = timeForToday(data.createdAt);
 
-  const goMypage = name => {
+  const goMypage = (name: string) => {
     navigate(`/mypage/${name}`);
   };
 
-  const goSearch = (content, e) => {
+  const goSearch = (content: string, e: any) => {
     e.stopPropagation();
     dispatch(setSearchWord(content));
     navigate(`/search?q=${content}`);
   };
 
   return (
-    <StextMain ResolveWrapper={ResolveWrapper}>
+    <StextMain>
       {isSearch && type === "qna" && (
         <SSolveText resolve={data.isResolve}>
           {data.isResolve ? "채택 완료" : "채택미완료"}
@@ -73,7 +91,6 @@ const ContentList = ({ data, type, isSearch }) => {
         }}
         type={type}
         resolve={data.isResolve}
-        ResolveWrapper={ResolveWrapper}
         isSearch={isSearch}
       >
         <SUserInfo>
@@ -98,11 +115,7 @@ const ContentList = ({ data, type, isSearch }) => {
         <STagWrapper>
           <STags>
             {data.tags?.map((data, i) => {
-              return (
-                <Tag type={type} key={i}>
-                  {data}
-                </Tag>
-              );
+              return <Tag key={i}>{data}</Tag>;
             })}
           </STags>
           <SCount>
@@ -127,7 +140,7 @@ const StextMain = styled.div`
   position: relative;
 `;
 
-const SSolveText = styled.div`
+const SSolveText = styled.div<{ resolve: boolean }>`
   position: absolute;
   right: 30px;
   top: -35px;
@@ -143,7 +156,11 @@ const SSolveText = styled.div`
     props.resolve ? ResolvedListIcon : NoResolvedListIcon});
 `;
 
-const SWrapper = styled.div`
+const SWrapper = styled.div<{
+  type: string;
+  resolve: boolean;
+  isSearch: boolean;
+}>`
   width: 100%;
   padding: 30px 50px 18px 50px;
   min-height: 200px;
@@ -182,7 +199,7 @@ const SProfileContainer = styled.div`
   cursor: pointer;
 `;
 
-const SProfile = styled.div`
+const SProfile = styled.div<{ profile: string }>`
   width: 33px;
   height: 33px;
   border-radius: 50%;
@@ -274,7 +291,7 @@ const SIcon = styled.div`
   background-position: center;
 `;
 
-const SLikeIcon = styled(SIcon)`
+const SLikeIcon = styled(SIcon)<{ type: string; resolve: boolean }>`
   background-image: url(${props =>
     props.type === "qna"
       ? props.resolve
@@ -283,7 +300,7 @@ const SLikeIcon = styled(SIcon)`
       : unlike});
 `;
 
-const SCommentIcon = styled(SIcon)`
+const SCommentIcon = styled(SIcon)<{ type: string; resolve: boolean }>`
   background-image: url(${props =>
     props.type === "qna"
       ? props.resolve

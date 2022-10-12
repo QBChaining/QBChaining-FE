@@ -4,7 +4,7 @@ import styled from "styled-components";
 //이미지
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 
-const Nodata = ({ type }) => {
+const Nodata = ({ type }: { type?: string }) => {
   return (
     <SNodata>
       <SIcon src={BookmarkFillIcon} />

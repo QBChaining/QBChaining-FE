@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { RootState, AppDispatch } from "redux/config/configStore";
 import { getUserInfoDB } from "../../redux/async/user";
 import Register from "./Register";
 
 const RegisterEdit = () => {
-  const dispatch = useDispatch();
-  const { userName, userInfo } = useSelector(state => state.userSlice);
+  const dispatch: AppDispatch = useDispatch();
+  const { userName, userInfo } = useSelector(
+    (state: RootState) => state.userSlice,
+  );
 
   useEffect(() => {
     dispatch(getUserInfoDB(userName));
-  }, [userName]);
+  }, [userName, dispatch]);
 
   return (
     <>

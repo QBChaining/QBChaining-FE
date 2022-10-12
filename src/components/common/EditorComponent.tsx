@@ -33,8 +33,20 @@ import {
 import { errorAlert } from "../../utils/swal";
 //이미지
 import DeleteButton from "../../assets/images/DeleteButton.png";
+
+type options = {
+  isEdit?: boolean;
+  isWrite?: boolean;
+  isCommentWrite?: boolean;
+  isBlogEdit?: boolean;
+  isBlogWrite?: boolean;
+  id?: string;
+  blogEditId?: number;
+  blogEditData?: {};
+  editData?: {};
+};
+
 const EditorComponent = ({
-  isGuide,
   isEdit,
   isWrite,
   isCommentWrite,
@@ -44,7 +56,7 @@ const EditorComponent = ({
   blogEditId,
   blogEditData,
   editData,
-}) => {
+}: options) => {
   const isComment = useSelector(state => state.qnaSlice.isCommentWrite);
   const navigate = useNavigate();
   const dispatch = useDispatch();

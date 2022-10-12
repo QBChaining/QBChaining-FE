@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //컴포넌트
 import ContentList from "../../components/common/ContentList";
@@ -26,8 +27,10 @@ import MainWriteButton from "../../assets/images/MainWriteButton.png";
 
 const QnaMain = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { qnaList, isFetching } = useSelector(state => state.qnaSlice);
+  const dispatch: AppDispatch = useDispatch();
+  const { qnaList, isFetching } = useSelector(
+    (state: RootState) => state.qnaSlice,
+  );
   const [category, setCategory] = useState("");
   const [resolveTap, setResolveTap] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
