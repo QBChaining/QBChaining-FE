@@ -57,7 +57,7 @@ const MyPage = () => {
     dispatch(getUserInfoActivityDB(userName));
     dispatch(getUserQnaListDB(userName));
     dispatch(getUserBlogListDB(userName));
-  }, [userName]);
+  }, [userName, dispatch]);
 
   useEffect(() => {
     return () => {
