@@ -41,7 +41,7 @@ type options = {
   isBlogEdit?: boolean;
   isBlogWrite?: boolean;
   id?: string;
-  blogEditId?: number;
+  blogEditId?: string;
   blogEditData?: {};
   editData?: {};
 };

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //컴포넌트
 import ModalBookmark from "../../components/common/ModalBookmark";
@@ -12,7 +13,9 @@ import EditorComponent from "../../components/common/EditorComponent";
 import QnaWriteIcon from "../../assets/images/QnaWriteIcon.png";
 
 const BlogCommunityEdit = () => {
-  const blogEditData = useSelector(state => state.blogSlice.blogDetail);
+  const blogEditData = useSelector(
+    (state: RootState) => state.blogSlice.blogDetail,
+  );
   const { id } = useParams();
 
   return (

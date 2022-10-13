@@ -27,7 +27,7 @@ const BlogCommmunityMain = () => {
   // const blogMainLists = [...new Set(blogMainList.map(JSON.stringify))].map(
   //   JSON.parse,
   // );
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
   /**
@@ -73,7 +73,7 @@ const BlogCommmunityMain = () => {
       setPage(page => page + 1);
     }
 
-    if (isFinish === 0) {
+    if (isFinish === false) {
     }
   }, [page]);
 

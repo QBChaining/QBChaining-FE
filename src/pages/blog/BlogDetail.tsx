@@ -37,9 +37,6 @@ const BlogCommunityDetail = () => {
   const userName = useSelector(
     (state: RootState) => state.blogSlice.blogDetail.userName,
   );
-  const profileImg = useSelector(
-    (state: RootState) => state.blogSlice.blogDetail.profileImg,
-  );
   const isBookmark = useSelector(
     (state: RootState) => state.blogSlice.blogDetail.isBookmark,
   );

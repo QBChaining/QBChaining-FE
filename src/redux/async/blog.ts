@@ -10,7 +10,7 @@ import { successAlert } from "../../utils/swal";
 //블로그 커뮤니티 조회
 export const getBlogCommunityListDB = createAsyncThunk(
   "BLOG_COMMUNITYLIST",
-  async (data, thunkAPI) => {
+  async (data: number, thunkAPI) => {
     try {
       const response = await blogApi.getBlogCommunityList(data);
       if (response.data.success === true) {
