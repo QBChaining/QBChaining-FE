@@ -2,18 +2,25 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import categories from "../../utils/category";
 
+type TQnaMainCatergory = {
+  pageNumber: string;
+  setPageNumber: any;
+  setCategory: any;
+  setHasNextPage: any;
+};
+
 const QnaMainCatergory = ({
   pageNumber,
   setPageNumber,
   setCategory,
   setHasNextPage,
-}) => {
+}: TQnaMainCatergory) => {
   const category = categories.qnaCategory;
 
   const lists = useRef();
   const [check, setCheck] = useState("");
 
-  const onSelectCategoryHandler = name => {
+  const onSelectCategoryHandler = (name: string) => {
     //중복클릭 방지
     if (name === check) {
       return;

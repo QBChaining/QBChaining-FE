@@ -3,6 +3,16 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import "dayjs/locale/ko"; // 한국어 가져오기
 
+type TMyPageCube = {
+  data: any;
+  hoverData: any[];
+  index: number;
+  setHoverDay: any;
+  setHoverData: any;
+  length: any;
+  hoverDay: any;
+};
+
 const MyPageCube = ({
   data,
   hoverData,
@@ -11,7 +21,7 @@ const MyPageCube = ({
   setHoverData,
   length,
   hoverDay,
-}) => {
+}: TMyPageCube) => {
   dayjs.locale("ko");
   const Today = dayjs(new Date()).add(-29, "day");
   const day = Today.add(index, "day").format("YYYY-MM-DD");
@@ -44,7 +54,7 @@ const MyPageCube = ({
 
 export default MyPageCube;
 
-const SCube = styled.div`
+const SCube = styled.div<{ length: number }>`
   position: relative;
   background-color: rgba(0, 0, 0, 1);
   background-color: ${props =>

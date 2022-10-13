@@ -12,9 +12,9 @@ import python from "../../assets/images/icon/python.png";
 import vue from "../../assets/images/icon/vue.png";
 import reactIcon from "../../assets/images/icon/react.png";
 import styled from "styled-components";
-const QnaCategoryImage = ({ item }) => {
+const QnaCategoryImage = ({ item }: { item: string }) => {
   const [icon, setIcon] = useState("");
-  const nameChange = item => {
+  const nameChange = (item: string) => {
     switch (item) {
       case "JavaScript":
         setIcon(javascript);
@@ -66,7 +66,7 @@ const QnaCategoryImage = ({ item }) => {
 
 export default QnaCategoryImage;
 
-const SImage = styled.div`
+const SImage = styled.div<{ icon: string }>`
   background-image: url(${props => props.icon});
   background-position: center;
   background-repeat: no-repeat;

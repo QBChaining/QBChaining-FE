@@ -2,12 +2,26 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 
-const InterestItem = ({ isEdit, data, setLanguage, language, language2 }) => {
+interface IInterestItem {
+  isEdit: boolean;
+  data: { id: number; name: string };
+  setLanguage: any;
+  language: string[];
+  language2: string[];
+}
+
+const InterestItem = ({
+  isEdit,
+  data,
+  setLanguage,
+  language,
+  language2,
+}: IInterestItem) => {
   const [toggle, setToggle] = useState(false);
 
   // console.log(language);
 
-  const onToggleHandler = name => {
+  const onToggleHandler = (name: string) => {
     setToggle(!toggle);
     if (language.indexOf(name) !== -1) {
       setLanguage(
@@ -33,7 +47,6 @@ const InterestItem = ({ isEdit, data, setLanguage, language, language2 }) => {
   return (
     <SList
       toggle={toggle}
-      language={language}
       onClick={() => {
         onToggleHandler(data.name);
       }}
@@ -45,7 +58,7 @@ const InterestItem = ({ isEdit, data, setLanguage, language, language2 }) => {
 
 export default InterestItem;
 
-const SList = styled.li`
+const SList = styled.li<{ toggle: boolean }>`
   padding: 10px 30px;
   cursor: pointer;
   border: 1px solid

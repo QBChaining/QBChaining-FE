@@ -12,6 +12,13 @@ import {
 import * as Sentry from "@sentry/react";
 import { getToday } from "../../utils/today";
 
+type TBookmark = {
+  id: number;
+  title: string;
+  user_name: string;
+  createdAt: string;
+};
+
 //게시글 채택 조회
 export const getQnaMainListDB = createAsyncThunk(
   "qna/getqnamainlist",
@@ -135,7 +142,7 @@ export const getQnaLikeListDB = createAsyncThunk(
 //게시글 추천
 export const likeQnaListDB = createAsyncThunk(
   "qna/likeqnalist",
-  async (data, thunkAPI) => {
+  async (data: TBookmark, thunkAPI) => {
     try {
       const response = await qnaApi.likeQnaList(data);
       if (response.data.success === true) {
@@ -156,7 +163,7 @@ export const likeQnaListDB = createAsyncThunk(
 //게시글 추천 취소
 export const dislikeQnaListDB = createAsyncThunk(
   "qna/dislikeqnalist",
-  async (data, thunkAPI) => {
+  async (data: TBookmark, thunkAPI) => {
     try {
       const response = await qnaApi.dislikeQnaList(data);
       if (response.data.success === true) {
@@ -328,7 +335,7 @@ export const getBookmarkListDB = createAsyncThunk(
 //게시글 즐겨찾기 추가
 export const postBookmarkListDB = createAsyncThunk(
   "qna/postbookmark",
-  async (data, thunkAPI) => {
+  async (data: TBookmark, thunkAPI) => {
     try {
       const response = await qnaApi.postBookmarkList(data);
       if (response.data.success === true) {

@@ -1,14 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { searchApi } from "../../axios/api/searchApi";
 
-import { errorLikeAlert, networkError, successAlert } from "../../utils/swal";
+import { networkError, successAlert } from "../../utils/swal";
 
 import * as Sentry from "@sentry/react";
+
+type SSearchData = {
+  word: string;
+  endid: number;
+};
 
 //qna 검색결과 조회
 export const getQnaSearchListDB = createAsyncThunk(
   "qna/getqnasearch",
-  async (data, thunkAPI) => {
+
+  async (data: SSearchData, thunkAPI) => {
     try {
       const response = await searchApi.getQnaSearchList(data);
       if (
@@ -34,7 +40,7 @@ export const getQnaSearchListDB = createAsyncThunk(
 
 export const getBlogSearchListDB = createAsyncThunk(
   "blog/getqnasearch",
-  async (data, thunkAPI) => {
+  async (data: SSearchData, thunkAPI) => {
     try {
       const response = await searchApi.getBlogSearchList(data);
       if (

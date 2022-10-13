@@ -11,7 +11,7 @@ const searchSlice = createSlice({
     isFetching: false,
   },
   reducers: {
-    removeSearchList: (state, { payload }) => {
+    removeSearchList: state => {
       state.qnaSearchList = [];
       state.blogSearchList = [];
       state.searchWord = "";

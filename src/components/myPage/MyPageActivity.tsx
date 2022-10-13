@@ -3,9 +3,10 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import MyPageCube from "./MyPageCube";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 const MyPageActivity = () => {
-  const { userActivity } = useSelector(state => state.userSlice);
+  const { userActivity } = useSelector((state: RootState) => state.userSlice);
   const [cube, setCube] = useState([]);
   const [hoverDay, setHoverDay] = useState("");
   const [hoverData, setHoverData] = useState([]);

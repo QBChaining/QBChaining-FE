@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { nanoid } from "@reduxjs/toolkit";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //무한스크롤
 import { useInView } from "react-intersection-observer";
@@ -14,10 +15,15 @@ import {
   getQnaSearchListDB,
 } from "../../redux/async/search";
 
-const SearchList = ({ searchWord, type }) => {
-  const dispatch = useDispatch();
+type TSearchList = {
+  searchWord: string;
+  type: string;
+};
+
+const SearchList = ({ searchWord, type }: TSearchList) => {
+  const dispatch: AppDispatch = useDispatch();
   const { qnaSearchList, blogSearchList, isFetching } = useSelector(
-    state => state.searchSlice,
+    (state: RootState) => state.searchSlice,
   );
 
   const [endid, setEndid] = useState(0);
@@ -114,14 +120,8 @@ export default SearchList;
 
 const SNodata = styled.div`
   padding-left: 30px;
-  border: ${props =>
-    props.resolve
-      ? `1px solid ${props.theme.color.mainOrange}`
-      : `1px solid ${props.theme.color.grey3}`};
-  box-shadow: ${props =>
-    props.resolve
-      ? "4px 6px 15px rgba(0, 0, 0, 0.1);"
-      : "-4px 6px 15px rgba(0, 0, 0, 0.1)"};
+  border: ${props => props.theme.color.grey3};
+  box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
   margin: 30px 0;
   min-height: 209px;

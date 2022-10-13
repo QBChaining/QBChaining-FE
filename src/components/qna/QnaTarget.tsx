@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { getToday } from "../../utils/today";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //컴포넌트
 import ToastViewer from "../editor/ToastViewer";
@@ -22,11 +23,11 @@ import QnaLikeFill from "../../assets/images/addLike.png";
 import BookmarkNoFillIcon from "../../assets/images/BookmarkNoFillIcon.png";
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 
-const QnaTarget = ({ isDatail }) => {
+const QnaTarget = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const target = useSelector(state => state.qnaSlice.qnaTarget);
-  const { isLogin } = useSelector(state => state.userSlice);
+  const dispatch: AppDispatch = useDispatch();
+  const target = useSelector((state: RootState) => state.qnaSlice.qnaTarget);
+  const { isLogin } = useSelector((state: RootState) => state.userSlice);
 
   const totalId = {
     id: target.id,
@@ -122,7 +123,7 @@ const ButtonBackground = styled.button`
   background-color: transparent;
 `;
 
-const SBookmarkButton = styled(ButtonBackground)`
+const SBookmarkButton = styled(ButtonBackground)<{ isBookmarked: boolean }>`
   position: absolute;
   background-position: center center;
   width: 24px;
@@ -132,7 +133,7 @@ const SBookmarkButton = styled(ButtonBackground)`
     props.isBookmarked ? BookmarkFillIcon : BookmarkNoFillIcon});
 `;
 
-const SHoneyTipButton = styled(ButtonBackground)`
+const SHoneyTipButton = styled(ButtonBackground)<{ isLike: boolean }>`
   position: absolute;
   right: 0;
   top: 0;
@@ -159,7 +160,7 @@ const SUserInfo = styled.div`
   border-bottom: 1px solid ${props => props.theme.color.grey5};
 `;
 
-const SUserProfile = styled.div`
+const SUserProfile = styled.div<{ profile: string }>`
   width: 44px;
   height: 44px;
   background-image: url(${props => props.profile});

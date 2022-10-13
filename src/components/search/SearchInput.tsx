@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import SearchIcon from "../../assets/images/SearchIcon.png";
+import { RootState, AppDispatch } from "redux/config/configStore";
 import styled from "styled-components";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
@@ -17,12 +18,12 @@ import { errorAlert } from "../../utils/swal";
 import { useEffect } from "react";
 
 const SearchInput = () => {
-  const search = useRef();
+  const search = useRef<HTMLInputElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const searchWords = searchParams.get("q");
-  const wrapperRef = useRef();
 
   const [open, setOpen] = useState(false);
 
@@ -37,12 +38,12 @@ const SearchInput = () => {
 
   const goSearch = () => {
     if (search.current.value.length === 0) {
-      errorAlert("검색어를 입력해주세요!");
+      errorAlert("검색어를 입력해주세요!", "");
       return;
     }
 
     if (searchWords === search.current.value) {
-      errorAlert("이전과 다른 검색어를 입력해주세요!");
+      errorAlert("이전과 다른 검색어를 입력해주세요!", "");
       return;
     }
 
@@ -53,7 +54,7 @@ const SearchInput = () => {
 
     if (keyword.length > 9) {
       setKeyword(
-        keyword.filter(data => {
+        keyword.filter((data: any) => {
           return data.id !== keyword[9].id;
         }),
       );
@@ -70,12 +71,12 @@ const SearchInput = () => {
         return;
       }
     }
-    setKeyword(prev => [newKeyword, ...prev]);
+    setKeyword((prev: any) => [newKeyword, ...prev]);
     search.current.value = "";
   };
 
   //엔터로 검색가능
-  const onKeyPress = e => {
+  const onKeyPress = (e: any) => {
     if (e.key === "Enter") {
       goSearch();
     }
@@ -90,7 +91,7 @@ const SearchInput = () => {
     };
   }, []);
 
-  const handleClickOutside = event => {
+  const handleClickOutside = (event: any) => {
     if (wrapperRef && !wrapperRef.current?.contains(event.target)) {
       setOpen(false);
     } else {
@@ -98,9 +99,9 @@ const SearchInput = () => {
     }
   };
 
-  const keywordClearHandler = id => {
+  const keywordClearHandler = (id: number) => {
     setKeyword(
-      keyword.filter(data => {
+      keyword.filter((data: any) => {
         return data.id !== id;
       }),
     );
@@ -113,7 +114,7 @@ const SearchInput = () => {
         onClick={() => {
           setOpen(true);
         }}
-        maxLength={"20"}
+        maxLength={20}
         ref={search}
         type="text"
         placeholder="검색어를 입력해주세요!"
@@ -122,7 +123,7 @@ const SearchInput = () => {
       {open && (
         <SSearchWordList>
           {keyword.length < 1 && <SNoword>검색어가 없습니다!</SNoword>}
-          {keyword.map(data => (
+          {keyword.map((data: any) => (
             <SSearchWord
               key={data.id}
               onClick={() => {
