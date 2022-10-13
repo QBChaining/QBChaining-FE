@@ -2,16 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import { RootState, AppDispatch } from "redux/config/configStore";
 const SideNav = () => {
   const navigate = useNavigate();
   const location = window.location.pathname;
-  const goPage = page => {
+  const goPage = (page: string) => {
     navigate(`/${page}`);
   };
 
   const { userName: loginUserName, isLogin } = useSelector(
-    state => state.userSlice,
+    (state: RootState) => state.userSlice,
   );
 
   return (
@@ -63,7 +63,7 @@ const SNav = styled.nav`
 
 const SUl = styled.ul``;
 
-const SList = styled.li`
+const SList = styled.li<{ location: string; type: string }>`
   background-color: ${props =>
     props.location.includes(props.type)
       ? props.theme.color.mainOrange
@@ -89,7 +89,11 @@ const SList = styled.li`
   }
 `;
 
-const SMypage = styled(SList)`
+const SMypage = styled(SList)<{
+  isMine: boolean;
+  location: string;
+  type: string;
+}>`
   background-color: ${props =>
     props.isMine ? props.theme.color.mainOrange : props.theme.color.mainNavy};
   /* background-color: ${props => props.theme.color.mainNavy}; */
