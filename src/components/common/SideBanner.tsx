@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //슬라이드
 import Slider from "react-slick";
@@ -22,13 +23,13 @@ import Like from "../../assets/images/unlike.png";
 import BugReport from "../../assets/images/BugReport.jpg";
 import SurveyReport from "../../assets/images/SurveyReport.jpg";
 
-const SideBanner = ({ type }) => {
+const SideBanner = ({ type }: { type: string }) => {
   const navigate = useNavigate();
-  const hotList = useSelector(state =>
+  const hotList = useSelector((state: RootState) =>
     type === "qna" ? state.qnaSlice.qnaHotList : state.blogSlice.hotBlog,
   );
 
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const settings = {
     dots: false,
     infinite: true,
@@ -44,7 +45,7 @@ const SideBanner = ({ type }) => {
     dispatch(type === "qna" ? getQnaHotListDB() : getHotBlogDB());
   }, []);
 
-  const goDetail = (type, id) => {
+  const goDetail = (type: string, id: number) => {
     navigate(`/${type}/detail/${id}`);
   };
   return (
@@ -94,7 +95,7 @@ const SideBanner = ({ type }) => {
 
 export default SideBanner;
 
-const SBannerWrapper = styled.div`
+const SBannerWrapper = styled.div<{ type: string }>`
   position: relative;
   &::before {
     content: "";
