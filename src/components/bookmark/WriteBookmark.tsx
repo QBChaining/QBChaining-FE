@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "redux/config/configStore";
 import { getCommentListDB, getOneQnaListDB } from "../../redux/async/qna";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -13,25 +14,35 @@ import { getBlogCommentListDB, getBlogDetailDB } from "../../redux/async/blog";
 import QnaLike from "../../assets/images/unlike.png";
 import GobackArrow from "../../assets/images/GobackArrow.png";
 
-const WriteBookmark = ({ type, id, onToggleHandler }) => {
-  const dispatch = useDispatch();
-  const { color } = useSelector(state => state.userSlice);
+type TWriteBookmark = {
+  type?: string;
+  id?: number;
+  onToggleHandler?: any;
+};
 
-  const target = useSelector(state =>
+const WriteBookmark = ({ type, id, onToggleHandler }: TWriteBookmark) => {
+  const dispatch: AppDispatch = useDispatch();
+  const { color } = useSelector((state: RootState) => state.userSlice);
+
+  const target = useSelector((state: RootState) =>
     type === "qna" ? state.qnaSlice.qnaTarget : state.blogSlice.blogDetail,
   );
 
-  const commentList = useSelector(state =>
+  const commentList = useSelector((state: RootState) =>
     type === "qna" ? state.qnaSlice.commentList : state.blogSlice.commentList,
   );
 
-  const { isFetching } = useSelector(state =>
+  const { isFetching } = useSelector((state: RootState) =>
     type === "qna" ? state.qnaSlice : state.blogSlice,
   );
 
   useEffect(() => {
     dispatch(type === "qna" ? getOneQnaListDB(id) : getBlogDetailDB(id));
-    dispatch(type === "qna" ? getCommentListDB(id) : getBlogCommentListDB(id));
+    // dispatch(
+    //   type === "qna"
+    //     ? getCommentListDB({ id, pageNumber: 0 })
+    //     : getBlogCommentListDB(id),
+    // );
   }, []);
 
   return (
@@ -144,7 +155,7 @@ const SBackButton = styled.button`
   background-size: 20px 20px;
 `;
 
-const SUserProfile = styled.div`
+const SUserProfile = styled.div<{ profile: string }>`
   width: 44px;
   height: 44px;
   background-image: url(${props => props.profile});

@@ -29,7 +29,7 @@ export const getBlogCommunityListDB = createAsyncThunk(
 //블로그 디테일
 export const getBlogDetailDB = createAsyncThunk(
   "BLOG_DETAIL",
-  async (id: string, thunkAPI) => {
+  async (id: number, thunkAPI) => {
     try {
       const response = await blogApi.getBlogDetail(id);
 
@@ -49,7 +49,10 @@ export const getBlogDetailDB = createAsyncThunk(
 //블로그 커뮤니티 생성
 export const postBlogCommunityDB = createAsyncThunk(
   "BLOG_COMMUNITY",
-  async (data, thunkAPI) => {
+  async (
+    data: { title: string; content: string; tags: string[] },
+    thunkAPI,
+  ) => {
     try {
       const response = await blogApi.postBlogCommunity(data);
       if (response.data.success === true) {
@@ -68,7 +71,7 @@ export const postBlogCommunityDB = createAsyncThunk(
 //블로그 커뮤니티 수정
 export const patchBlogCommunityDB = createAsyncThunk(
   "BLOG_EDIT",
-  async (data, thunkAPI) => {
+  async (data: { title: string; content: string; id: string }, thunkAPI) => {
     try {
       const response = await blogApi.editBlogCommunity(data);
 
@@ -89,7 +92,7 @@ export const patchBlogCommunityDB = createAsyncThunk(
 //블로그 게시글 삭제
 export const deleteBlogCommunityDB = createAsyncThunk(
   "BLOG_DELETE",
-  async (id: string, thunkAPI) => {
+  async (id: number, thunkAPI) => {
     try {
       const response = await blogApi.deleteBlogCommunity(id);
 
@@ -110,7 +113,7 @@ export const deleteBlogCommunityDB = createAsyncThunk(
 // 댓글 조회
 export const getBlogCommentListDB = createAsyncThunk(
   "BLOG_COMMENTLIST",
-  async (data, thunkAPI) => {
+  async (data: number, thunkAPI) => {
     try {
       const response = await blogApi.getBlogCommentList(data);
 
@@ -130,7 +133,7 @@ export const getBlogCommentListDB = createAsyncThunk(
 //댓글 추가
 export const postBlogCommentDB = createAsyncThunk(
   "POST_BLOG_COMMENTLIST",
-  async (data, thunkAPI) => {
+  async (data: any, thunkAPI) => {
     try {
       const response = await blogApi.postBlogComment(data);
       if (response.data.success === true) {
@@ -150,7 +153,7 @@ export const postBlogCommentDB = createAsyncThunk(
 //댓글 수정
 export const patchBlogCommentDB = createAsyncThunk(
   "PATCH_BLOG_COMMENTLIST",
-  async (data, thunkAPI) => {
+  async (data: any, thunkAPI) => {
     try {
       const response = await blogApi.patchBlogComment(data);
       if (response.data.success === true) {
@@ -169,7 +172,7 @@ export const patchBlogCommentDB = createAsyncThunk(
 //댓글 삭제
 export const deleteBlogCommentDB = createAsyncThunk(
   "DELETE_BLOG_COMMENTLIST",
-  async (id, thunkAPI) => {
+  async (id: number, thunkAPI) => {
     try {
       const response = await blogApi.DeleteBlogComment(id);
       if (response.data.success === true) {
@@ -207,7 +210,7 @@ export const getMyBlogDB = createAsyncThunk(
 // 좋아요 추가
 export const postBlogLikeDB = createAsyncThunk(
   "ADD_LIKE",
-  async (id: string, thunkAPI) => {
+  async (id: number, thunkAPI) => {
     try {
       const response = await blogApi.postBlogLike(id);
       if (response.data.success === true) {
@@ -227,7 +230,7 @@ export const postBlogLikeDB = createAsyncThunk(
 //좋아요 삭제
 export const unBlogLikeDB = createAsyncThunk(
   "UN_LIKE",
-  async (id: string, thunkAPI) => {
+  async (id: number, thunkAPI) => {
     try {
       const response = await blogApi.unBlogLike(id);
       successAlert("좋아요가 취소 되었습니다.");
@@ -262,7 +265,7 @@ export const getBlogBookMarkDB = createAsyncThunk(
 export const postBlogBookMarkDB = createAsyncThunk(
   "ADD_BOOK_MARK",
   async (
-    data: { id: string; title: string; user_name: string; createdAt: string },
+    data: { id: number; title: string; user_name: string; createdAt: string },
     thunkAPI,
   ) => {
     try {
@@ -284,7 +287,7 @@ export const postBlogBookMarkDB = createAsyncThunk(
 //블로그 북마크 삭제
 export const deleteBlogBookMarkDB = createAsyncThunk(
   "DEL_BOOK_MARK",
-  async (id: string, thunkAPI) => {
+  async (id: number, thunkAPI) => {
     try {
       const response = await blogApi.delBlogBookMark(id);
       if (response.data.success === true) {
@@ -321,7 +324,7 @@ export const getHotBlogDB = createAsyncThunk(
 // 댓글 좋아요
 export const postCommentLikeDB = createAsyncThunk(
   "COMMENT_POST_LIKE",
-  async (id, thunkAPI) => {
+  async (id: number, thunkAPI) => {
     try {
       const response = await blogApi.postCommentLike(id);
       if (response.data.success === true) {
@@ -340,7 +343,7 @@ export const postCommentLikeDB = createAsyncThunk(
 // 댓글 좋아요 취소
 export const delCommentLikeDB = createAsyncThunk(
   "COMMENT_UN_LIKE",
-  async (id, thunkAPI) => {
+  async (id: number, thunkAPI) => {
     try {
       const response = await blogApi.delCommentLike(id);
       if (response.data.success === true) {

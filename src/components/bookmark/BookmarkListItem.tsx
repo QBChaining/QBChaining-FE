@@ -8,7 +8,15 @@ import WriteBookmark from "./WriteBookmark";
 //이미지
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 
-const BookmarkListItem = ({ type, isModal, data }) => {
+const BookmarkListItem = ({
+  type,
+  isModal,
+  data,
+}: {
+  type?: string;
+  isModal?: boolean;
+  data: { id: number; userName: string; title: string; createdAt: string };
+}) => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
 
@@ -16,7 +24,7 @@ const BookmarkListItem = ({ type, isModal, data }) => {
     setModal(!modal);
   };
 
-  const goDetail = (type, id) => {
+  const goDetail = (type: string, id: number) => {
     navigate(`/${type}/detail/${id}`);
   };
 
@@ -38,8 +46,6 @@ const BookmarkListItem = ({ type, isModal, data }) => {
       </SBookmarkListItem>
       {modal && (
         <WriteBookmark
-          modal={modal}
-          setModal={setModal}
           onToggleHandler={onToggleHandler}
           id={data.id}
           type={type}

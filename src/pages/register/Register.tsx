@@ -31,11 +31,11 @@ const Register = ({
 }: {
   isEdit: boolean;
   editData: {
-    languages: string[];
-    age: string;
-    gender: string;
-    career: string;
-    job: string;
+    languages?: string[];
+    age?: string;
+    gender?: string;
+    career?: string;
+    job?: string;
   };
 }) => {
   const navigate = useNavigate();

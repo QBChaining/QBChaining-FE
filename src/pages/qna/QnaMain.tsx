@@ -289,14 +289,8 @@ const STitle = styled.h2`
 `;
 
 const SNodata = styled.div`
-  border: ${props =>
-    props.resolve
-      ? `1px solid ${props.theme.color.mainGreen}`
-      : `1px solid ${props.theme.color.grey3}`};
-  box-shadow: ${props =>
-    props.resolve
-      ? "4px 6px 15px rgba(0, 0, 0, 0.1);"
-      : "-4px 6px 15px rgba(0, 0, 0, 0.1)"};
+  border: 1px solid ${props => props.theme.color.grey3};
+  box-shadow: -4px 6px 15px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
   margin: 20px 0;
   min-height: 209px;

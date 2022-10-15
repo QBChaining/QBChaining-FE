@@ -2,12 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "redux/config/configStore";
 
 //이미지
 import unlike from "../../assets/images/unlike.png";
 
 const BlogHotList = () => {
-  const hotcommunits = useSelector(state => state.blogSlice.hotBlog);
+  const hotcommunits = useSelector(
+    (state: RootState) => state.blogSlice.hotBlog,
+  );
   /**
    * 히트게시물리스트 4개만 보여주기
    */

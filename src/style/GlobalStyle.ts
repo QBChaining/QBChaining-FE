@@ -40,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     min-height: 100vh;
-    background-color: ${props => props.theme.color.mainIvory};
+    background-color: #FDF6EC;
   }
 `;
 

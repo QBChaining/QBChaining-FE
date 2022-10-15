@@ -30,7 +30,7 @@ export interface IQnaProps {
     id: number;
     isBookmark: boolean;
     isLike: boolean;
-    isResolve: number;
+    isResolve: number | boolean;
     like: number;
     profileImg: string;
     tags: string[];
@@ -71,12 +71,6 @@ const qnaSlice = createSlice({
     },
     removeQnaList: state => {
       state.qnaList = [];
-      state.qnaTarget = {
-        isLike: false,
-        like: 0,
-        isBookmark: false,
-        isResolve: false,
-      };
     },
     removeCommentList: state => {
       state.commentList = [];

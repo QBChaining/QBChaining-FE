@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //통신
 import { postBlogLikeDB, unBlogLikeDB } from "../../redux/async/blog";
@@ -12,9 +13,8 @@ import { needLoginAlert } from "../../utils/swal";
 import addlike from "../../assets/images/addLike.png";
 import unlike from "../../assets/images/unlike.png";
 
-const BlogLike = ({ isLove }) => {
-  const { isLogin } = useSelector(state => state.userSlice);
-  const dispatch = useDispatch();
+const BlogLike = ({ isLove }: { isLove: boolean }) => {
+  const { isLogin } = useSelector((state: RootState) => state.userSlice);
   const { id } = useParams();
   const [Like, setLike] = useState(isLove);
   useEffect(() => {

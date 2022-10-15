@@ -51,7 +51,7 @@ const BlogCommunityDetail = () => {
     confirmAlert("삭제", "이 게시글을 삭제하시겠습니까?", "삭제", "취소").then(
       res => {
         res.isConfirmed === true
-          ? dispatch(deleteBlogCommunityDB(id)).then(() => {
+          ? dispatch(deleteBlogCommunityDB(parseInt(id))).then(() => {
               successAlert("삭제되었습니다!").then(res => {
                 (res.isConfirmed || res.isDismissed) && navigate("/blog");
               });
@@ -69,7 +69,7 @@ const BlogCommunityDetail = () => {
   }, [detailErrorMessage]);
 
   useEffect(() => {
-    dispatch(getBlogDetailDB(id));
+    dispatch(getBlogDetailDB(parseInt(id)));
   }, []);
 
   const goMypage = (name: string) => {

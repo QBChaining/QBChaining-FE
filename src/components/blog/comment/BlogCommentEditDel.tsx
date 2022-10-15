@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //통신
 import {
@@ -15,38 +16,38 @@ import { errorAlert } from "../../../utils/swal";
 // 댓글 좋아요
 import CommentLike from "./CommentLike";
 
-const CommentEditDel = ({ comments }) => {
+const CommentEditDel = ({ comments }: { comments: any }) => {
   const navigate = useNavigate();
 
-  const userNick = useSelector(state => state.userSlice.userName);
+  const userNick = useSelector((state: RootState) => state.userSlice.userName);
   const [show, setShow] = useState(false);
   const [textAreaText, setTextAreaText] = useState("");
-  const editRef = useRef();
+  const editRef = useRef<HTMLTextAreaElement>();
 
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   //댓글 수정 완료 버튼
   const onClickEditHandler = () => {
     if (editRef.current.value.length < 1) {
-      errorAlert("빈칸입니다!");
+      errorAlert("빈칸입니다!", "");
       return;
     }
     dispatch(
       patchBlogCommentDB({
         comment: textAreaText,
-        id: comments.id,
+        id: parseInt(comments.id),
       }),
     );
     setShow(!show);
   };
 
   //댓글 삭제 버튼
-  const onClickDeleteHandler = e => {
+  const onClickDeleteHandler = (e: any) => {
     e.preventDefault();
     dispatch(deleteBlogCommentDB(comments.id));
   };
 
-  const goMypage = userName => {
+  const goMypage = (userName: string) => {
     navigate(`/mypage/${userName}`);
   };
 
@@ -82,7 +83,6 @@ const CommentEditDel = ({ comments }) => {
           <SComment>{comments.comment}</SComment>
         ) : (
           <STextArea
-            type="text"
             value={textAreaText}
             onChange={e => {
               setTextAreaText(e.target.value);
@@ -94,7 +94,6 @@ const CommentEditDel = ({ comments }) => {
           <ButtonGroup>
             <div
               className="editbtn"
-              type="button"
               onClick={
                 show
                   ? () => {
@@ -108,11 +107,7 @@ const CommentEditDel = ({ comments }) => {
             >
               {show ? "수정완료" : "수정하기"}
             </div>
-            <div
-              className="delbtn"
-              type="button"
-              onClick={onClickDeleteHandler}
-            >
+            <div className="delbtn" onClick={onClickDeleteHandler}>
               삭제
             </div>
           </ButtonGroup>
@@ -149,7 +144,7 @@ const SProfileWrapper = styled.div`
   color: ${props => props.theme.color.grey5};
 `;
 
-const SProfile = styled.div`
+const SProfile = styled.div<{ url: string }>`
   width: 44px;
   height: 44px;
   border-radius: 50%;

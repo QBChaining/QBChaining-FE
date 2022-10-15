@@ -6,10 +6,11 @@ import { getToday } from "../../utils/today";
 import { RootState, AppDispatch } from "redux/config/configStore";
 
 //통신
+
 import {
   postBlogBookMarkDB,
   deleteBlogBookMarkDB,
-} from "../../redux/async/blog.js";
+} from "../../redux/async/blog";
 
 //알럿
 import { needLoginAlert } from "../../utils/swal";
@@ -55,7 +56,7 @@ const BlogBookMark = ({ target, isbookmark }: TBlogBookMark) => {
     dispatch(postBlogBookMarkDB(totalData));
   };
   const onDeleteBookMark = () => {
-    dispatch(deleteBlogBookMarkDB(id));
+    dispatch(deleteBlogBookMarkDB(parseInt(id)));
   };
 
   return (

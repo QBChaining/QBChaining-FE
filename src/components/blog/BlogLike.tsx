@@ -22,10 +22,10 @@ const BlogLike = ({ isLike, like }: { isLike: boolean; like: number }) => {
       needLoginAlert();
       return;
     }
-    dispatch(postBlogLikeDB(id));
+    dispatch(postBlogLikeDB(parseInt(id)));
   };
   const onUnLikeBlog = () => {
-    dispatch(unBlogLikeDB(id));
+    dispatch(unBlogLikeDB(parseInt(id)));
   };
 
   return (

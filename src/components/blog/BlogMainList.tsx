@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //컴포넌트
 import BlogBookMark from "./BlogBookMark";
@@ -10,10 +11,8 @@ import BlogBookMark from "./BlogBookMark";
 import unlike from "../../assets/images/GreyQnaLike.png";
 import cmtComment from "../../assets/images/GreyQnaComment.png";
 
-const BlogMainList = ({ posts }) => {
-  const [Like, setLike] = useState(posts.isLike);
-  // const [likeNum, setLikeNum] = useState(posts.like);
-  const likeNum = useSelector(state => state.blogSlice.blogDetail.like);
+const BlogMainList = ({ posts }: { posts: any }) => {
+  const [Like, setLike] = useState<boolean>(posts.isLike);
 
   useEffect(() => {
     if (posts.isLike) {
@@ -26,7 +25,7 @@ const BlogMainList = ({ posts }) => {
   const navigate = useNavigate();
 
   //몇일전 구하는 함수
-  const timeForToday = value => {
+  const timeForToday = (value: string) => {
     const today = new Date();
     const timeValue = new Date(value);
 
@@ -75,11 +74,7 @@ const BlogMainList = ({ posts }) => {
               <SCreatedAt>{time}</SCreatedAt>
             </SUserInfo>
             <SBookMark>
-              <BlogBookMark
-                ismainlist={true}
-                isbookmark={posts.isBookmark}
-                posts={posts}
-              />
+              <BlogBookMark isbookmark={posts.isBookmark} />
             </SBookMark>
           </SPTitleBox>
           <SContentWrapper>
@@ -88,7 +83,7 @@ const BlogMainList = ({ posts }) => {
           </SContentWrapper>
           <STagNMark>
             <STagList>
-              {posts.tags?.map((tags, i) => (
+              {posts.tags?.map((tags: string, i: number) => (
                 <STag key={i}>{tags.slice(0, 7)}</STag>
               ))}
             </STagList>
@@ -134,7 +129,7 @@ const SUserInfo = styled.div`
   display: flex;
   align-items: center;
 `;
-const SProfile = styled.div`
+const SProfile = styled.div<{ url: string }>`
   width: 37px;
   height: 37px;
   border-radius: 50%;

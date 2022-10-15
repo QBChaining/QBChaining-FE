@@ -56,10 +56,10 @@ const Notification = ({ show, setShow }: TNotification) => {
 
   // 확인, 삭제
   const checkNoti = (notiId: string) => {
-    dispatch(postNotificationDB(notiId));
+    dispatch(postNotificationDB(parseInt(notiId)));
   };
   const delNoti = (notiId: string) => {
-    dispatch(delNotificationDB(notiId));
+    dispatch(delNotificationDB(parseInt(notiId)));
   };
 
   const checkk = (isNoti: string[]) => {

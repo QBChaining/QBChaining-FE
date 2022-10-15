@@ -10,7 +10,7 @@ function App() {
 
   const dispatch = useDispatch();
   if (getCookie("token")) {
-    dispatch(logIn(null));
+    dispatch(logIn());
   }
   return (
     <Layout>

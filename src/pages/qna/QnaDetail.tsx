@@ -50,7 +50,7 @@ const QnaDetail = () => {
   }, [detailErrorMessage]);
 
   useEffect(() => {
-    dispatch(getOneQnaListDB(id));
+    dispatch(getOneQnaListDB(parseInt(id)));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const QnaDetail = () => {
   //코멘트 무한스크롤
   useEffect(() => {
     let data = {
-      id,
+      id: parseInt(id),
       pageNumber,
     };
     dispatch(getCommentListDB(data)).then(res =>
@@ -93,7 +93,7 @@ const QnaDetail = () => {
         {!isDetailFetcing ? (
           <>
             <SLeftHeader>
-              <QnaTarget isDatail={true} />
+              <QnaTarget />
             </SLeftHeader>
             <SLeftBody>
               <h3>답변</h3>

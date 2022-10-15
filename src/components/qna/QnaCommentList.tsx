@@ -75,7 +75,7 @@ const QnaCommentList = ({ id, qnaId }: TQnaCommentList) => {
       denyButtonText: `취소`,
     }).then(res => {
       if (res.isConfirmed) {
-        dispatch(choiceCommentListDB({ id, qnaId, userName }));
+        dispatch(choiceCommentListDB({ id: parseInt(id), qnaId, userName }));
       } else if (res.isDenied || res.isDismissed) {
         errorAlert("취소 하셨습니다.", "");
       }

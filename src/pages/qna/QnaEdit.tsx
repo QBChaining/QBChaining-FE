@@ -19,7 +19,7 @@ const QnaEdit = () => {
 
   //최초로딩시  타겟게시글 정보 요청
   useEffect(() => {
-    dispatch(getOneQnaListDB(id));
+    dispatch(getOneQnaListDB(parseInt(id)));
   }, [id]);
 
   //타겟이 있다면 원본데이터 props전달목적

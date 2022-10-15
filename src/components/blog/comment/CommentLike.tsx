@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //이미지
 import addlike from "../../../assets/images/addLike.png";
@@ -10,12 +11,18 @@ import unlike from "../../../assets/images/unlike.png";
 import { needLoginAlert } from "../../../utils/swal";
 import { postCommentLikeDB, delCommentLikeDB } from "../../../redux/async/blog";
 
-const CommentLike = ({ comments, isLike }) => {
+const CommentLike = ({
+  comments,
+  isLike,
+}: {
+  comments: any;
+  isLike: boolean;
+}) => {
   const [isOn, setIsOn] = useState(null);
-  const { isLogin } = useSelector(state => state.userSlice);
-  const dispatch = useDispatch();
+  const { isLogin } = useSelector((state: RootState) => state.userSlice);
+  const dispatch: AppDispatch = useDispatch();
 
-  const likeOn = id => {
+  const likeOn = (id: number) => {
     if (!isLogin) {
       needLoginAlert();
       return;
@@ -24,7 +31,7 @@ const CommentLike = ({ comments, isLike }) => {
     setIsOn(!isOn);
   };
 
-  const likeOff = id => {
+  const likeOff = (id: number) => {
     dispatch(delCommentLikeDB(id));
     setIsOn(!isOn);
   };

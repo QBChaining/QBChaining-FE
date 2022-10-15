@@ -16,13 +16,13 @@
     "@types/jest": "^29.1.2",
     "@types/lodash": "^4.14.186",
     "@types/node": "^18.8.3",
+    "@types/prismjs": "^1.26.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/react-helmet": "^6.1.5",
     "@types/react-router": "^5.1.19",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-slick": "^0.23.10",
-    "@types/react-syntax-highlighter": "^15.5.5",
     "@types/styled-components": "^5.1.26",
     "aws": "^0.0.3-2",
     "axios": "^0.27.2",
@@ -87,5 +87,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-syntax-highlighter": "^15.5.5"
   }
 }

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import categories from "../../utils/category";
 
 type TQnaMainCatergory = {
-  pageNumber: string;
+  pageNumber: number;
   setPageNumber: any;
   setCategory: any;
   setHasNextPage: any;

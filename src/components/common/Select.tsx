@@ -6,11 +6,11 @@ import styled from "styled-components";
 import selectArrow from "../../assets/images/SelectArrow.png";
 
 type TSelect = {
-  isEdit: boolean;
-  options: { id: number; name: string }[];
-  setOption: any;
-  initialText: string;
-  zIndex: number;
+  isEdit?: boolean;
+  options?: { id: number; name: string }[];
+  setOption?: any;
+  initialText?: string;
+  zIndex?: number;
 };
 
 const Select = ({

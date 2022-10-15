@@ -19,6 +19,14 @@ type TBookmark = {
   createdAt: string;
 };
 
+type DBList = {
+  title?: string;
+  content?: string;
+  id?: string;
+  category?: string;
+  tags?: string[];
+};
+
 //게시글 채택 조회
 export const getQnaMainListDB = createAsyncThunk(
   "qna/getqnamainlist",
@@ -63,7 +71,7 @@ export const getQnaCategoryListDB = createAsyncThunk(
 //게시글 상세 조회
 export const getOneQnaListDB = createAsyncThunk(
   "qna/getOnelist",
-  async (data: string, thunkAPI) => {
+  async (data: number, thunkAPI) => {
     try {
       const response = await qnaApi.getOneList(data);
       if (response.data.success === true) {
@@ -82,7 +90,7 @@ export const getOneQnaListDB = createAsyncThunk(
 //게시글 작성
 export const postQnaListDB = createAsyncThunk(
   "qna/postlist",
-  async (data, thunkAPI) => {
+  async (data: DBList, thunkAPI) => {
     try {
       const response = await qnaApi.postList(data);
       if (response.data.success === true) {
@@ -103,7 +111,7 @@ export const postQnaListDB = createAsyncThunk(
 //게시글 수정
 export const editQnaListDB = createAsyncThunk(
   "qna/editlist",
-  async (data, thunkAPI) => {
+  async (data: DBList, thunkAPI) => {
     try {
       const response = await qnaApi.editList(data);
       if (response.data.success === true) {
@@ -123,7 +131,7 @@ export const editQnaListDB = createAsyncThunk(
 //게시글 추천 조회
 export const getQnaLikeListDB = createAsyncThunk(
   "qna/getqnalikelist",
-  async (data, thunkAPI) => {
+  async (data: { id: number }, thunkAPI) => {
     try {
       const response = await qnaApi.likeQnaList(data);
       if (response.data.success === true) {
@@ -184,7 +192,7 @@ export const dislikeQnaListDB = createAsyncThunk(
 //댓글 전체조회
 export const getCommentListDB = createAsyncThunk(
   "qna/getcomment",
-  async (data: { id: string; pageNumber: number }, thunkAPI) => {
+  async (data: { id: number; pageNumber: number }, thunkAPI) => {
     try {
       const response = await qnaApi.getCommentList(data);
       if (response.data.success === true) {
@@ -203,7 +211,16 @@ export const getCommentListDB = createAsyncThunk(
 //댓글 추가
 export const postCommentListDB = createAsyncThunk(
   "qna/postcomment",
-  async (data: { userName: string; profileImg: string }, thunkAPI) => {
+  async (
+    data: {
+      userName: string;
+      profileImg: string;
+      content: string;
+      id: number;
+      honey_tip: number;
+    },
+    thunkAPI,
+  ) => {
     try {
       const response = await qnaApi.postCommentList(data);
       if (response.data.success === true) {
@@ -229,7 +246,7 @@ export const postCommentListDB = createAsyncThunk(
 //댓글 삭제
 export const deleteCommentListDB = createAsyncThunk(
   "qna/deletecomment",
-  async (data, thunkAPI) => {
+  async (data: number, thunkAPI) => {
     try {
       const response = await qnaApi.deleteCommentList(data);
       if (response.data.success === true) {
@@ -377,7 +394,7 @@ export const deleteBookmarkListDB = createAsyncThunk(
 //댓글 채택
 export const choiceCommentListDB = createAsyncThunk(
   "qna/choiceComment",
-  async (data: { id: string; qnaId: string; userName: string }, thunkAPI) => {
+  async (data: { id: number; qnaId: string; userName: string }, thunkAPI) => {
     try {
       const response = await qnaApi.choiceCommentList(data);
       if (response.data.success === true) {

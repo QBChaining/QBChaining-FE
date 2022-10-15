@@ -4,8 +4,18 @@ import styled from "styled-components";
 //이미지
 import BookmarkFillIcon from "../../assets/images/BookmarkFillIcon.png";
 import BookmarkNoFillIcon from "../../assets/images/BookmarkNoFillIcon.png";
-
-const QnaBookmarkButton = ({ is_bookmark, id, resolve, type }) => {
+type TQnaBookmarkButton = {
+  is_bookmark: boolean;
+  id: number;
+  resolve: boolean;
+  type: string;
+};
+const QnaBookmarkButton = ({
+  is_bookmark,
+  id,
+  resolve,
+  type,
+}: TQnaBookmarkButton) => {
   return (
     <SBookmarkIcon
       type={type}
@@ -17,7 +27,11 @@ const QnaBookmarkButton = ({ is_bookmark, id, resolve, type }) => {
 
 export default QnaBookmarkButton;
 
-const SBookmarkIcon = styled.div`
+const SBookmarkIcon = styled.div<{
+  type: string;
+  isBookmark: boolean;
+  isResolve: boolean;
+}>`
   width: 30px;
   height: 30px;
   background-position: center;

@@ -2,20 +2,23 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //알럿
-import { postBlogCommentDB } from "../../../redux/async/blog.js";
+import { postBlogCommentDB } from "../../../redux/async/blog";
 
 //이미지
 import porfilecomment from "../../../assets/images/porfilecomment.png";
 
 const CommentAdd = () => {
-  const { userProfile, isLogin } = useSelector(state => state.userSlice);
-  const dispatch = useDispatch();
-  const commentRefInput = useRef();
+  const { userProfile, isLogin } = useSelector(
+    (state: RootState) => state.userSlice,
+  );
+  const dispatch: AppDispatch = useDispatch();
+  const commentRefInput = useRef<HTMLInputElement>();
   const { id } = useParams();
 
-  const addComment = e => {
+  const addComment = (e: any) => {
     e.preventDefault();
     dispatch(
       postBlogCommentDB({
@@ -33,7 +36,7 @@ const CommentAdd = () => {
         type="text"
         ref={commentRefInput}
         placeholder={"500자이하"}
-        maxLength="500"
+        maxLength={500}
       />
       <button onClick={addComment}>추가하기</button>
     </SComment>
@@ -67,7 +70,7 @@ const SComment = styled.div`
     height: 44px;
   }
 `;
-const SProfile = styled.div`
+const SProfile = styled.div<{ url: string }>`
   width: 44px;
   height: 44px;
   border-radius: 50%;

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //컴포넌트
 import BookmarkListItem from "./BookmarkListItem";
@@ -9,8 +10,10 @@ import BookmarkListItem from "./BookmarkListItem";
 import { getBookmarkListDB } from "../../redux/async/qna";
 
 const BookmarkList = () => {
-  const dispatch = useDispatch();
-  const qnaBookmarkList = useSelector(state => state.qnaSlice.bookmarkList);
+  const dispatch: AppDispatch = useDispatch();
+  const qnaBookmarkList = useSelector(
+    (state: RootState) => state.qnaSlice.bookmarkList,
+  );
   useEffect(() => {
     dispatch(getBookmarkListDB());
   }, []);

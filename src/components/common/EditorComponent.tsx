@@ -16,7 +16,7 @@ import "@toast-ui/editor/dist/i18n/ko-kr";
 import Prism from "prismjs";
 import "prismjs/themes/prism.css";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
-import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight-all.js";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 
 //컴포넌트
 import Select from "./Select";
@@ -43,8 +43,13 @@ type options = {
   isBlogWrite?: boolean;
   id?: string;
   blogEditId?: string;
-  blogEditData?: {};
-  editData?: {};
+  blogEditData?: { title?: string; content?: string; category?: string };
+  editData?: {
+    id?: string;
+    title?: string;
+    content?: string;
+    category?: string;
+  };
 };
 
 const EditorComponent = ({
@@ -63,8 +68,8 @@ const EditorComponent = ({
   );
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const tagText = useRef();
-  const titleText = useRef();
+  const tagText = useRef<HTMLInputElement>();
+  const titleText = useRef<HTMLInputElement>();
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [category, setCategory] = useState<string>("");
@@ -76,7 +81,7 @@ const EditorComponent = ({
   const { isLogin, userName, userProfile } = useSelector(
     (state: RootState) => state.userSlice,
   );
-  const editorRef = useRef<HTMLDivElement>();
+  const editorRef = useRef<any>();
 
   const QnatoolbarItems = [
     ["codeblock"],
@@ -103,34 +108,34 @@ const EditorComponent = ({
   };
 
   //생성 or 수정 함수
-  const onSubmitHandler = e => {
+  const onSubmitHandler = (e: any) => {
     e.preventDefault();
     //로그인이 안되어있을때 알럿
     if (!isLogin) {
-      errorAlert("로그인이 필요한 기능입니다!");
+      errorAlert("로그인이 필요한 기능입니다!", "");
       return;
     }
 
     //빈칸 알럿
     if (titleText.current !== undefined && titleText.current.value.length < 1) {
-      errorAlert("제목을 입력해주세요!");
+      errorAlert("제목을 입력해주세요!", "");
       return;
     }
 
     if (content.length === 0) {
-      errorAlert("본문을 입력해주세요!");
+      errorAlert("본문을 입력해주세요!", "");
       return;
     }
 
     if (!isCommentWrite && !isBlogEdit) {
       if (tags.length < 1) {
-        errorAlert("최소 1개의 태그가 필요합니다!");
+        errorAlert("최소 1개의 태그가 필요합니다!", "");
         return;
       }
     }
 
     if ((isEdit || isWrite) && category === "") {
-      errorAlert("카테고리를 선택해주세요!");
+      errorAlert("카테고리를 선택해주세요!", "");
       return;
     }
 
@@ -192,13 +197,13 @@ const EditorComponent = ({
           content,
           id: blogEditId,
         }),
-        setBlogTitle(blogEditData.title),
+        // setBlogTitle(blogEditData.title),
       );
     }
   };
 
   /**titlechangehandler  */
-  const onTitleChangeHandler = e => {
+  const onTitleChangeHandler = (e: any) => {
     if (isBlogEdit) {
       setBlogTitle(e.target.value);
     } else {
@@ -222,27 +227,27 @@ const EditorComponent = ({
     }
   }, [isBlogEdit]);
 
-  const onCategoryChangeHandler = e => {
+  const onCategoryChangeHandler = (e: any) => {
     setCategory(e.target.value);
   };
 
   //태그입력
-  const onChangeTagHandler = e => {
+  const onChangeTagHandler = (e: any) => {
     setTag(e.target.value);
   };
 
   //태그추가
   const onAddTagHandler = () => {
     if (tags.length > 4) {
-      errorAlert("태그는 5개가 최대입니다!");
+      errorAlert("태그는 5개가 최대입니다!", "");
       return;
     }
     if (tagText.current.value.length < 1) {
-      errorAlert("빈칸입니다.");
+      errorAlert("빈칸입니다.", "");
       return;
     }
     if (tags.filter(data => data === tagText.current.value).length === 1) {
-      errorAlert("이미 추가된 태그입니다!");
+      errorAlert("이미 추가된 태그입니다!", "");
       return;
     }
 
@@ -252,14 +257,14 @@ const EditorComponent = ({
     tagText.current.value = "";
   };
 
-  const onKeyPress = e => {
+  const onKeyPress = (e: any) => {
     if (e.key === "Enter") {
       onAddTagHandler();
     }
   };
 
   //태그 삭제
-  const onDeleteTagHandler = data => {
+  const onDeleteTagHandler = (data: string) => {
     setTags(tags.filter(tag => tag !== data));
   };
 
@@ -274,7 +279,7 @@ const EditorComponent = ({
               onChange={onTitleChangeHandler}
               type="text"
               ref={titleText}
-              maxLength="50"
+              maxLength={50}
               placeholder="제목을 입력해주세요."
               // initialText={blogTitle}
             />
@@ -330,7 +335,7 @@ const EditorComponent = ({
                 id="tag"
                 ref={tagText}
                 onChange={onChangeTagHandler}
-                maxLength="10"
+                maxLength={10}
                 placeholder="태그를 추가해 주세요."
               />
               <SAddButton type="button" onClick={onAddTagHandler}>
@@ -397,23 +402,6 @@ const SSubmitWrapper = styled.div`
   margin-bottom: 10px;
 `;
 
-const SelectWrapper = styled.select`
-  min-width: 251px;
-  width: 30%;
-  padding: 10px 30px;
-  appearance: none;
-  background-image: url(${props => props.arrow});
-  background-repeat: no-repeat;
-  background-position: center right 30px;
-  border: 1px solid #939393;
-  border-radius: 30px;
-
-  & option {
-    border: 1px solid #939393;
-    border-radius: 30px;
-  }
-`;
-
 const STagContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -455,7 +443,7 @@ const STags = styled.div`
   color: ${props => props.theme.color.white};
 `;
 
-const SSubmitButton = styled.button`
+const SSubmitButton = styled.button<{ location: string }>`
   height: 40px;
   min-width: 140px;
   background-color: ${props => props.theme.color.mainOrange};

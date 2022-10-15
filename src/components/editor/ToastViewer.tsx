@@ -6,6 +6,14 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import styled from "styled-components";
+
+type TCode = {
+  node?: any;
+  inline?: any;
+  className?: any;
+  children?: any;
+};
+
 const ToastViewer = ({ content }: { content: string }) => {
   return (
     <SToastViewer>
@@ -13,7 +21,7 @@ const ToastViewer = ({ content }: { content: string }) => {
         children={content}
         remarkPlugins={[remarkGfm]}
         components={{
-          code({ node, inline, className, children, ...props }) {
+          code({ node, inline, className, children, ...props }: TCode) {
             const match = /language-(\w+)/.exec(className || "");
             return !inline && match ? (
               <SyntaxHighlighter

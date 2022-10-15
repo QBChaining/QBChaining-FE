@@ -5,7 +5,7 @@ import styled from "styled-components";
 import blogbookmark from "../../assets/images/BookmarkNoFillIcon.png";
 import blogbookmarkadd from "../../assets/images/BookmarkFillIcon.png";
 
-const BlogBookMark = ({ isbookmark, posts }) => {
+const BlogBookMark = ({ isbookmark }: { isbookmark: boolean }) => {
   return (
     <>
       <div>{isbookmark === false ? <SBookMarkBtn /> : <SbookMarkBtnAdd />}</div>
