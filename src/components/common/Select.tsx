@@ -5,14 +5,28 @@ import styled from "styled-components";
 //이미지
 import selectArrow from "../../assets/images/SelectArrow.png";
 
-const Select = ({ isEdit, options, setOption, initialText, zIndex }) => {
-  const [open, setOpen] = useState(false);
+type TSelect = {
+  isEdit: boolean;
+  options: { id: number; name: string }[];
+  setOption: any;
+  initialText: string;
+  zIndex: number;
+};
+
+const Select = ({
+  isEdit,
+  options,
+  setOption,
+  initialText,
+  zIndex,
+}: TSelect) => {
+  const [open, setOpen] = useState<boolean>(false);
   const [initial, setInitial] = useState(initialText);
   const onOpenHandler = () => {
     setOpen(!open);
   };
 
-  const onSetOptionHandler = value => {
+  const onSetOptionHandler = (value: string) => {
     setInitial(value);
     setOption(value);
     setOpen(!open);
@@ -54,12 +68,12 @@ const Select = ({ isEdit, options, setOption, initialText, zIndex }) => {
 
 export default Select;
 
-const SSelectWrapper = styled.div`
+const SSelectWrapper = styled.div<{ zIndex: number }>`
   position: relative;
   z-index: ${props => props.zIndex};
 `;
 
-const SSelect = styled.button`
+const SSelect = styled.button<{ zIndex: number; open: boolean }>`
   min-width: 251px;
   width: 100%;
   padding: 10px 30px;
