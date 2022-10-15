@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { throttle } from "lodash";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //컴포넌트
 import Notification from "./Notification";
@@ -19,10 +20,10 @@ import MainLogo from "../../assets/images/MainLogo.png";
 
 const Header = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const location = window.location.pathname;
   const { isLogin, userProfile, userName } = useSelector(
-    state => state.userSlice,
+    (state: RootState) => state.userSlice,
   );
   const onLogoutHandler = () => {
     dispatch(logOut());
@@ -91,7 +92,7 @@ const Header = () => {
 
 export default Header;
 
-const SHeader = styled.header`
+const SHeader = styled.header<{ location: string; visible: boolean }>`
   min-width: 1300px;
   width: 100%;
   display: flex;
@@ -155,7 +156,7 @@ const SLoginConatainer = styled.div`
   }
 `;
 
-const SUserProfile = styled.div`
+const SUserProfile = styled.div<{ userProfile: string }>`
   width: 32px;
   height: 32px;
   border-radius: 50%;

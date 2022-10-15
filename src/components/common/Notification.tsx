@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import styled from "styled-components";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //통신
 import {
@@ -18,27 +19,33 @@ import notifitry from "../../assets/images/notifitry.png";
 import allamOff from "../../assets/images/allimOff.png";
 import allamOn from "../../assets/images/allimOn.png";
 import allamDot from "../../assets/images/allamDot.png";
-const Notification = ({ show, setShow }) => {
+
+type TNotification = {
+  show: boolean;
+  setShow: any;
+};
+
+const Notification = ({ show, setShow }: TNotification) => {
   const notifiResponse = useSelector(
-    state => state.notificationSlice.notification,
+    (state: RootState) => state.notificationSlice.notification,
   );
-  const { isLogin } = useSelector(state => state.userSlice);
+  const { isLogin } = useSelector((state: RootState) => state.userSlice);
   const address = window.location.href;
   const isNoti = notifiResponse?.filter(data => data.check === false);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
   // 알림 on,off 상태값o
   const [isNo, setIsNo] = useState(false);
   // 알림 모달창
-  const wrapperRef = useRef();
+  const wrapperRef = useRef<HTMLDivElement>();
   // 디테일페이지로가기
-  const goDetail = (type, id) => {
+  const goDetail = (type: string, id: string) => {
     navigate(`/${type}/detail/${id}`);
   };
 
   // 알림 보기
-  const onShow = e => {
+  const onShow = (e: any) => {
     e.stopPropagation();
     if (!isLogin) {
       needLoginAlert();
@@ -48,14 +55,14 @@ const Notification = ({ show, setShow }) => {
   };
 
   // 확인, 삭제
-  const checkNoti = notiId => {
+  const checkNoti = (notiId: string) => {
     dispatch(postNotificationDB(notiId));
   };
-  const delNoti = notiId => {
+  const delNoti = (notiId: string) => {
     dispatch(delNotificationDB(notiId));
   };
 
-  const checkk = isNoti => {
+  const checkk = (isNoti: string[]) => {
     //isNoti는 아직 안읽은것
     if (isNoti?.length === 0 || isNoti === undefined) {
       setIsNo(true);
@@ -85,7 +92,7 @@ const Notification = ({ show, setShow }) => {
     };
   }, []);
 
-  const handleClickOutside = event => {
+  const handleClickOutside = (event: any) => {
     if (wrapperRef && !wrapperRef.current?.contains(event.target)) {
       setShow(false);
     } else {
@@ -163,7 +170,7 @@ const SNotiTry = styled.div`
   left: 0;
   /* margin-left: 178px; */
 `;
-const SItemList = styled.div`
+const SItemList = styled.div<{ isOpen: boolean }>`
   position: absolute;
   width: 264px;
   height: 198px;
@@ -256,7 +263,7 @@ const SDelButton = styled.div`
 
 const SCheckButton = styled.div``;
 
-const SNotiList = styled.li`
+const SNotiList = styled.li<{ isChecked: boolean }>`
   border-bottom: 1px solid #dcdcdc;
   display: flex;
   align-items: center;

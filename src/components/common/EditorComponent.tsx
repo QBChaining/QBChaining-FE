@@ -5,6 +5,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import styled from "styled-components";
 import categories from "../../utils/category";
 import { storage } from "../../utils/firebase";
+import { RootState, AppDispatch } from "redux/config/configStore";
 
 //파이어베이스
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -57,23 +58,25 @@ const EditorComponent = ({
   blogEditData,
   editData,
 }: options) => {
-  const isComment = useSelector(state => state.qnaSlice.isCommentWrite);
+  const isComment = useSelector(
+    (state: RootState) => state.qnaSlice.isCommentWrite,
+  );
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const tagText = useRef();
   const titleText = useRef();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [category, setCategory] = useState("");
-  const nextId = useRef(1);
-  const [tag, setTag] = useState("");
-  const [tags, setTags] = useState([]);
-  const [blogTitle, setBlogTitle] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const nextId = useRef<number>(1);
+  const [tag, setTag] = useState<string>("");
+  const [tags, setTags] = useState<string[]>([]);
+  const [blogTitle, setBlogTitle] = useState<string>("");
   const location = window.location.pathname;
   const { isLogin, userName, userProfile } = useSelector(
-    state => state.userSlice,
+    (state: RootState) => state.userSlice,
   );
-  const editorRef = useRef();
+  const editorRef = useRef<HTMLDivElement>();
 
   const QnatoolbarItems = [
     ["codeblock"],

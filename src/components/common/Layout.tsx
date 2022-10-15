@@ -3,7 +3,7 @@ import Header from "./Header";
 import SideNav from "./SideNav";
 import styled from "styled-components";
 
-const Layout = props => {
+const Layout = (props: any) => {
   return (
     <SLayout>
       <Header />

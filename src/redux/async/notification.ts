@@ -28,7 +28,7 @@ export const getNotificationDB = createAsyncThunk(
  */
 export const postNotificationDB = createAsyncThunk(
   "POST_NOTIFICATION",
-  async (id, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
       const response = await notification.postNotification(id);
       return id;
@@ -50,7 +50,7 @@ export const postNotificationDB = createAsyncThunk(
  */
 export const delNotificationDB = createAsyncThunk(
   "DEL_NOTIFICATION",
-  async (id, thunkAPI) => {
+  async (id: string, thunkAPI) => {
     try {
       const response = await notification.deleteNotification(id);
       return id;
