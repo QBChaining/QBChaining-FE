@@ -100,7 +100,7 @@ const SSelect = styled.button<{ zIndex: number; open: boolean }>`
   }
 `;
 
-const SLists = styled.ul`
+const SLists = styled.ul<{ zIndex?: number }>`
   width: 100%;
   position: absolute;
   top: 0;
