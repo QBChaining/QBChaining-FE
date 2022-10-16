@@ -20,6 +20,7 @@ import MainWriteButton from "../../assets/images/MainWriteButton.png";
 
 const BlogCommmunityMain = () => {
   const blogMainList = useSelector(state => state.blogSlice.blogList);
+  console.log(blogMainList);
   const isFinish = useSelector(state => state.blogSlice.isMore);
   const blogMainLists = [...new Set(blogMainList.map(JSON.stringify))].map(
     JSON.parse,
@@ -119,8 +120,6 @@ const BlogCommmunityMain = () => {
       </SBody>
       <ModalBookmark />
     </SBlogCommmunityMain>
-    // {hasMore ? (isLoading ? null : <div ref={ref} style={{ border: "1px solid white" }}></div>)
-    //  : <HashMore txt={'맨 하단 페이지 입니다.'} />}
   );
 };
 
