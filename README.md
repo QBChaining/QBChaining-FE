@@ -37,7 +37,7 @@
 #### 김영건
 
 ```Blog 메인, 상세페이지,``` ```UI/UX```
-```CI/CD(w/Github Actions)``` ```배포환경 구축(w/AWS S#, Route53, Cloudfront)```
+```CI/CD(w/Github Actions)``` ```배포환경 구축(w/AWS S3, Route53, Cloudfront)```
 
 
   
