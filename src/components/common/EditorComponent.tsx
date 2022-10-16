@@ -305,7 +305,7 @@ const EditorComponent = ({
             }
             useCommandShortcut={false}
             hideModeSwitch={true}
-            plugins={[[codeSyntaxHighlight, { highligher: Prism }]]}
+            // plugins={[[codeSyntaxHighlight, { highligher: Prism }]]}
             language="ko-KR"
             ref={editorRef}
             onChange={onChangeContent}
