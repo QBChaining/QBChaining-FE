@@ -12,6 +12,7 @@ type TCode = {
   inline?: any;
   className?: any;
   children?: any;
+  props?: any;
 };
 
 const ToastViewer = ({ content }: { content: string }) => {

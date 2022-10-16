@@ -42,8 +42,6 @@ const QnaCommentList = ({ id, qnaId }: TQnaCommentList) => {
     (state: RootState) => state.userSlice,
   );
 
-  console.log(isLogin);
-
   // //코멘트 삭제 dispatch
   // const onDeleteHandler = id => {
   //   if (!isLogin) {
